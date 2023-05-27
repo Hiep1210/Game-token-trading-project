@@ -13,6 +13,8 @@ Lý Thế Lượng
 
 Nguyễn Chí Trung 
 
+Tài liệu:
+
 [Software Design](https://docs.google.com/document/d/1TcwIWhHrKaECqe70mnsV8_mucIcPwoZA-GE4UoVo7OM/edit#heading=h.tyjcwt)
 
 [Software requirement](https://docs.google.com/document/d/17vkZqQKNwW8uvyz9gE7J0moQE1pAq2jaMNaCkiHZf04/edit)
