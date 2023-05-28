@@ -21,4 +21,4 @@ Tài liệu:
 
 [Daily Log](https://docs.google.com/spreadsheets/d/1VWTJeDWcJItloYncrRG8kqn6nCSnTeA0DwjpmOvqU2Y/edit#gid=0)
 
-[Project Back Log](https://discord.com/channels/1107676694665511014/1107676695416283331/1110510001010778223)
+[Project Back Log](https://docs.google.com/spreadsheets/d/1zN-EBGGo1EgroNjnxDXLT6dBLO7TpAEP/edit#gid=199086574)
