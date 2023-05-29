@@ -1,0 +1,97 @@
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content .row {
+    flex: 1;
+}
+
+.sidebar .container {
+    width: 70%;
+}
+
+.sidebar .sidebar-category {
+    color: white;
+}
+
+.sidebar-category summary {
+    font-weight: bold;
+    font-size: 25px;
+    background-color: rgb(49, 47, 61);
+    padding-left: 40px;
+}
+
+.sidebar-category:first-child summary {
+    border-radius: 5px 5px 0px 0px;
+}
+
+.sidebar-category:last-child summary {
+    border-radius: 0px 0px 5px 5px;
+}
+
+.sidebar-category li {
+    font-size: 20px;
+    list-style: none;
+    background-color: rgb(61, 61, 77);
+    padding: 5px 0px 5px 40px;
+}
+
+.user-information {
+    color: white;
+    border-right: 1px solid rgb(61, 61, 77);
+    border-left: 1px solid rgb(61, 61, 77);
+}
+
+.user-information .container {
+    width: 80%;
+}
+
+#edit-user-profile div {
+    margin-bottom: 20px;
+}
+
+.user-information label {
+    font-weight: bold;
+    font-size: 25px;
+    padding: 0px;
+}
+
+.user-information input {
+    height: 100%;
+    border: none;
+    background-color: rgb(49, 47, 61);
+    color: white;
+}
+
+.user-information .form-check-input {
+    width: 30px;
+    height: 30px;
+}
+
+.form-check-input:checked {
+    background-color: rgb(128, 108, 245);
+}
+
+.summit-button button {
+    width: 100%;
+    background-color: rgb(128, 108, 245);
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    border: none;
+    border-radius: 5px;
+}
+
+.summit-button button:hover {
+    background-color: rgb(80, 67, 151);
+}
+
+.user-pfp .container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
