@@ -106,7 +106,7 @@ public class LoginController extends HttpServlet {
             request.getRequestDispatcher("second.jsp").forward(request, response);
         }
         request.getSession().setAttribute("user", user);
-        response.sendRedirect("DisplayMarketItemsController");//CON
+        response.sendRedirect("DisplayMarketItemsController");//CONcho
     }
 
     /**
