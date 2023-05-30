@@ -9,6 +9,8 @@ import java.sql.Statement;
 import model.User;
 import Context.DBContext;
 import java.sql.CallableStatement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author Inspiron
@@ -20,7 +22,7 @@ public class UserDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where Username = " + "'" + username + "'";
+                String sql = "Select 1 from UserAccount where Username = " + "'" + username + "'";
                 Statement statement = con.createStatement();
                 ResultSet set = statement.executeQuery(sql);
                 //if there is a set is not null returned then return username
@@ -35,19 +37,19 @@ public class UserDAO {
         }
         return null;
     }
-    public static User Login(String username, String pass) {
+    public static User LogIn(String username, String pass) {
         User user = null;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserS where Username = " + "'" + username + "'" + 
+                String sql = "Select 1 from UserS where Username = " + "'" + username + "'" + 
                         "AND PASSWORD = " + "'" + pass + "'";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 while (rs.next()) {             //needed even if just 1 row       
                     user = new User(rs.getInt("User_id"), 
-                            username, pass, rs.getInt("game_id)"), rs.getInt("role_id"));
+                            username, pass, rs.getInt("game_id)"), rs.getInt("role_id"), rs.getDouble("money_amount"));
                 }
                 call.close();
                 con.close();
@@ -57,8 +59,28 @@ public class UserDAO {
         }
         return user;
     }
+    public static boolean InsertUser(User user){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "INSERT INTO `game_items_trading`.`useraccount` (`username`, `password`, `game_id`, `role_id`, `money_amount`) "
+                        + "VALUES ('"+user.getUsername()+"', '"+user.getPassword()+"', "+user.getGame_id()
+                        +", 1,0);";
+                Statement statement = con.createStatement();
+                int rows = statement.executeUpdate(sql);
+                statement.close();
+                con.close();
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
         System.out.println(dao.FindUserName("hiep"));
+        System.out.println(dao.InsertUser(new User(0, "hung", "hung123", 1, 0, 0)));
     }
 }

@@ -13,13 +13,15 @@ public class User {
     private String username;
     private String password;
     private int game_id;
+    private int role_id;
     private double money;
 
-    public User(int id, String username, String password, int game_id, double money) {
+    public User(int id, String username, String password, int game_id, int role_id, double money) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.game_id = game_id;
+        this.role_id = role_id;
         this.money = money;
     }
 
@@ -55,6 +57,14 @@ public class User {
         this.game_id = game_id;
     }
 
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
+    }
+
     public double getMoney() {
         return money;
     }
@@ -62,5 +72,7 @@ public class User {
     public void setMoney(double money) {
         this.money = money;
     }
+
+    
     
 }

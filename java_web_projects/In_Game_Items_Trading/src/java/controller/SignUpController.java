@@ -1,6 +1,6 @@
 /*
 *Programmer: Nguyễn Hoàng Hiệp 
-*Description: This files is controller for the feature log in
+*Description: This files is controller for signing up 
  */
 package controller;
 
@@ -18,8 +18,8 @@ import dao.UserDAO;
  *
  * @author Inspiron
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "SignUpController", urlPatterns = {"/SignUpController"})
+public class SignUpController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserController</title>");
+            out.println("<title>Servlet SignUpController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,38 +75,26 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        //if there is username given then find it
         if (username != null) {
-            FindUserName(request, response ,username);
-            //if there is password given then proceed to log in
-            if (request.getParameter("password") != null) {
-                LogIn(request, response,username,password);
+            //if inputted username is found, then send a message to UI
+            if (UserDAO.FindUserName(username) != null) {
+                request.setAttribute("message", "Existed username, please re-input!");
+                request.getRequestDispatcher("first.jsp").forward(request, response);
+            }
+            //if there is password given then signup for user
+            if (password != null) {
+                User user = new User(0, username, password, Integer.parseInt(request.getParameter("game_id")), 1, 0);
+                boolean success = UserDAO.InsertUser(user);
+                //if fail to add user then dend a message to UI
+                if (!success) {
+                    request.setAttribute("message", "Internal Error, failed to add user");
+                    request.getRequestDispatcher("second.jsp").forward(request, response);
+                }
+                request.getSession().setAttribute("user", user);
+                response.sendRedirect("DisplayMarketItemsController");
             }
         }
-    }
 
-    //if there is username in db then send it back 
-    private void FindUserName(HttpServletRequest request, HttpServletResponse response,String username) 
-            throws IOException, ServletException {
-        String name = UserDAO.FindUserName(username);
-        if(name!=null){
-            request.setAttribute("name", name);
-        }//if not found, send a message
-        else{
-            request.setAttribute("message", "Username not found");
-        }
-        request.getRequestDispatcher("second.jsp").forward(request, response);
-    }
-
-    private void LogIn(HttpServletRequest request, HttpServletResponse response,String username,String password) 
-            throws IOException, ServletException {
-        User user = UserDAO.LogIn(username, password);
-        if(user==null){
-            request.setAttribute("message", "Password not found");
-            request.getRequestDispatcher("second.jsp").forward(request, response);
-        }
-        request.getSession().setAttribute("user", user);
-        response.sendRedirect("DisplayMarketItemsController");//CONcho
     }
 
     /**
