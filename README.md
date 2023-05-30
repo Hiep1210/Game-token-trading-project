@@ -3,9 +3,9 @@
 # In-game Items Trading Website
   **Teams**
   
-Nguyễn Hoàng Hiệp - technical leader
+Nguyễn Hoàng Hiệp - Technical Leader
 
-Phùng Phúc Lâm - production manager
+Phùng Phúc Lâm - Production Manager
 
 Trần Thế Hùng 
 
