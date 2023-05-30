@@ -61,7 +61,7 @@ public class DisplayMarketItemsController extends HttpServlet {
     throws ServletException, IOException {
         ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
         request.setAttribute("market_list", list);
-        request.getRequestDispatcher("main.jsp").forward(request, response);
+        request.getRequestDispatcher("buy.jsp").forward(request, response);
     } 
 
     /** 
