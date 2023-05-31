@@ -32,10 +32,11 @@ public class LogInGameAccountController extends HttpServlet{
             req.setAttribute("message", "Username or password is incorrect !");
             req.getRequestDispatcher("loginfi.jsp").forward(req, resp);
         }
-        req.setAttribute("gameacc", guser);
+        req.getSession().setAttribute("gameacc", guser);
         //reusability
+        /*sign up thi redirect la dia chi trang sign up.jsp, change link account thi dia chi la UpdateGameAccount*/
         String redirect = req.getParameter("redirect");
-        req.getRequestDispatcher(redirect).forward(req, resp);
+        resp.sendRedirect(redirect);
     }
     
 }

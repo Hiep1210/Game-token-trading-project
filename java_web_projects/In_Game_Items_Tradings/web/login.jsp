@@ -42,7 +42,7 @@
                     <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
-                        <input id="password" name="password" type="password" placeholder="Enter Password"
+                        <input id="password"  name="password" type="password" placeholder="Enter Password"
                                class="form-control">
                         <span class="form-message"></span>
                     </div>
