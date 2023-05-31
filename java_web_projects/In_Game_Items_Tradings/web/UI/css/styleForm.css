@@ -4,7 +4,7 @@ body {
     overflow-x: hidden;
     height: 100vh;
 }
-
+ 
 .container {
     margin: auto;
     border: 1px solid rgb(182, 182, 182);
@@ -16,22 +16,6 @@ body {
 
 body {
     display: flex;
-}
-
-.container .registration {
-    display: none;
-}
-
-#check:checked~.registration {
-    display: block;
-}
-
-#check:checked~.login {
-    display: none;
-}
-
-#check {
-    display: none;
 }
 
 .container .form {
