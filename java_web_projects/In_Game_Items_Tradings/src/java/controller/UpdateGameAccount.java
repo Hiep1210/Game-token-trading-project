@@ -19,6 +19,7 @@ import model.GameAccount;
  *
  * @author Inspiron
  */
+//new
 @WebServlet(name="UpdateGameAccount", urlPatterns={"/UpdateGameAccount"})
 public class UpdateGameAccount extends HttpServlet {
    
