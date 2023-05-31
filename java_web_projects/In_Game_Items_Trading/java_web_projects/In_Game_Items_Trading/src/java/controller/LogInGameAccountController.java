@@ -33,9 +33,7 @@ public class LogInGameAccountController extends HttpServlet{
             req.getRequestDispatcher("loginfi.jsp").forward(req, resp);
         }
         req.setAttribute("gameacc", guser);
-        //reusability
-        String redirect = req.getParameter("redirect");
-        req.getRequestDispatcher(redirect).forward(req, resp);
+        req.getRequestDispatcher("first.jsp").forward(req, resp);
     }
     
 }

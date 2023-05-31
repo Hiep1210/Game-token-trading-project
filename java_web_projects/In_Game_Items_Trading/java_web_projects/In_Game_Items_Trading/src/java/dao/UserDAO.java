@@ -22,7 +22,7 @@ public class UserDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where Username = " + "'" + username + "' limit 1";
+                String sql = "Select 1 from UserAccount where Username = " + "'" + username + "'";
                 Statement statement = con.createStatement();
                 ResultSet set = statement.executeQuery(sql);
                 //if there is a set is not null returned then return username
@@ -43,13 +43,13 @@ public class UserDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where Username = " + "'" + username + "'" + 
-                        "AND PASSWORD = " + "'" + pass + "' limit 1";
+                String sql = "Select 1 from UserS where Username = " + "'" + username + "'" + 
+                        "AND PASSWORD = " + "'" + pass + "'";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 while (rs.next()) {             //needed even if just 1 row       
                     user = new User(rs.getInt("User_id"), 
-                            username, pass, rs.getInt("game_account_id)"), rs.getInt("role_id"), rs.getDouble("money_amount"));
+                            username, pass, rs.getInt("game_id)"), rs.getInt("role_id"), rs.getDouble("money_amount"));
                 }
                 call.close();
                 con.close();
@@ -64,7 +64,7 @@ public class UserDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "INSERT INTO `game_items_trading`.`useraccount` (`username`, `password`, `game_account_id`, `role_id`, `money_amount`) "
+                String sql = "INSERT INTO `game_items_trading`.`useraccount` (`username`, `password`, `game_id`, `role_id`, `money_amount`) "
                         + "VALUES ('"+user.getUsername()+"', '"+user.getPassword()+"', "+user.getGame_id()
                         +", 1,0);";
                 Statement statement = con.createStatement();
@@ -78,30 +78,9 @@ public class UserDAO {
         }
         return false;
     }
-     public static boolean updateLinkedGameAccount(int user, int game) {//nut bam
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            if (con != null) {
-                String sql = "UPDATE `game_items_trading`.`useraccount` SET `game_account_id` = '"+game+
-                        "' WHERE (`id` = '"+user+"');";
-                Statement statement = con.createStatement();
-                int rows = statement.executeUpdate(sql);
-                //if no row updated, throw exception
-                if(rows<1){
-                    throw new Exception();
-                }
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
         System.out.println(dao.FindUserName("hiep"));
         System.out.println(dao.InsertUser(new User(0, "hung", "hung123", 1, 0, 0)));
-        System.out.println(dao.updateLinkedGameAccount(3, 4));
     }
 }
