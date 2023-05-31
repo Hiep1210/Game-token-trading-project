@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+        <title>Login Game Account</title>
         <!-- Link Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -30,7 +30,7 @@
             <!-- Login Form -->
             <div class="login form">
                 <!-- Screen Header -->
-                <header>Login</header>
+                <header>Login Game Account</header>
                 <!-- Main Form -->
                 <form id="login-form" action="#">
                     <!-- Username -->
@@ -42,7 +42,7 @@
                     <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
-                        <input id="password"  name="password" type="password" placeholder="Enter Password"
+                        <input id="password" name="password" type="password" placeholder="Enter Password"
                                class="form-control">
                         <span class="form-message"></span>
                     </div>
@@ -51,15 +51,6 @@
                 <div class="row">
                     <!-- Screen switch -->
                     <div class="col-lg-9">
-                        <div class="screen-switch">
-                            <span class="forget-password">
-                                <label>Forgot password?</label>
-                            </span>
-                            <br>
-                            <span class="signup">Don't have an account?
-                                <label for="check">Signup</label>
-                            </span>
-                        </div>
                     </div>
                     <!-- Summit button -->
                     <div class="col-lg-3">
@@ -71,5 +62,20 @@
             </div>
         </div>
 
+        <script>
+            Validator({
+                form: '#login-form',
+                formGroupSelector: '.form-group',
+                errorSelector: '.form-message',
+                rules: [
+                    Validator.isRequired('#username', 'Please enter your username'),
+                    Validator.minLength('#password', 6)
+                ],
+                onSubmit: function (data) {
+                    // Call API
+                    console.log(data);
+                }
+            });
+        </script>
     </body>
 </html>
