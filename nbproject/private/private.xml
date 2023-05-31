@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/web/index.html</file>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/src/java/controller/LogInGameAccountController.java</file>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/src/java/model/MarketItems.java</file>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/src/java/controller/DisplayMarketItemsController.java</file>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/src/java/dao/MarketItemsDao.java</file>
-            <file>file:/D:/java_web_projects/In_Game_Items_Trading/src/java/dao/GameAccountDAO.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
