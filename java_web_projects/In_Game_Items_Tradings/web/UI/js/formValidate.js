@@ -26,13 +26,14 @@ function Validator(options) {
                 case 'radio':
                 case 'checkbox':
                     errorMessage = rules[i](
-                        formElement.querySelector(rule.selector + ':checked')
-                    );
+                            formElement.querySelector(rule.selector + ':checked')
+                            );
                     break;
                 default:
                     errorMessage = rules[i](inputElement.value);
             }
-            if (errorMessage) break;
+            if (errorMessage)
+                break;
         }
 
         if (errorMessage) {
@@ -220,4 +221,13 @@ Validator.isConfirmed = function (selector, getConfirmValue, message) {
             return value === getConfirmValue() ? undefined : message || 'Confirm input not matching';
         }
     }
+}
+
+function changeColor(color, gender) {
+    var label = document.querySelector(`label[for=${gender}]`);
+    label.style.backgroundColor = color;
+}
+function resetColor(gender) {
+    var label = document.querySelector(`label[for=${gender}]`);
+    label.style.backgroundColor = '';
 }
