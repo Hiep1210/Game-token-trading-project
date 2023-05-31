@@ -1,12 +1,10 @@
 /*
 *Programmer: Nguyễn Hoàng Hiệp 
-*Description: This files is controller for displaying items on the market
+*Description: This files is controller for changing linked game account
 */
-
 
 package controller;
 
-import Context.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import dao.MarketItemsDao;
-import java.util.ArrayList;
-import model.MarketItems;
+import model.User;
+import dao.UserDAO;
+import model.GameAccount;
 /**
  *
  * @author Inspiron
  */
-@WebServlet(name="MarketItemsController", urlPatterns={"/DisplayMarketItemsController"})
-public class DisplayMarketItemsController extends HttpServlet {
+@WebServlet(name="UpdateGameAccount", urlPatterns={"/UpdateGameAccount"})
+public class UpdateGameAccount extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +37,10 @@ public class DisplayMarketItemsController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MarketItemsController</title>");  
+            out.println("<title>Servlet UpdateGameAccount</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet MarketItemsController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateGameAccount at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,9 +57,7 @@ public class DisplayMarketItemsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
-        request.setAttribute("market_list", list);
-        request.getRequestDispatcher("buy.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -74,7 +70,17 @@ public class DisplayMarketItemsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        User user = (User) request.getSession().getAttribute("user");
+       int user_id = user.getId();
+       int linked_acc = Integer.parseInt(request.getParameter("game_acc_id"));
+       String message ;
+       message = "failed update";
+       //if update successfully, change message sent to UI
+       if(UserDAO.updateLinkedGameAccount(user_id, linked_acc)){
+           message= "success update";
+       }
+       request.setAttribute("message", message);
+       request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
     }
 
     /** 
