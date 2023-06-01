@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file describes the model of paymentRequest 
  */
 package model;
 
@@ -9,11 +9,16 @@ package model;
  * @author Asus
  */
 public class PaymentRequest {
+
     int id;
     int user_id;
     double money;
     String date;
     String img;
+
+    public PaymentRequest() {
+
+    }
 
     public PaymentRequest(int user_id, double money, String date, String img) {
         this.user_id = user_id;
@@ -74,5 +79,5 @@ public class PaymentRequest {
     public String toString() {
         return "PaymentRequest{" + "id=" + id + ", user_id=" + user_id + ", money=" + money + ", date=" + date + ", img=" + img + '}';
     }
-     
+
 }

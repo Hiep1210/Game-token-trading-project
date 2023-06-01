@@ -79,5 +79,5 @@ public class Notification {
     public String toString() {
         return "Notification{" + "noti_id=" + noti_id + ", user_id=" + user_id + ", date=" + date + ", noti_content=" + noti_content + ", img=" + img + '}';
     }
-    
+  
 }
