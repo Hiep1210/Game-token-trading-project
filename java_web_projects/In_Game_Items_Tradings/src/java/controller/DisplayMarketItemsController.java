@@ -28,16 +28,14 @@ public class DisplayMarketItemsController extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
         request.setAttribute("market_list", list);
-        request.setAttribute("redirect", "buy.jsp");
-        request.getRequestDispatcher("GetNotification").forward(request, response);
+        request.getRequestDispatcher("buy.jsp").forward(request, response);
 
-//        request.getRequestDispatcher("buy.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
