@@ -26,3 +26,5 @@ Tài liệu:
 [class diagram tutorial](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/)
 
 [sequence diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/)
+
+[render class diagram](https://www.visual-paradigm.com/tutorials/modelinginnetbeans.jsp)
