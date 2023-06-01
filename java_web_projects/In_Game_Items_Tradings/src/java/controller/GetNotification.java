@@ -1,13 +1,11 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file retreive notification list according  to user id
  */
 package controller;
 
 import dao.NotificationDAO;
-import dao.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,15 +34,18 @@ public class GetNotification extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
+        String redirect = "DisplayMarketItemsController";//In case redirect attribute is null
+        // Only retrieve notification if there is an user attribute in session
         if (user != null) {
-//            User user = new User(1, "HUng", "123", 1, 1, 0);
+            redirect = request.getParameter("redirect");
             int id = user.getId();
             ArrayList<Notification> notiList
                     = NotificationDAO.getAllUserNotification(id);
             request.setAttribute("notiList", notiList);
         }
-        request.getRequestDispatcher((String) request.getAttribute("redirect")).forward(request, response);
+        request.getRequestDispatcher(redirect).forward(request, response);
     }
+
 
     @Override
     public String getServletInfo() {
