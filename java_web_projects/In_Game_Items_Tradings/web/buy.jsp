@@ -1,6 +1,7 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -105,7 +106,7 @@
                 </div>
             </div>
     </nav>
-
+    
     <!-- Main Content -->
     <div class="container-fluid main-content">
         <!-- Filter Section -->
@@ -119,7 +120,7 @@
                     <h5>Cart total</h5>
                     <h5>$ 2000</h5>
                 </div>
-            </div>
+            </div>   
             <!-- Filter Selection Section -->
             <div class="filter">
                 <ul></ul>
@@ -128,7 +129,12 @@
 
         <div class="col-md-10"></div>
     </div>
-
+     <c:forEach var = "notification" items="${requestScope.notiList}">
+         <p>${notification.noti_content}</p>
+         <p>${notification.date}</p>
+         <img src="${notification.img}" alt="${notification.img} picture">
+         </c:forEach>
+    
     <!-- Link Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">

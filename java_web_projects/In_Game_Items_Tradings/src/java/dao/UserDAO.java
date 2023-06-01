@@ -48,8 +48,9 @@ public class UserDAO {
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 while (rs.next()) {             //needed even if just 1 row       
-                    user = new User(rs.getInt("User_id"), 
-                            username, pass, rs.getInt("game_account_id)"), rs.getInt("role_id"), rs.getDouble("money_amount"));
+                    user = new User(rs.getInt("id"), 
+                            username, pass, rs.getInt("game_account_id"),
+                            rs.getInt("role_id"), rs.getDouble("money_amount"));
                 }
                 call.close();
                 con.close();

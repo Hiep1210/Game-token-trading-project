@@ -16,7 +16,7 @@ public class Notification {
     private String date;
     private String noti_content;
     private String img;
-
+    
     public Notification() {
     }
     
