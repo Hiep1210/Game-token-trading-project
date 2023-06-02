@@ -53,7 +53,7 @@ CREATE TABLE Notification (
     FOREIGN KEY (user_id)
         REFERENCES UserAccount (id),
     noti_content VARCHAR(50),
-    img VARCHAR(50)
+    icon_type VARCHAR(50)-- anh icon cho thong bao --  
 );
 create table MarketItems(-- show item on market-- 
 	id int not null auto_increment,
