@@ -1,4 +1,5 @@
 create database game_items_trading;
+drop database game_items_trading;
 use game_items_trading;
 CREATE TABLE GameItems(
 	id INT not null auto_increment,
@@ -51,7 +52,7 @@ CREATE TABLE Notification (
     user_id INT,
     FOREIGN KEY (user_id)
         REFERENCES UserAccount (id),
-    noti_content VARCHAR(65535),
+    noti_content VARCHAR(10000),
     img VARCHAR(50)
 );
 create table MarketItems(-- show item on market-- 
