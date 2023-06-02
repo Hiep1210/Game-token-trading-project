@@ -1,5 +1,4 @@
 create database game_items_trading;
-drop database game_items_trading;
 use game_items_trading;
 CREATE TABLE GameItems(
 	id INT not null auto_increment,
@@ -52,8 +51,8 @@ CREATE TABLE Notification (
     user_id INT,
     FOREIGN KEY (user_id)
         REFERENCES UserAccount (id),
-    noti_content VARCHAR(50),
-    icon_type VARCHAR(50)-- anh icon cho thong bao --  
+    noti_content VARCHAR(65535),
+    img VARCHAR(50)
 );
 create table MarketItems(-- show item on market-- 
 	id int not null auto_increment,
@@ -78,7 +77,7 @@ create table PaymentRequest ( -- adminscreen --
     money double,
     date date,
     foreign key(user_id) references UserAccount(id),
-    img varchar(50)
+    content_type varchar(50)
 );
 create table RetrieveRequest(
 	id int not null auto_increment,
