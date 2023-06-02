@@ -123,6 +123,10 @@ body {
     border-radius: 5px;
 }
 
+.form input[type="file"] {
+    height: 100%;
+}
+
 .radio-group i {
     width: 30px;
 }

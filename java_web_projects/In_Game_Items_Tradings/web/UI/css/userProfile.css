@@ -31,6 +31,11 @@
     border-radius: 0px 0px 5px 5px;
 }
 
+.sidebar-category a {
+    text-decoration: none;
+    color: white;
+}
+
 .sidebar-category li {
     font-size: 20px;
     list-style: none;

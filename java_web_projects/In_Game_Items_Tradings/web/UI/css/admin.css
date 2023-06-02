@@ -1,0 +1,15 @@
+.page-info {
+    border-right: 1px solid rgb(61, 61, 77);
+    border-left: 1px solid rgb(61, 61, 77);
+}
+
+.page-info textarea {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.form-group .form-label {
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}

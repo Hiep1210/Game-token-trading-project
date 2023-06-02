@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Send Announcement</title>
     <!-- Link Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -14,6 +14,7 @@
     <!-- Link CSS -->
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/userProfile.css">
+    <link rel="stylesheet" href="./css/admin.css">
 </head>
 
 <body>
@@ -112,70 +113,45 @@
             <!-- Sidebar -->
             <div class="col-lg-3 sidebar">
                 <div class="container">
-                    <!-- Sidebar Category -->
+                    <!-- Sidebar Announcement -->
                     <details class="sidebar-category">
-                        <summary>User Profile</summary>
+                        <summary>Announcement</summary>
                         <ul class="nopadding">
-                            <a href="userProfile.html">
-                                <li>Profile</li>
+                            <a href="sendAnnouncement.html">
+                                <li>Send Announcement</li>
                             </a>
-                            <a href="topup.html"><li>Topup</li></a>
-                            <a href="changePassword"><li>Change Password</li></a>
                         </ul>
                     </details>
-                    <!-- Sidebar Category -->
+                    <!-- Sidebar Request -->
                     <details class="sidebar-category">
-                        <summary>History</summary>
+                        <summary>Requests</summary>
+                        <ul class="nopadding">
+                            <a href="retrieveRequest.html">
+                                <li>Topup Request</li>
+                            </a>
+                        </ul>
                     </details>
                 </div>
             </div>
-            <!-- User Info -->
-            <div class="col-lg-6 user-information">
+            <!-- Sidebar Page Info -->
+            <div class="col-lg-9 page-info">
                 <div class="container">
-                    <form id="edit-user-profile">
-                        <div class="row mb-3">
-                            <label for="username" class="col-sm-3 col-form-label">User Name:</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="username">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="email" class="col-sm-3 col-form-label">Email:</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="email">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="dob" class="col-sm-3 col-form-label">Date of Birth:</label>
-                            <div class="col-sm-7">
-                                <input type="date" class="form-control" id="dob">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Gender:</label>
-                            <div class="col-sm-7">
-                                <input class="form-check-input" type="radio" name="gender" id="genderMale"
-                                    value="option1">
-                                <label class="form-check-label" for="gridRadios1">
-                                    Male
-                                </label>
-                                <input class="form-check-input" type="radio" name="gender" id="genderFemale"
-                                    value="option2">
-                                <label class="form-check-label" for="gridRadios2">
-                                    Female
-                                </label>
-                            </div>
+                    <form action="">
+                        <div class="form-group">
+                            <label for="announcement" class="form-label">Send Announcement</label>
+                            <textarea name="announcement" id="announcement" rows="20" class="form-control"></textarea>
+                            <span class="form-message"></span>
                         </div>
                     </form>
-                </div>
-            </div>
-            <!-- User PFP -->
-            <div class="col-lg-3 user-pfp">
-                <div class="container">
-                    <img class="img-fluid rounded-circle" src="image/user_profile.jpg" alt="">
-                    <div class="row mb-3">
-                        <div class="mt-4 summit-button nopadding">
-                            <button type="submit" form="edit-user-profile">Change</button>
+                    <div class="row">
+                        <!-- Scren Switch -->
+                        <div class="col-lg-10">
+                        </div>
+                        <!-- Summit button -->
+                        <div class="col-lg-2">
+                            <div class="summit-button">
+                                <button type="submit" form="signup-form">Send</button>
+                            </div>
                         </div>
                     </div>
                 </div>
