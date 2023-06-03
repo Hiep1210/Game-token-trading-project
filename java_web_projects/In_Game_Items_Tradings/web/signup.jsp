@@ -26,6 +26,9 @@
             <div class="registration form">
                 <!-- Screen Header -->
                 <header>Signup</header>
+                <!-- Display Signup Error -->
+                <div class="form-message">${signupFailed}</div>
+                <div class="form-message">${existedUsername}</div>
                 <!-- Main Form -->
                 <form id="signup-form" action="SignUpController" method="post">
                     <!-- Username -->
@@ -48,6 +51,7 @@
                                placeholder="Confirm your password" type="password" class="form-control">
                         <span class="form-message"></span>
                     </div>
+                    <input type="text" name="game_account_id" value="${gameAccount.getId()}" hidden>
                 </form>
 
                 <!-- Form Buttons -->
@@ -78,12 +82,7 @@
                         Validator.isConfirmed('#password_confirmation', function () {
                             return document.querySelector('#signup-form #password').value;
                         }, 'Password not matching')
-                    ],
-//                    //delete when using jsp
-//                    onSubmit: function (data) {
-//                        // Call API
-//                        console.log(data);
-//                    }
+                    ]
                 });
             });
         </script>

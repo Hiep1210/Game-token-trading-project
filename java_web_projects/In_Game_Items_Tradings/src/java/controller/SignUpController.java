@@ -75,23 +75,24 @@ public class SignUpController extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(request.getParameter("game_account_id"));
         if (username != null) {
             //if inputted username is found, then send a message to UI
             if (UserDAO.FindUserName(username) != null) {
-                request.setAttribute("message", "Existed username, please re-input!");
-                request.getRequestDispatcher("first.jsp").forward(request, response);
+                request.setAttribute("existedUsername", "Existed username, please re-input!");
+                request.getRequestDispatcher("signup.jsp").forward(request, response);
             }
             //if there is password given then signup for user
             if (password != null) {
-                User user = new User(0, username, password, Integer.parseInt(request.getParameter("game_id")), 1, 0);
+                User user = new User(username, password, Integer.parseInt(request.getParameter("game_account_id")), 1, 0);
                 boolean success = UserDAO.InsertUser(user);
                 //if fail to add user then dend a message to UI
                 if (!success) {
-                    request.setAttribute("message", "Internal Error, failed to add user");
-                    request.getRequestDispatcher("second.jsp").forward(request, response);
+                    request.setAttribute("signupFailed", "Internal Error, failed to add user");
+                    request.getRequestDispatcher("signup.jsp").forward(request, response);
                 }
                 request.getSession().setAttribute("user", user);
-                response.sendRedirect("DisplayMarketItemsController");
+                response.sendRedirect("buy.jsp");
             }
         }
 

@@ -70,11 +70,7 @@
                 rules: [
                     Validator.isRequired('#username', 'Please enter your username'),
                     Validator.minLength('#password', 6)
-                ],
-                onSubmit: function (data) {
-                    // Call API
-                    console.log(data);
-                }
+                ]
             });
         </script>
     </body>

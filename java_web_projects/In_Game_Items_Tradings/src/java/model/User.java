@@ -1,7 +1,7 @@
 /*
 *Programmer: Nguyễn Hoàng Hiệp 
 *Description: This file describes the model of user 
-*/
+ */
 package model;
 
 /**
@@ -9,12 +9,22 @@ package model;
  * @author Inspiron
  */
 public class User {
+
     private int id;
     private String username;
     private String password;
     private int game_id;
     private int role_id;
     private double money;
+
+    public User(String username, String password, int game_id, int role_id, double money) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.game_id = game_id;
+        this.role_id = role_id;
+        this.money = money;
+    }
 
     public User(int id, String username, String password, int game_id, int role_id, double money) {
         this.id = id;
@@ -73,6 +83,4 @@ public class User {
         this.money = money;
     }
 
-    
-    
 }

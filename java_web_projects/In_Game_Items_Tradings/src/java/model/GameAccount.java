@@ -10,7 +10,6 @@ package model;
  */
 public class GameAccount {
     private int id;
-    private String realname;
     private String username;
     private String password;
     private String dob;
@@ -18,9 +17,8 @@ public class GameAccount {
     private String gender;
     private String avatar;
 
-    public GameAccount(int id, String realname, String username, String password, String dob, String email, String gender, String avatar) {
+    public GameAccount(int id, String username, String password, String dob, String email, String gender, String avatar) {
         this.id = id;
-        this.realname = realname;
         this.username = username;
         this.password = password;
         this.dob = dob;
@@ -35,14 +33,6 @@ public class GameAccount {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRealname() {
-        return realname;
-    }
-
-    public void setRealname(String realname) {
-        this.realname = realname;
     }
 
     public String getUsername() {

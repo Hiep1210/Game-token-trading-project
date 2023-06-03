@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,8 +32,10 @@
             <div class="login form">
                 <!-- Screen Header -->
                 <header>Login Game Account</header>
+                <!-- Display Login Error -->
+                <div class="form-message">${loginFailed}</div>
                 <!-- Main Form -->
-                <form id="login-form" action="#">
+                <form id="login-form" action="LogInGameAccountController" method="post">
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
@@ -42,39 +45,36 @@
                     <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
-                        <input id="password" name="password" type="password" placeholder="Enter Password"
-                               class="form-control">
+                        <input id="password" name="password" type="password" placeholder="Enter Password" class="form-control">
                         <span class="form-message"></span>
                     </div>
-                </form>
-                <!-- Form Buttons -->
-                <div class="row">
-                    <!-- Screen switch -->
-                    <div class="col-lg-9">
-                    </div>
-                    <!-- Summit button -->
-                    <div class="col-lg-3">
-                        <div class="summit-button">
-                            <button type="submit" form="login-form">Login</button>
+                    <input type="text" name="redirect" value="signup.jsp" hidden>
+                    <!-- Form Buttons -->
+                    <div class="row">
+                        <!-- Screen switch -->
+                        <div class="col-lg-9"></div>
+                        <!-- Summit button -->
+                        <div class="col-lg-3">
+                            <div class="summit-button">
+                                <button type="submit" form="login-form">Login</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
         <script>
-            Validator({
-                form: '#login-form',
-                formGroupSelector: '.form-group',
-                errorSelector: '.form-message',
-                rules: [
-                    Validator.isRequired('#username', 'Please enter your username'),
-                    Validator.minLength('#password', 6)
-                ],
-                onSubmit: function (data) {
-                    // Call API
-                    console.log(data);
-                }
+            document.addEventListener('DOMContentLoaded', function () {
+                Validator({
+                    form: '#login-form',
+                    formGroupSelector: '.form-group',
+                    errorSelector: '.form-message',
+                    rules: [
+                        Validator.isRequired('#username', 'Please enter your username'),
+                        Validator.minLength('#password', 6)
+                    ]
+                });
             });
         </script>
     </body>

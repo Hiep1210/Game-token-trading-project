@@ -9,9 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import model.User;
 import Context.DBContext;
-import java.sql.CallableStatement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 /**
@@ -20,20 +18,22 @@ import java.util.ArrayList;
  */
 public class UserDAO {
 
-    //This function is to find if there is an user with provided username
     public static String FindUserName(String username) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where Username = " + "'" + username + "' limit 1";
-                Statement statement = con.createStatement();
-                ResultSet set = statement.executeQuery(sql);
-                //if there is a set is not null returned then return username
-                if (set != null) {
+                String sql = "SELECT * FROM UserAccount WHERE Username = ?";
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setString(1, username);
+                ResultSet rs = st.executeQuery();
+                // Check if any rows exist in the result set
+                if (rs.next()) {
+                    st.close();
+                    con.close();
                     return username;
                 }
-                statement.close();
+                st.close();
                 con.close();
             }
         } catch (Exception e) {
@@ -72,16 +72,19 @@ public class UserDAO {
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "INSERT INTO `game_items_trading`.`useraccount` (`username`, `password`, `game_account_id`, `role_id`, `money_amount`) "
-                        + "VALUES ('" + user.getUsername() + "', '" + user.getPassword() + "', " + user.getGame_id()
-                        + ", 1,0);";
-                Statement statement = con.createStatement();
-                int rows = statement.executeUpdate(sql);
+                        + "VALUES (?, ?, ?, 1, 0)";
+                PreparedStatement statement = con.prepareStatement(sql);
+                statement.setString(1, user.getUsername());
+                statement.setString(2, user.getPassword());
+                statement.setInt(3, user.getGame_id());
+
+                int rows = statement.executeUpdate();
                 statement.close();
                 con.close();
                 return true;
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error inserting user: " + e.getMessage());
         }
         return false;
     }
@@ -134,12 +137,13 @@ public class UserDAO {
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
+//        System.out.println(dao.FindUserName("laamwwibu1"));
 //        System.out.println(dao.FindUserName("hiep"));
 //        System.out.println(dao.InsertUser(new User(0, "hung", "hung123", 1, 0, 0)));
 //        System.out.println(dao.updateLinkedGameAccount(3, 4));
-        for (int id : dao.getAllUserId()) {
-            System.out.println(id);
-        }
-            
+//        for (int id : dao.getAllUserId()) {
+//            System.out.println(id);
+//        }
+
     }
 }

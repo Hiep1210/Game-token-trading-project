@@ -29,14 +29,14 @@ public class LogInGameAccountController extends HttpServlet{
         GameAccount guser = GameAccountDAO.GameLogIn(req.getParameter("username"), req.getParameter("password"));
         //if guser is null then send message to UI
         if(guser == null){
-            req.setAttribute("message", "Username or password is incorrect !");
-            req.getRequestDispatcher("loginfi.jsp").forward(req, resp);
+            req.setAttribute("loginFailed", "Username or password is incorrect !");
+            req.getRequestDispatcher("loginGameAccount.jsp").forward(req, resp);
         }
-        req.getSession().setAttribute("gameacc", guser);
+        req.getSession().setAttribute("gameAccount", guser);
         //reusability
         /*sign up thi redirect la dia chi trang sign up.jsp, change link account thi dia chi la UpdateGameAccount*/
         String redirect = req.getParameter("redirect");
-        resp.sendRedirect(redirect);
+        req.getRequestDispatcher(redirect).forward(req, resp);
     }
     
 }

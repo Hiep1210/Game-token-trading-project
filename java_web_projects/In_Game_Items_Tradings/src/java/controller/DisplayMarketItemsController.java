@@ -26,9 +26,10 @@ public class DisplayMarketItemsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
-        request.setAttribute("market_list", list);
-        request.getRequestDispatcher("buy.jsp").forward(request, response);
+//        ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
+//        request.setAttribute("market_list", list);
+        response.sendRedirect("buy.jsp");
+//        request.getRequestDispatcher("buy.jsp").forward(request, response);
 
     }
 
