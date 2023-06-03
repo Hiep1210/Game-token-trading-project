@@ -78,7 +78,7 @@ create table PaymentRequest ( -- adminscreen --
     money double,
     date date,
     foreign key(user_id) references UserAccount(id),
-    content_type varchar(50)
+    img varchar(50)
 );
 create table RetrieveRequest(
 	id int not null auto_increment,
