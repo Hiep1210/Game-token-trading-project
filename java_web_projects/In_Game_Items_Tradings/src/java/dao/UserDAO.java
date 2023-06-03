@@ -71,7 +71,8 @@ public class UserDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "INSERT INTO `game_items_trading`.`useraccount` (`username`, `password`, `game_account_id`, `role_id`, `money_amount`) "
+                String sql = "INSERT INTO `game_items_trading`.`useraccount` "
+                        + "(`username`, `password`, `game_account_id`, `role_id`, `money_amount`) "
                         + "VALUES (?, ?, ?, 1, 0)";
                 PreparedStatement statement = con.prepareStatement(sql);
                 statement.setString(1, user.getUsername());

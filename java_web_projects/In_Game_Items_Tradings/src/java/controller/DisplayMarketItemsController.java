@@ -13,8 +13,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import dao.MarketItemsDao;
+import dao.GameItemsDAO;
 import java.util.ArrayList;
 import model.MarketItems;
+import model.GameItems;
 
 /**
  *
@@ -26,10 +28,16 @@ public class DisplayMarketItemsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
-//        request.setAttribute("market_list", list);
-        response.sendRedirect("./UI/buy.html");
-//        request.getRequestDispatcher("buy.jsp").forward(request, response);
+        System.out.println("please show");
+        ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
+        ArrayList<GameItems> market_list = new ArrayList<>();
+        //get item's info for each of items returned by getAllMarketItems then add to a list
+        for (int i = 0; i < list.size(); i++) {
+            market_list.add(GameItemsDAO.getItemInfo(list.get(i).getItem_id()));
+            System.out.println(market_list.get(i).getImg());
+        }
+        request.setAttribute("market_list", market_list);
+        request.getRequestDispatcher("./UI/buy.jsp").forward(request, response);
 
     }
 
