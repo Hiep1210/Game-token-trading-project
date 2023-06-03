@@ -84,7 +84,7 @@ public class SignUpController extends HttpServlet {
             }
             //if there is password given then signup for user
             if (password != null) {
-                User user = new User(username, password, Integer.parseInt(request.getParameter("game_account_id")), 1, 0);
+                User user = new User(0,username, password, Integer.parseInt(request.getParameter("game_account_id")), 1, 0);
                 boolean success = UserDAO.InsertUser(user);
                 //if fail to add user then dend a message to UI
                 if (!success) {
