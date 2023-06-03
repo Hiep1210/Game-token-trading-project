@@ -37,7 +37,7 @@ public class DisplayMarketItemsController extends HttpServlet {
             System.out.println(market_list.get(i).getImg());
         }
         request.setAttribute("market_list", market_list);
-        request.getRequestDispatcher("./UI/buy.jsp").forward(request, response);
+        request.getRequestDispatcher("buy.jsp").forward(request, response);
 
     }
 
