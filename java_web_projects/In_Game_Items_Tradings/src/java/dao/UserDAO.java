@@ -153,6 +153,21 @@ public class UserDAO {
         }
         return true;
     }
+        public int ChangePassword(int user_id, String password){
+        try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + password
+                        + "' WHERE (`id` = '" + user_id + "');";
+                Statement st = con.createStatement();
+                st.executeQuery(sql);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return 0;
+    }
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
 //        System.out.println(dao.FindUserName("laamwwibu1"));
