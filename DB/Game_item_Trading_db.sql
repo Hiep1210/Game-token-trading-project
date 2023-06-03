@@ -53,7 +53,7 @@ CREATE TABLE Notification (
     FOREIGN KEY (user_id)
         REFERENCES UserAccount (id),
     noti_content VARCHAR(10000),
-    img VARCHAR(50)
+    content_type VARCHAR(50)
 );
 create table MarketItems(-- show item on market-- 
 	id int not null auto_increment,
