@@ -11,13 +11,18 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <!-- Link Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- Link Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Link CSS -->
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/buy.css">
 </head>
 
-<body>
+<body onload="copyDiv()">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg" id="navbar">
         <div class="container-fluid">
             <!-- Navbar Logo -->
             <a class="navbar-brand col-lg-3" href="#">
@@ -108,31 +113,171 @@
 
     <!-- Main Content -->
     <div class="container-fluid main-content">
-        <!-- Filter Section -->
-        <div class="col-md-2 flex-column">
-            <!-- Cart Info Section -->
-            <div class="cart-info">
-                <button class="buy-button">
-                    <h5>Buy now</h5>
-                </button>
-                <div class="cart-total">
-                    <h5>Cart total</h5>
-                    <h5>$ 2000</h5>
+        <div class="row">
+            <!-- Filter Section -->
+            <div class="col-lg-2 flex-column p-4">
+                <!-- Cart Info Section -->
+                <div class="cart-info">
+                    <button class="buy-button">
+                        <h5>Buy now</h5>
+                    </button>
+                    <div class="cart-total">
+                        <h5>Cart total</h5>
+                        <h5>$ 2000</h5>
+                    </div>
+                </div>
+                <!-- Filter Selection Section -->
+                <div class="filter sidebar">
+                    <div class="container">
+                        <!-- Filter Type -->
+                        <details class="sidebar-category">
+                            <summary>Type</summary>
+                            <ul class="nopadding d-flex flex-column">
+                                <div class="category-group">
+                                    <input type="checkbox" name="knife" value="knife" id="knife">
+                                    <label for="knife">Knife</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="glove" value="glove" id="glove">
+                                    <label for="glove">Glove</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="gun" value="gun" id="gun">
+                                    <label for="gun">Gun</label>
+                                </div>
+                            </ul>
+                        </details>
+                        <!-- Filter Exterior -->
+                        <details class="sidebar-category">
+                            <summary>Exterior</summary>
+                            <ul class="nopadding d-flex flex-column">
+                                <div class="category-group">
+                                    <input type="checkbox" name="fn" value="fn" id="fn">
+                                    <label for="knife">Factory New</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="mw" value="mw" id="mw">
+                                    <label for="glove">Minimal Wear</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="ft" value="ft" id="ft">
+                                    <label for="gun">Field-Tested</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="ww" value="ww" id="ww">
+                                    <label for="gun">Well-Worn</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="bs" value="bs" id="bs">
+                                    <label for="gun">Battle-Scarred</label>
+                                </div>
+                            </ul>
+                        </details>
+                        <!-- Filter Rarity -->
+                        <details class="sidebar-category">
+                            <summary>Rarity</summary>
+                            <ul class="nopadding d-flex flex-column">
+                                <div class="category-group">
+                                    <input type="checkbox" name="grey" value="grey" id="grey">
+                                    <label for="knife">Consumer Grade</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="blue" value="blue" id="blue">
+                                    <label for="glove">Industrial Grade</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="purple" value="purple" id="purple">
+                                    <label for="gun">Restricted</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="pink" value="pink" id="pink">
+                                    <label for="gun">Classified</label>
+                                </div>
+                                <div class="category-group">
+                                    <input type="checkbox" name="red" value="rd" id="red">
+                                    <label for="gun">Covert</label>
+                                </div>
+                            </ul>
+                        </details>
+                    </div>
                 </div>
             </div>
-            <!-- Filter Selection Section -->
-            <div class="filter">
-                <ul></ul>
+            <!-- Item List Section -->
+            <div class="col-lg-10 p-4">
+                <div class="container">
+                    <!-- Tool Bar -->
+                    <div class="row">
+                        <!-- Search Bar -->
+                        <div class="col-lg-4 search-bar form">
+                            <form action="">
+                                <div class="form-group">
+                                    <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
+                                    <input class="form-control ps-5" type="text" placeholder="Search...">
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Sort Button -->
+                        <div class="col-lg-6">
+                        </div>
+                        <!-- View Cart -->
+                        <div class="col-lg-2">
+                        </div>
+                    </div>
+                    <!-- Item List -->
+                    <div class="row" id="item-box">
+                        <!-- Item Card -->
+                        <div class="col-lg-2 item-card mt-2 mb-2" id="item-card">
+                            <div class="card">
+                                <img src="image/item_placeholder.png" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title item-card-price ps-1">$ 2000</h5>
+                                    <a href="#" class="btn item-card-button">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page Navigator -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
-
-        <div class="col-md-10"></div>
     </div>
 
     <!-- Link Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
+
+    <!-- Delete when using jsp -->
+    <script>
+        function copyDiv() {
+            var itemBox = document.getElementById("item-card");
+            var container = document.querySelector("#item-box");
+
+            for (var i = 1; i < 18; i++) {
+                var clone = itemBox.cloneNode(true);
+                container.appendChild(clone);
+            }
+        }
+    </script>
 </body>
 
 </html>
