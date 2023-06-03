@@ -260,7 +260,18 @@
             </div>
         </div>
     </div>
+        <c:forEach var = "notification" items="${requestScope.notiList}">
+            <p>${notification.noti_content}</p>
+            <p>${notification.date}</p>
+            <img src="${notification.img}" alt="${notification.img} picture">
+        </c:forEach>
 
+        <form action='InsertNotification' method='post'>
+            <input type="hidden" name="type" value="adminNotification">
+            <label for="Content">Content</label>
+            <input type="text" name="content" id="title" placeholder="Content" required>
+            <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
+        </form>  
     <!-- Link Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
