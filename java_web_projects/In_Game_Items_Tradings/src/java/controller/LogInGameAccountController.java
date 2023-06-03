@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import model.GameAccount;
 import dao.GameAccountDAO;
+import dao.UserDAO;
 /**
  *
  * @author Inspiron
@@ -30,6 +31,11 @@ public class LogInGameAccountController extends HttpServlet{
         //if guser is null then send message to UI
         if(guser == null){
             req.setAttribute("loginFailed", "Username or password is incorrect !");
+            req.getRequestDispatcher("loginGameAccount.jsp").forward(req, resp);
+        }
+        //if there is a duplicate linked game account then send a message to UI
+        if(UserDAO.checkDuplicateGameAccount(guser.getId())){
+            req.setAttribute("loginFailed", "This game account is linked with another account !");
             req.getRequestDispatcher("loginGameAccount.jsp").forward(req, resp);
         }
         req.getSession().setAttribute("gameAccount", guser);

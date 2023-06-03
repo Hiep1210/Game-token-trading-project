@@ -134,7 +134,25 @@ public class UserDAO {
         return userIdlist;
 
     }
-
+    public static boolean checkDuplicateGameAccount(int game_id){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "select * from UserAccount where game_account_id = "+game_id ;
+                Statement statement = con.createStatement();
+                ResultSet rs = statement.executeQuery(sql);
+                //if rs has entries means this game account is already linked
+                if (rs.next()) {
+                    throw new Exception();
+                }
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
 //        System.out.println(dao.FindUserName("laamwwibu1"));
