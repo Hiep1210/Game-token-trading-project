@@ -1,25 +1,29 @@
 /*
-*Programmer: Ly The Luong 
-*Description: This files is controller for Log out
+*Programmer: Ly The Luong
+*Description: This files is controller for displaying user information
  */
 
 package controller;
 
+import dao.GameAccountDAO;
+import dao.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Map;
+import model.GameAccount;
+import model.User;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name="LogOutController", urlPatterns={"/LogOutController"})
-public class LogOutController extends HttpServlet {
+@WebServlet(name="UserProfileController", urlPatterns={"/UserProfileController"})
+public class UserProfileController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,15 +33,14 @@ public class LogOutController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {       
-      try{
+    throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.invalidate();
-        request.getRequestDispatcher("login").forward(request, response);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        response.setContentType("text/html;charset=UTF-8");
+        if (session.getAttribute("username") == null){
+            response.sendRedirect("login.jsp");
+            session.setAttribute("mess", "Ban chua co tai khoan vui long dang nhap hoac dang ky");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -51,6 +54,13 @@ public class LogOutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
+        HttpSession session = request.getSession();
+        GameAccount ga = (GameAccount) request.getSession().getAttribute("id");
+        GameAccountDAO gad = new GameAccountDAO();
+        session.setAttribute("infor", gad.GetUserInformation(ga.getId()));
+        User u = (User) request.getSession().getAttribute("id");
+        UserDAO ud = new UserDAO();
+        session.setAttribute("umoney",ud.getUserMoney(u.getId()));      
     } 
 
     /** 
@@ -64,6 +74,7 @@ public class LogOutController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /** 

@@ -93,17 +93,17 @@ public class LoginController extends HttpServlet {
             request.setAttribute("name", name);
         }//if not found, send a message
         else{
-            request.setAttribute("message", "Username not found");
+            request.setAttribute("loginFailed", "Username not found");
         }
-        request.getRequestDispatcher("second.jsp").forward(request, response);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     private void LogIn(HttpServletRequest request, HttpServletResponse response,String username,String password) 
             throws IOException, ServletException {
         User user = UserDAO.LogIn(username, password);
         if(user==null){
-            request.setAttribute("message", "Password not found");
-            request.getRequestDispatcher("second.jsp").forward(request, response);
+            request.setAttribute("loginFailed", "Password not found");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
         request.getSession().setAttribute("user", user);
         response.sendRedirect("DisplayMarketItemsController");

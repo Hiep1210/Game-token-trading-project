@@ -156,20 +156,24 @@ public class UserDAO {
         return true;
     }
 
-    public int ChangePassword(int user_id, String password) {
-        try {
-            DBContext db = new DBContext();
+        public static boolean ChangePassword(int user_id, String password){
+        try{
+           DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + password
                         + "' WHERE (`id` = '" + user_id + "');";
                 Statement st = con.createStatement();
-                st.executeQuery(sql);
+                int rows = st.executeUpdate(sql);
+                if(rows < 1){
+                    throw new Exception();
+                }
+                return true;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return 0;
+        return false;
     }
 
     public static boolean acceptPaymentRequest(int user, double money) {
@@ -193,6 +197,29 @@ public class UserDAO {
         }
         return false;
     }
+            public ArrayList<User> getUserMoney(int id){
+            ArrayList<User> list = new ArrayList<>();
+            User user;
+            try{
+                 DBContext db = new DBContext();
+                 Connection con = db.getConnection();
+                 if(con != null){
+                     String sql = "Select * from UserAccount where id = '" + id + "';";
+                     Statement st = con.createStatement();
+                     ResultSet rs = st.executeQuery(sql);
+                     while(rs.next()){
+                         user = new User();
+                         user.setMoney(rs.getDouble(1));
+                         list.add(user);
+                     }
+                     st.close();
+                     con.close();
+        }
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                    }
+            return list;
+        }
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
