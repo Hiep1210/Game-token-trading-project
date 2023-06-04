@@ -17,6 +17,7 @@ import dao.GameItemsDAO;
 import java.util.ArrayList;
 import model.MarketItems;
 import model.GameItems;
+import model.User;
 
 /**
  *

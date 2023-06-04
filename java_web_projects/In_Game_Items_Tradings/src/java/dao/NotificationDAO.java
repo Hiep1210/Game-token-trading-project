@@ -29,9 +29,10 @@ public class NotificationDAO {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "SELECT * FROM Notification WHERE user_id = "
-                        + user_id + " ORDER BY date DESC LIMIT "
-                        + notificationLimit;
+                String sql = " SELECT * FROM Notification "
+                        + " WHERE user_id = "+ user_id 
+                        + " OR content_type = 'admin'"
+                        + " ORDER BY id DESC LIMIT "+ notificationLimit;
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model   
@@ -41,13 +42,14 @@ public class NotificationDAO {
                     notification.setUser_id(rs.getInt("user_id"));
                     notification.setDate(rs.getString("date"));
                     notification.setNoti_content(rs.getString("noti_content"));
-                    notification.setImg(rs.getString("img"));
+                    notification.setContent_type(rs.getString("content_type"));
                     list.add(notification);
                 }
                 call.close();
                 con.close();
             }
         } catch (Exception e) {
+            System.out.println(e);
             System.out.println("ERROR IN getAllUserNotification");
         }
         return list;
@@ -60,12 +62,12 @@ public class NotificationDAO {
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
                 String sql = "INSERT INTO notification (date, user_id, "
-                        + "noti_content, img) VALUES (?, ?, ?, ?)";
+                        + "noti_content, content_type) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
                 preparedStatement.setString(1, notification.getDate());
                 preparedStatement.setInt(2, notification.getUser_id());
                 preparedStatement.setString(3, notification.getNoti_content());
-                preparedStatement.setString(4, notification.getImg());
+                preparedStatement.setString(4, notification.getContent_type());
                 // if insert command failed
                 if (preparedStatement.executeUpdate() != 1) {
                     System.out.println("ERROR INSERTING NOTIFICATION");
@@ -76,46 +78,6 @@ public class NotificationDAO {
             System.out.println("ERROR IN insertNotification");
         }
     }
-
-    public static void sendNotificationToAllUser(Notification notification,
-            ArrayList<Integer> userIdList) {
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            //if connection is secured, proceed to execute query and retrieve data into and return a list
-            if (con != null) {
-                String sql = "INSERT INTO notification (date, user_id, "
-                        + "noti_content, img) VALUES (?, ?, ?, ?)";
-                PreparedStatement preparedStatement = con.prepareStatement(sql);
-                for (int userId : userIdList) {
-                    System.out.println(userId);
-                    preparedStatement.setString(1, notification.getDate());
-                    preparedStatement.setInt(2, userId);
-                    preparedStatement.setString(3, 
-                            notification.getNoti_content());
-                    preparedStatement.setString(4, notification.getImg());
-                    if (preparedStatement.executeUpdate() != 1) {
-                        System.out.println("ERROR INSERTING ADMIN NOTIFICATION "
-                                + "ID = " + userId);
-                    }
-                }
-                con.close();
-            }
-        } catch (Exception e) {
-            System.out.println("Error in sendNotificationToAllUser");
-        }
-    }
-//    To be further plan    
-//    public void deleteNotification(int news_id) {
-//        try {
-//            DBContext db = new DBContext();
-//            Connection con = db.getConnection();
-//            st.close();
-//            con.close();
-//        } catch (Exception e) {
-//            System.out.println("Error");
-//        }
-//    }
 
     public static void main(String[] args) {
         NotificationDAO dao = new NotificationDAO();

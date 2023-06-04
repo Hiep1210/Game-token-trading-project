@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.MarketItemsDao;
 import dao.PaymentRequestDAO;
 import dao.RoleDAO;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.MarketItems;
 import model.PaymentRequest;
 import model.Role;
 import model.User;
@@ -23,8 +21,8 @@ import model.User;
  *
  * @author Asus
  */
-@WebServlet(name = "GetPaymentRequest", urlPatterns = {"/GetPaymentRequest"})
-public class GetPaymentRequest extends HttpServlet {
+@WebServlet(name = "GetPaymentRequestController", urlPatterns = {"/GetPaymentRequestController"})
+public class GetPaymentRequestController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -40,26 +38,30 @@ public class GetPaymentRequest extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void processRequest(HttpServletRequest request,
-            HttpServletResponse response) {
-        User user = (User) request.getSession().getAttribute("user");
-        ArrayList<PaymentRequest> paymentRequestList = PaymentRequestDAO.getAllPaymentRequest();
-        ArrayList<Role> roleList = RoleDAO.getRoleList();
-        if (user == null) {
-            request.setAttribute("redirect", "buy.jsp");
-        } else if (!isAdmin(user.getRole_id())) {
-            request.setAttribute("redirect", "buy.jsp");
-        } else {
-            request.setAttribute("paymentRequestList", paymentRequestList);
+    protected void processRequest(HttpServletRequest request,HttpServletResponse response) {
+        try {
+            User user = (User) request.getSession().getAttribute("user");
+            ArrayList<PaymentRequest> paymentRequestList;
+            String redirect = "DisplayMarketItemsController";
+            if (user == null) {
+                redirect = "DisplayMarketItemsController";
+            } else if (!isAdmin(user.getRole_id())) {
+                redirect = "DisplayMarketItemsController";
+            } else {
+                paymentRequestList = PaymentRequestDAO.getAllPaymentRequest();
+                request.setAttribute("paymentRequestList",paymentRequestList);
+            }
+            request.getRequestDispatcher(redirect).forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        
     }
 
     public boolean isAdmin(int role_id) {
         ArrayList<Role> roleList = RoleDAO.getRoleList();
         boolean isAdmin = false;
         for (Role role : roleList) {
-            if (role.getRole() == role_id && role.getRole_name() == "admin") {
+            if (role.getRole() == role_id && "admin".equals(role.getRole_name())) {
                 isAdmin = true;
                 break;
             }
