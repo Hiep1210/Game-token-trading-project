@@ -47,8 +47,7 @@ public class SendPaymentRequestController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         ServletFileUpload upload;
         FileItemIterator iterator;
         FileItemStream item;
