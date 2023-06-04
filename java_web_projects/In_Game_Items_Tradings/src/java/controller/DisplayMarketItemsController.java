@@ -28,7 +28,6 @@ public class DisplayMarketItemsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("please show");
         ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
         ArrayList<GameItems> market_list = new ArrayList<>();
         //get item's info for each of items returned by getAllMarketItems then add to a list
@@ -37,7 +36,7 @@ public class DisplayMarketItemsController extends HttpServlet {
             System.out.println(market_list.get(i).getImg());
         }
         request.setAttribute("market_list", market_list);
-        request.getRequestDispatcher("./UI/buy.jsp").forward(request, response);
+        request.getRequestDispatcher("buy.jsp").forward(request, response);
 
     }
 

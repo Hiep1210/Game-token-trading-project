@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <!-- Navbar Logo -->
                 <a class="navbar-brand col-lg-3" href="#">
-                    <img src="UI/image/market_csmoney_2.png" alt="Bootstrap" width="200px">
+                    <img src="UI/image/cs-money.png" alt="Bootstrap" width="200px">
                 </a>
                 <!-- Navbar Toggler Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
@@ -97,7 +97,7 @@
                                 <!-- Dropdown toggler -->
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="image/user_profile.jpg" alt="">
+                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
                                 </button>
                                 <!-- Dropdown menu -->
                                 <div class="dropdown-menu dropdown-menu-end">
@@ -111,6 +111,7 @@
                     </div>
                 </div>
         </nav>
+        
 
         <!-- Main Content -->
         <div class="container-fluid main-content">
@@ -228,10 +229,9 @@
                         <div class="row" id="item-box">
                             <!-- Item Card -->
                             <c:forEach var ="market_items" items="${requestScope.market_list}">
-                                <c:out value="${market_items.getImg()}"/>
                                 <div class="col-lg-2 item-card mt-2 mb-2" id="item-card">
                                     <div class="card">
-                                        <img src="UI/image/market_csmoney_2.png" alt ="wtf" class="card-img-top" >
+                                        <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ 2000</h5>
                                             <a href="#" class="btn item-card-button">
