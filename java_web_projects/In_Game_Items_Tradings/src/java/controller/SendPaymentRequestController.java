@@ -117,7 +117,7 @@ public class SendPaymentRequestController extends HttpServlet {
             System.out.println(e);
         }
         return jarPath.replace("build/web/WEB-INF/classes/", "").substring(1)
-                + "web/UI/image/invoices/";//return the location invoice images file
+                + "web/UI/image/";//return the location invoice images file
     }
 
     /**
