@@ -19,8 +19,8 @@ import model.User;
  *
  * @author Asus
  */
-@WebServlet(name = "GetNotificationController", urlPatterns = {"/GetNotificationController"})
-public class GetNotificationController extends HttpServlet {
+@WebServlet(name = "GetNotification", urlPatterns = {"/GetNotification"})
+public class GetNotification extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
@@ -30,21 +30,22 @@ public class GetNotificationController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        ArrayList<Notification> notificationList;
-        int id;
-        String redirect = request.getParameter("redirect");
-        //In case session contain no user attribute or redirect parameter is missing
-        if (redirect == null || user == null) {
-            redirect = "DisplayMarketItemsController";
-        } else {
-            id = user.getId();
-            notificationList = NotificationDAO.getAllUserNotification(id);
-            request.setAttribute("notificationList", notificationList);
+        String redirect = "DisplayMarketItemsController";//In case redirect attribute is null
+        // Only retrieve notification if there is an user attribute in session
+        if (user != null) {
+            redirect = request.getParameter("redirect");
+            int id = user.getId();
+            ArrayList<Notification> notiList
+                    = NotificationDAO.getAllUserNotification(id);
+            request.setAttribute("notiList", notiList);
         }
         request.getRequestDispatcher(redirect).forward(request, response);
     }
+
 
     @Override
     public String getServletInfo() {

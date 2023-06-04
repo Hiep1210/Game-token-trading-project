@@ -135,13 +135,12 @@ public class UserDAO {
         return userIdlist;
 
     }
-
-    public static boolean checkDuplicateGameAccount(int game_id) {
+    public static boolean checkDuplicateGameAccount(int game_id){
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "select * from UserAccount where game_account_id = " + game_id;
+                String sql = "select * from UserAccount where game_account_id = "+game_id ;
                 Statement statement = con.createStatement();
                 ResultSet rs = statement.executeQuery(sql);
                 //if rs has entries means this game account is already linked
@@ -155,45 +154,21 @@ public class UserDAO {
         }
         return true;
     }
-
-    public int ChangePassword(int user_id, String password) {
-        try {
+        public int ChangePassword(int user_id, String password){
+        try{
             DBContext db = new DBContext();
             Connection con = db.getConnection();
-            if (con != null) {
+            if(con != null){
                 String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + password
                         + "' WHERE (`id` = '" + user_id + "');";
                 Statement st = con.createStatement();
                 st.executeQuery(sql);
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
         return 0;
     }
-
-    public static boolean acceptPaymentRequest(int user, double money) {
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            if (con != null) {
-                String sql = "UPDATE `game_items_trading`.`useraccount`"
-                        + " SET money_amount = money_amount + " + money
-                        + " WHERE id = " + user;
-                Statement statement = con.createStatement();
-                int rows = statement.executeUpdate(sql);
-                //if no row updated, throw exception
-                if (rows < 1) {
-                    throw new Exception();
-                }
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
 //        System.out.println(dao.FindUserName("laamwwibu1"));

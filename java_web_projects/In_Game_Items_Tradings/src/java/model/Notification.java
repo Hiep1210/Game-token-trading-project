@@ -15,24 +15,24 @@ public class Notification {
     private int user_id;
     private String date;
     private String noti_content;
-    private String content_type;
-
+    private String img;
+    
     public Notification() {
     }
-        
-    public Notification(int user_id, String date, String noti_content, String content_type) {
+    
+    public Notification(int user_id, String date, String noti_content, String img) {
         this.user_id = user_id;
         this.date = date;
         this.noti_content = noti_content;
-        this.content_type = content_type;
-    }    
+        this.img = img;
+    }
     
-    public Notification(int noti_id, int user_id, String date, String noti_content, String content_type) {
+    public Notification(int noti_id, int user_id, String date, String noti_content, String img) {
         this.noti_id = noti_id;
         this.user_id = user_id;
         this.date = date;
         this.noti_content = noti_content;
-        this.content_type = content_type;
+        this.img = img;
     }
 
     public int getNoti_id() {
@@ -67,12 +67,17 @@ public class Notification {
         this.noti_content = noti_content;
     }
 
-    public String getContent_type() {
-        return content_type;
+    public String getImg() {
+        return img;
     }
 
-    public void setContent_type(String content_type) {
-        this.content_type = content_type;
+    public void setImg(String img) {
+        this.img = img;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Notification{" + "noti_id=" + noti_id + ", user_id=" + user_id + ", date=" + date + ", noti_content=" + noti_content + ", img=" + img + '}';
+    }
+  
 }
