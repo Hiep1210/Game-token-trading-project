@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <!-- Navbar Logo -->
                 <a class="navbar-brand col-lg-3" href="#">
-                    <img src="UI/image/cs-money.png" alt="Bootstrap" width="200px">
+                    <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
                 </a>
                 <!-- Navbar Toggler Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
