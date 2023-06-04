@@ -21,14 +21,13 @@
         <link rel="stylesheet" href="UI/css/buy.css">
     </head>
 
-    <body>
-        <c:set var="redirect" value="DisplayMarketItemsController"/>
+    <body onload="copyDiv()">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
                 <!-- Navbar Logo -->
                 <a class="navbar-brand col-lg-3" href="#">
-                    <img src="UI/image/market_csmoney_2.png" alt="Bootstrap" width="200px">
+                    <img src="UI/image/cs-money.png" alt="Bootstrap" width="200px">
                 </a>
                 <!-- Navbar Toggler Button -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
@@ -98,7 +97,7 @@
                                 <!-- Dropdown toggler -->
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="image/user_profile.jpg" alt="">
+                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
                                 </button>
                                 <!-- Dropdown menu -->
                                 <div class="dropdown-menu dropdown-menu-end">
@@ -112,6 +111,7 @@
                     </div>
                 </div>
         </nav>
+        
 
         <!-- Main Content -->
         <div class="container-fluid main-content">
@@ -229,10 +229,9 @@
                         <div class="row" id="item-box">
                             <!-- Item Card -->
                             <c:forEach var ="market_items" items="${requestScope.market_list}">
-                                <c:out value="${market_items.getImg()}"/>
                                 <div class="col-lg-2 item-card mt-2 mb-2" id="item-card">
                                     <div class="card">
-                                        <img src="UI/image/market_csmoney_2.png" alt ="wtf" class="card-img-top" >
+                                        <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ 2000</h5>
                                             <a href="#" class="btn item-card-button">
@@ -265,89 +264,23 @@
                 </div>
             </div>
         </div>
+    <c:forEach var = "notification" items="${requestScope.notiList}">
+        <p>${notification.noti_content}</p>
+        <p>${notification.date}</p>
+        <img src="${notification.img}" alt="${notification.img} picture">
+    </c:forEach>
 
+    <form action='InsertNotification' method='post'>
+        <input type="hidden" name="type" value="adminNotification">
+        <label for="Content">Content</label>
+        <input type="text" name="content" id="title" placeholder="Content" required>
+        <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
+    </form>  
+    <!-- Link Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
 
-        <!-- FOR INSERTING SERVER NOTIFICATION -->
-        <form action='InsertNotificationController' method='post'>
-            <input type="hidden" name="type" value="admin">
-            <label for="Content">Content</label>
-            <input type="text" name="content" id="title" placeholder="Content" required>
-            <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
-        </form>  
-
-
-        <!-- FOR GETTING NOTIFICATION -->
-        <a href="GetNotificationController?redirect=${redirect}">
-            Get notification
-        </a>
-
-        <!-- FOR SHOWING USER NOTIFICATION -->
-        <c:if test="${(requestScope.notificationList != null) }">
-            <c:choose>
-                <c:when test="${(requestScope.notificationList.size() eq 0) }">
-                    <p> You have 0 new notification </p>
-                </c:when>    
-                <c:otherwise>
-                    <c:forEach var = "notification" items="${requestScope.notificationList}">
-                        <p>${notification.noti_content}</p>
-                        <p>${notification.date}</p>
-                        <!--img src="${notification.content_type}" alt="${notification.content_type} picture"--> 
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-        </c:if>
-
-
-        <!-- FOR SENDING PAYMENT REQUEST -->
-        <form action='SendPaymentRequestController' method='post' enctype="multipart/form-data">
-
-            <label for="amount">Total Amount</label>
-            <input type="number" step="0.01" id="amount" name="amount" placeholder="Insert top up amount"required>
-
-            <label for="image">Image</label>
-            <input type="file" accept="image/*" class="form-control" name="image" id="subtitle" placeholder="Image" required>
-
-            <input style="color: white; font-weight: bold; margin-top: 10px" class="button-submit" type='submit' name='action' value='Submit'>
-        </form> 
-
-
-        <!-- FOR GETTING PAYMENT REQUEST NOTIFICATION -->
-        <a href="GetPaymentRequestController">
-            Get payment Request
-        </a>
-
-
-        <!-- FOR SHOWING PAYMENT REQUEST LIST -->
-
-        <c:choose>
-            <c:when test="${(requestScope.paymentRequestList != null) }">
-                <table>
-                    <c:forEach var = "paymentRequest" items="${requestScope.paymentRequestList}">
-                        <form action='ProcessPaymentRequestController' method='post'>
-                            <input type="hidden" name="paymentRequestId" value="${paymentRequest.id}">
-                            <input type="hidden" name="type" value="payment">
-                            <tr>
-                                <td>${paymentRequest.money}</td>
-                                <td> ${paymentRequest.date}</td>
-                                <td><img src="${paymentRequest.img}" alt="invoice picture"></td>
-                                <td><input type="radio" name="decision" value="accept"></td>
-                                <td><input type="radio" name="decision" value="reject" ></td>
-                                <td><input type='submit' name='action' value='Accept'></td>
-                            </tr>
-                        </form>
-                    </c:forEach>
-                </table>
-                <br>
-            </c:when>    
-            <c:otherwise>
-                <p>Currently 0 payment request to process</p>
-            </c:otherwise>
-        </c:choose>
-        <!-- Link Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
-
-    </body>
+</body>
 
 </html>

@@ -1,10 +1,11 @@
 /*
-*Programmer: Ly The Luong 
-*Description: This files is controller for Log out
- */
+*Programmer: Nguyễn Hoàng Hiệp 
+*Description: This files is controller for changing linked game account
+*/
 
 package controller;
 
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,14 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
- * @author ACER
+ * @author Inspiron
  */
-@WebServlet(name="LogOutController", urlPatterns={"/LogOutController"})
-public class LogOutController extends HttpServlet {
+@WebServlet(name="ChangeLinkedGameAccount", urlPatterns={"/ChangeLinkedGameAccount"})
+public class ChangeLinkedGameAccount extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,15 +30,21 @@ public class LogOutController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {       
-      try{
-        HttpSession session = request.getSession();
-        session.invalidate();
-        request.getRequestDispatcher("login").forward(request, response);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ChangeLinkedGameAccount</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ChangeLinkedGameAccount at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -50,8 +57,23 @@ public class LogOutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        changeLinkedGameAccount(request, response);
     } 
+    
+    private void changeLinkedGameAccount(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+       int user_id = user.getId();
+       int linked_acc = Integer.parseInt((String) request.getAttribute("game_acc_id"));
+       String message ;//m
+       message = "failed update";
+       //if update successfully, change message sent to UI
+       if(UserDAO.updateLinkedGameAccount(user_id, linked_acc)){
+           message= "success update";
+       }
+       request.setAttribute("message", message);
+       request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.

@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+*Programmer: Ly The Luong 
+*Description: This files is controller for Change Password
  */
 
 package controller;
@@ -30,11 +30,12 @@ public class ChangePasswordController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+throws ServletException, IOException {
         String oldPass = request.getParameter("oldpassword");
-         String newPass = request.getParameter("password");
+        String newPass = request.getParameter("password");
         String newCfPass = request.getParameter("cfpassword");
-        User acc = UserDAO.LogIn(request.getParameter("id"),request.getParameter("password"));
+        User acc = (User) request.getSession().getAttribute("id");
+        acc = (User) request.getSession().getAttribute("password");
         String opass = acc.getPassword();
         int user_id = acc.getId();
         if (!oldPass.equals(opass)){//check mat khau cu co dung khong

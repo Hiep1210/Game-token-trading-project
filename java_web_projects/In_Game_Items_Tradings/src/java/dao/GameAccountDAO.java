@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import model.GameAccount;
 
 /**
@@ -43,6 +45,36 @@ public class GameAccountDAO {
             System.out.println(e.getMessage());
         }
         return guser;
+        
+    }
+        public Map<String, GameAccount> GetUserInformation(int id){
+        Map<String, GameAccount> listAccounts = new HashMap<>();
+        try{
+             DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "Select * from GameAccount where id= '" + id + "';";
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while(rs.next()){
+                  GameAccount gui = new GameAccount();
+                  gui.setId(rs.getInt(1));
+                  gui.setUsername(rs.getString(2));
+                  gui.setPassword(rs.getString(3));
+                  gui.setDob(rs.getString(4));
+                  gui.setEmail(rs.getString(5));
+                  gui.setGender(rs.getString(6));
+                  gui.setAvatar(rs.getString(7));
+                  listAccounts.put(gui.getUsername(), gui);
+                }
+                  rs.close();
+                  st.close();
+                  con.close();
+                }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return listAccounts;
     }
 
     public static void main(String[] args) {

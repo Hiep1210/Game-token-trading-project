@@ -73,6 +73,12 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        SignUpController(request, response);
+
+    }
+
+    private void SignUpController(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         System.out.println(request.getParameter("game_account_id"));
@@ -95,9 +101,7 @@ public class SignUpController extends HttpServlet {
                 response.sendRedirect("DisplayMarketItemsController");
             }
         }
-
     }
-
     /**
      * Returns a short description of the servlet.
      *

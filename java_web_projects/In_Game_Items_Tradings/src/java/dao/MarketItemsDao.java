@@ -29,9 +29,7 @@ public class MarketItemsDao {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {             
-                    items.setId(rs.getInt("id"));
-                    items.setItem_id(rs.getInt("item_id"));
-                    items.setUser_id(rs.getInt("user_id"));
+                    items = new MarketItems(0, rs.getInt(2), rs.getInt(3));
                     list.add(items);
                 }
                 call.close();
