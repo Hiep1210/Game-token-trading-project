@@ -30,3 +30,5 @@ Tài liệu:
 [render class diagram](https://www.visual-paradigm.com/tutorials/modelinginnetbeans.jsp)
 
 [sds tham khao](https://docs.google.com/document/d/1MkbHOGkapnZgolGdPhC5oMmWCCvLlUjt53eqkY_FgjU/edit?fbclid=IwAR0P89l0iqoZYlYQiHEfd0sGX5s9KdXYzmz9xwn-4OGUOfLG7fB-boCqlwM)
+
+[sequence diagram tutorial 2](https://developer.ibm.com/articles/the-sequence-diagram/)
