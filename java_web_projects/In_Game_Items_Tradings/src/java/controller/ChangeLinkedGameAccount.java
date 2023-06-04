@@ -5,6 +5,7 @@
 
 package controller;
 
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +14,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
-import dao.UserDAO;
-import model.GameAccount;
+
 /**
  *
  * @author Inspiron
  */
-//new
-@WebServlet(name="UpdateGameAccount", urlPatterns={"/UpdateGameAccount"})
-public class UpdateGameAccount extends HttpServlet {
+@WebServlet(name="ChangeLinkedGameAccount", urlPatterns={"/ChangeLinkedGameAccount"})
+public class ChangeLinkedGameAccount extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +37,10 @@ public class UpdateGameAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateGameAccount</title>");  
+            out.println("<title>Servlet ChangeLinkedGameAccount</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateGameAccount at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ChangeLinkedGameAccount at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,8 +57,23 @@ public class UpdateGameAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        changeLinkedGameAccount(request, response);
     } 
+    
+    private void changeLinkedGameAccount(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+       int user_id = user.getId();
+       int linked_acc = Integer.parseInt((String) request.getAttribute("game_acc_id"));
+       String message ;//m
+       message = "failed update";
+       //if update successfully, change message sent to UI
+       if(UserDAO.updateLinkedGameAccount(user_id, linked_acc)){
+           message= "success update";
+       }
+       request.setAttribute("message", message);
+       request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -71,17 +85,7 @@ public class UpdateGameAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
-       int user_id = user.getId();
-       int linked_acc = Integer.parseInt(request.getParameter("game_acc_id"));
-       String message ;//m
-       message = "failed update";
-       //if update successfully, change message sent to UI
-       if(UserDAO.updateLinkedGameAccount(user_id, linked_acc)){
-           message= "success update";
-       }
-       request.setAttribute("message", message);
-       request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /** 

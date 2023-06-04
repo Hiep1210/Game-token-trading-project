@@ -38,7 +38,7 @@ public class DisplayMarketItemsController extends HttpServlet {
         }
         request.setAttribute("market_list", market_list);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
-        
+
     }
 
     @Override

@@ -18,7 +18,7 @@ import dao.UserDAO;
  *
  * @author Inspiron
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
+@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
 
     /**

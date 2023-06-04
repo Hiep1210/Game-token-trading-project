@@ -27,6 +27,9 @@ public class LogInGameAccountController extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LogInGameAcc(req, resp);
+    }
+    private void LogInGameAcc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         GameAccount guser = GameAccountDAO.GameLogIn(req.getParameter("username"), req.getParameter("password"));
         //if guser is null then send message to UI
         if(guser == null){
@@ -38,11 +41,10 @@ public class LogInGameAccountController extends HttpServlet{
             req.setAttribute("loginFailed", "This game account is linked with another account !");
             req.getRequestDispatcher("loginGameAccount.jsp").forward(req, resp);
         }
-        req.getSession().setAttribute("gameAccount", guser);
+        req.getSession().setAttribute("game_acc_id", guser.getId());
         //reusability
-        /*sign up thi redirect la dia chi trang sign up.jsp, change link account thi dia chi la UpdateGameAccount*/
+        /*sign up thi redirect la dia chi trang sign up.jsp, change link account thi dia chi la ChangeLinkedGameAccount*/
         String redirect = req.getParameter("redirect");
         req.getRequestDispatcher(redirect).forward(req, resp);
     }
-    
 }
