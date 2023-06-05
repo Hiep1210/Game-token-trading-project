@@ -33,18 +33,18 @@ public class LogInGameAccountController extends HttpServlet{
         GameAccount guser = GameAccountDAO.GameLogIn(req.getParameter("username"), req.getParameter("password"));
         //if guser is null then send message to UI
         if(guser == null){
-            req.setAttribute("loginFailed", "Username or password is incorrect !");
+            req.setAttribute("message", "Username or password is incorrect !");
             req.getRequestDispatcher("loginGameAccount.jsp").forward(req, resp);
         }
         //if there is a duplicate linked game account then send a message to UI
         if(UserDAO.checkDuplicateGameAccount(guser.getId())){
-            req.setAttribute("loginFailed", "This game account is linked with another account !");
+            req.setAttribute("message", "This game account is linked with another account !");
             req.getRequestDispatcher("loginGameAccount.jsp").forward(req, resp);
         }
-        req.getSession().setAttribute("game_acc_id", guser.getId());
+        req.getSession().setAttribute("game_acc", guser);
         //reusability
         /*sign up thi redirect la dia chi trang sign up.jsp, change link account thi dia chi la ChangeLinkedGameAccount*/
         String redirect = req.getParameter("redirect");
-        req.getRequestDispatcher(redirect).forward(req, resp);
+        resp.sendRedirect(redirect);
     }
 }

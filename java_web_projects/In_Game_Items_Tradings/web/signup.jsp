@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,8 +28,7 @@
                 <!-- Screen Header -->
                 <header>Signup</header>
                 <!-- Display Signup Error -->
-                <div class="form-message">${signupFailed}</div>
-                <div class="form-message">${existedUsername}</div>
+                <div class="form-message">${message}</div>
                 <!-- Main Form -->
                 <form id="signup-form" action="SignUpController" method="post">
                     <!-- Username -->

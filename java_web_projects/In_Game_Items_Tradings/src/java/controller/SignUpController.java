@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.UserDAO;
+import model.GameAccount;
 
 /**
  *
@@ -82,19 +83,22 @@ public class SignUpController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         System.out.println(request.getParameter("game_account_id"));
+        GameAccount game_acc = (GameAccount)request.getSession().getAttribute("game_acc");
+        System.out.println(game_acc.getUsername());
+        int game_id = game_acc.getId();
         if (username != null) {
             //if inputted username is found, then send a message to UI
             if (UserDAO.FindUserName(username) != null) {
-                request.setAttribute("existedUsername", "Existed username, please re-input!");
+                request.setAttribute("message", "Existed username, please re-input!");
                 request.getRequestDispatcher("signup.jsp").forward(request, response);
             }
             //if there is password given then signup for user
             if (password != null) {
-                User user = new User(0,username, password, Integer.parseInt(request.getParameter("game_account_id")), 1, 0);
+                User user = new User(0,username, password, game_id, 1, 0);
                 boolean success = UserDAO.InsertUser(user);
                 //if fail to add user then dend a message to UI
                 if (!success) {
-                    request.setAttribute("signupFailed", "Internal Error, failed to add user");
+                    request.setAttribute("message", "Internal Error, failed to add user");
                     request.getRequestDispatcher("signup.jsp").forward(request, response);
                 }
                 request.getSession().setAttribute("user", user);

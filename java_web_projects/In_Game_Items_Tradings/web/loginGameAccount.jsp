@@ -33,7 +33,7 @@
                 <!-- Screen Header -->
                 <header>Login Game Account</header>
                 <!-- Display Login Error -->
-                <div class="form-message">${loginFailed}</div>
+                <div class="form-message">${message}</div>
                 <!-- Main Form -->
                 <form id="login-form" action="LogInGameAccountController" method="post">
                     <!-- Username -->
@@ -48,7 +48,13 @@
                         <input id="password" name="password" type="password" placeholder="Enter Password" class="form-control">
                         <span class="form-message"></span>
                     </div>
+                    <c:if test="${param.request_id == 1}">
                     <input type="text" name="redirect" value="signup.jsp" hidden>
+                    </c:if>
+                    <c:if test="${param.request_id == 2}">
+                    <input type="text" name="redirect" value="ChangeLinkedGameAccount" hidden>
+                    </c:if>
+
                     <!-- Form Buttons -->
                     <div class="row">
                         <!-- Screen switch -->

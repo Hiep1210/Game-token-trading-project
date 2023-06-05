@@ -31,7 +31,6 @@ public class DisplayMarketItemsController extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
         ArrayList<GameItems> market_list = new ArrayList<>();
-        request.getSession().setAttribute("user", new User(4, "hung", "123", 1, 2, 100));
         //get item's info for each of items returned by getAllMarketItems then add to a list
         for (int i = 0; i < list.size(); i++) {
             market_list.add(GameItemsDAO.getItemInfo(list.get(i).getItem_id()));
