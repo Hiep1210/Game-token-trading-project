@@ -32,8 +32,8 @@ public class LogOutController extends HttpServlet {
     throws ServletException, IOException {       
       try{
         HttpSession session = request.getSession();
-        session.invalidate();
-        request.getRequestDispatcher("login").forward(request, response);
+        session.removeAttribute("user");
+        request.getRequestDispatcher("login.jsp").forward(request, response);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
