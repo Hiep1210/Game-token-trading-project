@@ -25,6 +25,7 @@
     </head>
 
     <body>
+        <c:set var="redirect" value="UserProfileController"/>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
@@ -73,43 +74,92 @@
                         </div>
                     </div>
                     <!-- Navbar User  -->
+                    <%--<c:out value="${pageContext.request.requestURI}"/>--%>
                     <div class="col-lg-4 nopadding navbar-user">
                         <div class="row nopadding">
                             <!-- User Notification -->
-                            <div class="col-lg-3 navbar-user-notifi dropdown">
-                                <!-- Dropdown toggler -->
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <i class="material-icons navbar-item-icon">notifications</i>
-                                </button>
-                            </div>
+                            <c:if test="${(sessionScope.user != null)}">  
+
+                                <div class="col-lg-3 navbar-user-notifi dropdown">
+                                    <c:choose>
+                                        <c:when test="${(requestScope.notificationList == null)}">
+                                            <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
+                                                <i class="material-icons navbar-item-icon">notifications</i>
+                                            </a>
+                                        </c:when>
+                                        <c:when test="${(requestScope.notificationList.size() eq 0) }">
+                                            <!-- Dropdown toggler -->
+                                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                               aria-expanded="false">
+                                                <i class="material-icons navbar-item-icon">notifications</i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">You have 0 new notification </a>
+                                            </div>
+                                        </c:when>    
+                                        <c:otherwise>
+                                            <!-- Dropdown toggler -->
+                                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                               aria-expanded="false">
+                                                <i class="material-icons navbar-item-icon">notifications</i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <c:forEach var="notification" items="${requestScope.notificationList}">
+                                                    <a class="dropdown-item" href="#">${notification.noti_content}</a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </c:if>
                             <!-- User Balance -->
-                            <div class="col-lg-6 navbar-user-balance nopadding">
-                                <!-- Balance amount -->
-                                <div class="navbar-user-balance-text">
-                                    <h5>Your balance</h5>
-                                    <h5>$ 10000</h5>
+                            <c:if test="${(sessionScope.user != null)}" >  
+                                <div class="col-lg-6 navbar-user-balance nopadding">
+                                    <!-- Balance amount -->
+                                    <div class="navbar-user-balance-text">
+                                        <h5>Your balance</h5>
+                                        <h5>$ ${sessionScope.user.money}</h5>
+                                    </div>
+                                    <!-- Topup button -->
+                                    <div class="navbar-user-balance-topup rounded-circle">
+                                        <i class="material-icons navbar-item-icon">add</i>
+                                    </div>
                                 </div>
-                                <!-- Topup button -->
-                                <div class="navbar-user-balance-topup rounded-circle">
-                                    <i class="material-icons navbar-item-icon">add</i>
-                                </div>
-                            </div>
+                            </c:if>
                             <!-- User Profile -->
-                            <div class="col-lg-3 navbar-user-profile dropdown">
-                                <!-- Dropdown toggler -->
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                    <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                </div>
-                            </div>
+                            <c:choose>
+                                <c:when test="${sessionScope.user != null}">
+                                    <div class="col-lg-3 navbar-user-profile dropdown">
+                                        <!-- Dropdown toggler -->
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
+                                        </button>
+                                        <!-- Dropdown menu -->
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="UserProfileController">User Profile</a>
+                                            <a class="dropdown-item" href="#">Transaction History</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a id="logout" class="dropdown-item" href="LogOutController">Log out</a>
+                                        </div>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-lg-3 navbar-user-profile dropdown">
+                                        <!-- Dropdown toggler -->
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
+                                        </button>
+                                        <!-- Dropdown menu -->
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
+                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
@@ -127,8 +177,20 @@
                                 <a href="UserProfileController">
                                     <li>Profile</li>
                                 </a>
-                                <a href="topUpRequest.jsp"><li>Top up</li></a>
-                                <a href="ChangePassword.jsp"><li>Change Password</li></a>
+                                <a href="topUpRequest.jsp">
+                                    <li>Top up</li>
+                                </a>
+                                <a href="ChangePassword.jsp">
+                                    <li>Change Password</li>
+                                </a>
+                                <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">  
+                                    <a href="GetPaymentRequestController">
+                                        <li>Process top up request</li>
+                                    </a>
+                                    <a href="sendAdminNotification.jsp">
+                                        <li>Send notification to all users</li>
+                                    </a>
+                                </c:if> 
                             </ul>
                         </details>
                         <!-- Sidebar Category -->

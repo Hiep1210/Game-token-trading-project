@@ -34,7 +34,7 @@
                 <form id="topup-form" action='SendPaymentRequestController' method='post' enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="amount" class="form-label">Enter the amount you want</label>
-                        <input type="number" step="0.01" id="amount" name="amount" class="form-control" placeholder="Insert top up amount">
+                        <input type="number" step="0.01" min="0.01"id="amount" name="amount" class="form-control"  placeholder="Insert top up amount">
                         <span class="form-message"></span>
                     </div>
                     <div class="form-group">
