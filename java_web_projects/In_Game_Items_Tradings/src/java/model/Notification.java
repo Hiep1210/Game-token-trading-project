@@ -1,5 +1,5 @@
 /*
-*Programmer: Trần Thế Hùng 
+*Programmer: Nguyễn Chí Trung
 *Description: This file describes the model of notification that will appear on dashboard
 */
 package model;
