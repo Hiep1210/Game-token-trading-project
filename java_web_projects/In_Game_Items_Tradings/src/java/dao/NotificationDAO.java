@@ -1,5 +1,5 @@
 /*
-*Programmer: Trần Thế Hùng 
+*Programmer: Nguyễn Chí Trung
 *Description: This file is a DAO for doing CRUD operations on the Notification table
  */
 package dao;
