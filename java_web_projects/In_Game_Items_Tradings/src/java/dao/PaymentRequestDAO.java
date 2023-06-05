@@ -158,14 +158,14 @@ public class PaymentRequestDAO {
 //        return true;
 //    }
 
-    public static void main(String[] args) {
-        PaymentRequestDAO dao = new PaymentRequestDAO();
-        insertPaymentRequest(new PaymentRequest(1, 1000, "2023-05-01", "invoice"));
-        ArrayList<PaymentRequest> paymentRequestList = getAllPaymentRequest();
-        int[] idArray = new int[paymentRequestList.size()];
-        for (int i = 0; i < paymentRequestList.size(); i++) {
-            idArray[i] = paymentRequestList.get(i).getId();
-        }
-        deletePaymentRequest(idArray);
-    }
+//    public static void main(String[] args) {
+//        PaymentRequestDAO dao = new PaymentRequestDAO();
+//        insertPaymentRequest(new PaymentRequest(1, 1000, "2023-05-01", "invoice"));
+//        ArrayList<PaymentRequest> paymentRequestList = getAllPaymentRequest();
+//        int[] idArray = new int[paymentRequestList.size()];
+//        for (int i = 0; i < paymentRequestList.size(); i++) {
+//            idArray[i] = paymentRequestList.get(i).getId();
+//        }
+//        deletePaymentRequest(idArray);
+//    }
 }
