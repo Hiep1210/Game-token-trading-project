@@ -1,5 +1,5 @@
 /*
-*Programmer: Trần Thế Hùng 
+*Programmer: Nguyễn Chí Trung
 *Description: This file retreive notification list according  to user id
  */
 package controller;
