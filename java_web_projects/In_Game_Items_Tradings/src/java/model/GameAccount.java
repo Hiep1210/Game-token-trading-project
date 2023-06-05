@@ -1,7 +1,7 @@
 /*
 *Programmer: Nguyễn Hoàng Hiệp 
 *Description: This file describes the model of Game account
-*/
+ */
 package model;
 
 /**
@@ -9,6 +9,7 @@ package model;
  * @author Inspiron
  */
 public class GameAccount {
+
     private int id;
     private String username;
     private String password;
@@ -16,6 +17,9 @@ public class GameAccount {
     private String email;
     private String gender;
     private String avatar;
+
+    public GameAccount() {
+    }
 
     public GameAccount(int id, String username, String password, String dob, String email, String gender, String avatar) {
         this.id = id;
@@ -25,10 +29,6 @@ public class GameAccount {
         this.email = email;
         this.gender = gender;
         this.avatar = avatar;
-    }
-
-    public GameAccount() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getId() {
@@ -86,5 +86,5 @@ public class GameAccount {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
+
 }

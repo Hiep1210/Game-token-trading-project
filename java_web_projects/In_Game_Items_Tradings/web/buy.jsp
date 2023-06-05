@@ -95,37 +95,37 @@
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
-                            <div class="col-lg-3 navbar-user-profile dropdown">
-                                <!-- Dropdown toggler -->
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="userProfile.html">User Profile</a>
-                                    <a class="dropdown-item" href="#">Transaction History</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                </div>
-                            </div>
-                            </c:when>
-                            <c:otherwise>
-                                  <div class="col-lg-3 navbar-user-profile dropdown">
-                                <!-- Dropdown toggler -->
-                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
-                                </button>
-                                <!-- Dropdown menu -->
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                    <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                </div>
-                            </div>
-                            </c:otherwise>
+                                    <div class="col-lg-3 navbar-user-profile dropdown">
+                                        <!-- Dropdown toggler -->
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
+                                        </button>
+                                        <!-- Dropdown menu -->
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="userProfile.html">User Profile</a>
+                                            <a class="dropdown-item" href="#">Transaction History</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a id="logout" class="dropdown-item" href="#">Log out</a>
+                                        </div>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-lg-3 navbar-user-profile dropdown">
+                                        <!-- Dropdown toggler -->
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
+                                        </button>
+                                        <!-- Dropdown menu -->
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
+                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a id="logout" class="dropdown-item" href="#">Log out</a>
+                                        </div>
+                                    </div>
+                                </c:otherwise>
                             </c:choose>
                         </div>
                     </div>
@@ -284,15 +284,27 @@
                 </div>
             </div>
         </div>
-        
-        <c:set var="redirect" value="DisplayMarketItemsController"/>
-        <!-- FOR INSERTING SERVER NOTIFICATION -->
-        <form action='InsertNotificationController' method='post'>
-            <input type="hidden" name="type" value="admin">
-            <label for="Content">Content</label>
-            <input type="text" name="content" id="title" placeholder="Content" required>
-            <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
-        </form>  
+        <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">   
+            <c:set var="redirect" value="DisplayMarketItemsController"/>
+            <!-- FOR INSERTING SERVER NOTIFICATION -->
+            <form action='InsertNotificationController' method='post'>
+                <input type="hidden" name="type" value="admin">
+                <label for="Content">Content</label>
+                <input type="text" name="content" id="title" placeholder="Content" required>
+                <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
+            </form>  
+
+            <a href="paymentRequest.jsp">
+                Go to payment request page
+            </a>              
+
+
+            <!-- FOR GETTING PAYMENT REQUEST NOTIFICATION -->
+            <a href="GetPaymentRequestController">
+                Get payment Request
+            </a>
+
+        </c:if> 
 
 
         <!-- FOR GETTING NOTIFICATION -->
@@ -317,51 +329,9 @@
         </c:if>
 
 
-        <!-- FOR SENDING PAYMENT REQUEST -->
-        <form action='SendPaymentRequestController' method='post' enctype="multipart/form-data">
-
-            <label for="amount">Total Amount</label>
-            <input type="number" step="0.01" id="amount" name="amount" placeholder="Insert top up amount"required>
-
-            <label for="image">Image</label>
-            <input type="file" accept="image/*" class="form-control" name="image" id="subtitle" placeholder="Image" required>
-
-            <input style="color: white; font-weight: bold; margin-top: 10px" class="button-submit" type='submit' name='action' value='Submit'>
-        </form> 
 
 
-        <!-- FOR GETTING PAYMENT REQUEST NOTIFICATION -->
-        <a href="GetPaymentRequestController">
-            Get payment Request
-        </a>
 
-
-        <!-- FOR SHOWING PAYMENT REQUEST LIST -->
-
-        <c:choose>
-            <c:when test="${(requestScope.paymentRequestList != null) }">
-                <table>
-                    <c:forEach var = "paymentRequest" items="${requestScope.paymentRequestList}">
-                        <form action='ProcessPaymentRequestController' method='post'>
-                            <input type="hidden" name="paymentRequestId" value="${paymentRequest.id}">
-                            <input type="hidden" name="type" value="payment">
-                            <tr>
-                                <td>${paymentRequest.money}</td>
-                                <td> ${paymentRequest.date}</td>
-                                <td><img src="${paymentRequest.img}" alt="invoice picture"></td>
-                                <td><input type="radio" name="decision" value="accept"></td>
-                                <td><input type="radio" name="decision" value="reject" ></td>
-                                <td><input type='submit' name='action' value='Accept'></td>
-                            </tr>
-                        </form>
-                    </c:forEach>
-                </table>
-                <br>
-            </c:when>    
-            <c:otherwise>
-                <p>Currently 0 payment request to process</p>
-            </c:otherwise>
-        </c:choose>
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">

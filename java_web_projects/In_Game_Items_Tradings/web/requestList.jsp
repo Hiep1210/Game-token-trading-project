@@ -194,7 +194,8 @@
                                                 <th scope="row">1</th>
                                                 <td>${paymentRequest.money}</td>
                                                 <td> ${paymentRequest.date}</td>
-                                                <td><img src="${paymentRequest.img}" alt="invoice picture"></td>
+                                                <td><img src="UI/image/${paymentRequest.img}" alt="invoice picture" width="400" 
+                                                    height="500"></td>
                                                 <td>
                                                     Accept<input type="radio" name="decision" value="accept">
                                                     Reject<input type="radio" name="decision" value="reject">

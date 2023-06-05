@@ -42,7 +42,7 @@ public class GetPaymentRequestController extends HttpServlet {
         try {
             User user = (User) request.getSession().getAttribute("user");
             ArrayList<PaymentRequest> paymentRequestList;
-            String redirect = "DisplayMarketItemsController";
+            String redirect = "requestList.jsp";
             if (user == null) {
                 redirect = "DisplayMarketItemsController";
             } else if (!isAdmin(user.getRole_id())) {
