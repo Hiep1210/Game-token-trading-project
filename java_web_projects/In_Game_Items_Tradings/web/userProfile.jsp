@@ -29,7 +29,7 @@
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
                 <!-- Navbar Logo -->
-                <a class="navbar-brand col-lg-3" href="#">
+                <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
                     <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
                 </a>
                 <!-- Navbar Toggler Button -->
@@ -58,7 +58,7 @@
                             </div>
                             <!-- Buy Button -->
                             <div class="col-lg-3 navbar-item nopadding">
-                                <a href="">
+                                <a href="DisplayMarketItemsController">
                                     <i class="material-icons navbar-item-icon">shopping_cart</i>
                                 </a>
                                 <h5>Buy</h5>
@@ -127,7 +127,7 @@
                                 <a href="UserProfileController">
                                     <li>Profile</li>
                                 </a>
-                                <a href="topup.html"><li>Topup</li></a>
+                                <a href="topUpRequest"><li>Top up</li></a>
                                 <a href="changePassword"><li>Change Password</li></a>
                             </ul>
                         </details>
