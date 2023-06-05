@@ -127,8 +127,8 @@
                                 <a href="UserProfileController">
                                     <li>Profile</li>
                                 </a>
-                                <a href="topUpRequest"><li>Top up</li></a>
-                                <a href="changePassword"><li>Change Password</li></a>
+                                <a href="topUpRequest.jsp"><li>Top up</li></a>
+                                <a href="ChangePassword.jsp"><li>Change Password</li></a>
                             </ul>
                         </details>
                         <!-- Sidebar Category -->
