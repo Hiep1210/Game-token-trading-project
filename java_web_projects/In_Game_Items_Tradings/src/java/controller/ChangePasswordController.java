@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -31,27 +32,25 @@ public class ChangePasswordController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 throws ServletException, IOException {
-        String oldPass = request.getParameter("oldpassword");
-        String newPass = request.getParameter("password");
-        String newCfPass = request.getParameter("cfpassword");
-        User acc = (User) request.getSession().getAttribute("id");
-        acc = (User) request.getSession().getAttribute("password");
-        String opass = acc.getPassword();
-        int user_id = acc.getId();
-        if (!oldPass.equals(opass)){//check mat khau cu co dung khong
-            request.setAttribute("mess1","Mật khẩu cũ không khớp. Vui lòng nhập lại!");
-            request.getRequestDispatcher("./changePassword.jsp").forward(request, response);
-        }else {
-        if (newPass.equals(newCfPass)) {//check lai mat khau da nhap
-            UserDAO ud = new UserDAO();
-            ud.ChangePassword(user_id, newPass);
-            response.sendRedirect("./changePasswordSuccess.jsp");
-            
-        }else {
-            request.setAttribute("mess2", "Mật khẩu không khớp. Vui lòng nhập lại!");
-            request.getRequestDispatcher("./changePassword.jsp").forward(request, response);
-    }
-        }
+        String oldPass = request.getParameter("oldpass");
+        String newPass = request.getParameter("newpass");
+        String newCfPass = request.getParameter("cfpass");
+        UserDAO dao = new UserDAO();
+        HttpSession ses = request.getSession();
+        User user = (User) request.getSession().getAttribute("account");
+        if(!oldPass.equals(user.getPassword())){
+            ses.setAttribute("mess1", "Old password not match");
+            request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
+        }else{
+            if(newPass.equals(newCfPass)){
+                dao.ChangePassword(user.getId(), newPass);
+                ses.setAttribute("mess3", "Suceed");
+                request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+            }else{
+                ses.setAttribute("mess2", "New pass and confirm not match");
+                request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
+            }
+        }     
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
