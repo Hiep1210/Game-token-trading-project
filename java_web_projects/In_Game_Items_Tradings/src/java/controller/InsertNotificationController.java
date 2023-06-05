@@ -1,5 +1,5 @@
 /*
-*Programmer: Trần Thế Hùng 
+*Programmer: Trần Thế Hùng & Nguyễn Chí Trung
 *Description: This file contain the various method to generate a notification of various types
  */
 package controller;
