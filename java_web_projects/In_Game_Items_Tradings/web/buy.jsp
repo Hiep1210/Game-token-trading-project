@@ -110,17 +110,19 @@
                                 </div>
                             </c:if>
                             <!-- User Balance -->
-                            <div class="col-lg-6 navbar-user-balance nopadding">
-                                <!-- Balance amount -->
-                                <div class="navbar-user-balance-text">
-                                    <h5>Your balance</h5>
-                                    <h5>$ 10000</h5>
+                            <c:if test="${(sessionScope.user != null)}" >  
+                                <div class="col-lg-6 navbar-user-balance nopadding">
+                                    <!-- Balance amount -->
+                                    <div class="navbar-user-balance-text">
+                                        <h5>Your balance</h5>
+                                        <h5>$ ${sessionScope.user.money}</h5>
+                                    </div>
+                                    <!-- Topup button -->
+                                    <div class="navbar-user-balance-topup rounded-circle">
+                                        <i class="material-icons navbar-item-icon">add</i>
+                                    </div>
                                 </div>
-                                <!-- Topup button -->
-                                <div class="navbar-user-balance-topup rounded-circle">
-                                    <i class="material-icons navbar-item-icon">add</i>
-                                </div>
-                            </div>
+                            </c:if>
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
@@ -323,15 +325,6 @@
                 <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
             </form>  
 
-            <a href="paymentRequest.jsp">
-                Go to payment request page
-            </a>              
-
-
-            <!-- FOR GETTING PAYMENT REQUEST NOTIFICATION -->
-            <a href="GetPaymentRequestController">
-                Get payment Request
-            </a>
 
         </c:if> 
 
