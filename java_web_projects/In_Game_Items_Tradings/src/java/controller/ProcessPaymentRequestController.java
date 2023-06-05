@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import static jdk.nashorn.internal.objects.NativeMath.round;
 import model.PaymentRequest;
 import model.Role;
 import model.User;
@@ -53,6 +54,7 @@ public class ProcessPaymentRequestController extends HttpServlet {
             PaymentRequest paymentRequest;
             String redirect = "InsertNotificationController";
             int paymentRequestId;
+            double newMoneyAmount = 0;
             if (user == null) {
                 redirect = "DisplayMarketItemsController";
             } else if (!isAdmin(user.getRole_id())) {
@@ -67,7 +69,9 @@ public class ProcessPaymentRequestController extends HttpServlet {
                 request.setAttribute("type", "payment");
                 // If payment request is accepted add funds to user account
                 if (decision.equals("accept")) {
-                    UserDAO.acceptPaymentRequest(paymentRequest.getUser_id(), paymentRequest.getMoney());
+                    newMoneyAmount = user.getMoney() + paymentRequest.getMoney();
+                    UserDAO.acceptPaymentRequest(paymentRequest.getUser_id(), newMoneyAmount);
+                    user.setMoney(newMoneyAmount);
                 }
                 PaymentRequestDAO.deletePaymentRequest(paymentRequestId);//Delete payment request record from table
             }
