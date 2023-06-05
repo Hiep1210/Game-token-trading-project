@@ -106,7 +106,7 @@
                                     <a class="dropdown-item" href="userProfile.html">User Profile</a>
                                     <a class="dropdown-item" href="#">Transaction History</a>
                                     <div class="dropdown-divider"></div>
-                                    <a id="logout" class="dropdown-item" href="#">Log out</a>
+                                    <a id="logout" class="dropdown-item" href="">Log out</a>
                                 </div>
                             </div>
                             </c:when>
@@ -122,7 +122,6 @@
                                     <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
                                     <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
                                     <div class="dropdown-divider"></div>
-                                    <a id="logout" class="dropdown-item" href="#">Log out</a>
                                 </div>
                             </div>
                             </c:otherwise>
