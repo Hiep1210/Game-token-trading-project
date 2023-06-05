@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="UI/css/buy.css">
     </head>
 
-    <body onload="copyDiv()">
+    <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
