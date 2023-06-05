@@ -73,14 +73,17 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("adsad");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(username + password);
         //if there is username given then find it
         if (username != null) {
-            FindUserName(request, response ,username);
             //if there is password given then proceed to log in
-            if (request.getParameter("password") != null) {
+            if (password != null) {
                 LogIn(request, response,username,password);
+            }else{
+            FindUserName(request, response ,username);
             }
         }
     }
@@ -93,19 +96,23 @@ public class LoginController extends HttpServlet {
             request.setAttribute("name", name);
         }//if not found, send a message
         else{
-            request.setAttribute("loginFailed", "Username not found");
+            request.setAttribute("message", "Username not found");
+            request.getRequestDispatcher("LoginUsername.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("LoginPassword.jsp").forward(request, response);
     }
 
     private void LogIn(HttpServletRequest request, HttpServletResponse response,String username,String password) 
             throws IOException, ServletException {
         User user = UserDAO.LogIn(username, password);
         if(user==null){
-            request.setAttribute("loginFailed", "Password not found");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.setAttribute("message", "Password not found");
+            System.out.println("pass");
+            request.getRequestDispatcher("LoginPassword.jsp").forward(request, response);
         }
+        System.out.println("ok");
         request.getSession().setAttribute("user", user);
+        System.out.println("ok2");
         response.sendRedirect("DisplayMarketItemsController");
     }
 

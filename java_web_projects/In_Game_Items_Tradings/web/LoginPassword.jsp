@@ -32,18 +32,13 @@
                 <!-- Screen Header -->
                 <header>Login</header>
                 <!-- Display Signup Error -->
-                <div class="form-message">${loginFailed}</div>
+                <div class="form-message">${requestScope.message}</div>
                 <!-- Main Form -->
-                <form id="login-form" action="UserController" method="post">
-                    <!-- Username -->
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input id="username" name="username" type="text" placeholder="Ex: laamwwibu" class="form-control">
-                        <span class="form-message"></span>
-                    </div>
+                <form id="login-form" action="LoginController" method="post">
                     <!-- Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
+                        <input id="username" name="username" type =" text" value="${requestScope.name}" placeholder="Enter Password" hidden/>
                         <input id="password" name="password" type="password" placeholder="Enter Password"
                                class="form-control">
                         <span class="form-message"></span>
@@ -70,7 +65,6 @@
                 formGroupSelector: '.form-group',
                 errorSelector: '.form-message',
                 rules: [
-                    Validator.isRequired('#username', 'Please enter your username'),
                     Validator.minLength('#password', 6)
                 ]
             });

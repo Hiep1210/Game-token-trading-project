@@ -95,37 +95,36 @@
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
-                                    <div class="col-lg-3 navbar-user-profile dropdown">
-                                        <!-- Dropdown toggler -->
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="userProfile.html">User Profile</a>
-                                            <a class="dropdown-item" href="#">Transaction History</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                        </div>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-lg-3 navbar-user-profile dropdown">
-                                        <!-- Dropdown toggler -->
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                        </div>
-                                    </div>
-                                </c:otherwise>
+                            <div class="col-lg-3 navbar-user-profile dropdown">
+                                <!-- Dropdown toggler -->
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="userProfile.html">User Profile</a>
+                                    <a class="dropdown-item" href="#">Transaction History</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a id="logout" class="dropdown-item" href="">Log out</a>
+                                </div>
+                            </div>
+                            </c:when>
+                            <c:otherwise>
+                                  <div class="col-lg-3 navbar-user-profile dropdown">
+                                <!-- Dropdown toggler -->
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
+                                    <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
+                            </div>
+                            </c:otherwise>
                             </c:choose>
                         </div>
                     </div>

@@ -32,7 +32,7 @@
                 <!-- Screen Header -->
                 <header>Login</header>
                 <!-- Display Signup Error -->
-                <div class="form-message">${loginFailed}</div>
+                <div class="form-message">${requestScope.message}</div>
                 <!-- Main Form -->
                 <form id="login-form" action="LoginController" method="post">
                     <!-- Username -->
@@ -64,7 +64,6 @@
                 errorSelector: '.form-message',
                 rules: [
                     Validator.isRequired('#username', 'Please enter your username'),
-                    Validator.minLength('#password', 6)
                 ]
             });
         </script>

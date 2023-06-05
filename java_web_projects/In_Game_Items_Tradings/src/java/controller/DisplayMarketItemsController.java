@@ -29,7 +29,6 @@ public class DisplayMarketItemsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("user", new User(1, "Salt", "123456", 1, 2, 100));
         ArrayList<MarketItems> list = MarketItemsDao.getAllMarketItems();
         ArrayList<GameItems> market_list = new ArrayList<>();
         //get item's info for each of items returned by getAllMarketItems then add to a list
