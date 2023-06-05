@@ -26,6 +26,7 @@ public class GetNotificationController extends HttpServlet {
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("hey");
         doPost(request, response);
     }
 
@@ -35,14 +36,9 @@ public class GetNotificationController extends HttpServlet {
         ArrayList<Notification> notificationList;
         int id;
         String redirect = request.getParameter("redirect");
-        //In case session contain no user attribute or redirect parameter is missing
-        if (redirect == null || user == null) {
-            redirect = "DisplayMarketItemsController";
-        } else {
-            id = user.getId();
-            notificationList = NotificationDAO.getAllUserNotification(id);
-            request.setAttribute("notificationList", notificationList);
-        }
+        id = user.getId();
+        notificationList = NotificationDAO.getAllUserNotification(id);
+        request.setAttribute("notiList", notificationList);
         request.getRequestDispatcher(redirect).forward(request, response);
     }
 

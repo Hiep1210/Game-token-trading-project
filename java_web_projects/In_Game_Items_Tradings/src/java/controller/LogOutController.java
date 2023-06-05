@@ -33,7 +33,7 @@ public class LogOutController extends HttpServlet {
       try{
         HttpSession session = request.getSession();
         session.invalidate();
-        request.getRequestDispatcher("login").forward(request, response);
+        response.sendRedirect("DisplayMarketItemsController");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

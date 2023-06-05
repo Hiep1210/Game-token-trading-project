@@ -3,6 +3,7 @@
     Created on : Jun 5, 2023, 10:36:58 AM
     Author     : VICTUS
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -95,40 +96,20 @@
                                 </div>
                             </div>
                             <!-- User Profile -->
-                            <c:choose>
-                                <c:when test="${sessionScope.user != null}">
-                                    <div class="col-lg-3 navbar-user-profile dropdown">
-                                        <!-- Dropdown toggler -->
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="userProfile.html">User Profile</a>
-                                            <a class="dropdown-item" href="#">Transaction History</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                        </div>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-lg-3 navbar-user-profile dropdown">
-                                        <!-- Dropdown toggler -->
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a id="logout" class="dropdown-item" href="#">Log out</a>
-                                        </div>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
+                            <div class="col-lg-3 navbar-user-profile dropdown">
+                                <!-- Dropdown toggler -->
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
+                                </button>
+                                <!-- Dropdown menu -->
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
+                                    <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a id="logout" class="dropdown-item" href="#">Log out</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,7 +124,7 @@
                         <details class="sidebar-category">
                             <summary>User Profile</summary>
                             <ul class="nopadding">
-                                <a href="userProfile.html">
+                                <a href="UserProfileController">
                                     <li>Profile</li>
                                 </a>
                                 <a href="topup.html"><li>Topup</li></a>
@@ -163,34 +144,25 @@
                             <div class="row mb-3">
                                 <label for="username" class="col-sm-3 col-form-label">User Name:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="username">
+                                    <input type="text" value="${sessionScope.user.username}" class="form-control" readonly="">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="email" class="col-sm-3 col-form-label">Email:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" class="form-control" id="email">
+                                    <input type="text"  value="${sessionScope.game_acc.email}" class="form-control" id="email" readonly>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="dob" class="col-sm-3 col-form-label">Date of Birth:</label>
                                 <div class="col-sm-7">
-                                    <input type="date" class="form-control" id="dob">
+                                    <input type="date" value="${sessionScope.game_acc.dob}" class="form-control" id="dob" readonly="">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Gender:</label>
+                                <label for="gender" class="col-sm-3 col-form-label">Gender:</label>
                                 <div class="col-sm-7">
-                                    <input class="form-check-input" type="radio" name="gender" id="genderMale"
-                                           value="option1">
-                                    <label class="form-check-label" for="gridRadios1">
-                                        Male
-                                    </label>
-                                    <input class="form-check-input" type="radio" name="gender" id="genderFemale"
-                                           value="option2">
-                                    <label class="form-check-label" for="gridRadios2">
-                                        Female
-                                    </label>
+                                    <input type="text" value="${sessionScope.game_acc.gender}" class="form-control" id="dob" readonly="">
                                 </div>
                             </div>
                         </form>

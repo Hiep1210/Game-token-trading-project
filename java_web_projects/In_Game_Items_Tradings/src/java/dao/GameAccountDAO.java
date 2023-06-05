@@ -48,7 +48,7 @@ public class GameAccountDAO {
 
     }
 
-    public GameAccount GetUserInformation(int id) {
+    public static GameAccount GetUserInformation(int id) {
         GameAccount gui = new GameAccount();
         try {
             DBContext db = new DBContext();
@@ -78,7 +78,9 @@ public class GameAccountDAO {
     }
 
     public static void main(String[] args) {
-        GameAccount g = GameLogIn("laamwwibu", "123456");
-        System.out.println(g.getDob());
+//        GameAccount g = GameLogIn("laamwwibu", "123456");
+//        System.out.println(g.getDob());
+        GameAccount a = GetUserInformation(1);
+        System.out.println(a.getEmail());
     }
 }

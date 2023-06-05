@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.UserDAO;
-
 /**
  *
  * @author Inspiron
@@ -105,6 +104,7 @@ public class LoginController extends HttpServlet {
     private void LogIn(HttpServletRequest request, HttpServletResponse response,String username,String password) 
             throws IOException, ServletException {
         User user = UserDAO.LogIn(username, password);
+        
         if(user==null){
             request.setAttribute("message", "Password not found");
             System.out.println("pass");
