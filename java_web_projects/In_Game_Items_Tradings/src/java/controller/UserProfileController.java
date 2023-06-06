@@ -60,7 +60,7 @@ public class UserProfileController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) request.getSession().getAttribute("user");
         GameAccountDAO gad = new GameAccountDAO();
-        GameAccount gameAccount = gad.GetUserInformation(user.getId());
+        GameAccount gameAccount = gad.GetUserInformation(user.getGame_id());
         session.setAttribute("game_acc", gameAccount);
         request.getRequestDispatcher("userProfile.jsp").forward(request, response);
     }

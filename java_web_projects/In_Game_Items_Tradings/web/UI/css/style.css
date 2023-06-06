@@ -104,7 +104,7 @@ body {
 }
 
 .dropdown-toggle::after {
-    display: none;
+    display: block;
 }
 
 .dropdown-toggle:hover {

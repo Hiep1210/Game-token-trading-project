@@ -34,7 +34,6 @@ public class DisplayMarketItemsController extends HttpServlet {
         //get item's info for each of items returned by getAllMarketItems then add to a list
         for (int i = 0; i < list.size(); i++) {
             market_list.add(GameItemsDAO.getItemInfo(list.get(i).getItem_id()));
-            System.out.println(market_list.get(i).getImg());
         }
         request.setAttribute("market_list", market_list);
         request.getRequestDispatcher("buy.jsp").forward(request, response);

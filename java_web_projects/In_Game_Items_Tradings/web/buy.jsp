@@ -69,6 +69,18 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+                        
+                        function Setting() {
+                            
+                            if (document.getElementById("myDropDown").style.display == "block"){ 
+                                document.getElementById("myDropDown").style.display = "none"
+                            }else{
+                                 document.getElementById("myDropDown").style.display = "block";
+                                window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController";
+                            }
+                        }
+                    </script>
                     <!-- Navbar User  -->
                     <%--<c:out value="${pageContext.request.requestURI}"/>--%>
                     <div class="col-lg-4 nopadding navbar-user">
@@ -76,17 +88,19 @@
                             <!-- User Notification -->
                             <div class="col-lg-3 navbar-user-notifi dropdown">
                                 <!-- Dropdown toggler -->
-                      
-                                <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+
+                                <a onclick="Setting()" type="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     <i class="material-icons navbar-item-icon">notifications</i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <c:forEach var="notiList" items="${requestScope.notiList}">
-                                        <a class="dropdown-item" href="#">${notiList.noti_content}</a>
-                                    </c:forEach>
+                                <div  id="myDropDown" class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="UserProfileController">noti 1</a>
+                                    <a class="dropdown-item" href="#">noti 2</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a id="logout" class="dropdown-item" href="LogOutController">noti 3</a>
                                 </div>
                             </div>
+
                             <!-- User Balance -->
                             <div class="col-lg-6 navbar-user-balance nopadding">
                                 <!-- Balance amount -->
@@ -339,6 +353,7 @@
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
+
         </script>
 
 

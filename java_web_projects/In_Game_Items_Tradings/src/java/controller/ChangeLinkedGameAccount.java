@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
-
+import model.GameAccount;
 /**
  *
  * @author Inspiron
@@ -64,7 +64,9 @@ public class ChangeLinkedGameAccount extends HttpServlet {
     throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
        int user_id = user.getId();
-       int linked_acc = Integer.parseInt((String) request.getAttribute("game_acc_id"));
+       GameAccount game_acc = (GameAccount) request.getSession().getAttribute("game_acc");
+       int linked_acc = game_acc.getId();
+        System.out.println(linked_acc);
        String message ;//m
        message = "failed update";
        //if update successfully, change message sent to UI
@@ -72,7 +74,7 @@ public class ChangeLinkedGameAccount extends HttpServlet {
            message= "success update";
        }
        request.setAttribute("message", message);
-       request.getRequestDispatcher("UserProfile.jsp").forward(request, response);
+       request.getRequestDispatcher("UserProfileController").forward(request, response);
     }
 
     /** 

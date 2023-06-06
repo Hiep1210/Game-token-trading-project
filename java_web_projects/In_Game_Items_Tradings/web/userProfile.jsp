@@ -172,9 +172,15 @@
                 <div class="col-lg-3 user-pfp">
                     <div class="container">
                         <img class="img-fluid rounded-circle" src="image/user_profile.jpg" alt="">
-                        <div class="row mb-3">
+                        <div class="row mb-3 user-information">
+                            <label for="dob" class="col-form-label">Associated Game Account</label>
+                            <label for="dob" class="col-form-label">Username:</label>
+                            <input type="text" value="${sessionScope.game_acc.username}" class="form-control" id="dob" readonly="">
                             <div class="mt-4 summit-button nopadding">
-                                <button type="submit" form="edit-user-profile">Change</button>
+                                <a style=" text-decoration: none" href="loginGameAccount.jsp?request_id=2">
+                                <i class="material-icons navbar-item-icon">link</i>
+                                <label style="display: inline;">Change linked game account</label>
+                                </a>
                             </div>
                         </div>
                     </div>
