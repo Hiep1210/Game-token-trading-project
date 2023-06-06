@@ -182,7 +182,7 @@ public class UserDAO {
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "UPDATE `game_items_trading`.`useraccount`"
-                        + " SET money_amount = money_amount + " + money
+                        + " SET money_amount = " + money
                         + " WHERE id = " + user;
                 Statement statement = con.createStatement();
                 int rows = statement.executeUpdate(sql);
@@ -197,29 +197,6 @@ public class UserDAO {
         }
         return false;
     }
-            public ArrayList<User> getUserMoney(int id){
-            ArrayList<User> list = new ArrayList<>();
-            User user;
-            try{
-                 DBContext db = new DBContext();
-                 Connection con = db.getConnection();
-                 if(con != null){
-                     String sql = "Select * from UserAccount where id = '" + id + "';";
-                     Statement st = con.createStatement();
-                     ResultSet rs = st.executeQuery(sql);
-                     while(rs.next()){
-                         user = new User();
-                         user.setMoney(rs.getDouble(1));
-                         list.add(user);
-                     }
-                     st.close();
-                     con.close();
-        }
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-                    }
-            return list;
-        }
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();

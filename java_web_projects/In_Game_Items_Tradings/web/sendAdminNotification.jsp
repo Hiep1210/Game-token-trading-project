@@ -3,7 +3,7 @@
     Created on : Jun 5, 2023, 12:29:53 AM
     Author     : VICTUS
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Top up</title>
+        <title>Send server notification</title>
         <!-- Link Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -31,18 +31,17 @@
                 <!-- Screen Header -->
                 <header>Top-up</header>
                 <!-- Main Form -->
-                <form id="topup-form" action='SendPaymentRequestController' method='post' enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="amount" class="form-label">Enter the amount you want</label>
-                        <input type="number" step="0.01" min="0.01"id="amount" name="amount" class="form-control"  placeholder="Insert top up amount">
-                        <span class="form-message"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="image" class="form-label">Attach invoice</label>
-                        <input type="file" accept="image/*" id="amount subtitle" name="image" class="form-control" required>
-                        <span class="form-message"></span>
-                    </div>
-                </form>
+                <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">   
+                    <form id="topup-form" action='InsertNotificationController' method='post'>
+                        <input type="hidden" name="type" value="admin">
+                        <div class="form-group">
+                            <label for="content" class="form-label">Enter message</label>
+                            <input type="text" id="content" name="content" class="form-control"  placeholder="Attention all users..." required>
+                            <span class="form-message"></span>
+                        </div>
+                    </form>
+                </c:if> 
+               
                 <!-- Form Buttons -->
                 <div class="row">
                     <!-- Button Spacer -->

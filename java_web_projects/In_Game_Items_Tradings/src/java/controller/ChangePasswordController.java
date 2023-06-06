@@ -37,7 +37,7 @@ throws ServletException, IOException {
         String newCfPass = request.getParameter("cfpass");
         UserDAO dao = new UserDAO();
         HttpSession ses = request.getSession();
-        User user = (User) request.getSession().getAttribute("account");
+        User user = (User) request.getSession().getAttribute("user");
         if(!oldPass.equals(user.getPassword())){
             ses.setAttribute("mess1", "Old password not match");
             request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
@@ -45,7 +45,7 @@ throws ServletException, IOException {
             if(newPass.equals(newCfPass)){
                 dao.ChangePassword(user.getId(), newPass);
                 ses.setAttribute("mess3", "Suceed");
-                request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+                request.getRequestDispatcher("UserProfile_1.jsp").forward(request, response);
             }else{
                 ses.setAttribute("mess2", "New pass and confirm not match");
                 request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);

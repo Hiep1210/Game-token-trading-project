@@ -22,11 +22,12 @@
     </head>
 
     <body>
+        <c:set var="redirect" value="DisplayMarketItemsController"/>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
                 <!-- Navbar Logo -->
-                <a class="navbar-brand col-lg-3" href="#">
+                <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
                     <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
                 </a>
                 <!-- Navbar Toggler Button -->
@@ -55,7 +56,7 @@
                             </div>
                             <!-- Buy Button -->
                             <div class="col-lg-3 navbar-item nopadding">
-                                <a href="">
+                                <a href="DisplayMarketItemsController">
                                     <i class="material-icons navbar-item-icon">shopping_cart</i>
                                 </a>
                                 <h5>Buy</h5>
@@ -69,50 +70,59 @@
                             </div>
                         </div>
                     </div>
-                    <script>
-                        
-                        function Setting() {
-                            
-                            if (document.getElementById("myDropDown").style.display == "block"){ 
-                                document.getElementById("myDropDown").style.display = "none"
-                            }else{
-                                 document.getElementById("myDropDown").style.display = "block";
-                                window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController";
-                            }
-                        }
-                    </script>
                     <!-- Navbar User  -->
                     <%--<c:out value="${pageContext.request.requestURI}"/>--%>
                     <div class="col-lg-4 nopadding navbar-user">
                         <div class="row nopadding">
                             <!-- User Notification -->
-                            <div class="col-lg-3 navbar-user-notifi dropdown">
-                                <!-- Dropdown toggler -->
+                            <c:if test="${(sessionScope.user != null)}">  
 
-                                <a onclick="Setting()" type="button" data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="material-icons navbar-item-icon">notifications</i>
-                                </a>
-                                <div  id="myDropDown" class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="UserProfileController">noti 1</a>
-                                    <a class="dropdown-item" href="#">noti 2</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a id="logout" class="dropdown-item" href="LogOutController">noti 3</a>
+                                <div class="col-lg-3 navbar-user-notifi dropdown">
+                                    <c:choose>
+                                        <c:when test="${(requestScope.notificationList == null)}">
+                                            <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
+                                                <i class="material-icons navbar-item-icon">notifications</i>
+                                            </a>
+                                        </c:when>
+                                        <c:when test="${(requestScope.notificationList.size() eq 0) }">
+                                            <!-- Dropdown toggler -->
+                                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                               aria-expanded="false">
+                                                <i class="material-icons navbar-item-icon">notifications</i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#">You have 0 new notification </a>
+                                            </div>
+                                        </c:when>    
+                                        <c:otherwise>
+                                            <!-- Dropdown toggler -->
+                                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                               aria-expanded="false">
+                                                <i class="material-icons navbar-item-icon">notifications</i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <c:forEach var="notification" items="${requestScope.notificationList}">
+                                                    <a class="dropdown-item" href="#">${notification.noti_content}</a>
+                                                </c:forEach>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
-                            </div>
-
+                            </c:if>
                             <!-- User Balance -->
-                            <div class="col-lg-6 navbar-user-balance nopadding">
-                                <!-- Balance amount -->
-                                <div class="navbar-user-balance-text">
-                                    <h5>Your balance</h5>
-                                    <h5>$ 10000</h5>
+                            <c:if test="${(sessionScope.user != null)}" >  
+                                <div class="col-lg-6 navbar-user-balance nopadding">
+                                    <!-- Balance amount -->
+                                    <div class="navbar-user-balance-text">
+                                        <h5>Your balance</h5>
+                                        <h5>$ ${sessionScope.user.money}</h5>
+                                    </div>
+                                    <!-- Topup button -->
+                                    <div class="navbar-user-balance-topup rounded-circle">
+                                        <i class="material-icons navbar-item-icon">add</i>
+                                    </div>
                                 </div>
-                                <!-- Topup button -->
-                                <div class="navbar-user-balance-topup rounded-circle">
-                                    <i class="material-icons navbar-item-icon">add</i>
-                                </div>
-                            </div>
+                            </c:if>
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
@@ -304,8 +314,9 @@
                 </div>
             </div>
         </div>
+
         <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">   
-            <c:set var="redirect" value="DisplayMarketItemsController"/>
+
             <!-- FOR INSERTING SERVER NOTIFICATION -->
             <form action='InsertNotificationController' method='post'>
                 <input type="hidden" name="type" value="admin">
@@ -314,46 +325,13 @@
                 <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
             </form>  
 
-            <a href="paymentRequest.jsp">
-                Go to payment request page
-            </a>              
-
-
-            <!-- FOR GETTING PAYMENT REQUEST NOTIFICATION -->
-            <a href="GetPaymentRequestController">
-                Get payment Request
-            </a>
 
         </c:if> 
-
-
-        <!-- FOR GETTING NOTIFICATION -->
-        <a href="GetNotificationController?redirect=${redirect}">
-            Get notification
-        </a>
-
-        <!-- FOR SHOWING USER NOTIFICATION -->
-        <c:if test="${(requestScope.notificationList != null) }">
-            <c:choose>
-                <c:when test="${(requestScope.notificationList.size() eq 0) }">
-                    <p> You have 0 new notification </p>
-                </c:when>    
-                <c:otherwise>
-                    <c:forEach var = "notification" items="${requestScope.notificationList}">
-                        <p>${notification.noti_content}</p>
-                        <p>${notification.date}</p>
-                        <!--img src="${notification.content_type}" alt="${notification.content_type} picture"--> 
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-        </c:if>
-
 
         <script>
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
-
         </script>
 
 

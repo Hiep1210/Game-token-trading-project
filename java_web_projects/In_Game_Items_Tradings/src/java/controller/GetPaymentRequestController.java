@@ -45,9 +45,12 @@ public class GetPaymentRequestController extends HttpServlet {
             String redirect = "requestList.jsp";
             if (user == null) {
                 redirect = "DisplayMarketItemsController";
+                System.out.println("amogus1");
             } else if (!isAdmin(user.getRole_id())) {
+                System.out.println("amogus2");
                 redirect = "DisplayMarketItemsController";
             } else {
+                System.out.println("amogus2");
                 paymentRequestList = PaymentRequestDAO.getAllPaymentRequest();
                 request.setAttribute("paymentRequestList",paymentRequestList);
             }
