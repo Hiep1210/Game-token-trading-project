@@ -228,6 +228,7 @@
                                 </div>
                             </div>
                         </form>
+                                <div class="form-message">${requestScope.mess3}</div>
                     </div>
                 </div>
                 <!-- User PFP -->
