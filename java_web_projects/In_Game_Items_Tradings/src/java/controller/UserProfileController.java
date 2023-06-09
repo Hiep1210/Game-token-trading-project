@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.GameAccountDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Map;
-import model.GameAccount;
 import model.User;
 
 /**

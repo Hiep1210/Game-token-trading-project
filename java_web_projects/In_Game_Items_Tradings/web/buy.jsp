@@ -282,7 +282,7 @@
                                     <div class="card" data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
                                         <div class="card-body">
-                                            <h5 class="card-title item-card-price ps-1">$ 2000</h5>
+                                            <h5 class="card-title item-card-price ps-1">$ ${list[loop.index].price}</h5>
                                             <a href="#" class="btn item-card-button">
                                                 <i class="fa-solid fa-cart-shopping"></i>
                                             </a>

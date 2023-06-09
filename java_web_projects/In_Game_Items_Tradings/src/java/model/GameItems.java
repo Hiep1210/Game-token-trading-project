@@ -1,7 +1,7 @@
 /*
 *Programmer: Nguyễn Hoàng Hiệp 
 *Description: This file describes the items in the game
-*/
+ */
 package model;
 
 /**
@@ -9,6 +9,7 @@ package model;
  * @author Inspiron
  */
 public class GameItems {
+
     private int id;
     private String skin_name;
     private String item_name;
@@ -17,7 +18,7 @@ public class GameItems {
     private String exterior;
     private String img;
 
-    public GameItems(int id, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
+    public GameItems(int id, String skin_name, String item_name, String type, String rarity,String exterior, String img) {
         this.id = id;
         this.skin_name = skin_name;
         this.item_name = item_name;
@@ -26,6 +27,7 @@ public class GameItems {
         this.exterior = exterior;
         this.img = img;
     }
+
 
     public int getId() {
         return id;
@@ -82,5 +84,5 @@ public class GameItems {
     public void setImg(String img) {
         this.img = img;
     }
-    
+
 }

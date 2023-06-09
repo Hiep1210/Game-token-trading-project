@@ -181,6 +181,8 @@ public class UserDAO {
                 if (rs.next()) {
                     throw new Exception();
                 }
+                con.close();
+                statement.close();
                 return false;
             }
         } catch (Exception e) {

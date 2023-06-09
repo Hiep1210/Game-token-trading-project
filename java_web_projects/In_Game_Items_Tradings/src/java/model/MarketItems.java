@@ -12,11 +12,13 @@ public class MarketItems {
     private int id;
     private int user_id;
     private int item_id;
+    private double price;
 
-    public MarketItems(int id, int user_id, int item_id) {
+    public MarketItems(int id, int user_id, int item_id, double price) {
         this.id = id;
         this.user_id = user_id;
         this.item_id = item_id;
+        this.price = price;
     }
 
     public int getId() {
@@ -41,6 +43,14 @@ public class MarketItems {
 
     public void setItem_id(int item_id) {
         this.item_id = item_id;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
     
 }
