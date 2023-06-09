@@ -59,7 +59,7 @@
                             </div>
                             <!-- Buy Button -->
                             <div class="col-lg-3 navbar-item nopadding">
-                                <a href="DisplayMarketItemsController">
+                                <a href="BuyPageController">
                                     <i class="material-icons navbar-item-icon">shopping_cart</i>
                                 </a>
                                 <h5>Buy</h5>

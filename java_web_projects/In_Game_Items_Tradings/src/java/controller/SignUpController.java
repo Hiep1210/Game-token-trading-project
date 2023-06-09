@@ -100,7 +100,7 @@ public class SignUpController extends HttpServlet {
                     request.getRequestDispatcher("signup.jsp").forward(request, response);
                 }
                 request.getSession().setAttribute("user", user);
-                response.sendRedirect("DisplayMarketItemsController");
+                response.sendRedirect("BuyPageController");
             }
         }
     }

@@ -110,7 +110,7 @@ public class LoginController extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
         request.getSession().setAttribute("user", user);
-        response.sendRedirect("DisplayMarketItemsController");
+        response.sendRedirect("BuyPageController");
     }
 
     /**

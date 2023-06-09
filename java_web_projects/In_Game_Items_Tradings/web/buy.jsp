@@ -22,7 +22,7 @@
     </head>
 
     <body>
-        <c:set var="redirect" value="DisplayMarketItemsController"/>
+        <c:set var="redirect" value="BuyPageController"/>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
@@ -56,7 +56,7 @@
                             </div>
                             <!-- Buy Button -->
                             <div class="col-lg-3 navbar-item nopadding">
-                                <a href="DisplayMarketItemsController">
+                                <a href="BuyPageController">
                                     <i class="material-icons navbar-item-icon">shopping_cart</i>
                                 </a>
                                 <h5>Buy</h5>
