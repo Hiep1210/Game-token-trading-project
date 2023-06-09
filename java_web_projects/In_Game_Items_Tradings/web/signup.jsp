@@ -27,37 +27,78 @@
             <div class="registration form">
                 <!-- Screen Header -->
                 <header>Signup</header>
-                <!-- Display Signup Error -->
-                <div class="form-message">${message}</div>
                 <!-- Main Form -->
                 <form id="signup-form" action="SignUpController" method="post">
+                    <!-- Avatar -->
+                    <div class="form-group">
+                        <label for="image" class="form-label">Profile Picture</label>
+                        <input type="file" accept="image/*" id="amount subtitle" name="avatar" class="form-control" required>
+                        <span class="form-message"></span>
+                    </div>
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
                         <input id="username" name="username" type="text" placeholder="Ex: laamwwibu" class="form-control">
                         <span class="form-message"></span>
                     </div>
-                    <!-- Password -->
+                    <!-- Email -->
                     <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
-                        <input id="password" name="password" type="password" placeholder="Enter Password"
-                               class="form-control">
+                        <label for="email" class="form-label">Email</label>
+                        <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
                         <span class="form-message"></span>
                     </div>
-                    <!-- Confirm Password -->
-                    <div class="form-group">
-                        <label for="password_confirmation" class="form-label">Confirm Password</label>
-                        <input id="password_confirmation" name="password_confirmation"
-                               placeholder="Confirm your password" type="password" class="form-control">
-                        <span class="form-message"></span>
-                    </div>
-                    <input type="text" name="game_account_id" value="${gameAccount.getId()}" hidden>
+                    <!-- DOB and Gender -->
+                    <div class="row">
+                        <!-- DOB -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="dob" class="form-label">Date of Birth</label>
+                                <input id="dob" name="dob" type="date" placeholder="Ex: 03-21-2003" class="form-control">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <!-- Gender -->
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label">Gender</label>
+                                <div class="radio-group">
+                                    <label for="male" class="gender-select text-center"
+                                           onclick="changeColor('rgb(88, 101, 242)', 'male')"><i class="fa-solid fa-mars"></i></label>
+                                    <input type="radio" name="gender" value="male" id="male"
+                                           onchange="resetColor('female')">
+                                    <label for="female" class="gender-select text-center"
+                                           onclick="changeColor('rgb(238, 69, 158)', 'female')"><i class="fa-solid fa-venus"></i></label>
+                                    <input type="radio" name="gender" value="female" id="female"
+                                           onchange="resetColor('male')">
+                                </div>
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input id="password" name="password" type="password" placeholder="Enter Password"
+                                   class="form-control">
+                            <span class="form-message"></span>
+                        </div>
+                        <!-- Confirm Password -->
+                        <div class="form-group">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input id="password_confirmation" name="password_confirmation"
+                                   placeholder="Confirm your password" type="password" class="form-control">
+                            <span class="form-message"></span>
+                        </div>
                 </form>
 
                 <!-- Form Buttons -->
                 <div class="row">
                     <!-- Scren Switch -->
                     <div class="col-lg-8">
+                        <div class="screen-switch">
+                            <span class="signup">Already have an account?
+                                <label for="check">Login</label>
+                            </span>
+                        </div>
                     </div>
                     <!-- Summit button -->
                     <div class="col-lg-4">
@@ -77,6 +118,9 @@
                     errorSelector: '.form-message',
                     rules: [
                         Validator.isRequired('#username', 'Please enter your username'),
+                        Validator.isEmail('#email'),
+                        Validator.isDate('#dob'),
+                        Validator.isRequiredGender('[name="gender"]', 'Please select a gender'),
                         Validator.minLength('#password', 6),
                         Validator.isRequired('#password_confirmation'),
                         Validator.isConfirmed('#password_confirmation', function () {
