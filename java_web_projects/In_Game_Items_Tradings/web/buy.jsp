@@ -75,9 +75,8 @@
                     <div class="col-lg-4 nopadding navbar-user">
                         <div class="row nopadding">
                             <!-- User Notification -->
-                            <c:if test="${(sessionScope.user != null)}">  
-
-                                <div class="col-lg-3 navbar-user-notifi dropdown">
+                            <div class="col-lg-3 navbar-user-notifi dropdown">
+                                <c:if test="${(sessionScope.user != null)}">  
                                     <c:choose>
                                         <c:when test="${(requestScope.notificationList == null)}">
                                             <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
@@ -107,11 +106,11 @@
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
-                                </div>
-                            </c:if>
+                                </c:if>
+                            </div>
                             <!-- User Balance -->
-                            <c:if test="${(sessionScope.user != null)}" >  
-                                <div class="col-lg-6 navbar-user-balance nopadding">
+                            <div class="col-lg-6 navbar-user-balance nopadding">
+                                <c:if test="${(sessionScope.user != null)}" >  
                                     <!-- Balance amount -->
                                     <div class="navbar-user-balance-text">
                                         <h5>Your balance</h5>
@@ -121,8 +120,8 @@
                                     <div class="navbar-user-balance-topup rounded-circle">
                                         <i class="material-icons navbar-item-icon">add</i>
                                     </div>
-                                </div>
-                            </c:if>
+                                </c:if>
+                            </div>
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
@@ -150,8 +149,8 @@
                                         </button>
                                         <!-- Dropdown menu -->
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                            <a class="dropdown-item" href="signup.jsp?request_id=1">Sign Up</a>
+                                            <a class="dropdown-item" href="login.jsp">Log In</a>
                                             <div class="dropdown-divider"></div>
                                         </div>
                                     </div>
@@ -279,8 +278,8 @@
                         <div class="row" id="item-box">
                             <!-- Item Card -->
                             <c:forEach var ="market_items" items="${requestScope.market_list}">
-                                <div class="col-lg-2 item-card mt-2 mb-2" id="item-card">
-                                    <div class="card">
+                                <div class="col-lg-2 item-card mt-2 mb-2 dropdown " id="item-card">
+                                    <div class="card" data-bs-toggle="dropdown" aria-expanded="false">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ 2000</h5>
@@ -288,6 +287,10 @@
                                                 <i class="fa-solid fa-cart-shopping"></i>
                                             </a>
                                         </div>
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
+                                        <h1>${market_items.getId()}</h1>
                                     </div>
                                 </div>
                             </c:forEach>
