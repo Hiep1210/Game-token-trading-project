@@ -13,22 +13,26 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int game_id;
+    private String dob;
+    private String email;
+    private String gender;
+    private String avatar;
     private int role_id;
     private double money;
 
+    public User() {
+    }
 
-    public User(int id, String username, String password, int game_id, int role_id, double money) {
+    public User(int id, String username, String password, String dob, String email, String gender, String avatar, int role_id, double money) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.game_id = game_id;
+        this.dob = dob;
+        this.email = email;
+        this.gender = gender;
+        this.avatar = avatar;
         this.role_id = role_id;
         this.money = money;
-    }
-
-    public User() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getId() {
@@ -55,12 +59,36 @@ public class User {
         this.password = password;
     }
 
-    public int getGame_id() {
-        return game_id;
+    public String getDob() {
+        return dob;
     }
 
-    public void setGame_id(int game_id) {
-        this.game_id = game_id;
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int getRole_id() {
@@ -78,5 +106,6 @@ public class User {
     public void setMoney(double money) {
         this.money = money;
     }
-
+    
+    
 }

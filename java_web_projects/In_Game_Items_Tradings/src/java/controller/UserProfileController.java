@@ -58,10 +58,9 @@ public class UserProfileController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         HttpSession session = request.getSession();
+        UserDAO dao = new UserDAO();
         User user = (User) request.getSession().getAttribute("user");
-        GameAccountDAO gad = new GameAccountDAO();
-        GameAccount gameAccount = gad.GetUserInformation(user.getGame_id());
-        session.setAttribute("game_acc", gameAccount);
+        session.setAttribute("userInfo", dao.GetUserInformation(user.getId()));
         request.getRequestDispatcher("userProfile.jsp").forward(request, response);
     }
 

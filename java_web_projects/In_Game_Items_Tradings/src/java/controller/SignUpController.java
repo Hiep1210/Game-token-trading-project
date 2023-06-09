@@ -13,7 +13,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.UserDAO;
-import model.GameAccount;
+import java.io.InputStream;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.security.ProtectionDomain;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import org.apache.tomcat.util.http.fileupload.FileItemIterator;
+import org.apache.tomcat.util.http.fileupload.FileItemStream;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -75,17 +87,16 @@ public class SignUpController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SignUp(request, response);
-
     }
 
     private void SignUp(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         String username = request.getParameter("username");
+        String avatar = request.getParameter("avatar");
+        String email = request.getParameter("email");
+        String dob = request.getParameter("dob");
+        String gender = request.getParameter("gender");
         String password = request.getParameter("password");
-        System.out.println(request.getParameter("game_account_id"));
-        GameAccount game_acc = (GameAccount)request.getSession().getAttribute("game_acc");
-        System.out.println(game_acc.getUsername());
-        int game_id = game_acc.getId();
         if (username != null) {
             //if inputted username is found, then send a message to UI
             if (UserDAO.FindUserName(username) != null) {
@@ -94,7 +105,7 @@ public class SignUpController extends HttpServlet {
             }
             //if there is password given then signup for user
             if (password != null) {
-                User user = new User(0,username, password, game_id, 1, 0);
+                User user = new User(0, username, password, dob, email, gender, avatar, 1, 0);
                 boolean success = UserDAO.InsertUser(user);
                 //if fail to add user then dend a message to UI
                 if (!success) {
@@ -106,6 +117,45 @@ public class SignUpController extends HttpServlet {
             }
         }
     }
+
+    String location = null;
+
+    private void moveImages(FileItemStream item, String newInvoiceImageName) {
+        InputStream initialStream;
+        Path targetDir;
+        Path target;
+        try {
+            //Move image to new location in project folder called image
+            if (location == null) {
+                location = getLocation();
+            }
+            initialStream = item.openStream();
+            targetDir = Paths.get(location);//get location of image file in project 
+            target = targetDir.resolve(newInvoiceImageName + ".webp");//get location of copied image in the project(targetDir + id of inserted record + .webp)
+            Files.copy(initialStream, target,
+                    StandardCopyOption.REPLACE_EXISTING);//change name and copy image into target file
+            IOUtils.closeQuietly(initialStream);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private String getLocation() {
+        String path;
+        String jarPath = null;
+        ProtectionDomain domain;
+        try {
+            //get location of image file in project
+            domain = SendPaymentRequestController.class.getProtectionDomain();
+            path = domain.getCodeSource().getLocation().getPath();//get location of jar file in class News Controller
+            jarPath = URLDecoder.decode(path, "UTF-8");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return jarPath.replace("build/web/WEB-INF/classes/", "").substring(1)
+                + "web/UI/image/";//return the location invoice images file
+    }
+
     /**
      * Returns a short description of the servlet.
      *
