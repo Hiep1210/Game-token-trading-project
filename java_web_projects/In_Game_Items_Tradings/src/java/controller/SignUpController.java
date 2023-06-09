@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.UserDAO;
-import model.GameAccount;
 
 /**
  *
@@ -82,10 +81,6 @@ public class SignUpController extends HttpServlet {
             throws ServletException, IOException{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(request.getParameter("game_account_id"));
-        GameAccount game_acc = (GameAccount)request.getSession().getAttribute("game_acc");
-        System.out.println(game_acc.getUsername());
-        int game_id = game_acc.getId();
         if (username != null) {
             //if inputted username is found, then send a message to UI
             if (UserDAO.FindUserName(username) != null) {
@@ -94,7 +89,7 @@ public class SignUpController extends HttpServlet {
             }
             //if there is password given then signup for user
             if (password != null) {
-                User user = new User(0,username, password, game_id, 1, 0);
+                User user = new User(0,username, password, 1, 0);
                 boolean success = UserDAO.InsertUser(user);
                 //if fail to add user then dend a message to UI
                 if (!success) {

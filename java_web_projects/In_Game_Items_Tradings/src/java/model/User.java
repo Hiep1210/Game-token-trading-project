@@ -13,22 +13,15 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private int game_id;
     private int role_id;
     private double money;
 
-
-    public User(int id, String username, String password, int game_id, int role_id, double money) {
+    public User(int id, String username, String password, int role_id, double money) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.game_id = game_id;
         this.role_id = role_id;
         this.money = money;
-    }
-
-    public User() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getId() {
@@ -53,14 +46,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getGame_id() {
-        return game_id;
-    }
-
-    public void setGame_id(int game_id) {
-        this.game_id = game_id;
     }
 
     public int getRole_id() {

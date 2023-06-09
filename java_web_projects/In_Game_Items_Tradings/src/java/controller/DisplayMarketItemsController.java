@@ -36,6 +36,7 @@ public class DisplayMarketItemsController extends HttpServlet {
             market_list.add(GameItemsDAO.getItemInfo(list.get(i).getItem_id()));
         }
         request.setAttribute("market_list", market_list);
+        request.setAttribute("mlist", list);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
 
     }

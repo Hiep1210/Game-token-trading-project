@@ -29,7 +29,7 @@ public class MarketItemsDao {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {             
-                    items = new MarketItems(0, rs.getInt(2), rs.getInt(3));
+                    items = new MarketItems(0, rs.getInt(2), rs.getInt(3),rs.getDouble(4));
                     list.add(items);
                 }
                 call.close();

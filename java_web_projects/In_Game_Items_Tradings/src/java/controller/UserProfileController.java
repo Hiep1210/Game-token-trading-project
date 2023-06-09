@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.GameAccountDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -14,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Map;
-import model.GameAccount;
 import model.User;
 
 /**
@@ -57,11 +55,6 @@ public class UserProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession session = request.getSession();
-        User user = (User) request.getSession().getAttribute("user");
-        GameAccountDAO gad = new GameAccountDAO();
-        GameAccount gameAccount = gad.GetUserInformation(user.getGame_id());
-        session.setAttribute("game_acc", gameAccount);
         request.getRequestDispatcher("userProfile.jsp").forward(request, response);
     }
 

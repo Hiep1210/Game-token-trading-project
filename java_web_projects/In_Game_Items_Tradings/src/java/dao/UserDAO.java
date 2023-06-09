@@ -54,8 +54,7 @@ public class UserDAO {
                 ResultSet rs = call.executeQuery(sql);
                 while (rs.next()) {             //needed even if just 1 row       
                     user = new User(rs.getInt("id"),
-                            username, pass, rs.getInt("game_account_id"),
-                            rs.getInt("role_id"), rs.getDouble("money_amount"));
+                            username, pass, rs.getInt("role_id"), rs.getDouble("money_amount"));
                 }
                 call.close();
                 con.close();
@@ -73,12 +72,10 @@ public class UserDAO {
             if (con != null) {
                 String sql = "INSERT INTO `game_items_trading`.`useraccount` "
                         + "(`username`, `password`, `game_account_id`, `role_id`, `money_amount`) "
-                        + "VALUES (?, ?, ?, 1, 0)";
+                        + "VALUES (?, ?, 1, 0)";
                 PreparedStatement statement = con.prepareStatement(sql);
                 statement.setString(1, user.getUsername());
                 statement.setString(2, user.getPassword());
-                statement.setInt(3, user.getGame_id());
-
                 int rows = statement.executeUpdate();
                 statement.close();
                 con.close();
@@ -148,6 +145,8 @@ public class UserDAO {
                 if (rs.next()) {
                     throw new Exception();
                 }
+                con.close();
+                statement.close();
                 return false;
             }
         } catch (Exception e) {
