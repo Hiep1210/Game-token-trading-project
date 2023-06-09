@@ -13,19 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.UserDAO;
-import java.io.InputStream;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.security.ProtectionDomain;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import org.apache.tomcat.util.http.fileupload.FileItemIterator;
-import org.apache.tomcat.util.http.fileupload.FileItemStream;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -116,44 +103,6 @@ public class SignUpController extends HttpServlet {
                 response.sendRedirect("DisplayMarketItemsController");
             }
         }
-    }
-
-    String location = null;
-
-    private void moveImages(FileItemStream item, String newInvoiceImageName) {
-        InputStream initialStream;
-        Path targetDir;
-        Path target;
-        try {
-            //Move image to new location in project folder called image
-            if (location == null) {
-                location = getLocation();
-            }
-            initialStream = item.openStream();
-            targetDir = Paths.get(location);//get location of image file in project 
-            target = targetDir.resolve(newInvoiceImageName + ".webp");//get location of copied image in the project(targetDir + id of inserted record + .webp)
-            Files.copy(initialStream, target,
-                    StandardCopyOption.REPLACE_EXISTING);//change name and copy image into target file
-            IOUtils.closeQuietly(initialStream);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private String getLocation() {
-        String path;
-        String jarPath = null;
-        ProtectionDomain domain;
-        try {
-            //get location of image file in project
-            domain = SendPaymentRequestController.class.getProtectionDomain();
-            path = domain.getCodeSource().getLocation().getPath();//get location of jar file in class News Controller
-            jarPath = URLDecoder.decode(path, "UTF-8");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return jarPath.replace("build/web/WEB-INF/classes/", "").substring(1)
-                + "web/UI/image/";//return the location invoice images file
     }
 
     /**

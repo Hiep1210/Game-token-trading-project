@@ -277,10 +277,11 @@
                         <!-- Item List -->
                         <div class="row" id="item-box">
                             <!-- Item Card -->
-                            <c:forEach var ="market_items" items="${requestScope.market_list}">
-                                <div class="col-lg-2 item-card mt-2 mb-2 dropdown " id="item-card">
-                                    <div class="card" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
+                            <c:set var="list" value="${requestScope.mlist}" scope="request"/>
+                            <c:forEach var ="market_items" items="${requestScope.market_list}" varStatus="loop">
+                                <div class="col-lg-2 item-card mt-2 mb-2 dropdown" id="item-card">
+                                    <div class="card dropdown-toggle" data-bs-toggle = "dropdown" aria-expanded="false">
+                                        <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ ${list[loop.index].price}</h5>
                                             <a href="#" class="btn item-card-button">
@@ -288,9 +289,8 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="dropdown-menu">
-                                        <img src="UI/image/${market_items.getImg()}.png" alt ="wtf" class="card-img-top" >
-                                        <h1>${market_items.getId()}</h1>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">${market_items.skin_name}</a>
                                     </div>
                                 </div>
                             </c:forEach>
