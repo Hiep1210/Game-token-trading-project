@@ -1,27 +1,6 @@
 drop database if exists game_items_trading;
 create database game_items_trading;
 use game_items_trading;
-
-CREATE TABLE Role(
-	id INT not null auto_increment,
-    primary key(id),
-	role_name VARCHAR(50)
-);
-
-CREATE TABLE UserAccount(
-	id int not null auto_increment,
-    primary key(id),
-	username VARCHAR(50),
-	password VARCHAR(50),
-    dob DATE,
-	email VARCHAR(100),
-	gender VARCHAR(10),
-	avatar VARCHAR(50),
-    role_id int,
-    money_amount double,
-	foreign key(role_id) references Role(id)
-);
-
 CREATE TABLE GameItems(
 	id INT not null auto_increment,
     primary key(id),
@@ -32,7 +11,24 @@ CREATE TABLE GameItems(
     exterior varchar(50),
     img varchar(50)
 );
-
+CREATE TABLE Role(
+	id INT not null auto_increment,
+    primary key(id),
+	role_name VARCHAR(50)
+);
+CREATE TABLE UserAccount(
+	id int not null auto_increment,
+    primary key(id),
+	username VARCHAR(50),
+	password VARCHAR(50),
+    dob DATE, /*du 18 tuoi*/
+	email VARCHAR(100),
+	gender VARCHAR(10),
+	avatar VARCHAR(50),
+    role_id int,
+    money_amount double,
+	foreign key(role_id) references Role(id)
+);
 CREATE TABLE Notification (
     id INT NOT NULL auto_increment,
     PRIMARY KEY (id),
@@ -43,18 +39,26 @@ CREATE TABLE Notification (
     noti_content VARCHAR(10000),
     content_type VARCHAR(50)
 );
-
-create table MarketItems(
+create table MarketItems(-- show item on market-- 
 	id int not null auto_increment,
     primary key(id),
     user_id int,
     foreign key(user_id) references UserAccount(id),
     item_id int,
     price double,
-    foreign key(item_id) references GameItems(id)
+    foreign key(item_id) references GameItems(id),
+    begin_date date,
+    end_date date
 );
-
-create table PaymentRequest (
+create table TradeItems(
+	id int not null auto_increment,
+    primary key(id),
+    give_id int,
+    foreign key(give_id) references GameItems(id),
+    rec_id int,
+    foreign key(rec_id) references gameitems(id)
+);
+create table PaymentRequest ( -- adminscreen --
 	id int not null auto_increment,
     primary key(id),
     user_id int,
@@ -63,7 +67,6 @@ create table PaymentRequest (
     foreign key(user_id) references UserAccount(id),
     img varchar(50)
 );
-
 create table RetrieveRequest(
 	id int not null auto_increment,
     primary key (id),
@@ -73,16 +76,6 @@ create table RetrieveRequest(
     retrieve_amount double,
     bank_details varchar(50) 
 );
-
--- create table TradeItems(
--- 	id int not null auto_increment,
---     primary key(id),
---     give_id int,
---     foreign key(give_id) references useritem(id),
---     rec_id int,
---     foreign key(rec_id) references gameitems(id)
--- );
-
 INSERT INTO role (`id`, `role_name`) VALUES ('1', 'user');
 INSERT INTO role (`id`, `role_name`) VALUES ('2', 'admin');
 
@@ -399,3 +392,20 @@ INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values 
 INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values ('Lore','Bayonet','Knife','Covert', 'Field-Tested','Bayonet_Lore');
 INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values ('Lore','Bayonet','Knife','Covert', 'Well-Worn','Bayonet_Lore');
 INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values ('Lore','Bayonet','Knife','Covert', 'Battle-Scarred','Bayonet_Lore');
+
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '1',2000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '2',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '3',4000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '4',5000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '5',6000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '6',7000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '7',8000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '8',9000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '9',1000000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '10',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '11',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '12',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '13',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '14',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '15',3000);
+INSERT INTO `game_items_trading`.`marketitems` (`user_id`, `item_id`,`price`) VALUES ('1', '16',3000);
