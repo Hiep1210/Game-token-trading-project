@@ -33,7 +33,6 @@
                 <header>Change Password</header>
                 <!-- Display Signup Error -->
                 <div class="form-message">${requestScope.mess1}</div>
-                <div class="form-message">${requestScope.mess2}</div>
                 <!-- Main Form -->
                 <form id="ChangePass-form" action="ChangePasswordController">
                     <!-- Password -->
