@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -33,7 +32,7 @@ public class LogOutController extends HttpServlet {
       try{
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("DisplayMarketItemsController");
+        response.sendRedirect("BuyPageController");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

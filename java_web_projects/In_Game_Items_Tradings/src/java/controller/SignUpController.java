@@ -74,12 +74,15 @@ public class SignUpController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         SignUp(request, response);
-
     }
 
     private void SignUp(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         String username = request.getParameter("username");
+        String avatar = request.getParameter("avatar");
+        String email = request.getParameter("email");
+        String dob = request.getParameter("dob");
+        String gender = request.getParameter("gender");
         String password = request.getParameter("password");
         if (username != null) {
             //if inputted username is found, then send a message to UI
@@ -89,7 +92,7 @@ public class SignUpController extends HttpServlet {
             }
             //if there is password given then signup for user
             if (password != null) {
-                User user = new User(0,username, password, 1, 0);
+                User user = new User(0, username, password, dob, email, gender, avatar, 1, 0);
                 boolean success = UserDAO.InsertUser(user);
                 //if fail to add user then dend a message to UI
                 if (!success) {
@@ -97,10 +100,11 @@ public class SignUpController extends HttpServlet {
                     request.getRequestDispatcher("signup.jsp").forward(request, response);
                 }
                 request.getSession().setAttribute("user", user);
-                response.sendRedirect("DisplayMarketItemsController");
+                response.sendRedirect("BuyPageController");
             }
         }
     }
+
     /**
      * Returns a short description of the servlet.
      *

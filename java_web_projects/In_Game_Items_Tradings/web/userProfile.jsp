@@ -59,7 +59,7 @@
                             </div>
                             <!-- Buy Button -->
                             <div class="col-lg-3 navbar-item nopadding">
-                                <a href="DisplayMarketItemsController">
+                                <a href="BuyPageController">
                                     <i class="material-icons navbar-item-icon">shopping_cart</i>
                                 </a>
                                 <h5>Buy</h5>
@@ -78,9 +78,8 @@
                     <div class="col-lg-4 nopadding navbar-user">
                         <div class="row nopadding">
                             <!-- User Notification -->
-                            <c:if test="${(sessionScope.user != null)}">  
-
-                                <div class="col-lg-3 navbar-user-notifi dropdown">
+                            <div class="col-lg-3 navbar-user-notifi dropdown">
+                                <c:if test="${(sessionScope.user != null)}">  
                                     <c:choose>
                                         <c:when test="${(requestScope.notificationList == null)}">
                                             <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
@@ -110,11 +109,11 @@
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
-                                </div>
-                            </c:if>
+                                </c:if>
+                            </div>
                             <!-- User Balance -->
-                            <c:if test="${(sessionScope.user != null)}" >  
-                                <div class="col-lg-6 navbar-user-balance nopadding">
+                            <div class="col-lg-6 navbar-user-balance nopadding">
+                                <c:if test="${(sessionScope.user != null)}" >  
                                     <!-- Balance amount -->
                                     <div class="navbar-user-balance-text">
                                         <h5>Your balance</h5>
@@ -124,8 +123,8 @@
                                     <div class="navbar-user-balance-topup rounded-circle">
                                         <i class="material-icons navbar-item-icon">add</i>
                                     </div>
-                                </div>
-                            </c:if>
+                                </c:if>
+                            </div>
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
@@ -153,8 +152,8 @@
                                         </button>
                                         <!-- Dropdown menu -->
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                            <a class="dropdown-item" href="signup.jsp?request_id=1">Sign Up</a>
+                                            <a class="dropdown-item" href="login.jsp">Log In</a>
                                             <div class="dropdown-divider"></div>
                                         </div>
                                     </div>
@@ -212,23 +211,23 @@
                             <div class="row mb-3">
                                 <label for="email" class="col-sm-3 col-form-label">Email:</label>
                                 <div class="col-sm-7">
-                                    <input type="text"  value="${sessionScope.game_acc.email}" class="form-control" id="email" readonly>
+                                    <input type="text"  value="${sessionScope.userInfo.email}" class="form-control" id="email" readonly>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="dob" class="col-sm-3 col-form-label">Date of Birth:</label>
                                 <div class="col-sm-7">
-                                    <input type="date" value="${sessionScope.game_acc.dob}" class="form-control" id="dob" readonly="">
+                                    <input type="date" value="${sessionScope.userInfo.dob}" class="form-control" id="dob" readonly="">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="gender" class="col-sm-3 col-form-label">Gender:</label>
                                 <div class="col-sm-7">
-                                    <input type="text" value="${sessionScope.game_acc.gender}" class="form-control" id="dob" readonly="">
+                                    <input type="text" value="${sessionScope.userInfo.gender}" class="form-control" id="dob" readonly="">
                                 </div>
                             </div>
                         </form>
-                                <div class="form-message">${requestScope.mess3}</div>
+                        <div class="form-message">${requestScope.mess3}</div>
                     </div>
                 </div>
                 <!-- User PFP -->
@@ -241,8 +240,8 @@
                             <input type="text" value="${sessionScope.game_acc.username}" class="form-control" id="dob" readonly="">
                             <div class="mt-4 summit-button nopadding">
                                 <a style=" text-decoration: none" href="loginGameAccount.jsp?request_id=2">
-                                <i class="material-icons navbar-item-icon">link</i>
-                                <label style="display: inline;">Change linked game account</label>
+                                    <i class="material-icons navbar-item-icon">link</i>
+                                    <label style="display: inline;">Change linked game account</label>
                                 </a>
                             </div>
                         </div>

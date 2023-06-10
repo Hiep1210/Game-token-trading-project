@@ -22,7 +22,7 @@
     </head>
 
     <body>
-        <c:set var="redirect" value="DisplayMarketItemsController"/>
+        <c:set var="redirect" value="BuyPageController"/>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
@@ -56,7 +56,7 @@
                             </div>
                             <!-- Buy Button -->
                             <div class="col-lg-3 navbar-item nopadding">
-                                <a href="DisplayMarketItemsController">
+                                <a href="BuyPageController">
                                     <i class="material-icons navbar-item-icon">shopping_cart</i>
                                 </a>
                                 <h5>Buy</h5>
@@ -75,9 +75,8 @@
                     <div class="col-lg-4 nopadding navbar-user">
                         <div class="row nopadding">
                             <!-- User Notification -->
-                            <c:if test="${(sessionScope.user != null)}">  
-
-                                <div class="col-lg-3 navbar-user-notifi dropdown">
+                            <div class="col-lg-3 navbar-user-notifi dropdown">
+                                <c:if test="${(sessionScope.user != null)}">  
                                     <c:choose>
                                         <c:when test="${(requestScope.notificationList == null)}">
                                             <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
@@ -107,11 +106,11 @@
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
-                                </div>
-                            </c:if>
+                                </c:if>
+                            </div>
                             <!-- User Balance -->
-                            <c:if test="${(sessionScope.user != null)}" >  
-                                <div class="col-lg-6 navbar-user-balance nopadding">
+                            <div class="col-lg-6 navbar-user-balance nopadding">
+                                <c:if test="${(sessionScope.user != null)}" >  
                                     <!-- Balance amount -->
                                     <div class="navbar-user-balance-text">
                                         <h5>Your balance</h5>
@@ -121,8 +120,8 @@
                                     <div class="navbar-user-balance-topup rounded-circle">
                                         <i class="material-icons navbar-item-icon">add</i>
                                     </div>
-                                </div>
-                            </c:if>
+                                </c:if>
+                            </div>
                             <!-- User Profile -->
                             <c:choose>
                                 <c:when test="${sessionScope.user != null}">
@@ -150,8 +149,8 @@
                                         </button>
                                         <!-- Dropdown menu -->
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">Sign Up</a>
-                                            <a class="dropdown-item" href="LoginUsername.jsp">Log In</a>
+                                            <a class="dropdown-item" href="signup.jsp?request_id=1">Sign Up</a>
+                                            <a class="dropdown-item" href="login.jsp">Log In</a>
                                             <div class="dropdown-divider"></div>
                                         </div>
                                     </div>

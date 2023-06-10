@@ -17,6 +17,35 @@ import java.util.ArrayList;
  * @author Inspiron
  */
 public class UserDAO {
+    
+    public static User GetUserInformation(int id) {
+        User user = new User();
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "Select * from UserAccount where id= '" + id + "';";
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery(sql);
+                while (rs.next()) {
+                    user = new User();
+                    user.setId(rs.getInt(1));
+                    user.setUsername(rs.getString(2));
+                    user.setPassword(rs.getString(3));
+                    user.setDob(rs.getString(4));
+                    user.setEmail(rs.getString(5));
+                    user.setGender(rs.getString(6));
+                    user.setAvatar(rs.getString(7));
+                }
+                rs.close();
+                st.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
 
     public static String FindUserName(String username) {
         try {
@@ -52,9 +81,11 @@ public class UserDAO {
                         + "AND PASSWORD = " + "'" + pass + "' limit 1";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
-                while (rs.next()) {             //needed even if just 1 row       
+                while (rs.next()) {
                     user = new User(rs.getInt("id"),
-                            username, pass, rs.getInt("role_id"), rs.getDouble("money_amount"));
+                            username, pass, rs.getString("dob"), rs.getString("email"),
+                            rs.getString("gender"), rs.getString("avatar"),
+                            rs.getInt("role_id"), rs.getDouble("money_amount"));
                 }
                 call.close();
                 con.close();
@@ -71,11 +102,16 @@ public class UserDAO {
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "INSERT INTO `game_items_trading`.`useraccount` "
-                        + "(`username`, `password`, `game_account_id`, `role_id`, `money_amount`) "
-                        + "VALUES (?, ?, 1, 0)";
+                        + "(`username`, `password`, `dob`, `email`, `gender`, `avatar`, `role_id`, `money_amount`) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, 1, 0)";
                 PreparedStatement statement = con.prepareStatement(sql);
                 statement.setString(1, user.getUsername());
                 statement.setString(2, user.getPassword());
+                statement.setString(3, user.getDob());
+                statement.setString(4, user.getEmail());
+                statement.setString(5, user.getGender());
+                statement.setInt(6, user.getRole_id());
+
                 int rows = statement.executeUpdate();
                 statement.close();
                 con.close();
@@ -155,16 +191,16 @@ public class UserDAO {
         return true;
     }
 
-        public static boolean ChangePassword(int user_id, String password){
-        try{
-           DBContext db = new DBContext();
+    public static boolean ChangePassword(int user_id, String password) {
+        try {
+            DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + password
                         + "' WHERE (`id` = '" + user_id + "');";
                 Statement st = con.createStatement();
                 int rows = st.executeUpdate(sql);
-                if(rows < 1){
+                if (rows < 1) {
                     throw new Exception();
                 }
                 return true;
@@ -199,6 +235,8 @@ public class UserDAO {
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
+        User userInfo = GetUserInformation(1);
+        System.out.println(userInfo.getEmail());
 //        System.out.println(dao.FindUserName("laamwwibu1"));
 //        System.out.println(dao.FindUserName("hiep"));
 //        System.out.println(dao.InsertUser(new User(0, "hung", "hung123", 1, 0, 0)));

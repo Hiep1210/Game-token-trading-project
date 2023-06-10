@@ -38,7 +38,13 @@
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
-                        <input id="username" name="username" type="text" placeholder="Ex: laamwwibu" class="form-control">
+                        <input id="username" name="username" type="text" placeholder="Enter your username" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input id="password" name="password" type="password" placeholder="Enter Password" class="form-control">
                         <span class="form-message"></span>
                     </div>
                 </form>

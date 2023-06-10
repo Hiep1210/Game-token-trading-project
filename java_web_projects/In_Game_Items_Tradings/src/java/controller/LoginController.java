@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.UserDAO;
+
 /**
  *
  * @author Inspiron
@@ -80,40 +81,36 @@ public class LoginController extends HttpServlet {
         if (username != null) {
             //if there is password given then proceed to log in
             if (password != null) {
-                LogIn(request, response,username,password);
-            }else{
-            FindUserName(request, response ,username);
+                LogIn(request, response, username, password);
+            } else {
+                FindUserName(request, response, username);
             }
         }
     }
 
     //if there is username in db then send it back 
-    private void FindUserName(HttpServletRequest request, HttpServletResponse response,String username) 
+    private void FindUserName(HttpServletRequest request, HttpServletResponse response, String username)
             throws IOException, ServletException {
         String name = UserDAO.FindUserName(username);
-        if(name!=null){
+        if (name != null) {
             request.setAttribute("name", name);
         }//if not found, send a message
-        else{
+        else {
             request.setAttribute("message", "Username not found");
-            request.getRequestDispatcher("LoginUsername.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("LoginPassword.jsp").forward(request, response);
     }
 
-    private void LogIn(HttpServletRequest request, HttpServletResponse response,String username,String password) 
+    private void LogIn(HttpServletRequest request, HttpServletResponse response, String username, String password)
             throws IOException, ServletException {
         User user = UserDAO.LogIn(username, password);
-        
-        if(user==null){
+
+        if (user == null) {
             request.setAttribute("message", "Password not found");
-            System.out.println("pass");
-            request.getRequestDispatcher("LoginPassword.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-        System.out.println("ok");
         request.getSession().setAttribute("user", user);
-        System.out.println("ok2");
-        response.sendRedirect("DisplayMarketItemsController");
+        response.sendRedirect("BuyPageController");
     }
 
     /**
