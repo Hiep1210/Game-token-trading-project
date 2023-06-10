@@ -45,7 +45,7 @@ throws ServletException, IOException {
             if(newPass.equals(newCfPass)){
                 dao.ChangePassword(user.getId(), newPass);
                 ses.setAttribute("mess3", "Suceed");
-                request.getRequestDispatcher("UserProfile_1.jsp").forward(request, response);
+                request.getRequestDispatcher("userProfile.jsp").forward(request, response);
             }else{
                 ses.setAttribute("mess2", "New pass and confirm not match");
                 request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
