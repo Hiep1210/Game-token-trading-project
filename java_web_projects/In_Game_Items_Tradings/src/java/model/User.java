@@ -35,6 +35,16 @@ public class User {
         this.money = money;
     }
 
+    public User(String avatar, String username, String email, String dob, String gender, String password) {
+        this.avatar = avatar;
+        this.username = username;
+        this.email = email;
+        this.dob = dob;
+        this.gender = gender;
+        this.password = password;
+        
+    }
+
     public int getId() {
         return id;
     }
@@ -106,6 +116,5 @@ public class User {
     public void setMoney(double money) {
         this.money = money;
     }
-    
-    
+
 }

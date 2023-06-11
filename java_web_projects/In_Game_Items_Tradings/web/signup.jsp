@@ -28,11 +28,11 @@
                 <!-- Screen Header -->
                 <header>Signup</header>
                 <!-- Main Form -->
-                <form id="signup-form" action="SignUpController" method="post">
+                <form id="signup-form" action="SignUpController" method="post" enctype="multipart/form-data">
                     <!-- Avatar -->
                     <div class="form-group">
                         <label for="image" class="form-label">Profile Picture</label>
-                        <input type="file" accept="image/*" id="amount subtitle" name="avatar" class="form-control" required>
+                        <input type="file" accept="image/*" name="avatar" class="form-control" required>
                         <span class="form-message"></span>
                     </div>
                     <!-- Username -->
@@ -64,11 +64,11 @@
                                 <div class="radio-group">
                                     <label for="male" class="gender-select text-center"
                                            onclick="changeColor('rgb(88, 101, 242)', 'male')"><i class="fa-solid fa-mars"></i></label>
-                                    <input type="radio" name="gender" value="male" id="male"
+                                    <input type="radio" name="gender" value="Male" id="male"
                                            onchange="resetColor('female')">
                                     <label for="female" class="gender-select text-center"
                                            onclick="changeColor('rgb(238, 69, 158)', 'female')"><i class="fa-solid fa-venus"></i></label>
-                                    <input type="radio" name="gender" value="female" id="female"
+                                    <input type="radio" name="gender" value="Female" id="female"
                                            onchange="resetColor('male')">
                                 </div>
                                 <span class="form-message"></span>
