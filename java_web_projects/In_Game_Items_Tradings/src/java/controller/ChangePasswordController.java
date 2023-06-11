@@ -44,10 +44,10 @@ throws ServletException, IOException {
         }else{
             if(newPass.equals(newCfPass)){
                 dao.ChangePassword(user.getId(), newPass);
-                ses.setAttribute("mess3", "Suceed");
+                ses.setAttribute("mess2", "Suceed");
                 request.getRequestDispatcher("userProfile.jsp").forward(request, response);
             }else{
-                ses.setAttribute("mess2", "New pass and confirm not match");
+                ses.setAttribute("mess1", "New pass and confirm not match");
                 request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
             }
         }     

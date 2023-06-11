@@ -10,6 +10,7 @@ import java.sql.Statement;
 import model.User;
 import Context.DBContext;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * @author Inspiron
  */
 public class UserDAO {
-    
+
     public static User GetUserInformation(int id) {
         User user = new User();
         try {
@@ -96,31 +97,35 @@ public class UserDAO {
         return user;
     }
 
-    public static boolean InsertUser(User user) {
+    public static void insertUser(User user) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
-            if (con != null) {
-                String sql = "INSERT INTO `game_items_trading`.`useraccount` "
-                        + "(`username`, `password`, `dob`, `email`, `gender`, `avatar`, `role_id`, `money_amount`) "
-                        + "VALUES (?, ?, ?, ?, ?, ?, 1, 0)";
-                PreparedStatement statement = con.prepareStatement(sql);
-                statement.setString(1, user.getUsername());
-                statement.setString(2, user.getPassword());
-                statement.setString(3, user.getDob());
-                statement.setString(4, user.getEmail());
-                statement.setString(5, user.getGender());
-                statement.setInt(6, user.getRole_id());
 
-                int rows = statement.executeUpdate();
-                statement.close();
-                con.close();
-                return true;
+            // Prepare the SQL statement
+            String sql = "INSERT INTO UserAccount (username, password, dob,"
+                    + "email, gender, avatar, role_id, money_amount)"
+                    + "VALUES (?, ?, ?, ?, ?, ?, 1, 0)";
+            PreparedStatement st = con.prepareStatement(sql);
+            st = con.prepareStatement(sql);
+            st.setString(1, user.getUsername());
+            st.setString(2, user.getPassword());
+            st.setString(3, user.getDob());
+            st.setString(4, user.getEmail());
+            st.setString(5, user.getGender());
+            st.setString(6, user.getAvatar());
+
+            // Execute the SQL statement
+            st.executeUpdate();
+            if (st.executeUpdate() != 1) {
+                System.out.println("ERROR INSERTING User");
             }
+            st.close();
+            con.close();
+            // Any additional code or processing after inserting the user
         } catch (Exception e) {
-            System.out.println("Error inserting user: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
-        return false;
     }
 
     public static boolean updateLinkedGameAccount(int user, int game) {//nut bam

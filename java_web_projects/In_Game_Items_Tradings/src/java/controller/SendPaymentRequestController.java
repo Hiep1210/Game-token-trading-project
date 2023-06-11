@@ -42,7 +42,7 @@ public class SendPaymentRequestController extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
-        request.getRequestDispatcher("DisplayMarketItemsController").forward(
+        request.getRequestDispatcher("BuyPageController").forward(
                 request, response);
     }
 
@@ -57,13 +57,13 @@ public class SendPaymentRequestController extends HttpServlet {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         PaymentRequest paymentRequest;
         String strDate = formatter.format(date);
-        String redirect = "DisplayMarketItemsController";// if redirect attribute is null auto redirect to DisplayMarketItemsController
+        String redirect = "BuyPageController";// if redirect attribute is null auto redirect to DisplayMarketItemsController
         String newInvoiceImageName;
         double money;
 
         try {
             if (user == null) { // if session does not contain any user instance
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else {
                 upload = new ServletFileUpload();
                 iterator = upload.getItemIterator(request);
@@ -74,6 +74,7 @@ public class SendPaymentRequestController extends HttpServlet {
                 money = Double.parseDouble(dataArray[0]);
 
                 paymentRequest = new PaymentRequest(user.getId(), money,strDate, "");
+                
                 newInvoiceImageName = PaymentRequestDAO.insertPaymentRequest(paymentRequest);
                 moveImages(item,newInvoiceImageName);
                 
