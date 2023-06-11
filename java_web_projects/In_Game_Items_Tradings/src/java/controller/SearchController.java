@@ -1,6 +1,6 @@
 /*
-*Programmer: Nguyễn Hoàng Hiệp 
-*Description: This files is controller for signing up 
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
 
@@ -11,15 +11,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.User;
-import dao.UserDAO;
+import model.MarketItems;
+import model.GameItems;
+import dao.GameItemsDAO;
+import dao.MarketItemsDao;
+import java.util.ArrayList;
 
 /**
  *
  * @author Inspiron
  */
-@WebServlet(name = "SignUpController", urlPatterns = {"/SignUpController"})
-public class SignUpController extends HttpServlet {
+@WebServlet(name = "SearchController", urlPatterns = {"/SearchController"})
+public class SearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +33,6 @@ public class SignUpController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,7 +45,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        response.sendRedirect("BuyPageController");
     }
 
     /**
@@ -57,35 +59,20 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SignUp(request, response);
-    }
-
-    private void SignUp(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String avatar = request.getParameter("avatar");
-        String email = request.getParameter("email");
-        String dob = request.getParameter("dob");
-        String gender = request.getParameter("gender");
-        String password = request.getParameter("password");
-        if (username != null) {
-            //if inputted username is found, then send a message to UI
-            if (UserDAO.FindUserName(username) != null) {
-                request.setAttribute("message", "Existed username, please re-input!");
-                request.getRequestDispatcher("signup.jsp").forward(request, response);
-            }
-            //if there is password given then signup for user
-            if (password != null) {
-                User user = new User(0, username, password, dob, email, gender, avatar, 1, 0);
-                boolean success = UserDAO.InsertUser(user);
-                //if fail to add user then dend a message to UI
-                if (!success) {
-                    request.setAttribute("message", "Internal Error, failed to add user");
-                    request.getRequestDispatcher("signup.jsp").forward(request, response);
-                }
-                request.getSession().setAttribute("user", user);
-                response.sendRedirect("BuyPageController");
-            }
+        String input = request.getParameter("search").trim();
+        String analyze[] = input.split(" ");
+        String currentpage = request.getParameter("page");
+        switch (currentpage) {
+            case "/sell.jsp":
+                ArrayList<GameItems> game_items = GameItemsDAO.Search(analyze);
+                request.setAttribute("game_items", game_items);
+                request.getRequestDispatcher(currentpage).forward(request, response);
+                break;
+            case "/buy.jsp":
+                ArrayList<MarketItems> market_items = MarketItemsDao.Search(analyze);
+                request.setAttribute("market_list", market_items);
+                request.getRequestDispatcher(currentpage).forward(request, response);
+                break;
         }
     }
 

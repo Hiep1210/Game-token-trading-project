@@ -260,10 +260,12 @@
                         <div class="row">
                             <!-- Search Bar -->
                             <div class="col-lg-4 search-bar form">
-                                <form action="">
+                                <form action="SearchController" method = "post">
                                     <div class="form-group">
                                         <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
-                                        <input class="form-control ps-5" type="text" placeholder="Search...">
+                                        <input type="text" name="page" value="${pageContext.request.servletPath}" hidden=""/>
+                                        <input class="form-control ps-5" type="text" name ="search" placeholder="Enter the item or its skin's name or part of name">
+                                        <input type="submit" hidden=""/>
                                     </div>
                                 </form>
                             </div>
@@ -277,13 +279,12 @@
                         <!-- Item List -->
                         <div class="row" id="item-box">
                             <!-- Item Card -->
-                            <c:set var="list" value="${requestScope.mlist}" scope="request"/>
-                            <c:forEach var ="market_items" items="${requestScope.market_list}" varStatus="loop">
+                            <c:forEach var ="market_items" items="${requestScope.market_list}">
                                 <div class="col-lg-2 item-card mt-2 mb-2 dropdown" id="item-card">
                                     <div class="card dropdown-toggle" data-bs-toggle = "dropdown" aria-expanded="false">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
-                                            <h5 class="card-title item-card-price ps-1">$ ${list[loop.index].price}</h5>
+                                            <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
                                             <a href="#" class="btn item-card-button">
                                                 <i class="fa-solid fa-cart-shopping"></i>
                                             </a>
