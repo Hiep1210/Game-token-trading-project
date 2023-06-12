@@ -166,7 +166,12 @@ public class SignUpController extends HttpServlet {
                 }
                 index++;
             }
-
+            
+            //If inputted username is found in db, then send a message to UI
+            if (UserDAO.FindUserName(username) != null) {
+                request.setAttribute("message", "Existed username, please re-input!");
+                request.getRequestDispatcher("signup.jsp").forward(request, response);
+            }
             // Create a User object and perform sign-up logic
             User newUser = new User(profilePicFilename, username, email, dob, gender, password);
             // Perform sign-up logic using the newUser object
