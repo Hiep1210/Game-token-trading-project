@@ -1,11 +1,12 @@
 /*
-*Programmer: Ly The Luong 
-*Description: This files is controller for Change Password
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
 package controller;
 
-import dao.UserDAO;
+import dao.GameItemsDAO;
+import dao.MarketItemsDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.User;
+import java.util.ArrayList;
+import model.GameItems;
+import model.MarketItems;
 
 /**
  *
- * @author ACER
+ * @author Inspiron
  */
-@WebServlet(name="ChangePasswordController", urlPatterns={"/ChangePasswordController"})
-public class ChangePasswordController extends HttpServlet {
+@WebServlet(name="SortController", urlPatterns={"/SortController"})
+public class SortController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,28 +32,7 @@ public class ChangePasswordController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-throws ServletException, IOException {
-        String oldPass = request.getParameter("oldpass");
-        String newPass = request.getParameter("newpass");
-        String newCfPass = request.getParameter("cfpass");
-        UserDAO dao = new UserDAO();
-        HttpSession ses = request.getSession();
-        User user = (User) request.getSession().getAttribute("user");
-        if(!oldPass.equals(user.getPassword())){
-            ses.setAttribute("mess1", "Old password not match");
-            request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
-        }else{
-            if(newPass.equals(newCfPass)){
-                dao.ChangePassword(user.getId(), newPass);
-                ses.invalidate();
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }else{
-                ses.setAttribute("mess1", "New pass and confirm not match");
-                request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);
-            }
-        }     
-    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -63,7 +44,7 @@ throws ServletException, IOException {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        response.sendRedirect("BuyPageController");
     } 
 
     /** 
@@ -76,7 +57,21 @@ throws ServletException, IOException {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String currentpage = request.getParameter("page");
+        switch (currentpage) {
+            case "/sell.jsp":
+                ArrayList<GameItems> game_items = GameItemsDAO.Filter(request.getParameter("type"), 
+                        request.getParameter("rarity"), request.getParameter("exterior"));
+                request.setAttribute("game_items", game_items);
+                request.getRequestDispatcher(currentpage).forward(request, response);
+                break;
+            case "/buy.jsp":
+                ArrayList<MarketItems> market_items = MarketItemsDao.Filter(request.getParameter("priceorder"), 
+                        request.getParameter("type"), request.getParameter("rarity"), request.getParameter("exterior"));
+                request.setAttribute("market_list", market_items);
+                request.getRequestDispatcher(currentpage).forward(request, response);
+                break;
+        }
     }
 
     /** 
