@@ -23,6 +23,16 @@ public class User {
     public User() {
     }
 
+    public User(int id, String avatar, String username, String email, String dob, String gender) {
+        this.id = id;
+        this.avatar = avatar;
+        this.username = username;
+        this.email = email;
+        this.dob = dob;
+        this.gender = gender;
+        this.password = password;
+    }
+
     public User(int id, String username, String password, String dob, String email, String gender, String avatar, int role_id, double money) {
         this.id = id;
         this.username = username;
@@ -42,7 +52,6 @@ public class User {
         this.dob = dob;
         this.gender = gender;
         this.password = password;
-        
     }
 
     public int getId() {
