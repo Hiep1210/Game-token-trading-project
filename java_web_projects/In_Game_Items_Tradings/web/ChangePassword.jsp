@@ -38,13 +38,13 @@
                     <!-- Password -->
                     <div class="form-group">
                         <label for="oldpass" class="form-label">Password</label>
-                        <input id="oldpass" name="oldpass" type="password" placeholder="Enter Password"
+                        <input id="oldpass" name="oldpass" type="text" placeholder="Enter Password"
                                class="form-control"><br>
                         <label for="newpass" class="form-label">New Pass</label>
-                        <input id="newpass" name="newpass" type="newpass" placeholder="Enter Password"
+                        <input id="newpass" name="newpass" type="text" placeholder="Enter Password"
                                class="form-control"><br><!-- comment -->
                         <label for="cfpass" class="form-label">Confirm Pass</label>
-                        <input id="cfpass" name="cfpass" type="password" placeholder="Enter Password"
+                        <input id="cfpass" name="cfpass" type="text" placeholder="Enter Password"
                                class="form-control"><br>
                         <span class="form-message"></span>
                     </div>

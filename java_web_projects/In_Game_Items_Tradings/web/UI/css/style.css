@@ -3,6 +3,18 @@
     margin: 0px;
 }
 
+.invalid input {
+    border: 1px solid red;
+}
+
+.valid {
+    border: 1px solid green;
+}
+
+.form-message {
+    color: red;
+}
+
 /* Install font */
 @font-face {
     font-family: "Montserrat";

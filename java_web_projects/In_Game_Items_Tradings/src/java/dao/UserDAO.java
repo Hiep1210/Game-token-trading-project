@@ -25,7 +25,7 @@ public class UserDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where id= '" + id + "';";
+                String sql = "Select * from UserAccount where id= '" + id + "' limit 1;";
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
                 while (rs.next()) {
@@ -116,13 +116,39 @@ public class UserDAO {
             st.setString(6, user.getAvatar());
 
             // Execute the SQL statement
-            st.executeUpdate();
             if (st.executeUpdate() != 1) {
                 System.out.println("ERROR INSERTING User");
             }
             st.close();
             con.close();
             // Any additional code or processing after inserting the user
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void editUserProfile(User user) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+
+            // Prepare the SQL statement
+            String sql = "UPDATE UserAccount "
+                    + "SET dob = ?, email = ?, gender = ?, avatar = ? "
+                    + "WHERE id = " + user.getId();
+            PreparedStatement st = con.prepareStatement(sql);
+            st = con.prepareStatement(sql);
+            st.setString(1, user.getDob());
+            st.setString(2, user.getEmail());
+            st.setString(3, user.getGender());
+            st.setString(4, user.getAvatar());
+            // Execute the SQL statement
+            st.executeUpdate();
+            if (st.executeUpdate() != 1) {
+                System.out.println("ERROR INSERTING User");
+            }
+            st.close();
+            con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -241,6 +267,7 @@ public class UserDAO {
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
         User userInfo = GetUserInformation(1);
+        editUserProfile(new User(8, "abyss-diana-tc-2.png", "lao", "alo", "2003-03-21", "Female"));
         System.out.println(userInfo.getEmail());
 //        System.out.println(dao.FindUserName("laamwwibu1"));
 //        System.out.println(dao.FindUserName("hiep"));
