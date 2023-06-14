@@ -129,7 +129,7 @@
                                         <!-- Dropdown toggler -->
                                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                                 aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="">
+                                            <img id="profileImage" class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="">
                                         </button>
                                         <!-- Dropdown menu -->
                                         <div class="dropdown-menu dropdown-menu-end">
@@ -319,23 +319,16 @@
             </div>
         </div>
 
-        <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">   
-
-            <!-- FOR INSERTING SERVER NOTIFICATION -->
-            <form action='InsertNotificationController' method='post'>
-                <input type="hidden" name="type" value="admin">
-                <label for="Content">Content</label>
-                <input type="text" name="content" id="title" placeholder="Content" required>
-                <input style="color: white; font-weight: bold; margin-top: 10px" type='submit' name='action' value='Submit'>
-            </form>  
-
-
-        </c:if> 
 
         <script>
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
+            var timestamp = new Date().getTime();
+
+            var el = document.getElementById("profileImage");
+
+            el.src = "UI/image/profile_pics/${sessionScope.user.getAvatar()}?t=" + timestamp;
         </script>
 
 
