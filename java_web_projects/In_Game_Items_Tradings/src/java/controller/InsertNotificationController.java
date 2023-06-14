@@ -42,8 +42,10 @@ public class InsertNotificationController extends HttpServlet {
             switch (type) {
                 case "admin":
                     adminNotification(request, response);
+                    break;
                 case "payment":
                     paymentNotification(request, response);
+                    break;
                 default:
                     return;
             }
