@@ -242,7 +242,7 @@ public class UserDAO {
         return false;
     }
 
-    public static boolean acceptPaymentRequest(int user, double money) {
+    public static boolean updateUserMoney(int user, double money) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
