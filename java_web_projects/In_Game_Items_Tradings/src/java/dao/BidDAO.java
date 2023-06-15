@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file is the DAO for doing CRUD operations on bid table
  */
 package dao;
 
@@ -29,7 +29,8 @@ public class BidDAO {
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
                 String sql = "SELECT * FROM game_items_trading.bid "
-                        + " WHERE auction_id = " + auctionId;
+                        + " WHERE auction_id = " + auctionId
+                        + " ORDER BY amount DESC";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
@@ -60,14 +61,15 @@ public class BidDAO {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "SELECT * FROM game_items_trading.bid "
+                String sql = " SELECT * FROM game_items_trading.bid "
                         + " WHERE auction_id = " + auctionId
-                        + " ORDER BY amount DESC";
+                        + " ORDER BY amount DESC ";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
                     bid = rs.getDouble("amount");
+                    break;
                 }
                 rs.close();
                 call.close();

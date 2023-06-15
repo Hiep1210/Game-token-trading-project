@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file is the DAO for doing CRUD operations on auction table
  */
 package dao;
 

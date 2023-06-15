@@ -1,9 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file is the Model of auction entity
  */
 package model;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -20,7 +19,6 @@ public class Auction {
     private String gameAccountName;
     private LocalDateTime startingDate;
     private LocalDateTime endingDate;
-    private User seller;
     private GameItems gameItem;
 
     public Auction() {
@@ -101,14 +99,6 @@ public class Auction {
         this.endingDate = endingDate;
     }
 
-    public User getSeller() {
-        return seller;
-    }
-
-    public void setSeller(User seller) {
-        this.seller = seller;
-    }
-
     public GameItems getGameItem() {
         return gameItem;
     }
@@ -119,7 +109,7 @@ public class Auction {
 
     @Override
     public String toString() {
-        return "Auction{" + "auctionId=" + auctionId + ", sellerId=" + sellerId + ", itemId=" + itemId + ", lowestBid=" + lowestBid + ", gameAccountName=" + gameAccountName + ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", seller=" + seller + ", gameItem=" + gameItem + '}';
+        return "Auction{" + "auctionId=" + auctionId + ", sellerId=" + sellerId + ", itemId=" + itemId + ", lowestBid=" + lowestBid + ", gameAccountName=" + gameAccountName + ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", gameItem=" + gameItem + '}';
     }
 
 }
