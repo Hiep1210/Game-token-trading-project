@@ -18,6 +18,9 @@ public class GameItems {
     private String exterior;
     private String img;
 
+    public GameItems() {
+    }
+    
     public GameItems(int id, String skin_name, String item_name, String type, String rarity,String exterior, String img) {
         this.id = id;
         this.skin_name = skin_name;
@@ -84,5 +87,6 @@ public class GameItems {
     public void setImg(String img) {
         this.img = img;
     }
+
 
 }
