@@ -18,10 +18,10 @@ public class Auction {
     private int itemId;
     private double lowestBid;
     private String gameAccountName;
-    private ArrayList<Bid> bids;
     private LocalDateTime startingDate;
     private LocalDateTime endingDate;
     private User seller;
+    private GameItems gameItem;
 
     public Auction() {
     }
@@ -77,14 +77,6 @@ public class Auction {
         this.lowestBid = lowestBid;
     }
 
-    public ArrayList<Bid> getBids() {
-        return bids;
-    }
-
-    public void setBids(ArrayList<Bid> bids) {
-        this.bids = bids;
-    }
-
     public String getGameAccountName() {
         return gameAccountName;
     }
@@ -117,9 +109,17 @@ public class Auction {
         this.seller = seller;
     }
 
+    public GameItems getGameItem() {
+        return gameItem;
+    }
+
+    public void setGameItem(GameItems gameItem) {
+        this.gameItem = gameItem;
+    }
+
     @Override
     public String toString() {
-        return "Auction{" + "auctionId=" + auctionId + ", sellerId=" + sellerId + ", itemId=" + itemId + ", lowestBid=" + lowestBid + ", bids=" + bids + ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", seller=" + seller + '}';
+        return "Auction{" + "auctionId=" + auctionId + ", sellerId=" + sellerId + ", itemId=" + itemId + ", lowestBid=" + lowestBid + ", gameAccountName=" + gameAccountName + ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", seller=" + seller + ", gameItem=" + gameItem + '}';
     }
 
 }
