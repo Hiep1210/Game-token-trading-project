@@ -23,8 +23,8 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
     </head>
 
     <body onload="calc()">
-        <c:set var="redirect" value="AuctionPageController"/>
-        <%@include file="navbar.jsp" %>>
+        <c:set var="redirect" value="AuctionPageController?auctionId=${requestScope.auction.auctionId}"/>
+        <%@include file="navbar.jsp" %>
         <!-- Main Content -->
         <div class="container-fluid main-content">
             <div class="row">
@@ -32,6 +32,7 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                 <div class="col-lg-10 p-4">
                     <div class="container">
                         <!-- Auction info -->
+
                         <c:if test ="${requestScope.auction != null}">
 
                             <c:if test="${(!requestScope.isEnded)}">
@@ -41,6 +42,10 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                                 <p>The auction has ended</p>
                             </c:if>
 
+                            <c:if test="${not empty requestScope.errorMessage}">
+                                <p>${requestScope.errorMessage}</p>
+                            </c:if>  
+                                
                             <c:set var="gameItem" value="${requestScope.auction.gameItem}"/>
                             <%-- Show item information --%>
                             <img src="UI/image/${gameItem.img}.png" alt ="displayfailed" >
@@ -53,19 +58,19 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                             <c:if test="${requestScope.isSeller}">
                                 <h5>Starting bid: ${auction.lowestBid} $ </h5>
                             </c:if>
-                                
+
                             <h5>Time left :<span id="countdown" ></span> </h5> 
-                            
+
                             <%-- showing appropriate messages if the auction has ended --%>
                             <c:if test="${requestScope.isEnded}">
                                 <h5>The auction has ended. (Ending date ${auction.endingDate})</h5>
                                 <c:if test="${not empty bidList}">
                                     <%-- if the final bidder is the current user show him a you won text --%>
-                                    <c:if test="${sessionScope.user.id == biddersList[0].id}">
+                                    <c:if test="${requestScope.isHighestBidder}">
                                         <h5>You won the auction, final bid (<span>${bidList[0].amount} $</span>) was placed by you.</h5>
                                     </c:if>
                                     <%-- the viewer is not the one who buy it, so just show a simple message --%>
-                                    <c:if test="${sessionScope.user.id != biddersList[0].id}">
+                                    <c:if test="${not requestScope.isHighestBidder}">
                                         <h5>Final bid: <span>${bidList[0].amount} $</span></h5>
                                     </c:if>
                                     <%-- the seller should be able to view all the bids  --%>
@@ -99,8 +104,28 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
 
                                     <%-- let registered users to bid --%>
                                     <c:if test="${not requestScope.isSeller and not empty sessionScope.user}">
-                                        <form action="*" method="post">
-                                            <!-- Work in progress -->
+                                        <c:choose>
+                                            <%-- if user is highest bidder set min value to bid is 0 --%>
+                                            <c:when test="${requestScope.isHighestBidder}">
+                                                <c:set var="min" value="1"/>
+                                                <h3>You are the current highest bidder, the amount you need to add to your bid is : 0 $</h3>
+                                            </c:when>
+                                            <%-- if user is not highest bidder set min value to bid is highest current bidder - his bid + 1--%>
+                                            <c:when test="${not requestScope.isHighestBidder}">
+                                                <c:set var="min" value="${bidList[0].amount - requestScope.userBid.amount + 1}"/>
+                                                <h3>The amount you need to add to your bid to win is : ${min} $</h3>
+                                            </c:when>
+                                            <%-- if user has not bid yet on this auction set min bid to highest bidder + 1 --%>
+                                            <c:otherwise>
+                                                <c:set var="min" value="${bidList[0].amount + 1}"/>
+                                                <h3>The amount you need to bid to win is : ${min} $</h3>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <form action="InsertBidController" method="post">
+                                            <input type="hidden" name="auctionId" value="${requestScope.auction.auctionId}">
+                                            <input type="hidden" name="bidId" value="${requestScope.userBid.bidId}">
+                                            <input type="number" step="any" min="${min}" value="${min}" name="bidAmount">
+                                            <button type="submit" name="action" value="Bid">Bid for this item</button>
                                         </form>
                                     </c:if>
                                     <%-- the seller should only see the bidding history --%>
@@ -114,11 +139,13 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
 
                                 <%-- show text for when no one has bid this auction --%>
                                 <c:if test="${empty bidList}">
-                                    <%-- registered users should be able to bid for the first time --%>
+                                    <%-- if no on has bid on this auction --%>
                                     <c:if test="${not requestScope.isSeller and not empty sessionScope.user}">
                                         <h5>No bids placed yet.</h5>
-                                        <form action="*" method="post">
-                                            <!-- Work in progress -->
+                                        <form action="InsertBidController" method="post">
+                                            <input type="number" step="any" min="${requestScope.auction.lowestBid}" value="${requestScope.auction.lowestBid}" name="bidAmount">
+                                            <input type="hidden" name="auctionId" value="${requestScope.auction.auctionId}">
+                                            <button class="button-primary" type="submit" name="action" value="bidAuction">Make the first bid</button>
                                         </form>
                                     </c:if>
 
