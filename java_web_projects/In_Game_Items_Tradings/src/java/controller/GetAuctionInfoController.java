@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file get the detailed information of an auction.
  */
 package controller;
 
@@ -14,10 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import model.Auction;
 import model.Bid;
@@ -63,26 +60,33 @@ public class GetAuctionInfoController extends HttpServlet {
         Auction auction = null;
         String rawAuctionId = request.getParameter("auctionId");
         int auctionId;
+        List<Bid> bidList;
+        List<User> biddersList;
+        int sellerId;
+        User user;
         try {
             auctionId = Integer.parseInt(rawAuctionId);
             auction = AuctionDAO.getAuction(auctionId);
             if (auction != null) {
-
-                User user = (User) request.getSession().getAttribute("user");
-                /* get seller id for the auction */
-                int sellerId = auction.getSellerId();
-                /* Guest session */
-                if (user == null) {
-                    request.setAttribute("isSeller", false);
-                } else {
-                    request.setAttribute("isSeller", sellerId == user.getId());
-                }
-                /* get the highest bid */
-                List<Bid> bidList = BidDAO.getBidsFromAuctionId(auctionId);
-                List<User> biddersList = new ArrayList<>();
+                /*Get bid list for auction*/
+                bidList = BidDAO.getBidsFromAuctionId(auctionId);
+                biddersList = new ArrayList<>();
                 for (Bid bid : bidList) {
                     biddersList.add(UserDAO.GetUserInformation(bid.getBidderId()));
                 }
+                user = (User) request.getSession().getAttribute("user");
+                /* get seller id for the auction */
+                sellerId = auction.getSellerId();
+                /* Guest session */
+                if (user == null) {
+                    request.setAttribute("isSeller", false);
+                    /* User is logged in */
+                } else {
+                    request.setAttribute("isSeller", sellerId == user.getId());
+                }
+                /* Check if user has aready bid in auction and if is highest bidder  */
+                checkIfUserIsBidder(request, response, bidList, user);
+
                 if (auction.getEndingDate().isBefore(LocalDateTime.now())) {
                     request.setAttribute("isEnded", true);
                 } else {
@@ -101,6 +105,22 @@ public class GetAuctionInfoController extends HttpServlet {
             System.out.println(e);
         } finally {
             request.getRequestDispatcher("auctionInfo.jsp").forward(request, response);
+        }
+    }
+
+    public void checkIfUserIsBidder(HttpServletRequest request, HttpServletResponse response,
+            List<Bid> bidList, User user) {
+        if (user != null) {
+            for (Bid bid : bidList) {
+                if (bid.getBidderId() == user.getId()) {
+                    if (bidList.get(0).getBidderId()== user.getId()) {
+                        request.setAttribute("isHighestBidder", true);
+                    } else {
+                        request.setAttribute("isHighestBidder", false);
+                    }
+                    request.setAttribute("userBid", bid);
+                }
+            }
         }
     }
 
