@@ -30,7 +30,6 @@ public class User {
         this.email = email;
         this.dob = dob;
         this.gender = gender;
-        this.password = password;
     }
 
     public User(int id, String username, String password, String dob, String email, String gender, String avatar, int role_id, double money) {

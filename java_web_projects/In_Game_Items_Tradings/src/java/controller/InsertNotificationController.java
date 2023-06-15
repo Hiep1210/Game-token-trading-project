@@ -47,6 +47,7 @@ public class InsertNotificationController extends HttpServlet {
                     paymentNotification(request, response);
                     break;
                 default:
+                    //more cases in later iteration
                     return;
             }
         } catch (Exception e) {
