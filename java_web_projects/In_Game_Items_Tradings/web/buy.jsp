@@ -186,11 +186,6 @@
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
-            var timestamp = new Date().getTime();
-
-            var el = document.getElementById("profileImage");
-
-            el.src = "UI/image/profile_pics/${sessionScope.user.getAvatar()}?t=" + timestamp;
         </script>
 
 
