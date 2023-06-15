@@ -59,45 +59,49 @@ public class GetAuctionInfoController extends HttpServlet {
         getAnAuction(request, response);
     }
 
-    public void getAnAuction(HttpServletRequest request, HttpServletResponse response) {
+    public void getAnAuction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Auction auction = null;
         String rawAuctionId = request.getParameter("auctionId");
-        int auctionId; 
+        int auctionId;
         try {
             auctionId = Integer.parseInt(rawAuctionId);
-            Auction auction = AuctionDAO.getAuction(auctionId);
-            User user = (User) request.getSession().getAttribute("user");
-            /* get seller id for the auction */
-            int sellerId = auction.getSellerId();
-            /* Guest session */
-            if (user == null) {
-                request.setAttribute("isSeller", false);
-            } else {
-                request.setAttribute("isSeller", sellerId == user.getId());
-            }
-            auction.getStartingDate().until(auction.getEndingDate(),ChronoUnit.MILLIS );
-            /* get the highest bid */
-            List<Bid> bidList = BidDAO.getBidsFromAuctionId(auctionId);
-            List<User> biddersList = new ArrayList<>();
-            for (Bid bid : bidList) {
-                biddersList.add(UserDAO.GetUserInformation(bid.getBidderId()));
-            }
-            if (auction.getEndingDate().isBefore(LocalDateTime.now())) {
-                request.setAttribute("isEnded", true);
-            } else {
-                request.setAttribute("isEnded", false);
-            }
-            
-            
-            User seller = UserDAO.GetUserInformation(auction.getSellerId());
-            request.setAttribute("auction", auction);
-            request.setAttribute("seller", seller);
-            request.setAttribute("biddersList", biddersList);
-            request.setAttribute("bidList", bidList);
+            auction = AuctionDAO.getAuction(auctionId);
+            if (auction != null) {
 
-            request.getRequestDispatcher("auctionInfo.jsp").forward(request, response);
+                User user = (User) request.getSession().getAttribute("user");
+                /* get seller id for the auction */
+                int sellerId = auction.getSellerId();
+                /* Guest session */
+                if (user == null) {
+                    request.setAttribute("isSeller", false);
+                } else {
+                    request.setAttribute("isSeller", sellerId == user.getId());
+                }
+                /* get the highest bid */
+                List<Bid> bidList = BidDAO.getBidsFromAuctionId(auctionId);
+                List<User> biddersList = new ArrayList<>();
+                for (Bid bid : bidList) {
+                    biddersList.add(UserDAO.GetUserInformation(bid.getBidderId()));
+                }
+                if (auction.getEndingDate().isBefore(LocalDateTime.now())) {
+                    request.setAttribute("isEnded", true);
+                } else {
+                    request.setAttribute("isEnded", false);
+                }
+
+                User seller = UserDAO.GetUserInformation(auction.getSellerId());
+                request.setAttribute("auction", auction);
+                request.setAttribute("seller", seller);
+                request.setAttribute("biddersList", biddersList);
+                request.setAttribute("bidList", bidList);
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid id");
         } catch (Exception e) {
             System.out.println(e);
+        } finally {
+            request.getRequestDispatcher("auctionInfo.jsp").forward(request, response);
         }
     }
-    
+
 }

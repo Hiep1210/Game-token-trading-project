@@ -130,7 +130,7 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
 
                         </c:if> 
                         <c:if test ="${(requestScope.auction == null)}">
-                            <h3>The auction with id ${param.aid} does not exist!</h3>
+                            <h3>Auction does not exist or is deleted!</h3>
                         </c:if>
                     </div>
                 </div>
