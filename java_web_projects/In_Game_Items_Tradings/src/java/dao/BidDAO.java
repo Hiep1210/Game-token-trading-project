@@ -53,6 +53,33 @@ public class BidDAO {
         return bidsList;
     }
 
+    public static double getHighestBidFromAuctionId(int auctionId) {
+        double bid = -1;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "SELECT * FROM game_items_trading.bid "
+                        + " WHERE auction_id = " + auctionId
+                        + " ORDER BY amount DESC";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    bid = rs.getDouble("amount");
+                }
+                rs.close();
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error in get highest bids ");
+            System.out.println(e.getMessage());
+        }
+        return bid;
+    }
+
     public static boolean insertBid(Bid bid) {
         //Return true if insert process was successfull
         boolean insertStatus = true;
