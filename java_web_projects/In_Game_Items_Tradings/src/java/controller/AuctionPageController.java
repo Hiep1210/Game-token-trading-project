@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file is responsible for getting and showing auction page info
  */
 package controller;
 
@@ -36,9 +36,9 @@ public class AuctionPageController extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<Auction> auctionList = AuctionDAO.getAllAuctions();
         double amount;
-        for (Auction auction : auctionList) { 
+        for (Auction auction : auctionList) {
             amount = BidDAO.getHighestBidFromAuctionId(auction.getAuctionId());
-            //If atleast 1 bid was found for auction set lowest bid to that bid amount
+            //If highest bid is > 0 set as lowest bid, if not found amount would be = -1 
             if (amount > 0) {
                 auction.setLowestBid(amount);
             }
