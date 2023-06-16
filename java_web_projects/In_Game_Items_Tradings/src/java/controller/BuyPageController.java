@@ -24,8 +24,8 @@ public class BuyPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<MarketItems> market_list = MarketItemsDao.getAllMarketItems();
-        request.setAttribute("market_list", market_list);
+        ArrayList<MarketItems> marketlist = MarketItemsDao.getAllMarketItems();
+        request.setAttribute("marketlist", marketlist);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
 
     }

@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -69,13 +70,15 @@ public class DeleteCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         int id = Integer.parseInt(request.getParameter("id"));
-        String message = "Failed to delete cart";
+             int id = Integer.parseInt(request.getParameter("id"));
+        String message = null;
         if(!CartDAO.deleteCartItem(id)) {
             message = "deleted Cart failed";
         }
         request.setAttribute("message", message);
-        request.getRequestDispatcher("").forward(request, response);
+        User user = (User)request.getSession().getAttribute("user");
+        int userid = user.getId();
+        response.sendRedirect("ViewCartController?id="+userid);
     }
 
     /** 

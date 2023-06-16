@@ -111,8 +111,6 @@ public class MarketItemsDao {
 
     public static void main(String[] args) {
         ArrayList<MarketItems> m = getAllMarketItems();
-        for (MarketItems marketItems : m) {
-            System.out.println(marketItems.getSkinName());
-        }
+
     }
 }

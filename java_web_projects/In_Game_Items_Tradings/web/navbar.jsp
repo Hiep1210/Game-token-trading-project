@@ -3,7 +3,7 @@
 <nav class="autohide navbar navbar-expand-lg" id="navbar">
     <div class="container-fluid">
         <!-- Navbar Logo -->
-        <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
+        <a class="navbar-brand col-lg-3" href="BuyPageController">
             <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
         </a>
         <!-- Navbar Toggler Button -->
@@ -111,6 +111,7 @@
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="UserProfileController">User Profile</a>
                                     <a class="dropdown-item" href="#">Transaction History</a>
+                                    <a class="dropdown-item" href="ViewCartController?id=${sessionScope.user.id}">View Your Cart</a>
                                     <div class="dropdown-divider"></div>
                                     <a id="logout" class="dropdown-item" href="LogOutController">Log out</a>
                                 </div>

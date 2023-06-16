@@ -72,7 +72,7 @@ public class CartDAO {
     }
     public static boolean deleteCartItem(int id){
         try {
-            DBContext db = new DBContext();
+                    DBContext db = new DBContext();
             Connection con = db.getConnection();
             String sql = "delete from cart where id = "+id;
             Statement statement = con.createStatement();
