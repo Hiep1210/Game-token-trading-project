@@ -17,6 +17,7 @@
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
         <link rel="stylesheet" href="UI/css/styleForm.css">
+        <link rel="stylesheet" href="UI/css/styleInput.css">
         <!-- formValidate JS -->
         <script src="UI/js/formValidate.js"></script>
     </head>
