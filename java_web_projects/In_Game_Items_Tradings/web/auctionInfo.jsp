@@ -42,9 +42,9 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                                 <p>The auction has ended</p>
                             </c:if>
 
-                            <c:if test="${not empty requestScope.errorMessage}">
-                                <p>${requestScope.errorMessage}</p>
-                            </c:if>  
+                                <c:if test="${not empty requestScope.errorMessage}">
+                                    <p>${requestScope.errorMessage}</p>
+                                </c:if>  
                                 
                             <c:set var="gameItem" value="${requestScope.auction.gameItem}"/>
                             <%-- Show item information --%>
