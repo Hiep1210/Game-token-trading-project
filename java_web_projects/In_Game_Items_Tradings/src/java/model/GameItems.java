@@ -11,8 +11,8 @@ package model;
 public class GameItems {
 
     private int id;
-    private String skinname;
-    private String itemname;
+    private String skinName;
+    private String itemName;
     private String type;
     private String rarity;
     private String exterior;
@@ -20,17 +20,17 @@ public class GameItems {
 
     public GameItems() {
     }
-    
-    public GameItems(int id, String skinname, String itemname, String type, String rarity,String exterior, String img) {
+
+    public GameItems(int id, String skinName, String itemName, String type, String rarity, String exterior, String img) {
         this.id = id;
-        this.skinname = skinname;
-        this.itemname = itemname;
+        this.skinName = skinName;
+        this.itemName = itemName;
         this.type = type;
         this.rarity = rarity;
         this.exterior = exterior;
         this.img = img;
     }
-    
+
     public GameItems(String skinName, String itemName, String type, String rarity, String img) {
         this.skinName = skinName;
         this.itemName = itemName;
@@ -47,20 +47,20 @@ public class GameItems {
         this.id = id;
     }
 
-    public String getSkinname() {
-        return skinname;
+    public String getSkinName() {
+        return skinName;
     }
 
-    public void setSkinname(String skinname) {
-        this.skinname = skinname;
+    public void setSkinName(String skinName) {
+        this.skinName = skinName;
     }
 
-    public String getItemname() {
-        return itemname;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItemname(String itemname) {
-        this.itemname = itemname;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getType() {
@@ -94,7 +94,7 @@ public class GameItems {
     public void setImg(String img) {
         this.img = img;
     }
-    
+
     
 
 }
