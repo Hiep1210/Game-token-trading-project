@@ -263,6 +263,51 @@ public class UserDAO {
         }
         return false;
     }
+            public User getUserByUsername(String username){
+        User user = new User();
+        String sql = "Select * from UserAccount where username= '" + username + "';";
+        try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            PreparedStatement ps = con.prepareCall(sql);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                user.setId(rs.getInt("id"));
+                user.setUsername(username);
+                user.setPassword(rs.getString("password"));
+                user.setDob(rs.getString("dob"));
+                user.setEmail(rs.getString("email"));
+                user.setGender(rs.getString("gender"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setRoleid(rs.getInt("role_id"));
+                user.setMoney(rs.getDouble("money_amount"));
+                return user;
+                
+            }         
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+    }
+        return null;
+    }
+                public boolean ResetPassword(String username, String pass){
+        try{
+           DBContext db = new DBContext();
+           Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + pass
+                        +"' where username = '" + username + "';";
+                Statement st = con.createStatement();
+                int rows = st.executeUpdate(sql);
+                if(rows < 1){
+                    throw new Exception();
+                }
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
