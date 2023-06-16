@@ -1,0 +1,37 @@
+.item-card .card {
+    background-color: rgb(49, 47, 61);
+    color: white;
+}
+
+.item-card .card:hover {
+    background-color: rgb(85, 82, 97);
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.item-card-button {
+    width: 100%;
+    background-color: rgb(128, 108, 245);
+    color: white;
+}
+
+.item-card-button:hover {
+    background-color: rgb(183, 167, 255);
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+    background-color: rgb(49, 47, 61);
+    color: white;
+    border: none;
+    margin: 3px;
+    border-radius: 5px;
+    font-size: 25px;
+    font-weight: bold;
+}
+

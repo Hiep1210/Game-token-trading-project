@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg" id="navbar">
+<nav class="autohide navbar navbar-expand-lg" id="navbar">
     <div class="container-fluid">
         <!-- Navbar Logo -->
         <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
@@ -25,7 +25,7 @@
                     </div>
                     <!-- Sell Button -->
                     <div class="col-lg-3 navbar-item nopadding">
-                        <a href="">
+                        <a href="SellPageController">
                             <i class="material-icons navbar-item-icon">sell</i>
                         </a>
                         <h5>Sell</h5>

@@ -110,9 +110,9 @@ public class MarketItemsDao {
     }
 
     public static void main(String[] args) {
-        getAllMarketItems();
-        Filter("asc", "Pistol", "Covert", null);
-        String name[] = {"Eagle", "Code"};
-        Search(name);
+        ArrayList<MarketItems> m = getAllMarketItems();
+        for (MarketItems marketItems : m) {
+            System.out.println(marketItems.getSkinName());
+        }
     }
 }
