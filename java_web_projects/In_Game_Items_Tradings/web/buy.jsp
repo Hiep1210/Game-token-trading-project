@@ -140,10 +140,10 @@
                         </div>
                         <!-- Item List -->
                         <div class="row" id="item-box">
-                            <!-- Item Card -->
                             <c:forEach var ="market_items" items="${requestScope.market_list}">
-                                <div class="col-lg-2 item-card mt-2 mb-2 dropdown" id="item-card">
-                                    <div class="card dropdown-toggle" data-bs-toggle = "dropdown" aria-expanded="false">
+                                <!-- Item Card -->
+                                <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
+                                    <div class="card" data-bs-toggle = "dropdown" aria-expanded="false">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
@@ -152,8 +152,38 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">${market_items.skin_name}</a>
+                                </div>
+                                <!-- Item Details -->
+                                <div class="offcanvas offcanvas-start" data-bs-theme="dark" tabindex="-1" id="offcanvas${market_items.id}"
+                                     aria-labelledby="offcanvas">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvas">
+                                            ${market_items.type} | ${market_items.skinName}
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <img class="img-fluid" src="UI/image/${market_items.getImg()}.png" alt="">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Exterior:</p>
+                                            <h5>${market_items.exterior}</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Rarity:</p>
+                                            <h5>${market_items.rarity}</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Time Left:</p>
+                                            <h5>1:00:00</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Sell Price:</p>
+                                            <h5>$ ${market_items.price}</h5>
+                                        </div>
+                                        <div class="summit-button mt-2">
+                                            <button type="submit">Add to Sell List</button>
+                                        </div>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -186,11 +216,6 @@
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
-            var timestamp = new Date().getTime();
-
-            var el = document.getElementById("profileImage");
-
-            el.src = "UI/image/profile_pics/${sessionScope.user.getAvatar()}?t=" + timestamp;
         </script>
 
 

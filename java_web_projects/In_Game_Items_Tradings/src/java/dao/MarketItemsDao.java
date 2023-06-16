@@ -26,13 +26,17 @@ public class MarketItemsDao {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "select m.user_id, m.price, g.* FROM marketitems m, gameitems g where m.item_id = g.id;\n";
+                String sql = "SELECT m.id, m.user_id, m.item_id, m.price, g.skin_name, "
+                        + "g.item_name, g.type, g.rarity, g.exterior, g.img "
+                        + "FROM marketitems m "
+                        + "LEFT JOIN gameitems g ON m.item_id = g.id";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    items = new MarketItems(0, rs.getInt(1), rs.getDouble(2), rs.getString(4), rs.getString(5), rs.getString(6),
-                            rs.getString(7), rs.getString(8), rs.getString(9));
+                    items = new MarketItems(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                            rs.getDouble(4), rs.getString(5), rs.getString(6),
+                            rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
                     list.add(items);
                 }
                 call.close();
@@ -50,8 +54,10 @@ public class MarketItemsDao {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "select m.id, m.user_id, m.price, g.* FROM game_items_trading.marketitems m, gameitems g where "
-                        + "m.item_id = g.id ";
+                String sql = "SELECT m.id, m.user_id, m.item_id, m.price, g.skin_name, "
+                        + "g.item_name, g.type, g.rarity, g.exterior, g.img "
+                        + "FROM marketitems m "
+                        + "LEFT JOIN gameitems g ON m.item_id = g.id";
                 if (type != null) {
                     sql += " and type = '" + type + "'";
                 }
@@ -68,8 +74,9 @@ public class MarketItemsDao {
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
                 while (rs.next()) {
-                    list.add(new MarketItems(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getString(5), rs.getString(6), rs.getString(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10)));
+                    list.add(new MarketItems(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                            rs.getDouble(4), rs.getString(5), rs.getString(6),
+                            rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10)));
                 }
                 call.close();
                 con.close();
@@ -88,8 +95,10 @@ public class MarketItemsDao {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "select m.id, m.user_id, m.price, g.* FROM game_items_trading.marketitems m, gameitems g where "
-                        + "m.item_id = g.id ";
+                String sql = "SELECT m.id, m.user_id, m.item_id, m.price, g.skin_name, "
+                        + "g.item_name, g.type, g.rarity, g.exterior, g.img "
+                        + "FROM marketitems m "
+                        + "LEFT JOIN gameitems g ON m.item_id = g.id";
                 for (int i = 0; i < name.length; i++) {
                     sql += " and (item_name Like '%" + name[i] + "%' or skin_name like '%" + name[i] + "%') ";
                 }
@@ -97,8 +106,9 @@ public class MarketItemsDao {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    items = new MarketItems(rs.getInt(1), rs.getInt(2), rs.getDouble(3), rs.getString(5), rs.getString(6), rs.getString(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10));
+                    items = new MarketItems(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                            rs.getDouble(4), rs.getString(5), rs.getString(6),
+                            rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
                     list.add(items);
                 }
                 call.close();
@@ -111,9 +121,9 @@ public class MarketItemsDao {
     }
 
     public static void main(String[] args) {
-        getAllMarketItems();
-        Filter("asc", "Pistol", "Covert", null);
-        String name[] = {"Eagle", "Code"};
-        Search(name);
+        ArrayList<MarketItems> m = getAllMarketItems();
+        for (MarketItems marketItems : m) {
+            System.out.println(marketItems.getSkinName());
+        }
     }
 }

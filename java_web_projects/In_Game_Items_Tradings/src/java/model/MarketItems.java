@@ -10,21 +10,26 @@ package model;
  */
 public class MarketItems {
     private int id;
-    private int user_id;
+    private int userId;
+    private int itemId;
     private double price;
-    private String skin_name;
-    private String item_name;
+    private String skinName;
+    private String itemName;
     private String type;
     private String rarity;
     private String exterior;
     private String img;
 
-    public MarketItems(int id, int user_id, double price, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
+    public MarketItems() {
+    }
+
+    public MarketItems(int id, int userId, int itemId, double price, String skinName, String itemName, String type, String rarity, String exterior, String img) {
         this.id = id;
-        this.user_id = user_id;
+        this.userId = userId;
+        this.itemId = itemId;
         this.price = price;
-        this.skin_name = skin_name;
-        this.item_name = item_name;
+        this.skinName = skinName;
+        this.itemName = itemName;
         this.type = type;
         this.rarity = rarity;
         this.exterior = exterior;
@@ -39,12 +44,20 @@ public class MarketItems {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public double getPrice() {
@@ -55,20 +68,20 @@ public class MarketItems {
         this.price = price;
     }
 
-    public String getSkin_name() {
-        return skin_name;
+    public String getSkinName() {
+        return skinName;
     }
 
-    public void setSkin_name(String skin_name) {
-        this.skin_name = skin_name;
+    public void setSkinName(String skinName) {
+        this.skinName = skinName;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getType() {
@@ -102,5 +115,7 @@ public class MarketItems {
     public void setImg(String img) {
         this.img = img;
     }
+    
+    
    
 }
