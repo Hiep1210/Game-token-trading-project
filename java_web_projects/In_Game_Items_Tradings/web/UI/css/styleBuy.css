@@ -128,3 +128,11 @@
     background-color: rgb(183, 167, 255);
 }
 
+.offcanvas {
+    background-color: rgb(40, 38, 51);
+}
+
+.offcanvas-title, .sell-info-select-name {
+    color: white;
+    font-weight: bold;
+}
