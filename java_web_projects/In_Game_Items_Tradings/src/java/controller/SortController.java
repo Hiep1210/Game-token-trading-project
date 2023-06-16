@@ -8,7 +8,6 @@ package controller;
 import dao.GameItemsDAO;
 import dao.MarketItemsDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -71,6 +70,8 @@ public class SortController extends HttpServlet {
                 request.setAttribute("market_list", market_items);
                 request.getRequestDispatcher(currentpage).forward(request, response);
                 break;
+           default:
+               break;
         }
     }
 

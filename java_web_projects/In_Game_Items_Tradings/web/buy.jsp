@@ -27,7 +27,7 @@
         <nav class="navbar navbar-expand-lg" id="navbar">
             <div class="container-fluid">
                 <!-- Navbar Logo -->
-                <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
+                <a class="navbar-brand col-lg-3" href="BuyPageController">
                     <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
                 </a>
                 <!-- Navbar Toggler Button -->
@@ -71,7 +71,6 @@
                         </div>
                     </div>
                     <!-- Navbar User  -->
-                    <%--<c:out value="${pageContext.request.requestURI}"/>--%>
                     <div class="col-lg-4 nopadding navbar-user">
                         <div class="row nopadding">
                             <!-- User Notification -->
@@ -281,17 +280,17 @@
                             <!-- Item Card -->
                             <c:forEach var ="market_items" items="${requestScope.market_list}">
                                 <div class="col-lg-2 item-card mt-2 mb-2 dropdown" id="item-card">
-                                    <div class="card dropdown-toggle" data-bs-toggle = "dropdown" aria-expanded="false">
+                                    <div class="card dropdown-toggle">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
-                                            <a href="#" class="btn item-card-button">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                            </a>
+                                            <form action="AddCartController" method="post">
+                                                <input type="text" name="market_id" value="${market_items.id}" hidden/>
+                                                <button type="submit" value="" class="btn item-card-button">
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
+                                            </form>
                                         </div>
-                                    </div>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">${market_items.skin_name}</a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -334,7 +333,7 @@
 
         <script>
             function Redirect() {
-                window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
+                window.location.href = "GetNotificationController?redirect=BuyPageController"
             }
         </script>
 

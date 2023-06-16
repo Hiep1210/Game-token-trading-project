@@ -8,27 +8,22 @@ package model;
  *
  * @author Inspiron
  */
-public class MarketItems {
+public class MarketItems extends GameItems{
     private int id;
+    private String game;
     private int user_id;
     private double price;
-    private String skin_name;
-    private String item_name;
-    private String type;
-    private String rarity;
-    private String exterior;
-    private String img;
+    private String begindate;
+    private String enddate;
 
-    public MarketItems(int id, int user_id, double price, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
+    public MarketItems(int id, String game, int user_id, double price, String begindate, String enddate, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
+        super(gid, skin_name, item_name, type, rarity, exterior, img);
         this.id = id;
+        this.game = game;
         this.user_id = user_id;
         this.price = price;
-        this.skin_name = skin_name;
-        this.item_name = item_name;
-        this.type = type;
-        this.rarity = rarity;
-        this.exterior = exterior;
-        this.img = img;
+        this.begindate = begindate;
+        this.enddate = enddate;
     }
 
     public int getId() {
@@ -37,6 +32,14 @@ public class MarketItems {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getGame() {
+        return game;
+    }
+
+    public void setGame(String game) {
+        this.game = game;
     }
 
     public int getUser_id() {
@@ -55,52 +58,21 @@ public class MarketItems {
         this.price = price;
     }
 
-    public String getSkin_name() {
-        return skin_name;
+    public String getBegindate() {
+        return begindate;
     }
 
-    public void setSkin_name(String skin_name) {
-        this.skin_name = skin_name;
+    public void setBegindate(String begindate) {
+        this.begindate = begindate;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getEnddate() {
+        return enddate;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getRarity() {
-        return rarity;
-    }
-
-    public void setRarity(String rarity) {
-        this.rarity = rarity;
-    }
-
-    public String getExterior() {
-        return exterior;
-    }
-
-    public void setExterior(String exterior) {
-        this.exterior = exterior;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-   
+    
+    
 }

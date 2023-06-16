@@ -36,13 +36,13 @@ import org.apache.tomcat.util.http.fileupload.util.Streams;
 public class SendPaymentRequestController extends HttpServlet {
 
     String location = null;
-
+    private static final String HOMEPAGE = "BuyPageController";
     @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
-        request.getRequestDispatcher("BuyPageController").forward(
+        request.getRequestDispatcher(HOMEPAGE).forward(
                 request, response);
     }
 
@@ -57,13 +57,13 @@ public class SendPaymentRequestController extends HttpServlet {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         PaymentRequest paymentRequest;
         String strDate = formatter.format(date);
-        String redirect = "BuyPageController";// if redirect attribute is null auto redirect to DisplayMarketItemsController
+        String redirect = HOMEPAGE;// if redirect attribute is null auto redirect to DisplayMarketItemsController
         String newInvoiceImageName;
         double money;
 
         try {
             if (user == null) { // if session does not contain any user instance
-                redirect = "BuyPageController";
+                redirect =HOMEPAGE;
             } else {
                 upload = new ServletFileUpload();
                 iterator = upload.getItemIterator(request);
