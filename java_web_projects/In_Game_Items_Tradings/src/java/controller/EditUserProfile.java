@@ -108,7 +108,7 @@ public class EditUserProfile extends HttpServlet {
 
             // Create a User object and perform sign-up logic
             int id = Integer.parseInt(id_raw);
-            User user = new User(id, profilePicFilename, username, email, dob, gender);
+            User user = new User(id, username, "", dob, email, gender, profilePicFilename, 0, 0);
             // Perform update logic using the user object
             UserDAO dao = new UserDAO();
             dao.editUserProfile(user);

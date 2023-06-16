@@ -157,7 +157,7 @@ public class SignUpController extends HttpServlet {
                 request.getRequestDispatcher("signup.jsp").forward(request, response);
             }
             // Create a User object and perform sign-up logic
-            User newUser = new User(profilePicFilename, username, email, dob, gender, password);
+            User newUser = new User(0, username, password, dob, email, gender, profilePicFilename, 1, 0);
             // Perform sign-up logic using the newUser object
             UserDAO dao = new UserDAO();
             dao.insertUser(newUser);

@@ -6,19 +6,21 @@
 package controller;
 
 import java.io.IOException;
-import dao.CartDAO;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import dao.CartDAO;
+import java.util.ArrayList;
+import model.Cart;
 /**
  *
  * @author Inspiron
  */
-@WebServlet(name="AddCartController", urlPatterns={"/AddCartController"})
-public class AddCartController extends HttpServlet {
+@WebServlet(name="ViewCartController", urlPatterns={"/ViewCartController"})
+public class ViewCartController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -27,7 +29,22 @@ public class AddCartController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ViewCartController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ViewCartController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -53,14 +70,11 @@ public class AddCartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int marketid = Integer.parseInt(request.getParameter("marketid"));
+        ArrayList<Cart> clist = new ArrayList<>();
         int buyerid = Integer.parseInt(request.getParameter("buyerid"));
-        String message = "Failed to add cart";
-        if(CartDAO.insertCartItem(buyerid, marketid)) {
-            message = "Added Cart";
-        }
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("BuyPageController").forward(request, response);
+        clist = CartDAO.getAllCartItems(buyerid);
+        request.setAttribute("clist", clist);
+        request.getRequestDispatcher("").forward(request, response);
     }
 
     /** 

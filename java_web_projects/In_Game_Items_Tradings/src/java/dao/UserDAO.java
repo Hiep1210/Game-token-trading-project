@@ -267,7 +267,6 @@ public class UserDAO {
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
         User userInfo = GetUserInformation(1);
-        editUserProfile(new User(8, "abyss-diana-tc-2.png", "lao", "alo", "2003-03-21", "Female"));
         System.out.println(userInfo.getEmail());
 //        System.out.println(dao.FindUserName("laamwwibu1"));
 //        System.out.println(dao.FindUserName("hiep"));

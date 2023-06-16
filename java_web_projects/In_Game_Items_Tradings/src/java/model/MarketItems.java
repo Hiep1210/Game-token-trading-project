@@ -11,16 +11,17 @@ package model;
 public class MarketItems extends GameItems{
     private int id;
     private String game;
-    private int user_id;
+    private int userid;
     private double price;
     private String begindate;
     private String enddate;
 
-    public MarketItems(int id, String game, int user_id, double price, String begindate, String enddate, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
-        super(gid, skin_name, item_name, type, rarity, exterior, img);
+    public MarketItems(int id, String game, int userid, double price, String begindate, String enddate,
+            int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
+        super(gid, skinname, itemname, type, rarity, exterior, img);
         this.id = id;
         this.game = game;
-        this.user_id = user_id;
+        this.userid = userid;
         this.price = price;
         this.begindate = begindate;
         this.enddate = enddate;
@@ -42,12 +43,12 @@ public class MarketItems extends GameItems{
         this.game = game;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserid() {
+        return userid;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public double getPrice() {
@@ -73,6 +74,6 @@ public class MarketItems extends GameItems{
     public void setEnddate(String enddate) {
         this.enddate = enddate;
     }
-    
+
     
 }

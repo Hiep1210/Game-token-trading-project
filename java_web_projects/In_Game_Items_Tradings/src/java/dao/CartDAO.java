@@ -20,20 +20,21 @@ import model.Cart;
 public class CartDAO {
     private static final String SELECTITEMS = "SELECT c.id,c.buyer_id,m.id, m.game_account_name, m.user_id, "
             + "m.price, m.begin_date, m.end_date,g.* FROM cart c, marketitems m, gameitems g "
-            + "where c.market_items_id = m.id and m.item_id = g.id";
-    public static ArrayList<Cart> getAllCartItems() throws SQLException {
+            + "where c.market_items_id = m.id and m.item_id = g.id and c.buyer_id = ?";
+    public static ArrayList<Cart> getAllCartItems(int buyerid){
         ArrayList<Cart> list = new ArrayList<>();
         Cart items = null;
         Connection con = null;
-        Statement statement = null;
+        PreparedStatement statement = null;
         try {
             DBContext db = new DBContext();
             con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
                 String sql = SELECTITEMS;
-                statement = con.createStatement();
-                ResultSet rs = statement.executeQuery(sql);
+                statement = con.prepareStatement(sql);
+                statement.setInt(1, buyerid);
+                ResultSet rs = statement.executeQuery();
                 //run a loop to save queries into model
                 while (rs.next()) {
                     items = new Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getDouble(6),
@@ -45,8 +46,11 @@ public class CartDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } 
+        try{
             statement.close();
             con.close();
+        }catch(SQLException s){
+        }
         return list;
     }
     public static boolean insertCartItem(int buyerid, int marketid ){
@@ -82,7 +86,7 @@ public class CartDAO {
         return false;
     }
     public static void main(String[] args) throws SQLException {
-        getAllCartItems();
+        getAllCartItems(1);
         insertCartItem(2, 3);
         deleteCartItem(21);
     }
