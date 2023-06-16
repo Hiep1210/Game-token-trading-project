@@ -100,3 +100,33 @@
     justify-content: center;
     align-items: center;
 }
+
+.radio-group label {
+    font-size: 30px;
+    color: white;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: rgb(49, 47, 61);
+    border-radius: 5px;
+}
+
+.file-input {
+    border: none;
+    background-color: rgb(49, 47, 61);
+    color: white;
+}
+
+.file-input::file-selector-button {
+    color: white;
+    background-color: rgb(128, 108, 245);
+    font-weight: bold;
+}
+ 
+.header {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.form-controll {
+    color: white;
+}

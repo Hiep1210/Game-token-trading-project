@@ -19,240 +19,129 @@
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <!-- Link Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+              integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
         <link rel="stylesheet" href="UI/css/userProfile.css">
+        <script src="UI/js/formValidate.js"></script>
     </head>
 
     <body>
         <c:set var="redirect" value="UserProfileController"/>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg" id="navbar">
-            <div class="container-fluid">
-                <!-- Navbar Logo -->
-                <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
-                    <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
-                </a>
-                <!-- Navbar Toggler Button -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-                        aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Navbar Toggler -->
-                <div class="collapse navbar-collapse col-lg-9" id="navbarToggler">
-                    <!-- Navbar Item Box -->
-                    <div class="navbar-item-box col-lg-8">
-                        <div class="row nopadding">
-                            <!-- Trade Button -->
-                            <div class="col-lg-3 navbar-item nopadding">
-                                <a href="">
-                                    <i class="material-icons navbar-item-icon">compare_arrows</i>
-                                </a>
-                                <h5>Trade</h5>
-                            </div>
-                            <!-- Sell Button -->
-                            <div class="col-lg-3 navbar-item nopadding">
-                                <a href="">
-                                    <i class="material-icons navbar-item-icon">sell</i>
-                                </a>
-                                <h5>Sell</h5>
-                            </div>
-                            <!-- Buy Button -->
-                            <div class="col-lg-3 navbar-item nopadding">
-                                <a href="BuyPageController">
-                                    <i class="material-icons navbar-item-icon">shopping_cart</i>
-                                </a>
-                                <h5>Buy</h5>
-                            </div>
-                            <!-- Auction Button -->
-                            <div class="col-lg-3 navbar-item nopadding">
-                                <a href="">
-                                    <i class="material-icons navbar-item-icon">gavel</i>
-                                </a>
-                                <h5>Auction</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Navbar User  -->
-                    <%--<c:out value="${pageContext.request.requestURI}"/>--%>
-                    <div class="col-lg-4 nopadding navbar-user">
-                        <div class="row nopadding">
-                            <!-- User Notification -->
-                            <div class="col-lg-3 navbar-user-notifi dropdown">
-                                <c:if test="${(sessionScope.user != null)}">  
-                                    <c:choose>
-                                        <c:when test="${(requestScope.notificationList == null)}">
-                                            <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
-                                                <i class="material-icons navbar-item-icon">notifications</i>
-                                            </a>
-                                        </c:when>
-                                        <c:when test="${(requestScope.notificationList.size() eq 0) }">
-                                            <!-- Dropdown toggler -->
-                                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                               aria-expanded="false">
-                                                <i class="material-icons navbar-item-icon">notifications</i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#">You have 0 new notification </a>
-                                            </div>
-                                        </c:when>    
-                                        <c:otherwise>
-                                            <!-- Dropdown toggler -->
-                                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                               aria-expanded="false">
-                                                <i class="material-icons navbar-item-icon">notifications</i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <c:forEach var="notification" items="${requestScope.notificationList}">
-                                                    <a class="dropdown-item" href="#">${notification.noti_content}</a>
-                                                </c:forEach>
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:if>
-                            </div>
-                            <!-- User Balance -->
-                            <div class="col-lg-6 navbar-user-balance nopadding">
-                                <c:if test="${(sessionScope.user != null)}" >  
-                                    <!-- Balance amount -->
-                                    <div class="navbar-user-balance-text">
-                                        <h5>Your balance</h5>
-                                        <h5>$ ${sessionScope.user.money}</h5>
-                                    </div>
-                                    <!-- Topup button -->
-                                    <div class="navbar-user-balance-topup rounded-circle">
-                                        <i class="material-icons navbar-item-icon">add</i>
-                                    </div>
-                                </c:if>
-                            </div>
-                            <!-- User Profile -->
-                            <c:choose>
-                                <c:when test="${sessionScope.user != null}">
-                                    <div class="col-lg-3 navbar-user-profile dropdown">
-                                        <!-- Dropdown toggler -->
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile.jpg" alt="">
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="UserProfileController">User Profile</a>
-                                            <a class="dropdown-item" href="#">Transaction History</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a id="logout" class="dropdown-item" href="LogOutController">Log out</a>
-                                        </div>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-lg-3 navbar-user-profile dropdown">
-                                        <!-- Dropdown toggler -->
-                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            <img class="img-fluid rounded-circle" src="UI/image/user_profile1.jpg" alt="">
-                                        </button>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="signup.jsp?request_id=1">Sign Up</a>
-                                            <a class="dropdown-item" href="login.jsp">Log In</a>
-                                            <div class="dropdown-divider"></div>
-                                        </div>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                </div>
-        </nav>
+        <%@include file="navbar.jsp" %>
 
         <div class="container-fluid main-content">
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-lg-3 sidebar">
-                    <div class="container">
-                        <!-- Sidebar Category -->
-                        <details class="sidebar-category">
-                            <summary>User Profile</summary>
-                            <ul class="nopadding">
-                                <a href="UserProfileController">
-                                    <li>Profile</li>
-                                </a>
-                                <a href="topUpRequest.jsp">
-                                    <li>Top up</li>
-                                </a>
-                                <a href="ChangePassword.jsp">
-                                    <li>Change Password</li>
-                                </a>
-                                <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">  
-                                    <a href="GetPaymentRequestController">
-                                        <li>Process top up request</li>
-                                    </a>
-                                    <a href="sendAdminNotification.jsp">
-                                        <li>Send notification to all users</li>
-                                    </a>
-                                </c:if> 
-                            </ul>
-                        </details>
-                        <!-- Sidebar Category -->
-                        <details class="sidebar-category">
-                            <summary>History</summary>
-                        </details>
-                    </div>
+                    <%@include file="sidebar.jsp" %>
                 </div>
                 <!-- User Info -->
-                <div class="col-lg-6 user-information">
-                    <div class="container">
-                        <form id="edit-user-profile">
-                            <div class="row mb-3">
-                                <label for="username" class="col-sm-3 col-form-label">User Name:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" value="${sessionScope.user.username}" class="form-control" readonly="">
+                <form class="col-lg-9" id="edit-user-profile" action="EditUserProfile" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="user-information col-lg-8">
+                            <div class="container">
+                                <input name="id" type="text" value="${sessionScope.user.id}" hidden>
+                                <div class="form-group">
+                                    <label for="username" class="form-label">Username</label>
+                                    <div class="col-lg-10 ps-0">
+                                        <input id="username" name="username" type="text" value="${sessionScope.user.username}" class="form-control" readonly>
+                                        <span class="form-message"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email</label>
+                                    <div class="col-lg-10 ps-0">
+                                        <input id="email" name="email" type="text" value="${sessionScope.user.email}" class="form-control">
+                                        <span class="form-message"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dob" class="form-label">Date of Birth</label>
+                                    <div class="col-lg-10 ps-0">
+                                        <input id="dob" name="dob" type="date" value="${sessionScope.user.dob}" class="form-control">
+                                        <span class="form-message"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <div class="radio-group">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.user.gender eq 'Male'}">
+                                                <label for="male" class="gender-select text-center"
+                                                       onclick="changeColor('rgb(88, 101, 242)', 'male')"><i class="fa-solid fa-mars"></i></label>
+                                                <input type="radio" name="gender" value="Male" id="male"
+                                                       onchange="resetColor('female')" checked>
+                                                <label for="female" class="gender-select text-center"
+                                                       onclick="changeColor('rgb(238, 69, 158)', 'female')"><i class="fa-solid fa-venus"></i></label>
+                                                <input type="radio" name="gender" value="Female" id="female"
+                                                       onchange="resetColor('male')">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <label for="male" class="gender-select text-center"
+                                                       onclick="changeColor('rgb(88, 101, 242)', 'male')"><i class="fa-solid fa-mars"></i></label>
+                                                <input type="radio" name="gender" value="Male" id="male"
+                                                       onchange="resetColor('female')">
+                                                <label for="female" class="gender-select text-center"
+                                                       onclick="changeColor('rgb(238, 69, 158)', 'female')"><i class="fa-solid fa-venus"></i></label>
+                                                <input type="radio" name="gender" value="Female" id="female"
+                                                       onchange="resetColor('male')" checked>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="form-message">${requestScope.mess3}</div>  
+                                <!-- Form Button -->          
+                                <div class="row">
+                                    <div class="summit-button col-lg-2">
+                                        <button type="submit" form="edit-user-profile">Save</button>
+                                    </div>
+                                    <div class="summit-button col-lg-2">
+                                        <button type="reset" form="edit-user-profile">Reset</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label for="email" class="col-sm-3 col-form-label">Email:</label>
-                                <div class="col-sm-7">
-                                    <input type="text"  value="${sessionScope.userInfo.email}" class="form-control" id="email" readonly>
+                        </div>
+                        <!-- User PFP -->
+                        <div class="col-lg-4 user-pfp">
+                            <div class="container">
+                                <div class="form-group">
+                                    <label for="pfp" class="form-label">
+                                        <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="">
+                                        <c:set var="profile" value="${sessionScope.user.getAvatar()}"/>
+                                    </label>
+                                    <input type="file" accept="image/*" name="avatar" class="form-control file-input" id="pfp">
+                                    <span class="form-message"></span>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="dob" class="col-sm-3 col-form-label">Date of Birth:</label>
-                                <div class="col-sm-7">
-                                    <input type="date" value="${sessionScope.userInfo.dob}" class="form-control" id="dob" readonly="">
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="gender" class="col-sm-3 col-form-label">Gender:</label>
-                                <div class="col-sm-7">
-                                    <input type="text" value="${sessionScope.userInfo.gender}" class="form-control" id="dob" readonly="">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="form-message">${requestScope.mess3}</div>
-                    </div>
-                </div>
-                <!-- User PFP -->
-                <div class="col-lg-3 user-pfp">
-                    <div class="container">
-                        <img class="img-fluid rounded-circle" src="image/user_profile.jpg" alt="">
-                        <div class="row mb-3 user-information">
-                            <label for="dob" class="col-form-label">Associated Game Account</label>
-                            <label for="dob" class="col-form-label">Username:</label>
-                            <input type="text" value="${sessionScope.game_acc.username}" class="form-control" id="dob" readonly="">
-                            <div class="mt-4 summit-button nopadding">
-                                <a style=" text-decoration: none" href="loginGameAccount.jsp?request_id=2">
-                                    <i class="material-icons navbar-item-icon">link</i>
-                                    <label style="display: inline;">Change linked game account</label>
-                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Validator({
+                    form: '#edit-user-profile',
+                    formGroupSelector: '.form-group',
+                    errorSelector: '.form-message',
+                    rules: [
+                        Validator.isRequired('#username', 'Please enter your username'),
+                        Validator.isEmail('#email'),
+                        Validator.isDate('#dob'),
+                        Validator.isRequiredGender('[name="gender"]', 'Please select a gender')
+                    ]
+                });
+            });
         </script>
     </body>
 

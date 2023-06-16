@@ -23,10 +23,13 @@
 
     <body>
         <div class="container nopadding">
+
             <!-- Sign Up Form -->
             <div class="registration form">
                 <!-- Screen Header -->
                 <header>Signup</header>
+                <!-- Display Signup Error -->
+                <div class="form-message">${requestScope.message}</div>
                 <!-- Main Form -->
                 <form id="signup-form" action="SignUpController" method="post" enctype="multipart/form-data">
                     <!-- Avatar -->

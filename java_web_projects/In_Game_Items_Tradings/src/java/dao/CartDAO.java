@@ -6,6 +6,7 @@ package dao;
 
 import Context.DBContext;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -48,7 +49,41 @@ public class CartDAO {
             con.close();
         return list;
     }
+    public static boolean insertCartItem(int buyerid, int marketid ){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "INSERT INTO cart (buyer_id, market_items_id) VALUES (?, ?); ";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, buyerid);
+            statement.setInt(2, marketid);
+           if(statement.executeUpdate() < 1) throw new Exception();
+            con.close();
+            statement.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+    public static boolean deleteCartItem(int id){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "delete from cart where id = "+id;
+            Statement statement = con.createStatement();
+            if(statement.executeUpdate(sql) < 1) throw new Exception();
+            con.close();
+            statement.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     public static void main(String[] args) throws SQLException {
         getAllCartItems();
+        insertCartItem(2, 3);
+        deleteCartItem(21);
     }
 }

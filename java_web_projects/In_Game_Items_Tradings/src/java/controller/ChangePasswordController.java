@@ -7,7 +7,6 @@ package controller;
 
 import dao.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -44,8 +43,8 @@ throws ServletException, IOException {
         }else{
             if(newPass.equals(newCfPass)){
                 dao.ChangePassword(user.getId(), newPass);
-                ses.setAttribute("mess2", "Suceed");
-                request.getRequestDispatcher("userProfile.jsp").forward(request, response);
+                ses.invalidate();
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }else{
                 ses.setAttribute("mess1", "New pass and confirm not match");
                 request.getRequestDispatcher("ChangePassword.jsp").forward(request, response);

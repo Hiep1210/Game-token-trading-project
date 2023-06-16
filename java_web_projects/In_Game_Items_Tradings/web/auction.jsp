@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Buy Page</title>
+        <title>Auction Page</title>
         <!-- Link Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -21,8 +21,8 @@
         <link rel="stylesheet" href="UI/css/buy.css">
     </head>
 
-    <body>
-        <c:set var="redirect" value="BuyPageController"/>
+    <body onload="countDown()">
+        <c:set var="redirect" value="AuctionPageController"/>
         <%@include file="navbar.jsp" %>
         <!-- Main Content -->
         <div class="container-fluid main-content">
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <!-- Filter Selection Section -->
-                    <div class="filter sidebar">
+                    <div class="filtexr sidebar">
                         <div class="container">
                             <!-- Filter Type -->
                             <details class="sidebar-category">
@@ -141,19 +141,24 @@
                         <!-- Item List -->
                         <div class="row" id="item-box">
                             <!-- Item Card -->
-                            <c:forEach var ="market_items" items="${requestScope.market_list}">
+                            <c:forEach var ="auction" items="${requestScope.auctionList}" varStatus="currentStatus">
+                                <c:set var="gameItem" value="${auction.gameItem}"/>
                                 <div class="col-lg-2 item-card mt-2 mb-2 dropdown" id="item-card">
                                     <div class="card dropdown-toggle" data-bs-toggle = "dropdown" aria-expanded="false">
-                                        <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
+                                        <img src="UI/image/${gameItem.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
-                                            <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
-                                            <a href="#" class="btn item-card-button">
-                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            <h5 class="card-title item-card-price ps-1" >Start from :</h5>
+                                            <h5 class="card-title item-card-price ps-1">$ ${auction.lowestBid}</h5>
+                                            <h5 class="card-title ps-1" >Time left :</h5>
+                                            <h5 class="card-title ps-1" id="countdown${currentStatus.index}"></h5>
+                                            <a href="GetAuctionInfoController?auctionId=${auction.auctionId}" class="btn item-card-button">
+                                                <i class="fa-solid fa-gavel"></i>
                                             </a>
+
                                         </div>
                                     </div>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="loginGameAccount.jsp?request_id=1">${market_items.skin_name}</a>
+                                        <a class="dropdown-item" href="GetAuctionInfoController?auctionId=${auction.auctionId}">${gameItem.skin_name}</a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -181,17 +186,66 @@
             </div>
         </div>
 
-
         <script>
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
         </script>
+        <script>
+            // Define the countdown details for each timer
+            var countdowns = [
+            <c:forEach var="auction"  items="${requestScope.auctionList}" varStatus="currentStatus">
+            {name: "countdown${currentStatus.index}", endDate: "${auction.endingDate}"}
+                <c:if test="${not currentStatus.last}">
+            ,
+                </c:if>
+            </c:forEach>
+            ];
 
 
-        <!-- Link Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+            // Update all countdowns
+            function updateCountdowns() {
+                countdowns.forEach(function (countdown) {
+                    var endDate = new Date(countdown.endDate);
+
+                    var now = new Date();
+                    var distance = endDate.getTime() - now.getTime();
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    // Display the countdown in the HTML element for when acution time time less than 1 minute 
+                    if (days < 0 && hours < 0 & minutes < 0) {
+                        var countdownElement = document.getElementById(countdown.name);
+                        countdownElement.innerHTML = seconds + "s";
+                        // Display the countdown in the HTML element for when acution time less than 1 hour 
+                    } else if (days < 0 && hours < 0) {
+                        var countdownElement = document.getElementById(countdown.name);
+                        countdownElement.innerHTML = minutes + "m " + seconds + "s";
+                        // Display the countdown in the HTML element for when acution time less than 1 day 
+                    } else if (days < 0) {
+                        var countdownElement = document.getElementById(countdown.name);
+                        countdownElement.innerHTML = hours + "h "  + minutes + " m";
+                    } else {
+                        // Display the countdown in the HTML element for when auction time left is more than 1 day
+                        var countdownElement = document.getElementById(countdown.name);
+                        countdownElement.innerHTML = days + "d " + hours + "h ";
+                    }
+
+
+                    // If the countdown is finished, update the HTML element
+                    if (distance < 0) {
+                        countdownElement.innerHTML = countdown.name + ": EXPIRED";
+                    }
+                });
+            }
+
+            // Update countdowns every 1 second
+            var countdownInterval = setInterval(updateCountdowns, 1000);
+
+            // Call updateCountdowns once immediately to display the initial countdowns
+            updateCountdowns();
         </script>
 
     </body>

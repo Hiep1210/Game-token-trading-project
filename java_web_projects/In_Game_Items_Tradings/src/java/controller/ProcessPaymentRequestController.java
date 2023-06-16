@@ -8,7 +8,6 @@ import dao.PaymentRequestDAO;
 import dao.RoleDAO;
 import dao.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -69,7 +68,7 @@ public class ProcessPaymentRequestController extends HttpServlet {
                 // If payment request is accepted add funds to user account
                 if (decision.equals("accept")) {
                     newMoneyAmount = user.getMoney() + paymentRequest.getMoney();
-                    UserDAO.acceptPaymentRequest(paymentRequest.getUser_id(), newMoneyAmount);
+                    UserDAO.updateUserMoney(paymentRequest.getUser_id(), newMoneyAmount);
                     user.setMoney(newMoneyAmount);
                 }
                 PaymentRequestDAO.deletePaymentRequest(paymentRequestId);//Delete payment request record from table
