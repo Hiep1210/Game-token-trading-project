@@ -14,78 +14,32 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.List;
 import model.GameItems;
 
 /**
  *
  * @author VICTUS
  */
-@WebServlet(name = "searchSellItems", urlPatterns = {"/searchSell"})
-public class searchSellItems extends HttpServlet {
+@WebServlet(name = "sortSellController", urlPatterns = {"/sortSell"})
+public class sortSellController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet searchSellItems</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet searchSellItems at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
-        String nameSearch = (String) request.getParameter("txt");
-
-        SellDAO sellDAO = new SellDAO();
-        List<GameItems> itemList = sellDAO.searchByName(nameSearch);
-        ArrayList<GameItemsDAO> listWithTrimed = new ArrayList<>();
-        for (GameItems gameItems : itemList) {
+        String order = request.getParameter("order");
+        ArrayList<GameItems> allSellItems = SellDAO.sortByRarity(order);
+        ArrayList<GameItemsDAO> sellList = new ArrayList<>();
+        for (GameItems gameItems : allSellItems) {
             //trim all spaces character for offcanvas ids
             String trimedSkinName = gameItems.getSkinName().replaceAll("\\s", "");
             GameItemsDAO gameItem = new GameItemsDAO(gameItems, trimedSkinName);
-            listWithTrimed.add(gameItem);
+            sellList.add(gameItem);
         }
-        
-        for (GameItemsDAO gameItemsDAO : listWithTrimed) {
-            System.out.println(gameItemsDAO.getTrimedSkinName());
-        }
-        
         PrintWriter out = response.getWriter();
 
-        for (GameItemsDAO gameItems : listWithTrimed) {
+        for (GameItemsDAO gameItems : sellList) {
             out.println("<div class=\"col-lg-2 item-card mt-2 mb-2 \" id=\"item-card\" data-bs-toggle=\"offcanvas\" href=\"#offcanvas" + gameItems.getTrimedSkinName() + "\">\n"
-                    + "                                <div class=\"card rarity-"+ gameItems.getGameItems().getRarity().toLowerCase() +"\" data-bs-toggle = \"dropdown\" aria-expanded=\"false\">\n"
+                    + "                                <div class=\"card rarity-" + gameItems.getGameItems().getRarity().toLowerCase() + "\" data-bs-toggle = \"dropdown\" aria-expanded=\"false\">\n"
                     + "                                    <img src=\"UI/image/" + gameItems.getGameItems().getImg() + ".png\" alt =\"displayfailed\" class=\"card-img-top\">\n"
                     + "                                    <div class=\"card-body\">\n"
                     + "                                        <p>" + gameItems.getGameItems().getType() + " | " + gameItems.getGameItems().getItemName() + " " + gameItems.getGameItems().getSkinName() + "</p>\n"
@@ -128,29 +82,5 @@ public class searchSellItems extends HttpServlet {
                     + "                            </div>");
         }
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -63,7 +63,7 @@ public class SellPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<GameItems> allSellItems = SellDAO.getTopSixItems();
+        ArrayList<GameItems> allSellItems = SellDAO.getTopTwelveItems();
         ArrayList<GameItemsDAO> sellList = new ArrayList<>();
         for (GameItems gameItems : allSellItems) {
             //trim all spaces character for offcanvas ids
