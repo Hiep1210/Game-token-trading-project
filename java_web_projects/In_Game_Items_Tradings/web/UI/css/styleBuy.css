@@ -127,6 +127,14 @@
 .item-card-button:hover {
     background-color: rgb(183, 167, 255);
 }
+#cart-card{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#cart-size{
+    color: wheat;
+}
 
 .offcanvas {
     background-color: rgb(40, 38, 51);

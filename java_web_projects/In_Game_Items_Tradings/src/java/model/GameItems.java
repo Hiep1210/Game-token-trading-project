@@ -11,8 +11,8 @@ package model;
 public class GameItems {
 
     private int id;
-    private String skinName;
-    private String itemName;
+    private String skinname;
+    private String itemname;
     private String type;
     private String rarity;
     private String exterior;
@@ -20,11 +20,11 @@ public class GameItems {
 
     public GameItems() {
     }
-
-    public GameItems(int id, String skinName, String itemName, String type, String rarity, String exterior, String img) {
+    
+    public GameItems(int id, String skinname, String itemname, String type, String rarity,String exterior, String img) {
         this.id = id;
-        this.skinName = skinName;
-        this.itemName = itemName;
+        this.skinname = skinname;
+        this.itemname = itemname;
         this.type = type;
         this.rarity = rarity;
         this.exterior = exterior;
@@ -47,20 +47,20 @@ public class GameItems {
         this.id = id;
     }
 
-    public String getSkinName() {
-        return skinName;
+    public String getSkinname() {
+        return skinname;
     }
 
-    public void setSkinName(String skinName) {
-        this.skinName = skinName;
+    public void setSkinname(String skinname) {
+        this.skinname = skinname;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getItemname() {
+        return itemname;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setItemname(String itemname) {
+        this.itemname = itemname;
     }
 
     public String getType() {
