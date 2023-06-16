@@ -1,6 +1,7 @@
 .item-card .card {
     background-color: rgb(49, 47, 61);
     color: white;
+    min-height: 309px;
 }
 
 .item-card .card:hover {
@@ -35,3 +36,21 @@
     font-weight: bold;
 }
 
+.rarity-covert {
+    border: 2px solid rgb(201, 74, 79);
+}
+.rarity-classified {
+    border: 2px solid rgb(220, 81, 255);
+}
+.rarity-restricted {
+    border: 2px solid rgb(119, 106, 255);
+}
+.rarity-mil-spec {
+    border: 2px solid rgb(49, 95, 252);
+}
+.rarity-industrial {
+    border: 2px solid rgb(97, 157, 219);
+}
+.rarity-consumer {
+    border: 2px solid white;
+}

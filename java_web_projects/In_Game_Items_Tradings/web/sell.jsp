@@ -59,22 +59,17 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- Filter By Price -->
-                        <div class="col-lg-1 filter-price">
+                        <!-- Sort by Rarity -->
+                        <div class="col-lg-2">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-danger">Price</button>
+                                <button type="button" class="btn btn-danger" id="rarity-sort">Rarity</button>
                                 <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                    <li class="dropdown-item" onclick="sortByRarity('rarest', this)">Rarest First</li>
+                                    <li class="dropdown-item" onclick="sortByRarity('common', this)">Common First</li>
                                 </ul>
                             </div>
                         </div>
@@ -83,8 +78,8 @@
                     <div class="row" id="list-content">
                         <c:forEach var ="sellList" items="${requestScope.sellList}">
                             <!-- Item Card -->
-                            <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${sellList.trimedSkinName}">
-                                <div class="card" data-bs-toggle = "dropdown" aria-expanded="false">
+                            <div class="col-lg-2 item-card mt-2 mb-2" id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${sellList.trimedSkinName}">
+                                <div class="card rarity-${sellList.gameItems.rarity.toLowerCase()}" data-bs-toggle = "dropdown" aria-expanded="false">
                                     <img src="UI/image/${sellList.gameItems.img}.png" alt ="displayfailed" class="card-img-top">
                                     <div class="card-body">
                                         <p>${sellList.gameItems.type} | ${sellList.gameItems.itemName} ${sellList.gameItems.skinName}</p>
@@ -114,7 +109,7 @@
                                         <h5>${sellList.gameItems.rarity}</h5>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Time Left:</p>
+                                        <p class="sell-info-select-name">Sell time:</p>
                                         <h5>1:00:00</h5>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
@@ -129,7 +124,7 @@
                         </c:forEach>    
                     </div>
                     <div>
-                        <button onclick="loadMore()" class="btn btn-danger">Load More</button>
+                        <button onclick="loadMore()" class="btn btn-danger" id="load-button">Load More</button>
                     </div>
                 </div>
                 <!-- Sell List -->
@@ -178,24 +173,28 @@
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+    </script>
 
     <script>
-                            function loadMore() {
-                                var amount = document.getElementsByClassName("item-card").length;
-                                console.log(amount);
-                                $.ajax({
-                                    url: "/In_Game_Items_Trading/load",
-                                    type: 'GET',
-                                    data: {
-                                        exist: amount
-                                    },
-                                    success: function (data) {
-                                        var row = document.getElementById("list-content");
-                                        row.innerHTML += data;
-                                    }
-                                });
-                            }
+        function loadMore() {
+            var amount = document.getElementsByClassName("item-card").length;
+            console.log(amount);
+            $.ajax({
+                url: "/In_Game_Items_Trading/load",
+                type: 'GET',
+                data: {
+                    exist: amount
+                },
+                success: function (data) {
+                    var row = document.getElementById("list-content");
+                    row.innerHTML += data;
+                    if (data.length === 0) {
+                        document.getElementById("load-button").style.display = "none";
+                    }
+                }
+            });
+        }
     </script>
 
     <script>
@@ -209,6 +208,23 @@
                     txt: searchName
                 },
                 success: function (data) {
+                    var row = document.getElementById("list-content");
+                    row.innerHTML = data;
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function sortByRarity(order, name) {
+            $.ajax({
+                url: "/In_Game_Items_Trading/sortSell",
+                type: 'GET',
+                data: {
+                    order: order
+                },
+                success: function (data) {
+                    document.getElementById("rarity-sort").innerHTML = name.innerHTML;
                     var row = document.getElementById("list-content");
                     row.innerHTML = data;
                 }

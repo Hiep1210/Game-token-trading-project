@@ -32,3 +32,17 @@
     border-radius: 5px;
     padding-left: 20px;
 }
+
+.card img {
+    min-height: 185px;
+    object-fit: scale-down;
+}
+
+.card-body p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limit the text to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 48px;
+}

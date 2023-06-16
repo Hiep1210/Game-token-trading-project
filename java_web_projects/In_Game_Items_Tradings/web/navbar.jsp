@@ -3,7 +3,7 @@
 <nav class="autohide navbar navbar-expand-lg" id="navbar">
     <div class="container-fluid">
         <!-- Navbar Logo -->
-        <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
+        <a class="navbar-brand col-lg-3" href="BuyPageController">
             <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
         </a>
         <!-- Navbar Toggler Button -->

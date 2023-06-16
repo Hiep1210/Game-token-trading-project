@@ -18,7 +18,7 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
-        <link rel="stylesheet" href="UI/css/buy.css">
+        <link rel="stylesheet" href="UI/css/styleBuy.css">
     </head>
 
     <body onload="countDown()">
@@ -186,6 +186,10 @@
             </div>
         </div>
 
+        <!-- Link Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
         <script>
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
@@ -226,7 +230,7 @@
                         // Display the countdown in the HTML element for when acution time less than 1 day 
                     } else if (days < 0) {
                         var countdownElement = document.getElementById(countdown.name);
-                        countdownElement.innerHTML = hours + "h "  + minutes + " m";
+                        countdownElement.innerHTML = hours + "h " + minutes + " m";
                     } else {
                         // Display the countdown in the HTML element for when auction time left is more than 1 day
                         var countdownElement = document.getElementById(countdown.name);
