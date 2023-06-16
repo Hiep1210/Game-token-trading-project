@@ -23,7 +23,7 @@
 
     <body>
         <c:set var="redirect" value="BuyPageController"/>
-        <%@include file="navbar.jsp" %>>
+        <%@include file="navbar.jsp" %>
         <!-- Main Content -->
         <div class="container-fluid main-content">
             <div class="row">
