@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+*Programmer: Trần Thế Hùng 
+*Description: This file is the DAO for doing CRUD operations on auction table
  */
 package dao;
 
@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.Auction;
+import model.GameItems;
 
 /**
  *
@@ -20,28 +21,41 @@ import model.Auction;
 public class AuctionDAO {
 
     //Function to get all items in the market 
-    public static ArrayList<Auction> getAuctions() {
+    public static ArrayList<Auction> getAllAuctions() {
         ArrayList<Auction> auctionList = new ArrayList<>();
         Auction auction = null;
+        GameItems gameItem = null;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "SELECT * FROM game_items_trading.auction "
-                        + " WHERE NOW() < ending_date;";
+                String sql = "SELECT * FROM auction auc, gameitems gei "
+                        + " WHERE NOW() < auc.ending_date AND auc.item_id = gei.id "
+                        + " ORDER BY auc.ending_date DESC";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
                     auction = new Auction();
+                    gameItem = new GameItems();
+                    //Get auction information
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
-                    auction.setItemId(rs.getInt("item_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
+                    //Get game item information
+                    gameItem.setId(rs.getInt("id"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
+                    gameItem.setType(rs.getString("type"));
+                    gameItem.setRarity(rs.getString("rarity"));
+                    gameItem.setExterior(rs.getString("exterior"));
+                    gameItem.setImg(rs.getString("img"));
+                    //Add game item object to auction object
+                    auction.setGameItem(gameItem);
                     auctionList.add(auction);
                 }
                 call.close();
@@ -55,25 +69,38 @@ public class AuctionDAO {
 
     public static Auction getAuction(int auctionId) {
         Auction auction = null;
+        GameItems gameItem = null;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "SELECT * FROM game_items_trading.auction "
-                        + " WHERE id = " + auctionId;
+                String sql = "SELECT * FROM auction auc, gameitems gei "
+                        + " WHERE auc.id = " + auctionId + " AND auc.item_id = gei.id";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
                     auction = new Auction();
+                    gameItem = new GameItems();
+                    //Get auction information
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
-                    auction.setItemId(rs.getInt("item_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
+                    //Get game item information
+                    gameItem.setId(rs.getInt("id"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
+                    gameItem.setType(rs.getString("type"));
+                    gameItem.setRarity(rs.getString("rarity"));
+                    gameItem.setExterior(rs.getString("exterior"));
+                    gameItem.setImg(rs.getString("img"));
+                    //Add game item object to auction object
+                    auction.setGameItem(gameItem);
+  
                 }
                 call.close();
                 rs.close();
@@ -156,12 +183,12 @@ public class AuctionDAO {
 //            System.out.println(auction.getEndingDate().getMinute());
 //            System.out.println(auction.getEndingDate().getSecond());
 //        }
-        ArrayList<Integer> list = new ArrayList<>() ;
-        list.add(1);
-        if (deleteAuctions(list)) {
-            System.out.println("delete successful");
-        }
-        System.out.println(getAuction(1));
+//        ArrayList<Integer> list = new ArrayList<>();
+//        list.add(1);
+//        if (deleteAuctions(list)) {
+//            System.out.println("delete successful");
+//        }
+//        System.out.println(getAuction(1));
 
     }
 }
