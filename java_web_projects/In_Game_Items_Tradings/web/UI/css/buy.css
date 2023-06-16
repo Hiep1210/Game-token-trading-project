@@ -128,12 +128,3 @@
     background-color: rgb(183, 167, 255);
 }
 
-.pagination .page-item .page-link {
-    background-color: rgb(49, 47, 61);
-    color: white;
-    border: none;
-    margin: 3px;
-    border-radius: 5px;
-    font-size: 25px;
-    font-weight: bold;
-}
