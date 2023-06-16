@@ -58,6 +58,7 @@
                     <div class="col-lg-3">
                         <div class="summit-button">
                             <button type="submit" form="login-form">Login</button>
+                            <a href="forgotPassword.jsp" form="login-form">Forgot Password</a>
                         </div>
                     </div>
                 </div>
