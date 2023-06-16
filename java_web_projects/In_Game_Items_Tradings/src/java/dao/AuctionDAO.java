@@ -57,7 +57,7 @@ public class AuctionDAO {
                     //Add game item object to auction object
                     auction.setGameItem(gameItem);
                     auctionList.add(auction);
-                }
+                } 
                 call.close();
                 con.close();
             }
