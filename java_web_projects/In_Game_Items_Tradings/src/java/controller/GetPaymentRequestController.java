@@ -46,7 +46,7 @@ public class GetPaymentRequestController extends HttpServlet {
             if (user == null) {
                 redirect = "DisplayMarketItemsController";
                 System.out.println("amogus1");
-            } else if (!isAdmin(user.getRole_id())) {
+            } else if (!isAdmin(user.getRoleid())) {
                 System.out.println("amogus2");
                 redirect = "DisplayMarketItemsController";
             } else {

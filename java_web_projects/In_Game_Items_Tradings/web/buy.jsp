@@ -141,16 +141,20 @@
                         </div>
                         <!-- Item List -->
                         <div class="row" id="item-box">
-                            <c:forEach var ="market_items" items="${requestScope.market_list}">
+                            <c:forEach var ="market_items" items="${requestScope.marketlist}">
                                 <!-- Item Card -->
                                 <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
                                     <div class="card" data-bs-toggle = "dropdown" aria-expanded="false">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
-                                            <a href="#" class="btn item-card-button">
+                                            <form action="AddCartController" method="post">
+                                            <button type="submit" class="btn item-card-button">
                                                 <i class="fa-solid fa-cart-shopping"></i>
-                                            </a>
+                                            </button>
+                                                <input type="text" name="marketid" value="${market_items.id}" hidden=""/>
+                                                <input type="text" name="buyerid" value="${sessionScope.user.id}" hidden=""/>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +163,7 @@
                                      aria-labelledby="offcanvas">
                                     <div class="offcanvas-header">
                                         <h5 class="offcanvas-title" id="offcanvas">
-                                            ${market_items.type} | ${market_items.skinName}
+                                            ${market_items.type} | ${market_items.skinname}
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                                 aria-label="Close"></button>

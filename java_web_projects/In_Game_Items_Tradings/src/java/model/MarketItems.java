@@ -8,32 +8,23 @@ package model;
  *
  * @author Inspiron
  */
-public class MarketItems {
+public class MarketItems extends GameItems{
     private int id;
-    private int userId;
-    private int itemId;
+    private String game;
+    private int userid;
     private double price;
-    private String skinName;
-    private String itemName;
-    private String type;
-    private String rarity;
-    private String exterior;
-    private String img;
+    private String begindate;
+    private String enddate;
 
-    public MarketItems() {
-    }
-
-    public MarketItems(int id, int userId, int itemId, double price, String skinName, String itemName, String type, String rarity, String exterior, String img) {
+    public MarketItems(int id, String game, int userid, double price, String begindate, String enddate,
+            int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
+        super(gid, skinname, itemname, type, rarity, exterior, img);
         this.id = id;
-        this.userId = userId;
-        this.itemId = itemId;
+        this.game = game;
+        this.userid = userid;
         this.price = price;
-        this.skinName = skinName;
-        this.itemName = itemName;
-        this.type = type;
-        this.rarity = rarity;
-        this.exterior = exterior;
-        this.img = img;
+        this.begindate = begindate;
+        this.enddate = enddate;
     }
 
     public int getId() {
@@ -44,20 +35,20 @@ public class MarketItems {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getGame() {
+        return game;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setGame(String game) {
+        this.game = game;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getUserid() {
+        return userid;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public double getPrice() {
@@ -68,54 +59,21 @@ public class MarketItems {
         this.price = price;
     }
 
-    public String getSkinName() {
-        return skinName;
+    public String getBegindate() {
+        return begindate;
     }
 
-    public void setSkinName(String skinName) {
-        this.skinName = skinName;
+    public void setBegindate(String begindate) {
+        this.begindate = begindate;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getEnddate() {
+        return enddate;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getRarity() {
-        return rarity;
-    }
-
-    public void setRarity(String rarity) {
-        this.rarity = rarity;
-    }
-
-    public String getExterior() {
-        return exterior;
-    }
-
-    public void setExterior(String exterior) {
-        this.exterior = exterior;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
     
-    
-   
 }

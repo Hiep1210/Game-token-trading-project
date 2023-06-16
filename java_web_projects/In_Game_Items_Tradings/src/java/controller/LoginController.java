@@ -73,10 +73,8 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("adsad");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println(username + password);
         //if there is username given then find it
         if (username != null) {
             //if there is password given then proceed to log in

@@ -63,7 +63,7 @@ public class InsertNotificationController extends HttpServlet {
             Notification notification;
             if (user == null) { // if session does not contain any user instance
                 redirect = "DisplayMarketItemsController";
-            } else if (!isAdmin(user.getRole_id())) { //if user in session is not an admin
+            } else if (!isAdmin(user.getRoleid())) { //if user in session is not an admin
                 redirect = "DisplayMarketItemsController";
             } else {
                 notiContent = request.getParameter("content");
@@ -99,7 +99,7 @@ public class InsertNotificationController extends HttpServlet {
             Notification notification;
             if (user == null) { // if session does not contain any user instance
                 redirect = "DisplayMarketItemsController";
-            } else if (!isAdmin(user.getRole_id())) { //if user in session is not an admin
+            } else if (!isAdmin(user.getRoleid())) { //if user in session is not an admin
                 redirect = "DisplayMarketItemsController";
             } else {
                 if (decision.equals("accept")) {

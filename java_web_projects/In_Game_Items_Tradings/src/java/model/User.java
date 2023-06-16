@@ -17,22 +17,13 @@ public class User {
     private String email;
     private String gender;
     private String avatar;
-    private int role_id;
+    private int roleid;
     private double money;
 
     public User() {
     }
 
-    public User(int id, String avatar, String username, String email, String dob, String gender) {
-        this.id = id;
-        this.avatar = avatar;
-        this.username = username;
-        this.email = email;
-        this.dob = dob;
-        this.gender = gender;
-    }
-
-    public User(int id, String username, String password, String dob, String email, String gender, String avatar, int role_id, double money) {
+    public User(int id, String username, String password, String dob, String email, String gender, String avatar, int roleid, double money) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -40,17 +31,8 @@ public class User {
         this.email = email;
         this.gender = gender;
         this.avatar = avatar;
-        this.role_id = role_id;
+        this.roleid = roleid;
         this.money = money;
-    }
-
-    public User(String avatar, String username, String email, String dob, String gender, String password) {
-        this.avatar = avatar;
-        this.username = username;
-        this.email = email;
-        this.dob = dob;
-        this.gender = gender;
-        this.password = password;
     }
 
     public int getId() {
@@ -109,12 +91,12 @@ public class User {
         this.avatar = avatar;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleid() {
+        return roleid;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
     }
 
     public double getMoney() {
@@ -124,5 +106,5 @@ public class User {
     public void setMoney(double money) {
         this.money = money;
     }
-
+    
 }

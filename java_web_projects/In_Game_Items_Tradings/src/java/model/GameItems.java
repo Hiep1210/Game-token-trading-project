@@ -30,7 +30,7 @@ public class GameItems {
         this.exterior = exterior;
         this.img = img;
     }
-
+    
     public GameItems(String skinName, String itemName, String type, String rarity, String img) {
         this.skinName = skinName;
         this.itemName = itemName;
@@ -94,6 +94,7 @@ public class GameItems {
     public void setImg(String img) {
         this.img = img;
     }
-
+    
+    
 
 }
