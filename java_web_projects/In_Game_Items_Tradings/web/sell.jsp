@@ -210,6 +210,7 @@
                 success: function (data) {
                     var row = document.getElementById("list-content");
                     row.innerHTML = data;
+                    document.getElementById("load-button").style.display = "none";
                 }
             });
         }

@@ -144,17 +144,10 @@
                             <c:forEach var ="market_items" items="${requestScope.marketlist}">
                                 <!-- Item Card -->
                                 <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
-                                    <div class="card" data-bs-toggle = "dropdown" aria-expanded="false">
+                                    <div class="card">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
-                                            <form action="AddCartController" method="post">
-                                            <button type="submit" class="btn item-card-button">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                            </button>
-                                                <input type="text" name="marketid" value="${market_items.id}" hidden=""/>
-                                                <input type="text" name="buyerid" value="${sessionScope.user.id}" hidden=""/>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -187,7 +180,13 @@
                                             <h5>$ ${market_items.price}</h5>
                                         </div>
                                         <div class="summit-button mt-2">
-                                            <button type="submit">Add to Sell List</button>
+                                           <form action="AddCartController" method="post">
+                                            <button type="submit" class="btn item-card-button">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
+                                                <input type="text" name="marketid" value="${market_items.id}" hidden=""/>
+                                                <input type="text" name="buyerid" value="${sessionScope.user.id}" hidden=""/>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
