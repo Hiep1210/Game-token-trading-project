@@ -49,7 +49,7 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                             <c:set var="gameItem" value="${requestScope.auction.gameItem}"/>
                             <%-- Show item information --%>
                             <img src="UI/image/${gameItem.img}.png" alt ="displayfailed" >
-                            ${gameItem.skin_name}        
+                            ${gameItem.skinName}        
                             ${gameItem.item_name}        
                             ${gameItem.type}        
                             ${gameItem.rarity}        
