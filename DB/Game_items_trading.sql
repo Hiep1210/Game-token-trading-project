@@ -122,6 +122,7 @@ create table ProcessItems(
 	transaction_id int not null,
     sender_id int not null,
     receiver_id int not null,
+    game_account_name VARCHAR(50),
     foreign key (sender_id) references UserAccount(id),
     foreign key (receiver_id) references UserAccount(id)
 );
@@ -496,7 +497,7 @@ INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowes
 INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('5', '2', '21', '100', '2023-06-17 16:33:53', '2023-06-23 16:33:53', 'gamer');
 INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('6', '2', '26', '100', '2023-06-17 16:33:53', '2023-06-23 16:33:53', 'gamer');
 INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('7', '2', '31', '100', '2023-06-17 16:33:53', '2023-06-27 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('8', '2', '36', '100', '2023-06-17 16:33:53', '2023-06-27 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('8', '2', '36	', '100', '2023-06-17 16:33:53', '2023-06-27 16:33:53', 'gamer');
 
 INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('1', '3', '1', '2023-06-17 18:33:53', '200', 'gamer 1');
 INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('2', '4', '1', '2023-06-17 19:33:53', '300', 'gamer 2');
