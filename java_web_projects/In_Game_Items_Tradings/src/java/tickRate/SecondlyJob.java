@@ -11,7 +11,7 @@ package tickRate;
 public class SecondlyJob implements Runnable{
 
     public void run() {
-        // Do your hourly job here.
+        // Do your seccondly job here.
         System.out.println("Job trigged by scheduler");
     }
 }
