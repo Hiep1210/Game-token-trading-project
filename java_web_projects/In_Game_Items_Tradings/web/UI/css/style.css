@@ -3,16 +3,14 @@
     margin: 0px;
 }
 
-.invalid input {
-    border: 1px solid red;
+.scrolled-down {
+    transform: translateY(-100%);
+    transition: all 0.3s ease-in-out;
 }
 
-.valid {
-    border: 1px solid green;
-}
-
-.form-message {
-    color: red;
+.scrolled-up {
+    transform: translateY(0);
+    transition: all 0.3s ease-in-out;
 }
 
 /* Install font */
@@ -76,6 +74,7 @@ body {
     align-items: center;
     justify-content: space-around;
     background-color: rgb(49, 47, 61);
+    padding: 5px;
     border-radius: 5px;
 }
 
@@ -115,7 +114,7 @@ body {
 }
 
 .dropdown-toggle::after {
-    display: block;
+    display: none;
 }
 
 .dropdown-toggle:hover {

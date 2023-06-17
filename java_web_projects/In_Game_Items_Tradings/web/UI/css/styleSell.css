@@ -1,0 +1,48 @@
+.sell-header {
+    margin-bottom: 40px;
+}
+.sell-card {
+    background-color: rgb(49, 47, 61);
+    border-radius: 5px;
+    color: white;
+    padding: 0px;
+}
+
+.sell-card h5 {
+    font-weight: bold;
+}
+
+.offcanvas {
+    background-color: rgb(40, 38, 51);
+}
+
+.offcanvas-title, .sell-info-select-name {
+    color: white;
+    font-weight: bold;
+}
+
+.sell-info-select-container {
+    background-color: rgb(49, 47, 61);
+    border-radius: 5px;
+}
+
+.sell-price {
+    background-color: rgb(40, 38, 51);
+    border: 1px solid rgb(133, 133, 133);
+    border-radius: 5px;
+    padding-left: 20px;
+}
+
+.card img {
+    min-height: 185px;
+    object-fit: scale-down;
+}
+
+.card-body p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limit the text to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 48px;
+}

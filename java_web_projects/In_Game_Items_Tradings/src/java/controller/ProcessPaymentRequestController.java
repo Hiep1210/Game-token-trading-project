@@ -55,7 +55,7 @@ public class ProcessPaymentRequestController extends HttpServlet {
             double newMoneyAmount = 0;
             if (user == null) {
                 redirect = "DisplayMarketItemsController";
-            } else if (!isAdmin(user.getRole_id())) {
+            } else if (!isAdmin(user.getRoleid())) {
                 redirect = "DisplayMarketItemsController";
             } else if (rawPaymentRequestId == null || decision == null) {
                 redirect = "DisplayMarketItemsController";

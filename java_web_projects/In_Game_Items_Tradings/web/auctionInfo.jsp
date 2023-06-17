@@ -19,7 +19,7 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
-        <link rel="stylesheet" href="UI/css/buy.css">
+        <link rel="stylesheet" href="UI/css/styleBuy.css">
     </head>
 
     <body onload="calc()">

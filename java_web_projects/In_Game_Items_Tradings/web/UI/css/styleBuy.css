@@ -127,13 +127,20 @@
 .item-card-button:hover {
     background-color: rgb(183, 167, 255);
 }
+#cart-card{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#cart-size{
+    color: wheat;
+}
 
-.pagination .page-item .page-link {
-    background-color: rgb(49, 47, 61);
+.offcanvas {
+    background-color: rgb(40, 38, 51);
+}
+
+.offcanvas-title, .sell-info-select-name {
     color: white;
-    border: none;
-    margin: 3px;
-    border-radius: 5px;
-    font-size: 25px;
     font-weight: bold;
 }

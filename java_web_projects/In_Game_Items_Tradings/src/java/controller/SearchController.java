@@ -60,7 +60,7 @@ public class SearchController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String input = request.getParameter("search").trim();
-        String analyze[] = input.split(" ");
+        String[] analyze = input.split(" ");
         String currentpage = request.getParameter("page");
         switch (currentpage) {
             case "/sell.jsp":

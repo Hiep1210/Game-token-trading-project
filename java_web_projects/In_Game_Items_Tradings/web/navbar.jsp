@@ -1,9 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg" id="navbar">
+<nav class="autohide navbar navbar-expand-lg" id="navbar">
     <div class="container-fluid">
         <!-- Navbar Logo -->
-        <a class="navbar-brand col-lg-3" href="DisplayMarketItemsController">
+        <a class="navbar-brand col-lg-3" href="BuyPageController">
             <img src="UI/image/newLogo.png" alt="siteLogo" width="100px">
         </a>
         <!-- Navbar Toggler Button -->
@@ -25,7 +25,7 @@
                     </div>
                     <!-- Sell Button -->
                     <div class="col-lg-3 navbar-item nopadding">
-                        <a href="">
+                        <a href="SellPageController">
                             <i class="material-icons navbar-item-icon">sell</i>
                         </a>
                         <h5>Sell</h5>
@@ -111,6 +111,7 @@
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="UserProfileController">User Profile</a>
                                     <a class="dropdown-item" href="#">Transaction History</a>
+                                    <a class="dropdown-item" href="ViewCartController?id=${sessionScope.user.id}">View Your Cart</a>
                                     <div class="dropdown-divider"></div>
                                     <a id="logout" class="dropdown-item" href="LogOutController">Log out</a>
                                 </div>

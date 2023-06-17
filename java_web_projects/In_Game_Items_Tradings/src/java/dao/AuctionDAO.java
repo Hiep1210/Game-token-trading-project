@@ -48,8 +48,8 @@ public class AuctionDAO {
                     auction.setGameAccountName(rs.getString("game_account_name"));
                     //Get game item information
                     gameItem.setId(rs.getInt("id"));
-                    gameItem.setSkin_name(rs.getString("skin_name"));
-                    gameItem.setItem_name(rs.getString("item_name"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
                     gameItem.setType(rs.getString("type"));
                     gameItem.setRarity(rs.getString("rarity"));
                     gameItem.setExterior(rs.getString("exterior"));
@@ -57,7 +57,7 @@ public class AuctionDAO {
                     //Add game item object to auction object
                     auction.setGameItem(gameItem);
                     auctionList.add(auction);
-                }
+                } 
                 call.close();
                 con.close();
             }
@@ -92,8 +92,8 @@ public class AuctionDAO {
                     auction.setGameAccountName(rs.getString("game_account_name"));
                     //Get game item information
                     gameItem.setId(rs.getInt("id"));
-                    gameItem.setSkin_name(rs.getString("skin_name"));
-                    gameItem.setItem_name(rs.getString("item_name"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
                     gameItem.setType(rs.getString("type"));
                     gameItem.setRarity(rs.getString("rarity"));
                     gameItem.setExterior(rs.getString("exterior"));
