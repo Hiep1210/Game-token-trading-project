@@ -35,12 +35,14 @@ public class InsertBidController extends HttpServlet {
         int bidId = 0;
         double amount = 0;
         double newMoneyAmount = 0;
+        String gameAccountName = "";
         Bid bid;
         LocalDateTime currentTime;
         try {
             amount = Double.parseDouble(request.getParameter("bidAmount"));
             actionId = Integer.parseInt(request.getParameter("auctionId"));
             bidId = Integer.parseInt(request.getParameter("bidId"));
+            gameAccountName = request.getParameter("gameAccountName");
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -52,7 +54,7 @@ public class InsertBidController extends HttpServlet {
         } else {
             /* If form does not contain userBidId (meaning user is bidding for the first time on this auction ) add new bid to table*/
             if (bidId == 0) {
-                bid = new Bid(user.getId(), currentTime, amount, actionId);
+                bid = new Bid(bidId, LocalDateTime.now() , amount, gameAccountName, actionId);
                 BidDAO.insertBid(bid);
                 /* If form contain userBidId (meaning user is increasing his bid) change bid amount on old bid*/
             } else {
