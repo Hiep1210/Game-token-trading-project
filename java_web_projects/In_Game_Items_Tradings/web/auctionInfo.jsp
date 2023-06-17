@@ -50,7 +50,7 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                             <%-- Show item information --%>
                             <img src="UI/image/${gameItem.img}.png" alt ="displayfailed" >
                             ${gameItem.skinName}        
-                            ${gameItem.item_name}        
+                            ${gameItem.itemName}        
                             ${gameItem.type}        
                             ${gameItem.rarity}        
                             ${gameItem.exterior}        
