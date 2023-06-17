@@ -4,25 +4,24 @@
  */
 package controller;
 
+import dao.GameItemsDAO;
+import dao.MarketItemsDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.MarketItems;
-import model.GameItems;
-import dao.GameItemsDAO;
-import dao.MarketItemsDao;
 import java.util.ArrayList;
+import model.GameItems;
+import model.MarketItems;
 
 /**
  *
  * @author Inspiron
  */
-@WebServlet(name = "SearchController", urlPatterns = {"/SearchController"})
-public class SearchController extends HttpServlet {
+@WebServlet(name = "SortBuyController", urlPatterns = {"/SortBuyController"})
+public class SortBuyController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,21 +58,13 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String input = request.getParameter("search").trim();
-        String[] analyze = input.split(" ");
-        String currentpage = request.getParameter("page");
-        switch (currentpage) {
-            case "/sell.jsp":
-                ArrayList<GameItems> game_items = GameItemsDAO.Search(analyze);
-                request.setAttribute("game_items", game_items);
-                request.getRequestDispatcher(currentpage).forward(request, response);
-                break;
-            case "/buy.jsp":
-                ArrayList<MarketItems> market_items = MarketItemsDao.Search(analyze);
-                request.setAttribute("market_list", market_items);
-                request.getRequestDispatcher(currentpage).forward(request, response);
-                break;
-        }
+        String []type = request.getParameterValues("type");
+        String[] exterior = request.getParameterValues("exterior");
+        String[] rarity = request.getParameterValues("rarity");
+        ArrayList<MarketItems> market_items = MarketItemsDao.Filter(request.getParameter("priceorder"), type, rarity, exterior);
+        request.setAttribute("marketlist", market_items);
+        request.getRequestDispatcher("buy.jsp").forward(request, response);
+
     }
 
     /**

@@ -76,16 +76,12 @@ public class searchSellItems extends HttpServlet {
             GameItemsDAO gameItem = new GameItemsDAO(gameItems, trimedSkinName);
             listWithTrimed.add(gameItem);
         }
-        
-        for (GameItemsDAO gameItemsDAO : listWithTrimed) {
-            System.out.println(gameItemsDAO.getTrimedSkinName());
-        }
-        
+
         PrintWriter out = response.getWriter();
 
         for (GameItemsDAO gameItems : listWithTrimed) {
             out.println("<div class=\"col-lg-2 item-card mt-2 mb-2 \" id=\"item-card\" data-bs-toggle=\"offcanvas\" href=\"#offcanvas" + gameItems.getTrimedSkinName() + "\">\n"
-                    + "                                <div class=\"card rarity-"+ gameItems.getGameItems().getRarity().toLowerCase() +"\" data-bs-toggle = \"dropdown\" aria-expanded=\"false\">\n"
+                    + "                                <div class=\"card rarity-" + gameItems.getGameItems().getRarity().toLowerCase() + "\" data-bs-toggle = \"dropdown\" aria-expanded=\"false\">\n"
                     + "                                    <img src=\"UI/image/" + gameItems.getGameItems().getImg() + ".png\" alt =\"displayfailed\" class=\"card-img-top\">\n"
                     + "                                    <div class=\"card-body\">\n"
                     + "                                        <p>" + gameItems.getGameItems().getType() + " | " + gameItems.getGameItems().getItemName() + " " + gameItems.getGameItems().getSkinName() + "</p>\n"

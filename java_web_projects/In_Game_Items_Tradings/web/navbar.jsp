@@ -53,35 +53,14 @@
                     <!-- User Notification -->
                     <div class="col-lg-3 navbar-user-notifi dropdown">
                         <c:if test="${(sessionScope.user != null)}">  
-                            <c:choose>
-                                <c:when test="${(requestScope.notificationList == null)}">
-                                    <a class="btn" type="button" href="GetNotificationController?redirect=${redirect}">
-                                        <i class="material-icons navbar-item-icon">notifications</i>
-                                    </a>
-                                </c:when>
-                                <c:when test="${(requestScope.notificationList.size() eq 0) }">
                                     <!-- Dropdown toggler -->
                                     <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                       aria-expanded="false">
+                                       aria-expanded="false" onclick="getNotification()">
                                         <i class="material-icons navbar-item-icon">notifications</i>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="dropdown-menu dropdown-menu-end" id = "noti-list">
                                         <a class="dropdown-item" href="#">You have 0 new notification </a>
                                     </div>
-                                </c:when>    
-                                <c:otherwise>
-                                    <!-- Dropdown toggler -->
-                                    <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        <i class="material-icons navbar-item-icon">notifications</i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <c:forEach var="notification" items="${requestScope.notificationList}">
-                                            <a class="dropdown-item" href="#">${notification.noti_content}</a>
-                                        </c:forEach>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
                         </c:if>
                     </div>
                     <!-- User Balance -->
@@ -139,3 +118,19 @@
             </div>
         </div>
 </nav>
+            <script>
+            function getNotification(input) {
+            $.ajax({
+                url: "/In_Game_Items_Trading/GetNotificationController",
+                type: 'GET',
+                data: {
+                },
+                success: function(data){
+                    var list = document.getElementById("noti-list");
+                    list.innerHTML = data;
+                }
+            });
+    }
+        </script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+    </script>
