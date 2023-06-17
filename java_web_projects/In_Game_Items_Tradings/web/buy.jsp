@@ -163,7 +163,7 @@
                                      aria-labelledby="offcanvas">
                                     <div class="offcanvas-header">
                                         <h5 class="offcanvas-title" id="offcanvas">
-                                            ${market_items.type} | ${market_items.skinname}
+                                            ${market_items.type} | ${market_items.skinName}
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                                 aria-label="Close"></button>
