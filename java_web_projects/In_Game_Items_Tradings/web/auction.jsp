@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="UI/css/styleBuy.css">
     </head>
 
-    <body onload="countDown()">
+    <body   >
         <c:set var="redirect" value="AuctionPageController"/>
         <%@include file="navbar.jsp" %>
         <!-- Main Content -->
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="GetAuctionInfoController?auctionId=${auction.auctionId}">${gameItem.skin_name}</a>
+                                        <a class="dropdown-item" href="GetAuctionInfoController?auctionId=${auction.auctionId}">${gameItem.skinName}</a>
                                     </div>
                                 </div>
                             </c:forEach>
