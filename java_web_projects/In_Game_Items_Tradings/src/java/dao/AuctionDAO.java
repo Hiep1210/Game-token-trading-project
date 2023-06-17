@@ -174,21 +174,5 @@ public class AuctionDAO {
         return deleteStatus;
     }
 
-    public static void main(String[] args) {
-//        insertAuction(new Auction(1, 1, 1, 10, "Dave", LocalDateTime.of(2023, 06, 01, 0, 0, 0), LocalDateTime.of(2023, 06, 20, 05, 10, 50)));
-//        ArrayList<Auction> list = getAuctions();
-//        for (Auction auction : list) {
-//            System.out.println(auction);
-//            System.out.println(auction.getEndingDate().getHour());
-//            System.out.println(auction.getEndingDate().getMinute());
-//            System.out.println(auction.getEndingDate().getSecond());
-//        }
-//        ArrayList<Integer> list = new ArrayList<>();
-//        list.add(1);
-//        if (deleteAuctions(list)) {
-//            System.out.println("delete successful");
-//        }
-//        System.out.println(getAuction(1));
 
-    }
 }

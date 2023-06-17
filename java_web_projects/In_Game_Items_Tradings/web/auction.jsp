@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Auction Page</title>
+        <title>Buy Page</title>
         <!-- Link Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -19,9 +19,10 @@
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
         <link rel="stylesheet" href="UI/css/styleBuy.css">
+        <link rel="stylesheet" href="UI/css/styleInput.css"/>
     </head>
 
-    <body onload="countDown()">
+    <body>
         <c:set var="redirect" value="AuctionPageController"/>
         <%@include file="navbar.jsp" %>
         <!-- Main Content -->
@@ -40,7 +41,7 @@
                         </div>
                     </div>
                     <!-- Filter Selection Section -->
-                    <div class="filtexr sidebar">
+                    <div class="filter sidebar">
                         <div class="container">
                             <!-- Filter Type -->
                             <details class="sidebar-category">
@@ -140,25 +141,50 @@
                         </div>
                         <!-- Item List -->
                         <div class="row" id="item-box">
-                            <!-- Item Card -->
                             <c:forEach var ="auction" items="${requestScope.auctionList}" varStatus="currentStatus">
                                 <c:set var="gameItem" value="${auction.gameItem}"/>
-                                <div class="col-lg-2 item-card mt-2 mb-2 dropdown" id="item-card">
-                                    <div class="card dropdown-toggle" data-bs-toggle = "dropdown" aria-expanded="false">
-                                        <img src="UI/image/${gameItem.getImg()}.png" alt ="displayfailed" class="card-img-top" >
+                                <!-- Item Card -->
+                                <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${auction.auctionId}">
+                                    <div class="card">
+                                        <img src="UI/image/${gameItem.img}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
-                                            <h5 class="card-title item-card-price ps-1" >Start from :</h5>
                                             <h5 class="card-title item-card-price ps-1">$ ${auction.lowestBid}</h5>
-                                            <h5 class="card-title ps-1" >Time left :</h5>
-                                            <h5 class="card-title ps-1" id="countdown${currentStatus.index}"></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Item Details -->
+                                <div class="offcanvas offcanvas-start" data-bs-theme="dark" tabindex="-1" id="offcanvas${auction.auctionId}"
+                                     aria-labelledby="offcanvas">
+                                    <div class="offcanvas-header">
+                                        <h5 class="offcanvas-title" id="offcanvas">
+                                            ${gameItem.type} | ${gameItem.skinName}
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="offcanvas-body">
+                                        <img class="img-fluid" src="UI/image/${gameItem.img}.png" alt="">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Exterior:</p>
+                                            <h5>${gameItem.exterior}</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Rarity:</p>
+                                            <h5>${gameItem.rarity}</h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Time Left:</p>
+                                            <h5 id="countdown${currentStatus.index}"></h5>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Current Price:</p>
+                                            <h5>$ ${auction.lowestBid}</h5>
+                                        </div>
+                                        <div class="summit-button mt-2">
                                             <a href="GetAuctionInfoController?auctionId=${auction.auctionId}" class="btn item-card-button">
                                                 <i class="fa-solid fa-gavel"></i>
                                             </a>
-
                                         </div>
-                                    </div>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="GetAuctionInfoController?auctionId=${auction.auctionId}">${gameItem.skin_name}</a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -186,15 +212,13 @@
             </div>
         </div>
 
-        <!-- Link Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-        </script>
+
         <script>
             function Redirect() {
                 window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
             }
         </script>
+
         <script>
             // Define the countdown details for each timer
             var countdowns = [
@@ -205,8 +229,6 @@
                 </c:if>
             </c:forEach>
             ];
-
-
             // Update all countdowns
             function updateCountdowns() {
                 countdowns.forEach(function (countdown) {
@@ -250,6 +272,11 @@
 
             // Call updateCountdowns once immediately to display the initial countdowns
             updateCountdowns();
+        </script>
+
+        <!-- Link Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
 
     </body>

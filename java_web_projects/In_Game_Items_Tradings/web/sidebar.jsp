@@ -19,7 +19,7 @@
         </ul>
     </details>
     <!-- Sidebar Category -->
-    <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">  
+    <c:if test="${(sessionScope.user != null) && (sessionScope.user.roleid eq 2)}">  
         <details class="sidebar-category">
             <summary>Site Mananage</summary>
 

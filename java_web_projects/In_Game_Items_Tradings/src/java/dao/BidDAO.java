@@ -90,13 +90,14 @@ public class BidDAO {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "INSERT INTO game_items_trading.bid ( bidder_id, auction_id, bid_time, amount) "
-                        + " VALUES( ?, ?, ?, ?);";
+                String sql = "INSERT INTO game_items_trading.bid ( bidder_id, auction_id, bid_time, amount, game_account_name) "
+                        + " VALUES( ?, ?, ?, ?, ?);";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
                 preparedStatement.setInt(1, bid.getBidderId());
                 preparedStatement.setInt(2, bid.getAuctionId());
                 preparedStatement.setObject(3, bid.getBidTime());
                 preparedStatement.setDouble(4, bid.getAmount());
+                preparedStatement.setString(5, bid.getGameAccountName());
                 // if insert command failed
                 if (preparedStatement.executeUpdate() != 1) {
                     insertStatus = false;
