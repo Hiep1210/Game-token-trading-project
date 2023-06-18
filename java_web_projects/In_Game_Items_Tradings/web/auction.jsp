@@ -242,15 +242,15 @@
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                     // Display the countdown in the HTML element for when acution time time less than 1 minute 
-                    if (days < 0 && hours < 0 & minutes < 0) {
+                    if (days == 0 && hours == 0 && minutes == 0) {
                         var countdownElement = document.getElementById(countdown.name);
                         countdownElement.innerHTML = seconds + "s";
                         // Display the countdown in the HTML element for when acution time less than 1 hour 
-                    } else if (days < 0 && hours < 0) {
+                    } else if (days == 0 && hours == 0) {
                         var countdownElement = document.getElementById(countdown.name);
                         countdownElement.innerHTML = minutes + "m " + seconds + "s";
                         // Display the countdown in the HTML element for when acution time less than 1 day 
-                    } else if (days < 0) {
+                    } else if (days == 0) {
                         var countdownElement = document.getElementById(countdown.name);
                         countdownElement.innerHTML = hours + "h " + minutes + " m";
                     } else {
