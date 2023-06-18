@@ -49,7 +49,7 @@ public class ProcessItemsDAO {
         }
         return insertStatus;
     }
-
+    
     public static ArrayList<ProcessItem> getAllProcessItems() {
         ArrayList<ProcessItem> processItemList = new ArrayList<>();
         ProcessItem processItem = null;

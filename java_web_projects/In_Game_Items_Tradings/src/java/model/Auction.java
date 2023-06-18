@@ -106,7 +106,7 @@ public class Auction {
     public void setGameItem(GameItems gameItem) {
         this.gameItem = gameItem;
     }
-
+    
     @Override
     public String toString() {
         return "Auction{" + "auctionId=" + auctionId + ", sellerId=" + sellerId + ", itemId=" + itemId + ", lowestBid=" + lowestBid + ", gameAccountName=" + gameAccountName + ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", gameItem=" + gameItem + '}';
