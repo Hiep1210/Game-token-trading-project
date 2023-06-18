@@ -20,26 +20,27 @@ import model.ProcessItem;
  */
 public class ProcessItemsDAO {
 
-    public static boolean insertProcessItems(ProcessItem processItem) {
+    public static void insertProcessItems(ProcessItem processItem) {
         boolean insertStatus = true;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "INSERT INTO ProcessItems (transactionType_id,transaction_id, sender_id, receiver_id,game_account_name) "
-                        + " VALUES ( ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO processitems (transactionType_id , transaction_id , sender_id,receiver_id,game_account_name) "
+                        + "  SELECT ?,?,?,?,? "
+                        + "WHERE NOT EXISTS "
+                        + "  (SELECT transaction_id FROM processitems WHERE transaction_id=? AND transactionType_id = ?);";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
                 preparedStatement.setInt(1, processItem.getTransactionTypeIdId());
                 preparedStatement.setInt(2, processItem.getTransactionId());
                 preparedStatement.setInt(3, processItem.getSenderId());
                 preparedStatement.setInt(4, processItem.getReceiverId());
                 preparedStatement.setString(5, processItem.getGameAccountName());
+                preparedStatement.setInt(6, processItem.getTransactionId());
+                preparedStatement.setInt(7, processItem.getTransactionTypeIdId());
                 // if insert command failed
-                if (preparedStatement.executeUpdate() != 1) {
-                    insertStatus = false;
-                    System.out.println("ERROR INSERTING PROCESS ITEMS, NO ROWS AFFECTED");
-                }
+                preparedStatement.executeUpdate();
                 preparedStatement.close();
                 con.close();
             }
@@ -47,9 +48,8 @@ public class ProcessItemsDAO {
             System.out.println("Error in ProcessItems");
             System.out.println(e);
         }
-        return insertStatus;
     }
-    
+
     public static ArrayList<ProcessItem> getAllProcessItems() {
         ArrayList<ProcessItem> processItemList = new ArrayList<>();
         ProcessItem processItem = null;
