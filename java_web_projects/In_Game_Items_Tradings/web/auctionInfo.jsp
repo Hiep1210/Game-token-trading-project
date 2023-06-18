@@ -60,7 +60,8 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                             </c:if>
 
                             <h5>Time left :<span id="countdown" ></span> </h5> 
-
+                            
+                            <h5>Number of bidders : <span>${requestScope.bidList.size()}</span> </h5>
                             <%-- showing appropriate messages if the auction has ended --%>
                             <c:if test="${requestScope.isEnded}">
                                 <h5>The auction has ended. (Ending date ${auction.endingDate})</h5>
@@ -73,16 +74,6 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                                     <c:if test="${not requestScope.isHighestBidder}">
                                         <h5>Final bid: <span>${bidList[0].amount} $</span></h5>
                                     </c:if>
-                                    <%-- the seller should be able to view all the bids  --%>
-                                    <c:if test="${requestScope.isSeller}">
-                                        <h5>All submitted bids:</h5>
-                                        <c:forEach var="bid" items="${bidList}" varStatus="status">
-                                            <h6>${biddersList[status.index].username} : ${bid.amount} $ ${bid.bidTime}</h6>
-                                        </c:forEach>
-                                    </c:if>
-                                </c:if>
-                                <c:if test="${empty bidList}">
-                                    <h5>No bids placed for this auction.</h5>
                                 </c:if>
                             </c:if>
 
@@ -127,13 +118,6 @@ import {LocalDateTime} from '@js-joda/root/packages/core/src/LocalDateTime.js'
                                             <input type="number" step="any" min="${min}" value="${min}" name="bidAmount">
                                             <button type="submit" name="action" value="Bid">Bid for this item</button>
                                         </form>
-                                    </c:if>
-                                    <%-- the seller should only see the bidding history --%>
-                                    <c:if test="${requestScope.isSeller}">
-                                        <h5>All submitted bids:</h5>
-                                        <c:forEach var="bid" items="${bidList}" varStatus="status">
-                                            <h6>${biddersList[status.index].username} : ${bid.amount} $ -  ${bid.bidTime}</h6>
-                                        </c:forEach>
                                     </c:if>
                                 </c:if>
 
