@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import model.Auction;
+import model.Bid;
 import model.GameItems;
 
 /**
@@ -57,7 +59,7 @@ public class AuctionDAO {
                     //Add game item object to auction object
                     auction.setGameItem(gameItem);
                     auctionList.add(auction);
-                } 
+                }
                 call.close();
                 con.close();
             }
@@ -100,7 +102,7 @@ public class AuctionDAO {
                     gameItem.setImg(rs.getString("img"));
                     //Add game item object to auction object
                     auction.setGameItem(gameItem);
-  
+
                 }
                 call.close();
                 rs.close();
@@ -174,5 +176,82 @@ public class AuctionDAO {
         return deleteStatus;
     }
 
+    public static HashMap<Bid, Auction> getAllSuccessfullAuction() {
+        HashMap<Bid, Auction> auctionList = new HashMap<Bid, Auction>();
+        Auction auction = null;
+        GameItems gameItem = null;
+        Bid bid = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "SELECT a.id, a.seller_id ,a.game_account_name, b.bidder_id, b.game_account_name ,b.amount, a.item_id\n"
+                        + "FROM bid b\n"
+                        + "JOIN auction a ON b.auction_id = a.id\n"
+                        + "WHERE b.amount = (\n"
+                        + "  SELECT MAX(amount)\n"
+                        + "  FROM bid\n"
+                        + "  WHERE auction_id = b.auction_id\n"
+                        + ") AND NOW() > a.ending_date";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    auction = new Auction();
+                    gameItem = new GameItems();
+                    bid = new Bid();
+                    //Get auction information
+                    auction.setAuctionId(rs.getInt(1));
+                    auction.setSellerId(rs.getInt(2));
+                    auction.setGameAccountName(rs.getString(3));
+                    //Get bid information
+                    bid.setBidderId(rs.getInt(4));
+                    bid.setGameAccountName(rs.getString(5));
+                    bid.setAmount(rs.getDouble(6));
+                    //Get game item information
+                    gameItem.setId(rs.getInt(7));
+                    auction.setGameItem(gameItem);
+                    auctionList.put(bid, auction);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return auctionList;
+    }
 
+    public static void deleteUnsuccessfulAuction() {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = " DELETE FROM Auction auc\n"
+                    + "WHERE auc.id IN\n"
+                    + "(SELECT id FROM (\n"
+                    + "	select auc.id \n"
+                    + "	from auction auc\n"
+                    + "	left outer join bid bid\n"
+                    + "	on auc.id = bid.auction_id\n"
+                    + "	where bid.id is null) as auction) ";
+            Statement call = con.createStatement();
+            //Loop through all payment request id and delete it from the table
+            call.executeUpdate(sql);
+            call.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in deleteUnsuccessfulAuction ");
+        }
+    }
+
+    public static void main(String[] args) {
+        deleteUnsuccessfulAuction();
+
+        HashMap<Bid, Auction> list = getAllSuccessfullAuction();
+        for (Bid bid : list.keySet()) {
+            System.out.println(bid);
+            System.out.println(list.get(bid));
+        }
+    }
 }
