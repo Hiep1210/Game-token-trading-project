@@ -45,7 +45,7 @@ public class MarketItemsDao {
         return list;
     }
 
-    public static ArrayList<MarketItems> Filter(String priceorder, String type, String rarity, String exterior) {
+    public static ArrayList<MarketItems> Filter(String priceorder, String[] type, String[] rarity, String[] exterior) {
         ArrayList<MarketItems> list = new ArrayList<>();
         try {
             DBContext db = new DBContext();
@@ -53,13 +53,25 @@ public class MarketItemsDao {
             if (con != null) {
                 String sql = SELECTITEMS;
                 if (type != null) {
-                    sql += " and type = '" + type + "'";
+                    sql += " and (";
+                    for (int i = 0; i < type.length-1; i++) {
+                        sql += " type = '"+type[i]+"' or ";
+                    }
+                    sql += " type = '"+type[type.length-1]+"') ";
                 }
                 if (rarity != null) {
-                    sql += " and rarity = '" + rarity + "'";
+                    sql += " and (";
+                    for (int i = 0; i < rarity.length-1; i++) {
+                        sql += " rarity = '"+rarity[i]+"' or ";
+                    }
+                    sql += " rarity = '"+rarity[rarity.length-1]+"') ";
                 }
                 if (exterior != null) {
-                    sql += " and exterior = '" + exterior + "'";
+                   sql += " and (";
+                    for (int i = 0; i < exterior.length-1; i++) {
+                        sql += " exterior = '"+exterior[i]+"' or ";
+                    }
+                    sql += " exterior = '"+exterior[exterior.length-1]+"') ";
                 }
                 if (priceorder != null) {
                     sql += " order by price " + priceorder;
@@ -111,6 +123,9 @@ public class MarketItemsDao {
 
     public static void main(String[] args) {
         ArrayList<MarketItems> m = getAllMarketItems();
-
+        String[] type =  {"Pistol","Knife"};
+        String[] r = {"Covert"};
+        String [] a = {"Well-Worn","Factory New"};
+        Filter("asc", type, r,a);
     }
 }

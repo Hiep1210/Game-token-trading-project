@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import model.Notification;
 import model.User;
@@ -31,17 +32,13 @@ public class GetNotificationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         User user = (User) request.getSession().getAttribute("user");
-        ArrayList<Notification> notificationList;
-        int id;
-        String redirect = request.getParameter("redirect");
-        if (user == null || redirect == null) { // if session does not contain any user instance
-            redirect = "DisplayMarketItemsController";
-        } 
-        id = user.getId();
-        notificationList = NotificationDAO.getAllUserNotification(id);
-        request.setAttribute("notificationList", notificationList);
-        request.getRequestDispatcher(redirect).forward(request, response);
+        int id = user.getId();
+        ArrayList<Notification> notificationList = NotificationDAO.getAllUserNotification(id);
+        for (Notification noti : notificationList) {
+            out.println("<a class=\"dropdown-item\" href=\"#\">"+noti.getNoti_content() +"</a>");
+        }
     }
 
     @Override
