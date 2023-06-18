@@ -34,5 +34,19 @@ public class Cart extends MarketItems{
     public void setBuyer_id(int buyer_id) {
         this.buyer_id = buyer_id;
     }
+
+    MarketItems getItemById(int id) {
+        for (MarketItems item : items) {
+            if ( item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
+    }
     
+    public void removeItem(int id) {
+        if (getItemById(id) != null) {
+            items.remove(getItemById(id));
+        }
+    }
 }
