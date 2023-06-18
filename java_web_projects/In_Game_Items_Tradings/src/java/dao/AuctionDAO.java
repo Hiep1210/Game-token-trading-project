@@ -234,7 +234,8 @@ public class AuctionDAO {
                     + "	from auction auc\n"
                     + "	left outer join bid bid\n"
                     + "	on auc.id = bid.auction_id\n"
-                    + "	where bid.id is null) as auction) ";
+                    + "	where bid.id is null) as auction) "
+                    + " AND NOW() > auc.ending_date ";
             Statement call = con.createStatement();
             //Loop through all payment request id and delete it from the table
             call.executeUpdate(sql);
