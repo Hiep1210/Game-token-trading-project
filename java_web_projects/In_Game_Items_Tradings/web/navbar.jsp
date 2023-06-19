@@ -39,7 +39,7 @@
                     </div>
                     <!-- Auction Button -->
                     <div class="col-lg-3 navbar-item nopadding">
-                        <a href="AuctionPageController">
+                        <a href="#">
                             <i class="material-icons navbar-item-icon">gavel</i>
                         </a>
                         <h5>Auction</h5>
