@@ -8,10 +8,8 @@ import Context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import model.PaymentRequest;
 import model.ProcessItem;
 
 /**
@@ -20,7 +18,7 @@ import model.ProcessItem;
  */
 public class ProcessItemsDAO {
 
-    public static void insertProcessItems(ProcessItem processItem) {
+    public static boolean insertProcessItems(ProcessItem processItem) {
         boolean insertStatus = true;
         try {
             DBContext db = new DBContext();
@@ -40,7 +38,9 @@ public class ProcessItemsDAO {
                 preparedStatement.setInt(6, processItem.getTransactionId());
                 preparedStatement.setInt(7, processItem.getTransactionTypeIdId());
                 // if insert command failed
-                preparedStatement.executeUpdate();
+                if (preparedStatement.executeUpdate() != 1) {
+                    insertStatus = false;
+                }
                 preparedStatement.close();
                 con.close();
             }
@@ -48,6 +48,7 @@ public class ProcessItemsDAO {
             System.out.println("Error in ProcessItems");
             System.out.println(e);
         }
+        return insertStatus;
     }
 
     public static ArrayList<ProcessItem> getAllProcessItems() {
@@ -78,7 +79,7 @@ public class ProcessItemsDAO {
             }
         } catch (Exception e) {
             System.out.println(e);
-        }
+        } 
         return processItemList;
     }
 
@@ -103,13 +104,13 @@ public class ProcessItemsDAO {
         return deleteStatus;
     }
 
-//    public static void main(String[] args) {
+    public static void main(String[] args) {
 //        ProcessItem processItem = new ProcessItem(1, 2, 1, 2,"Dave");
-//        insertProcessItems(processItem);
-////        deleteProcessItems(1);
+
+//        deleteProcessItems(1);
 //        for (ProcessItem pi : getAllProcessItems()) {
 //            System.out.println(pi);
 //        }
-//
-//    }
+
+    }
 }
