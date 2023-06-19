@@ -164,15 +164,4 @@ public class BidDAO {
         return deleteStatus;
     }
 
-    public static void main(String[] args) {
-        //insertBid(new Bid(1, LocalDateTime.of(2023, 06, 10, 0, 0, 0) , 100.0 , 3));
-//        changeBidAmount(3, 100.0, LocalDateTime.of(2024, 06, 10, 0, 0, 0));
-//        ArrayList<Integer> auctionList = new ArrayList<>();
-//        auctionList.add(2);
-//        deleteBids(auctionList);
-        ArrayList<Bid> list = getAllUnsuccessfulBids();
-        for (Bid bid : list) {
-            System.out.println(bid);
-        }
-    }
 }
