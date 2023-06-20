@@ -155,6 +155,5 @@ public class CartDAO {
     }
 
     public static void main(String[] args) throws SQLException {
-//        System.out.println(getCartFromId(1));
     }
 }

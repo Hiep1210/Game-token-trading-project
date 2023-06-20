@@ -60,10 +60,13 @@
             </c:forEach>
             <c:if test="${requestScope.clist !=null}">
                 <h2 style="color: wheat; text-align: right;">The total amount in your cart: ${total} $</h2>
-                <form action="ProcessCartController" method="post">
-                    <input type="text" name="gameAccountName" required="">    
-                    <button type="submit" class="btn item-card-button ">
-                        <h5 class="card-title item-card-price ps-1">Buy All</h5>
+                <button class="btn item-card-button " onclick="showGameAcc()">
+                    <h5 class="card-title item-card-price ps-1">Buy All</h5>
+                </button>
+                <form action="ProcessCartController" method="post">   
+                    <input type="text" name="gameAccountName" required="" hidden="" id="gameacc"> 
+                    <button class="btn item-card-button " type="submit" hidden="" id="butt-gameacc">
+                        <h5 class="card-title item-card-price ps-1">Enter</h5>
                     </button>
                 </form>
             </c:if>
@@ -73,7 +76,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
-
+        <script>
+            function showGameAcc(){
+                var input = document.getElementById("gameacc");
+                input.removeAttribute("hidden");
+                var button = document.getElementById("butt-gameacc");
+                button.removeAttribute("hidden")
+            }
+        </script>
     </body>
 
 </html>
