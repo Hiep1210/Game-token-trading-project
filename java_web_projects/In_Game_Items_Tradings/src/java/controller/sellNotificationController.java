@@ -40,7 +40,7 @@ public class sellNotificationController extends HttpServlet {
             }
             else 
             { // if the user sell the item correctly
-                notiContent = "You have sell " + gameItems.getSkinName()+" "+gameItems.getItemName() +"successfully" ;
+                notiContent = "You have sold " + gameItems.getSkinName()+" "+gameItems.getItemName() +"successfully" ;
                 notification = new Notification(user.getId(), getCurrentDate(),notiContent, "sell");
                 NotificationDAO.insertNotification(notification);
             }
@@ -70,7 +70,7 @@ public class sellNotificationController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
     }
 
     /**
@@ -83,7 +83,7 @@ public class sellNotificationController extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
     }
 
     /**
