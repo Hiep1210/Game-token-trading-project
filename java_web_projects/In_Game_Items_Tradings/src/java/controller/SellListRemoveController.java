@@ -43,7 +43,7 @@ public class SellListRemoveController {
             HttpSession session = request.getSession();
             Object object = session.getAttribute("sellList");
             int cartId = Integer.parseInt(request.getParameter("id"));
-            Cart cart = (Cart) object;
+            SellList cart = (SellList) object;
 //            cart.removeItem(cartId);
             session.setAttribute("cart",cart);
             response.sendRedirect("./Cart");
