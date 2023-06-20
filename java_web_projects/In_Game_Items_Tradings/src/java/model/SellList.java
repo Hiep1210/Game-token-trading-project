@@ -14,8 +14,8 @@ public class SellList extends MarketItems{
     int id;
     List<SellItems> items ;
     
-    public SellList(int id, int buyer_id, int mid, String game, int user_id, double price, String begindate, String enddate, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
-        super(mid, game, user_id, price, begindate, enddate, gid, skin_name, item_name, type, rarity, exterior, img);
+     public SellList(int id, int buyer_id, int mid, String game, int user_id, double price, String timeleft, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
+        super(mid, game, user_id, price, timeleft, gid, skin_name, item_name, type, rarity, exterior, img);
         this.id = id;
         
     }
