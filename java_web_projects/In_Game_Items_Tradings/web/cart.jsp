@@ -31,35 +31,38 @@
                 <h2>${requestScope.message}</h2>
             </c:if>
             <h2></h2>
-            <c:forEach var ="cartlist" items="${requestScope.clist}">
-                <div class="item-card mt-2 mb-2 " id="cart-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
-                    <div class="card" >
-                        <img src="UI/image/${cartlist.getImg()}.png" alt ="displayfailed" class="card-img-top" >
-                        <div class="card-body row">
-                            <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
-                            <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
-                            <div class="col-lg-6">
-                            <form action="BuyPageController" method="post">
-                                <button type="submit" class="btn item-card-button ">
-                                    <h5 class="card-title item-card-price ps-1">Buy</h5>
-                                </button>
-                            </form><!-- comment -->
-                            </div>
-                            <div class="col-lg-6">
-                             <form action="DeleteCartController" method="post">
-                                 <input type="text" name="id" value="${cartlist.id}" hidden=""/>
-                                 <button type="submit" onclick="confirm('Are you sure you want to remove this item from cart? ')" class="btn item-card-button ">
-                                    <h5 class="card-title item-card-price ps-1">Remove</h5>
-                                </button>
-                            </form>
+            <c:if test="${requestScope.clist.size() > 0}">
+                <c:set var="cartTotal" value="0"/>
+                <c:forEach var ="cartlist" items="${requestScope.clist}">
+                    <!-- count total amount in cart -->
+                    <c:set var="cartTotal" value="${cartTotal + cartlist.price}"/>
+                    <div class="item-card mt-2 mb-2 " id="cart-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
+                        <div class="card" >
+                            <img src="UI/image/${cartlist.getImg()}.png" alt ="displayfailed" class="card-img-top" >
+                            <div class="card-body row">
+                                <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
+                                <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
+                                <div class="col-lg-6">
+                                    <form action="DeleteCartController" method="post">
+                                        <input type="text" name="id" value="${cartlist.id}" hidden=""/>
+                                        <button type="submit" onsubmit="confirm('Are you sure you want to remove this item from cart? ')" class="btn item-card-button ">
+                                            <h5 class="card-title item-card-price ps-1">Remove</h5>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+                <h2>The total amount in your cart: ${cartTotal} $</h2>
+                <form action="ProcessCartController" method="post">
+                    <input type="text" name="gameAccountName" required="">    
+                    <button type="submit" class="btn item-card-button ">
+                        <h5 class="card-title item-card-price ps-1">Buy</h5>
+                    </button>
+                </form>
+            </c:if>
         </div>
-
-
 
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
