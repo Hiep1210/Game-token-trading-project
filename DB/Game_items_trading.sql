@@ -152,8 +152,8 @@ create table SellList(
 	id int not null auto_increment,
     primary key(id),
     seller_id int not null,
-	market_items_id int not null,
-    foreign key(market_items_id) references MarketItems(id),
+	sell_items_id int not null,
+    foreign key(sell_items_id) references SellItems(id),
     foreign key(seller_id) references UserAccount(id)
 );
 
