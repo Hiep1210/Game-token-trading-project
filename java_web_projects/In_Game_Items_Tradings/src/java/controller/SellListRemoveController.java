@@ -39,6 +39,7 @@ public class SellListRemoveController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+                ArrayList<GameItemsDAO> sellList = new ArrayList<>();
         try {
             HttpSession session = request.getSession();
             Object object = session.getAttribute("sellList");
