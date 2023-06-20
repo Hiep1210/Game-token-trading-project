@@ -35,18 +35,18 @@ public class forgotPasswordController extends HttpServlet {
            
             UserDAO dao = new UserDAO();
             User checkUser = dao.getUserByUsername(uname);
-            if(checkUser == null){             
+            if(checkUser == null){
+                request.setAttribute("Alert", "Account not existed");
                 request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
             }else{
                 if(email.equals(checkUser.getEmail())){
                     request.setAttribute("userForgetPass", checkUser);
                     request.getRequestDispatcher("sendEmail").forward(request, response);
-                }else{              
+                }else{
+                    request.setAttribute("Alert", "Account not existed");
                     request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
                 }
-            }
-            
-            
+            }          
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

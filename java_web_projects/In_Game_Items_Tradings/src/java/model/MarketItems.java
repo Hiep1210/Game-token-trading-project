@@ -1,26 +1,27 @@
 /*
 *Programmer: Nguyễn Hoàng Hiệp 
 *Description: This file describes the model of items that will appear on the market
-*/
+ */
 package model;
 
 /**
  *
  * @author Inspiron
  */
-public class MarketItems extends GameItems{
+public class MarketItems extends GameItems {
+
     private int id;
-    private String game;
+    private String gameAccountName;
     private int userid;
     private double price;
     private String begindate;
     private String enddate;
 
-    public MarketItems(int id, String game, int userid, double price, String begindate, String enddate,
+    public MarketItems(int id, String gameAccountName, int userid, double price, String begindate, String enddate,
             int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
         super(gid, skinname, itemname, type, rarity, exterior, img);
         this.id = id;
-        this.game = game;
+        this.gameAccountName = gameAccountName;
         this.userid = userid;
         this.price = price;
         this.begindate = begindate;
@@ -35,12 +36,12 @@ public class MarketItems extends GameItems{
         this.id = id;
     }
 
-    public String getGame() {
-        return game;
+    public String getgameAccountName() {
+        return gameAccountName;
     }
 
-    public void setGame(String game) {
-        this.game = game;
+    public void setgameAccountName(String gameAccountName) {
+        this.gameAccountName = gameAccountName;
     }
 
     public int getUserid() {
@@ -75,5 +76,4 @@ public class MarketItems extends GameItems{
         this.enddate = enddate;
     }
 
-    
 }

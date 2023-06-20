@@ -39,14 +39,15 @@ public class SellListRemoveController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+                ArrayList<GameItemsDAO> sellList = new ArrayList<>();
         try {
             HttpSession session = request.getSession();
-            Object object = session.getAttribute("cart");
+            Object object = session.getAttribute("sellList");
             int cartId = Integer.parseInt(request.getParameter("id"));
-            Cart cart = (Cart) object;
+//            SellList cart = (SellList) object;
 //            cart.removeItem(cartId);
-            session.setAttribute("cart",cart);
-            response.sendRedirect("./Cart");
+            request.setAttribute("sellList", sellList);
+            request.getRequestDispatcher("sell.jsp").forward(request, response);
         } catch (Exception e) {
             response.getWriter().println(e);
         }

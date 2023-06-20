@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Asus
@@ -16,17 +18,19 @@ public class ProcessItem {
     private int transactionId;
     private int transactionTypeIdId;
     private String gameAccountName;
+    private LocalDateTime processTime;
     private Object object;
 
     public ProcessItem() {
     }
 
-    public ProcessItem(int senderId, int receiverId, int transactionId, int transactionTypeIdId, String gameAccountName) {
+    public ProcessItem(int senderId, int receiverId, int transactionId, int transactionTypeIdId, String gameAccountName, LocalDateTime processTime) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.transactionId = transactionId;
         this.transactionTypeIdId = transactionTypeIdId;
         this.gameAccountName = gameAccountName;
+        this.processTime = processTime;
     }
 
     public int getId() {
@@ -77,6 +81,14 @@ public class ProcessItem {
         this.gameAccountName = gameAccountName;
     }
 
+    public LocalDateTime getProcessTime() {
+        return processTime;
+    }
+
+    public void setProcessTime(LocalDateTime processTime) {
+        this.processTime = processTime;
+    }
+
     public Object getObject() {
         return object;
     }
@@ -87,7 +99,7 @@ public class ProcessItem {
 
     @Override
     public String toString() {
-        return "ProcessItem{" + "id=" + id + ", senderId=" + senderId + ", receiverId=" + receiverId + ", transactionId=" + transactionId + ", transactionTypeIdId=" + transactionTypeIdId + ", gameAccountName=" + gameAccountName + ", object=" + object + '}';
+        return "ProcessItem{" + "id=" + id + ", senderId=" + senderId + ", receiverId=" + receiverId + ", transactionId=" + transactionId + ", transactionTypeIdId=" + transactionTypeIdId + ", gameAccountName=" + gameAccountName + ", processTime=" + processTime + ", object=" + object + '}';
     }
 
 }

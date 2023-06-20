@@ -217,9 +217,6 @@
                                                     <i class="fa-solid fa-cart-shopping"></i>
                                                 </button>
                                             </div>
-
-
-
                                         </c:if>
                                     </div>
                                 </div>

@@ -8,10 +8,9 @@ import Context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import model.PaymentRequest;
 import model.ProcessItem;
 
 /**
@@ -20,15 +19,15 @@ import model.ProcessItem;
  */
 public class ProcessItemsDAO {
 
-    public static void insertProcessItems(ProcessItem processItem) {
+    public static boolean insertProcessItems(ProcessItem processItem) {
         boolean insertStatus = true;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "INSERT INTO processitems (transactionType_id , transaction_id , sender_id,receiver_id,game_account_name) "
-                        + "  SELECT ?,?,?,?,? "
+                String sql = "INSERT INTO processitems (transactionType_id , transaction_id , sender_id,receiver_id,game_account_name,process_date) "
+                        + "  SELECT ?,?,?,?,?,? "
                         + "WHERE NOT EXISTS "
                         + "  (SELECT transaction_id FROM processitems WHERE transaction_id=? AND transactionType_id = ?);";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
@@ -37,10 +36,13 @@ public class ProcessItemsDAO {
                 preparedStatement.setInt(3, processItem.getSenderId());
                 preparedStatement.setInt(4, processItem.getReceiverId());
                 preparedStatement.setString(5, processItem.getGameAccountName());
-                preparedStatement.setInt(6, processItem.getTransactionId());
+                preparedStatement.setObject(6, processItem.getProcessTime());
                 preparedStatement.setInt(7, processItem.getTransactionTypeIdId());
+                preparedStatement.setInt(8, processItem.getTransactionId());
                 // if insert command failed
-                preparedStatement.executeUpdate();
+                if (preparedStatement.executeUpdate() != 1) {
+                    insertStatus = false;
+                }
                 preparedStatement.close();
                 con.close();
             }
@@ -48,6 +50,7 @@ public class ProcessItemsDAO {
             System.out.println("Error in ProcessItems");
             System.out.println(e);
         }
+        return insertStatus;
     }
 
     public static ArrayList<ProcessItem> getAllProcessItems() {
@@ -71,6 +74,7 @@ public class ProcessItemsDAO {
                     processItem.setSenderId(rs.getInt("sender_id"));
                     processItem.setReceiverId(rs.getInt("receiver_id"));
                     processItem.setGameAccountName(rs.getString("game_account_name"));
+                    processItem.setProcessTime(rs.getObject("process_date", LocalDateTime.class));
                     processItemList.add(processItem);
                 }
                 call.close();
@@ -104,12 +108,11 @@ public class ProcessItemsDAO {
     }
 
 //    public static void main(String[] args) {
-//        ProcessItem processItem = new ProcessItem(1, 2, 1, 2,"Dave");
-//        insertProcessItems(processItem);
+//        ProcessItem processItem = new ProcessItem(1, 2, 1, 2,"Dave", LocaDateTime. );
+//
 ////        deleteProcessItems(1);
 //        for (ProcessItem pi : getAllProcessItems()) {
 //            System.out.println(pi);
 //        }
-//
 //    }
 }

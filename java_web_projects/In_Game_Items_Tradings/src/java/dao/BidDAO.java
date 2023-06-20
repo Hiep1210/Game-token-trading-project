@@ -141,27 +141,20 @@ public class BidDAO {
         return changeBidAmountStatus;
     }
 
-    public static boolean deleteBids(ArrayList<Integer> auctionIds) {
+    public static boolean deleteBid(int bidId) {
         //Return true if delete process was successfull
         boolean deleteStatus = true;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
-            con.setAutoCommit(false);
             String sql = "DELETE FROM Bid "
-                    + " WHERE auction_id = ?;";
+                    + " WHERE id = ?;";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
-
+            preparedStatement.setInt(1, bidId);
             //Loop through all auction id and delete it from the bid table
-            for (int auctionId : auctionIds) {
-                preparedStatement.setInt(1, auctionId);
-                if (preparedStatement.executeUpdate() == 0) {
-                    con.rollback();
-                    deleteStatus = false;
-                    throw new Exception("ERROR DELETING BIDS, NO CHANGES WAS COMMITED");
-                }
+            if (preparedStatement.executeUpdate() != 1) {
+                deleteStatus = false;
             }
-            con.commit();
             preparedStatement.close();
             con.close();
         } catch (Exception e) {
@@ -171,15 +164,4 @@ public class BidDAO {
         return deleteStatus;
     }
 
-    public static void main(String[] args) {
-        //insertBid(new Bid(1, LocalDateTime.of(2023, 06, 10, 0, 0, 0) , 100.0 , 3));
-//        changeBidAmount(3, 100.0, LocalDateTime.of(2024, 06, 10, 0, 0, 0));
-//        ArrayList<Integer> auctionList = new ArrayList<>();
-//        auctionList.add(2);
-//        deleteBids(auctionList);
-        ArrayList<Bid> list = getBidsFromAuctionId(2);
-        for (Bid bid : list) {
-            System.out.println(bid);
-        }
-    }
 }

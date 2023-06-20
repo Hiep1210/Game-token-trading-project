@@ -16,8 +16,15 @@ import model.MarketItems;
  * @author Inspiron
  */
 public class MarketItemsDao {
+
     private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
-            + "FROM marketitems m, gameitems g where m.item_id = g.id";
+            + "FROM marketitems m, gameitems g "
+            + "WHERE m.item_id = g.id "
+            + "AND NOT EXISTS ("
+            + "     SELECT 1 FROM processitems p  "
+            + "     WHERE  p.transaction_id = m.id "
+            + "     AND p.transactionType_id = 1) ";
+
     //Function to get all items in the market 
     public static ArrayList<MarketItems> getAllMarketItems() {
         ArrayList<MarketItems> list = new ArrayList<>();
@@ -27,7 +34,7 @@ public class MarketItemsDao {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql =SELECTITEMS;
+                String sql = SELECTITEMS;
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
@@ -54,24 +61,24 @@ public class MarketItemsDao {
                 String sql = SELECTITEMS;
                 if (type != null) {
                     sql += " and (";
-                    for (int i = 0; i < type.length-1; i++) {
-                        sql += " type = '"+type[i]+"' or ";
+                    for (int i = 0; i < type.length - 1; i++) {
+                        sql += " type = '" + type[i] + "' or ";
                     }
-                    sql += " type = '"+type[type.length-1]+"') ";
+                    sql += " type = '" + type[type.length - 1] + "') ";
                 }
                 if (rarity != null) {
                     sql += " and (";
-                    for (int i = 0; i < rarity.length-1; i++) {
-                        sql += " rarity = '"+rarity[i]+"' or ";
+                    for (int i = 0; i < rarity.length - 1; i++) {
+                        sql += " rarity = '" + rarity[i] + "' or ";
                     }
-                    sql += " rarity = '"+rarity[rarity.length-1]+"') ";
+                    sql += " rarity = '" + rarity[rarity.length - 1] + "') ";
                 }
                 if (exterior != null) {
-                   sql += " and (";
-                    for (int i = 0; i < exterior.length-1; i++) {
-                        sql += " exterior = '"+exterior[i]+"' or ";
+                    sql += " and (";
+                    for (int i = 0; i < exterior.length - 1; i++) {
+                        sql += " exterior = '" + exterior[i] + "' or ";
                     }
-                    sql += " exterior = '"+exterior[exterior.length-1]+"') ";
+                    sql += " exterior = '" + exterior[exterior.length - 1] + "') ";
                 }
                 if (priceorder != null) {
                     sql += " order by price " + priceorder;
@@ -109,7 +116,7 @@ public class MarketItemsDao {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    items =new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
                             rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
                     list.add(items);
                 }
@@ -125,7 +132,7 @@ public class MarketItemsDao {
 
     public static void main(String[] args) {
         ArrayList<MarketItems> m = getAllMarketItems();
-        String[] type =  {"Pistol","Knife"};
+        String[] type = {"Pistol", "Knife"};
         String[] r = {"Covert"};
         String [] a = {"Well-Worn","Factory New"};
         Filter("asc", type, r,a);

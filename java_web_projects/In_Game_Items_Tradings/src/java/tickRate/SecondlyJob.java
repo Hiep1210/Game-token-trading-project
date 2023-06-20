@@ -4,12 +4,14 @@
  */
 package tickRate;
 
-import dao.AuctionDAO;
+
+import dao.BidDAO;
 import dao.ProcessItemsDAO;
-import java.util.HashMap;
-import model.Auction;
+import dao.UserDAO;
+import java.util.ArrayList;
 import model.Bid;
 import model.ProcessItem;
+import model.User;
 
 /**
  *
@@ -18,21 +20,10 @@ import model.ProcessItem;
 public class SecondlyJob implements Runnable {
 
     public void run() {
-        processAuctionItem();
+//        processAuctionItem();
+     
     }
+//
 
-    public void processAuctionItem() {
-        AuctionDAO.deleteUnsuccessfulAuction();
-        Auction auction;
-        ProcessItem processItem;
-        HashMap<Bid, Auction> auctionList = AuctionDAO.getAllSuccessfullAuction();
-        if (!auctionList.isEmpty()) {
-            for (Bid bid : auctionList.keySet()) {
-                auction = auctionList.get(bid);
-                processItem = new ProcessItem(auction.getSellerId(), bid.getBidderId(), auction.getAuctionId(), 2, bid.getGameAccountName());
-                ProcessItemsDAO.insertProcessItems(processItem);
-            }
-        }
-    }
 
 }

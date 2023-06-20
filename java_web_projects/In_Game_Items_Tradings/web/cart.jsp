@@ -40,28 +40,34 @@
                             <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
                             <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
                             <div class="col-lg-6">
-                            <form action="BuyPageController" method="post">
-                                <button type="submit" class="btn item-card-button ">
-                                    <h5 class="card-title item-card-price ps-1">Buy</h5>
-                                </button>
-                            </form><!-- comment -->
+                                <form action="ProcessCartController" method="post">
+                                    <button type="submit" class="btn item-card-button ">
+                                        <h5 class="card-title item-card-price ps-1">Buy</h5>
+                                    </button>
+                                </form><!-- comment -->
                             </div>
                             <div class="col-lg-6">
                                 <form action="DeleteCartController" method="post" onsubmit="return confirm('Are you sure you want to remove this item from cart? ')">
-                                 <input type="text" name="id" value="${cartlist.id}" hidden=""/>
-                                 <button type="submit"  class="btn item-card-button ">
-                                    <h5 class="card-title item-card-price ps-1">Remove</h5>
-                                </button>
-                            </form>
+                                    <input type="text" name="id" value="${cartlist.id}" hidden=""/>
+                                    <button type="submit"  class="btn item-card-button ">
+                                        <h5 class="card-title item-card-price ps-1">Remove</h5>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </c:forEach>
-            <h2 style="color: wheat; text-align: right;">Your Cart Total: ${total}</h2>
+            <c:if test="${requestScope.clist !=null}">
+                <h2 style="color: wheat; text-align: right;">The total amount in your cart: ${total} $</h2>
+                <form action="ProcessCartController" method="post">
+                    <input type="text" name="gameAccountName" required="">    
+                    <button type="submit" class="btn item-card-button ">
+                        <h5 class="card-title item-card-price ps-1">Buy All</h5>
+                    </button>
+                </form>
+            </c:if>
         </div>
-
-
 
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
