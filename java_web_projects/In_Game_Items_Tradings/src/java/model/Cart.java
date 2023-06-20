@@ -36,6 +36,10 @@ public class Cart extends MarketItems{
     public void setBuyer_id(int buyer_id) {
         this.buyer_id = buyer_id;
     }
+    
+    public int getMarketItemId() {
+        return super.getId();
+    }
 
     MarketItems getItemById(int id) {
         for (MarketItems item : items) {
