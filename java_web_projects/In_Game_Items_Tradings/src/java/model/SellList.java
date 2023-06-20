@@ -30,8 +30,8 @@ public class SellList extends MarketItems{
 
     
 
-    MarketItems getItemById(int id) {
-        for (MarketItems item : items) {
+    SellItems getItemById(int id) {
+        for (SellItems item : items) {
             if ( item.getId() == id) {
                 return item;
             }
