@@ -13,16 +13,18 @@ public class SellItems extends GameItems {
     private String gameAccountName;
     private int userid;
     private double price;
-    String timeleft;
-
-    public SellItems(int id, String gameAccountName, int userid, double price, String timeleft,
+    String begindate;
+    String enddate;
+    
+    public SellItems(int id, String gameAccountName, int userid, double price, String begindate, String enddate,
             int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
         super(gid, skinname, itemname, type, rarity, exterior, img);
         this.id = id;
         this.gameAccountName = gameAccountName;
         this.userid = userid;
         this.price = price;
-        this.timeleft=timeleft;
+        this.begindate = begindate;
+        this.enddate = enddate;
     }
 
     public int getId() {
@@ -57,13 +59,33 @@ public class SellItems extends GameItems {
         this.price = price;
     }
 
-    public String getTimeleft() {
-        return timeleft;
+    public String getGameAccountName() {
+        return gameAccountName;
     }
 
-    public void setTimeleft(String timeleft) {
-        this.timeleft = timeleft;
+    public void setGameAccountName(String gameAccountName) {
+        this.gameAccountName = gameAccountName;
     }
+
+    public String getBegindate() {
+        return begindate;
+    }
+
+    public void setBegindate(String begindate) {
+        this.begindate = begindate;
+    }
+
+    public String getEnddate() {
+        return enddate;
+    }
+
+    public void setEnddate(String enddate) {
+        this.enddate = enddate;
+    }
+
+    
+
+    
 
     
 }
