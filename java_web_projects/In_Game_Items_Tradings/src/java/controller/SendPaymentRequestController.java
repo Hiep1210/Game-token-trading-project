@@ -4,6 +4,8 @@
  */
 package controller;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import dao.PaymentRequestDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -34,7 +36,8 @@ import org.apache.tomcat.util.http.fileupload.util.Streams;
  */
 @WebServlet(name = "SendPaymentRequestController", urlPatterns = {"/SendPaymentRequestController"})
 public class SendPaymentRequestController extends HttpServlet {
-
+Logger logger
+            = Logger.getLogger(SendPaymentRequestController.class.getName());
     String location = null;
     private static final String HOMEPAGE = "BuyPageController";
     @Override
@@ -47,7 +50,7 @@ public class SendPaymentRequestController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletFileUpload upload;
         FileItemIterator iterator;
         FileItemStream item;
@@ -60,11 +63,9 @@ public class SendPaymentRequestController extends HttpServlet {
         String redirect = HOMEPAGE;// if redirect attribute is null auto redirect to DisplayMarketItemsController
         String newInvoiceImageName;
         double money;
-
+        String message = null;
         try {
-            if (user == null) { // if session does not contain any user instance
-                redirect =HOMEPAGE;
-            } else {
+            if (user != null) {  
                 upload = new ServletFileUpload();
                 iterator = upload.getItemIterator(request);
                 item = iterator.next();
@@ -79,10 +80,12 @@ public class SendPaymentRequestController extends HttpServlet {
                 moveImages(item,newInvoiceImageName);
                 
             }
-            request.getRequestDispatcher(redirect).forward(request, response);
         } catch (Exception e) {
-            System.out.println(e);
+            message = "Failed to send payment request";
         }
+        request.setAttribute("message", message);
+                    request.getRequestDispatcher(redirect).forward(request, response);
+
     }
 
     private void moveImages(FileItemStream item,String newInvoiceImageName) {
@@ -101,7 +104,7 @@ public class SendPaymentRequestController extends HttpServlet {
                     StandardCopyOption.REPLACE_EXISTING);//change name and copy image into target file
             IOUtils.closeQuietly(initialStream);
         } catch (Exception e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, e.getMessage());
         }
     }
 
@@ -115,20 +118,10 @@ public class SendPaymentRequestController extends HttpServlet {
             path = domain.getCodeSource().getLocation().getPath();//get location of jar file in class News Controller
             jarPath = URLDecoder.decode(path, "UTF-8");
         } catch (Exception e) {
-            System.out.println(e);
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return jarPath.replace("build/web/WEB-INF/classes/", "").substring(1)
                 + "web/UI/image/";//return the location invoice images file
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

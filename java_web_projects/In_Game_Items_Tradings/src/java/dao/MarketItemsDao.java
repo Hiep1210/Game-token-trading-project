@@ -100,6 +100,7 @@ public class MarketItemsDao {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
+                if(name.length > 0 && name[0] != ""){
                 String sql =SELECTITEMS;
                 for (int i = 0; i < name.length; i++) {
                     sql += " and (item_name Like '%" + name[i] + "%' or skin_name like '%" + name[i] + "%') ";
@@ -113,6 +114,7 @@ public class MarketItemsDao {
                     list.add(items);
                 }
                 call.close();
+                }
                 con.close();
             }
         } catch (Exception e) {
@@ -127,5 +129,7 @@ public class MarketItemsDao {
         String[] r = {"Covert"};
         String [] a = {"Well-Worn","Factory New"};
         Filter("asc", type, r,a);
+        String name[] = {};
+        Search(name);
     }
 }

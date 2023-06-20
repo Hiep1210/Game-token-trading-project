@@ -5,15 +5,12 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.MarketItems;
-import model.GameItems;
-import dao.GameItemsDAO;
 import dao.MarketItemsDao;
 import java.util.ArrayList;
 
@@ -60,9 +57,9 @@ public class SearchBuyController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String input = request.getParameter("search").trim();
-        String[] analyze = input.split(" ");
-        ArrayList<MarketItems> market_items = MarketItemsDao.Search(analyze);
-        request.setAttribute("marketlist", market_items);
+        String[] analyze = input.split("\\s");
+        ArrayList<MarketItems> marketItems = MarketItemsDao.Search(analyze);
+        request.setAttribute("marketlist", marketItems);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
     }
 }
