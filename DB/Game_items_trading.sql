@@ -148,6 +148,15 @@ create table SellItems(
     end_date date
 );
 
+create table SellList(
+	id int not null auto_increment,
+    primary key(id),
+    seller_id int not null,
+	market_items_id int not null,
+    foreign key(market_items_id) references MarketItems(id),
+    foreign key(seller_id) references UserAccount(id)
+);
+
 INSERT INTO role (`id`, `role_name`) VALUES ('1', 'user');
 INSERT INTO role (`id`, `role_name`) VALUES ('2', 'admin');
 
