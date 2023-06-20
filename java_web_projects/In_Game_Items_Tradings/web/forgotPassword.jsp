@@ -32,7 +32,7 @@
                 <!-- Screen Header -->
                 <header>Forgot Password</header>
                 <!-- Display Signup Error -->
-                <div class="form-message">${requestScope.message}</div>
+                <div class="form-message">${requestScope.Alert}</div>
                 <!-- Main Form -->
                 <form id="login-form" action="forgotPasswordController">
                     <!-- Username -->

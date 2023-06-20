@@ -173,6 +173,24 @@ public class SellDAO {
         return list;
     }
 
+    public static boolean insertSellItem(int sellerid, int sellid ){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "INSERT INTO SellList (seller_id, sell_items_id) VALUES (?, ?); ";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, sellerid);
+            statement.setInt(2, sellid);
+           if(statement.executeUpdate() < 1) throw new Exception();
+            con.close();
+            statement.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         ArrayList<GameItems> sellItems = sortByRarity("common");
         for (GameItems sellItem : sellItems) {

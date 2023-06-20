@@ -13,8 +13,12 @@
     </head>
     <body>
         <form action="verifyCode">
-            Confirm Code: <input type="text" name="cfcode"/><br/>
-            <input type="submit" value="Submit">
+            <div class="form-group">
+                        <label for="cfcode" class="form-label">Confirm Code</label>
+                        <input id="cfcode" name="cfcode" type="text" placeholder="EX:123456" class="form-control">
+                        <span class="form-message"></span>
+                    </div>
+            <div class="form-message">${requestScope.AlertC}</div>
         </form>
     </body>
 </html>
