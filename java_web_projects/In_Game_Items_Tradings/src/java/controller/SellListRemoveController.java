@@ -41,7 +41,7 @@ public class SellListRemoveController {
         response.setContentType("text/html;charset=UTF-8");
         try {
             HttpSession session = request.getSession();
-            Object object = session.getAttribute("cart");
+            Object object = session.getAttribute("sellList");
             int cartId = Integer.parseInt(request.getParameter("id"));
             Cart cart = (Cart) object;
 //            cart.removeItem(cartId);
