@@ -135,7 +135,18 @@ create table TransactionType(
     type VARCHAR(20)
 );
 
-
+create table SellItems(
+    id int not null auto_increment,
+    primary key(id),
+	game_account_name varchar(50),
+    user_id int,
+    foreign key(user_id) references UserAccount(id),
+    item_id int,
+    price double,
+    foreign key(item_id) references GameItems(id),
+    begin_date date,
+    end_date date
+);
 
 INSERT INTO role (`id`, `role_name`) VALUES ('1', 'user');
 INSERT INTO role (`id`, `role_name`) VALUES ('2', 'admin');
