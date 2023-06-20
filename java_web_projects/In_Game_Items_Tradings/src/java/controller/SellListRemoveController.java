@@ -46,7 +46,7 @@ public class SellListRemoveController {
             SellList cart = (SellList) object;
 //            cart.removeItem(cartId);
             session.setAttribute("cart",cart);
-            response.sendRedirect("./Cart");
+            request.getRequestDispatcher("sell.jsp").forward(request, response);
         } catch (Exception e) {
             response.getWriter().println(e);
         }
