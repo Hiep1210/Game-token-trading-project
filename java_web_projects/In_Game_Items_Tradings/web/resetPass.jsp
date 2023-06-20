@@ -32,7 +32,7 @@
                 <!-- Screen Header -->
                 <header>Reset Pass</header>
                 <!-- Display Signup Error -->
-                <div class="form-message">${requestScope.message}</div>
+                <div class="form-message">${requestScope.Boy}</div>
                 <!-- Main Form -->
                 <form id="login-form" action="resetPassController">
                     <!-- Username -->
