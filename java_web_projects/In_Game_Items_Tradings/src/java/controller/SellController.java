@@ -26,6 +26,6 @@ import model.MarketItems;
 import model.ProcessItem;
 import model.User;
 
-public class SellController {
+public class SellController extends HttpServlet {
     
 }
