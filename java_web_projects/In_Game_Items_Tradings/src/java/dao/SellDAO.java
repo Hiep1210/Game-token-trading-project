@@ -191,6 +191,26 @@ public class SellDAO {
         return false;
     }
 
+    public static boolean deleteSellItem(int id) {
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "delete from SellList where id = " + id;
+            Statement statement = con.createStatement();
+            if (statement.executeUpdate(sql) < 1) {
+                deleteStatus = false;
+                throw new Exception();
+            }
+            con.close();
+            statement.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
+    }
+
     public static void main(String[] args) {
         ArrayList<GameItems> sellItems = sortByRarity("common");
         for (GameItems sellItem : sellItems) {
