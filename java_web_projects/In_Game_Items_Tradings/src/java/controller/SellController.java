@@ -25,6 +25,7 @@ import model.Cart;
 import model.MarketItems;
 import model.ProcessItem;
 import model.User;
+import model.SellList;
 
 public class SellController extends HttpServlet {
     @Override
