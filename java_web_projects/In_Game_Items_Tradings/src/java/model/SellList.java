@@ -28,7 +28,9 @@ public class SellList extends MarketItems{
         this.id = id;
     }
 
-    
+    public int getSellItemId() {
+        return super.getId();
+    }
 
     SellItems getItemById(int id) {
         for (SellItems item : items) {
