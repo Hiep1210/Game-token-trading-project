@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.CartDAO;
 import dao.GameItemsDAO;
 import dao.MarketItemsDao;
 import dao.SellDAO;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import model.Cart;
 import model.GameItems;
 import model.MarketItems;
+import model.SellList;
+import model.User;
 
 /**
  *
