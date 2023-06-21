@@ -27,5 +27,9 @@ import model.ProcessItem;
 import model.User;
 
 public class SellController extends HttpServlet {
-    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //Users are not allowed to access this servlet through the doGet method
+        request.getRequestDispatcher("SellPageController").forward(request, response);
+    }
 }
