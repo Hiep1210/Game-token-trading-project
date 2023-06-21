@@ -30,6 +30,41 @@ public class SellDAO {
     private static final String SELECTONEITEM = "SELECT sl.id,sl.seller_id, s.id, s.game_account_name, s.user_id, "
             + "s.price, s.begin_date, s.end_date,g.* FROM SellList sl, SellItems s, gameitems g "
             + "where sl.sell_items_id = s.id and s.item_id = g.id and sl.id = ?";
+    
+public static ArrayList<SellList> getAllSellListItems(int sellerid) {
+        ArrayList<SellList> list = new ArrayList<>();
+        SellList items = null;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = SELECTITEMS;
+                statement = con.prepareStatement(sql);
+                statement.setInt(1, sellerid);
+                ResultSet rs = statement.executeQuery();
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new SellList(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getDouble(6),
+                            rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12),
+                            rs.getString(13), rs.getString(14), rs.getString(15));
+                    list.add(items);
+                }
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } 
+        try{
+            statement.close();
+            con.close();
+        }catch(SQLException s){
+            logger.log(Level.SEVERE, s.getMessage());
+        }
+        return list;
+    }
+    
     public static ArrayList<GameItems> getAllSellItems() {
         ArrayList<GameItems> list = new ArrayList<>();
         try {
