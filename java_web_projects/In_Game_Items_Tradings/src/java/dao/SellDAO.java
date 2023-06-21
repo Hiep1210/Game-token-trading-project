@@ -20,6 +20,11 @@ import model.GameItems;
  */
 public class SellDAO {
 
+    static Logger logger
+            = Logger.getLogger(SellDAO.class.getName());
+    private static final String SELECTITEMS = "SELECT sl.id,sl.seller_id, s.id, s.game_account_name, s.user_id, "
+            + "s.price, s.begin_date, s.end_date,g.* FROM SellList sl, SellItems s, gameitems g "
+            + "where sl.sell_items_id = s.id and s.item_id = g.id and sl.seller_id = ?";
     public static ArrayList<GameItems> getAllSellItems() {
         ArrayList<GameItems> list = new ArrayList<>();
         try {
