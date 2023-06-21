@@ -32,4 +32,9 @@ public class SellController extends HttpServlet {
         //Users are not allowed to access this servlet through the doGet method
         request.getRequestDispatcher("SellPageController").forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
 }
