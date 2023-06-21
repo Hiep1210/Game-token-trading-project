@@ -80,7 +80,15 @@ public class SellListRemoveController {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String message = null;
+        if(!SellDAO.deleteSellItem(id)) {
+            message = "deleted Cart failed";
+        }
+        request.setAttribute("message", message);
+        User user = (User)request.getSession().getAttribute("user");
+        int userid = user.getId();
+        response.sendRedirect("SellPageController?id="+userid);
     }
 
     /**
