@@ -40,18 +40,5 @@ public class SellList extends MarketItems{
         return super.getId();
     }
 
-    SellItems getItemById(int id) {
-        for (SellItems item : items) {
-            if ( item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
-    }
-    
-    public void removeItem(int id) {
-        if (getItemById(id) != null) {
-            items.remove(getItemById(id));
-        }
-    }
+   
 }
