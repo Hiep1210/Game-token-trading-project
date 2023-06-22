@@ -32,7 +32,7 @@ public class InsertNotificationController extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
-        request.getRequestDispatcher("DisplayMarketItemsController").forward(request, response);
+        request.getRequestDispatcher("BuyPageController").forward(request, response);
     }
 
     @Override
@@ -58,13 +58,13 @@ public class InsertNotificationController extends HttpServlet {
     public void adminNotification(HttpServletRequest request, HttpServletResponse response) {
         try {
             User user = (User) request.getSession().getAttribute("user");
-            String redirect = "DisplayMarketItemsController";// if redirect attribute is null auto redirect to DisplayMarketItemsController
+            String redirect = "BuyPageController";// if redirect attribute is null auto redirect to BuyPageController
             String notiContent;
             Notification notification;
             if (user == null) { // if session does not contain any user instance
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else if (!isAdmin(user.getRoleid())) { //if user in session is not an admin
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else {
                 notiContent = request.getParameter("content");
                 notification = new Notification(user.getId(), getCurrentDate(),notiContent, "admin");
@@ -98,9 +98,9 @@ public class InsertNotificationController extends HttpServlet {
             String notiContent;
             Notification notification;
             if (user == null) { // if session does not contain any user instance
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else if (!isAdmin(user.getRoleid())) { //if user in session is not an admin
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else {
                 if (decision.equals("accept")) {
                     notiContent = "Your payment request for " + paymentRequest.getMoney() + "$ has been ACCEPTED!";

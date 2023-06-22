@@ -31,12 +31,12 @@ public class sellNotificationController extends HttpServlet {
         try {
             User user = (User) request.getSession().getAttribute("user");
             GameItems gameItems = (GameItems) request.getAttribute("gameItems");
-            String redirect = "DisplayMarketItemsController";// if redirect attribute is null auto redirect to DisplayMarketItemsController
+            String redirect = "BuyPageController";// if redirect attribute is null auto redirect to BuyPageController
             String notiContent;
             Notification notification;
             if (user == null)
             { // if session does not contain any user instance
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             }
             else 
             { // if the user sell the item correctly
