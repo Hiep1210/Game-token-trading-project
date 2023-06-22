@@ -93,7 +93,6 @@ public class CartDAO {
             }
             con.close();
             statement.close();
-            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -113,7 +112,6 @@ public class CartDAO {
             }
             con.close();
             statement.close();
-            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
