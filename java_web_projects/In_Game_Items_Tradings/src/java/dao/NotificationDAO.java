@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Notification;
+import com.microsoft.sqlserver.jdbc.ISQLServerBulkRecord;
 
 /**
  *

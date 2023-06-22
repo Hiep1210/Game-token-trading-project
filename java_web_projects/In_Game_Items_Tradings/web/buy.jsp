@@ -33,7 +33,7 @@
                     <!-- Cart Info Section -->
                     <div class="cart-info">
                         <button class="buy-button">
-                            <h5>Buy now</h5>
+                            <h5><a href="ViewCartController?id=${sessionScope.user.id}">View Your Cart</a></h5>
                         </button>
                         <div class="cart-total">
                             <h5>Sort By</h5>
@@ -58,6 +58,18 @@
                                         <div class="category-group">
                                             <input type="checkbox" name="type" value="pistol" id="gun">
                                             <label for="gun">Pistol</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="Heavy" id="gun">
+                                            <label for="gun">Heavy</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="Rifle" id="gun">
+                                            <label for="gun">Rifle</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="SMGs" id="gun">
+                                            <label for="gun">SMGs</label>
                                         </div>
                                     </ul>
                                 </details>
@@ -157,6 +169,9 @@
                         </div>
                         <!-- Item List -->
                         <div class="row" id="item-box">
+                            <c:if test="${requestScope.marketlist.size() == 0}">
+                                <h1 style="text-align: center; color: grey">Found 0 result</h1>
+                            </c:if>
                             <c:forEach var ="market_items" items="${requestScope.marketlist}">
                                 <!-- Item Card -->
                                 <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
@@ -167,6 +182,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <!-- Item Details -->
                                 <div class="offcanvas offcanvas-start" data-bs-theme="dark" tabindex="-1" id="offcanvas${market_items.id}"
                                      aria-labelledby="offcanvas">
@@ -197,13 +213,9 @@
                                         </div>
                                         <c:if test="${sessionScope.user != null}">
                                             <div class="summit-button mt-2">
-                                                <form action="AddCartController" method="post">
-                                                    <button type="submit" class="btn item-card-button">
-                                                        <i class="fa-solid fa-cart-shopping"></i>
-                                                    </button>
-                                                    <input type="text" name="marketid" value="${market_items.id}" hidden=""/>
-                                                    <input type="text" name="buyerid" value="${sessionScope.user.id}" hidden=""/>
-                                                </form>
+                                                <button class="btn item-card-button"  onclick="addCart(${market_items.id},${sessionScope.user.id})" id="button-cart${market_items.id}">
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
                                             </div>
                                         </c:if>
                                     </div>
@@ -234,20 +246,30 @@
         </div>
         <c:if test="${requestScope.message != null}">
             <script>
-                alert('${requestScope.message}');
+                alert('${requestScope.message}')
             </script>
         </c:if>
-
-        <script>
-            function Redirect() {
-                window.location.href = "GetNotificationController?redirect=DisplayMarketItemsController"
-            }
-        </script>
-
-
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
+                function addCart(market, buyer) {
+                    console.log(market + "+" + buyer)
+                    $.ajax({
+                        url: "/In_Game_Items_Trading/AddCartController",
+                        type: 'POST',
+                        data: {
+                            marketid: market,
+                            buyerid: buyer
+                        },
+                        success: function (data) {
+                            var button = document.getElementById("button-cart" + market);
+                            button.innerHTML = data;
+                        }
+                    });
+                }
         </script>
 
     </body>

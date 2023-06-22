@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.CartDAO;
 import dao.GameItemsDAO;
 import dao.MarketItemsDao;
 import dao.SellDAO;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import model.Cart;
 import model.GameItems;
 import model.MarketItems;
+import model.SellList;
+import model.User;
 
 /**
  *
@@ -37,21 +40,21 @@ public class SellListRemoveController {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                ArrayList<GameItemsDAO> sellList = new ArrayList<>();
-        try {
-            HttpSession session = request.getSession();
-            Object object = session.getAttribute("sellList");
-            int cartId = Integer.parseInt(request.getParameter("id"));
-//            SellList cart = (SellList) object;
-//            cart.removeItem(cartId);
-            request.setAttribute("sellList", sellList);
-            request.getRequestDispatcher("sell.jsp").forward(request, response);
-        } catch (Exception e) {
-            response.getWriter().println(e);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteCartController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteCartController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -64,7 +67,7 @@ public class SellListRemoveController {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         response.sendRedirect("SellPageController");
     }
 
     /**
@@ -77,7 +80,15 @@ public class SellListRemoveController {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String message = null;
+        if(!SellDAO.deleteSellItem(id)) {
+            message = "deleted Cart failed";
+        }
+        request.setAttribute("message", message);
+        User user = (User)request.getSession().getAttribute("user");
+        int userid = user.getId();
+        response.sendRedirect("SellPageController?id="+userid);
     }
 
     /**

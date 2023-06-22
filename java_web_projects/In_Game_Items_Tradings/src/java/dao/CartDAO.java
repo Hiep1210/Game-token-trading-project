@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Cart;
 
 /**
@@ -18,7 +20,8 @@ import model.Cart;
  * @author Inspiron
  */
 public class CartDAO {
-
+    static Logger logger
+            = Logger.getLogger(CartDAO.class.getName());
     private static final String SELECTITEMS = "SELECT c.id,c.buyer_id,m.id, m.game_account_name, m.user_id, "
             + "m.price, m.begin_date, m.end_date,g.* FROM cart c, marketitems m, gameitems g "
             + "where c.market_items_id = m.id and m.item_id = g.id and c.buyer_id = ?";
@@ -50,34 +53,65 @@ public class CartDAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        try {
+            logger.log(Level.SEVERE, e.getMessage());
+        } 
+        try{
             statement.close();
             con.close();
-        } catch (SQLException s) {
+        }catch(SQLException s){
+            logger.log(Level.SEVERE, s.getMessage());
         }
         return list;
     }
-
-    public static boolean insertCartItem(int buyerid, int marketid) {
+    public static boolean checkDuplicateCart(int marketid, int buyerid) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM Cart WHERE market_items_id = ? and buyer_id = ?";
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setInt(1, marketid);
+                st.setInt(2, buyerid);
+                ResultSet rs = st.executeQuery();
+                // Check if any rows exist in the result set
+                if (rs.next()) {
+                    throw new NullPointerException();
+                }
+                st.close();
+                con.close();
+                return false;
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        return true;
+    }
+    public static boolean insertCartItem(int buyerid, int marketid ){
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+             con = db.getConnection();
             String sql = "INSERT INTO cart (buyer_id, market_items_id) VALUES (?, ?); ";
-            PreparedStatement statement = con.prepareStatement(sql);
+             statement = con.prepareStatement(sql);
             statement.setInt(1, buyerid);
             statement.setInt(2, marketid);
-            if (statement.executeUpdate() < 1) {
-                throw new Exception();
-            }
-            con.close();
-            statement.close();
+           if(statement.executeUpdate() < 1){
+               throw new NullPointerException();
+           }
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
+        }finally{
+        try{
+            statement.close();
+            con.close();
+        }catch(SQLException s){
+            logger.log(Level.SEVERE, s.getMessage());
+        }
         }
         return false;
+        
     }
     
     public static boolean deleteCartWithMarketItemId(int marketetItemId) {
@@ -94,7 +128,7 @@ public class CartDAO {
             con.close();
             statement.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return deleteStatus;
     }

@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.GameItemsDAO;
 import dao.MarketItemsDao;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -13,7 +12,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.GameItems;
 import model.MarketItems;
 
 /**
@@ -61,8 +59,8 @@ public class SortBuyController extends HttpServlet {
         String []type = request.getParameterValues("type");
         String[] exterior = request.getParameterValues("exterior");
         String[] rarity = request.getParameterValues("rarity");
-        ArrayList<MarketItems> market_items = MarketItemsDao.Filter(request.getParameter("priceorder"), type, rarity, exterior);
-        request.setAttribute("marketlist", market_items);
+        ArrayList<MarketItems> marketItems = MarketItemsDao.Filter(request.getParameter("priceorder"), type, rarity, exterior);
+        request.setAttribute("marketlist", marketItems);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
 
     }

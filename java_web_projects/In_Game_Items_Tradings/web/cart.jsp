@@ -30,35 +30,40 @@
             <c:if test="${requestScope.message != null}">
                 <h2>${requestScope.message}</h2>
             </c:if>
-            <h2></h2>
-            <c:if test="${requestScope.clist.size() > 0}">
-                <c:set var="cartTotal" value="0"/>
-                <c:forEach var ="cartlist" items="${requestScope.clist}">
-                    <!-- count total amount in cart -->
-                    <c:set var="cartTotal" value="${cartTotal + cartlist.price}"/>
-                    <div class="item-card mt-2 mb-2 " id="cart-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
-                        <div class="card" >
-                            <img src="UI/image/${cartlist.getImg()}.png" alt ="displayfailed" class="card-img-top" >
-                            <div class="card-body row">
-                                <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
-                                <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
-                                <div class="col-lg-6">
-                                    <form action="DeleteCartController" method="post">
-                                        <input type="text" name="id" value="${cartlist.id}" hidden=""/>
-                                        <button type="submit" onsubmit="confirm('Are you sure you want to remove this item from cart? ')" class="btn item-card-button ">
-                                            <h5 class="card-title item-card-price ps-1">Remove</h5>
-                                        </button>
-                                    </form>
-                                </div>
+            <c:set var="total" value="0"/>
+            <c:forEach var ="cartlist" items="${requestScope.clist}">
+                <c:set var="total" value="${cartlist.price + total}"/>
+                <div class="item-card mt-2 mb-2 " id="cart-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
+                    <div class="card" >
+                        <img src="UI/image/${cartlist.getImg()}.png" alt ="displayfailed" class="card-img-top" >
+                        <div class="card-body row">
+                            <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
+                            <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
+                            <div class="col-lg-6">
+                                <form action="ProcessCartController" method="post">
+                                    <button type="submit" class="btn item-card-button ">
+                                        <h5 class="card-title item-card-price ps-1">Buy</h5>
+                                    </button>
+                                </form><!-- comment -->
+                            </div>
+                            <div class="col-lg-6">
+                                <form action="DeleteCartController" method="post" onsubmit="return confirm('Are you sure you want to remove this item from cart? ')">
+                                    <input type="text" name="id" value="${cartlist.id}" hidden=""/>
+                                    <button type="submit"  class="btn item-card-button ">
+                                        <h5 class="card-title item-card-price ps-1">Remove</h5>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </c:forEach>
-                <h2>The total amount in your cart: ${cartTotal} $</h2>
+                </div>
+            </c:forEach>
+            <c:if test="${requestScope.clist !=null}">
+                <h2 style="color: wheat; text-align: right;">The total amount in your cart: ${total} $</h2>
                 <form action="ProcessCartController" method="post">
                     <input type="text" name="gameAccountName" required="">    
                     <button type="submit" class="btn item-card-button ">
-                        <h5 class="card-title item-card-price ps-1">Buy</h5>
+                        <h5 class="card-title item-card-price ps-1">Buy All</h5>
                     </button>
                 </form>
             </c:if>

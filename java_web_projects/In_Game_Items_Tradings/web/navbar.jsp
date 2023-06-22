@@ -119,7 +119,7 @@
         </div>
 </nav>
             <script>
-            function getNotification(input) {
+            function getNotification() {
             $.ajax({
                 url: "/In_Game_Items_Trading/GetNotificationController",
                 type: 'GET',
