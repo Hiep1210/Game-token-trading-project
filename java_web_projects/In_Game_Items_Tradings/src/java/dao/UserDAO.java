@@ -20,12 +20,12 @@ import java.util.ArrayList;
 public class UserDAO {
 
     public static User GetUserInformation(int id) {
-        User user = new User();
+        User user = null;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where id= '" + id + "' limit 1;";
+                String sql = "Select * from UserAccount where id=" + id;
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
                 while (rs.next()) {
@@ -37,6 +37,7 @@ public class UserDAO {
                     user.setEmail(rs.getString(5));
                     user.setGender(rs.getString(6));
                     user.setAvatar(rs.getString(7));
+                    user.setMoney(rs.getDouble(9));
                 }
                 rs.close();
                 st.close();
