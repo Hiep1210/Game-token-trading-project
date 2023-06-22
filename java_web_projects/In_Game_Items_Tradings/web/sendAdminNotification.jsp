@@ -31,7 +31,7 @@
                 <!-- Screen Header -->
                 <header>Top-up</header>
                 <!-- Main Form -->
-                <c:if test="${(sessionScope.user != null) && (sessionScope.user.role_id eq 2)}">   
+                <c:if test="${(sessionScope.user != null) && (sessionScope.user.roleid eq 2)}">   
                     <form id="topup-form" action='InsertNotificationController' method='post'>
                         <input type="hidden" name="type" value="admin">
                         <div class="form-group">
