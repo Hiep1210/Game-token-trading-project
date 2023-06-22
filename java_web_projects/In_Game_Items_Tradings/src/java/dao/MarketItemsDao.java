@@ -19,10 +19,18 @@ public class MarketItemsDao {
 
     private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
             + "FROM marketitems m, gameitems g "
-            + "WHERE m.item_id = g.id "
+            + "WHERE m.item_id = g.id AND NOW() < m.end_date "
             + "AND NOT EXISTS ("
             + "     SELECT 1 FROM processitems p  "
             + "     WHERE  p.transaction_id = m.id "
+            + "     AND p.transactionType_id = 1) ";
+
+    private static final String SELECTENDEDITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*  "
+            + "FROM marketitems m, gameitems g  "
+            + "WHERE m.item_id = g.id AND NOW() > m.end_date  "
+            + "AND NOT EXISTS ( "
+            + "     SELECT 1 FROM processitems p   "
+            + "     WHERE  p.transaction_id = m.id  "
             + "     AND p.transactionType_id = 1) ";
 
     //Function to get all items in the market 
@@ -50,6 +58,77 @@ public class MarketItemsDao {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+
+    public static MarketItems getMarketItem(int marketItemId) {
+        MarketItems item = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
+                        + "FROM marketitems m, gameitems g "
+                        + "WHERE m.item_id = g.id AND m.id = " + marketItemId;
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    item = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
+                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return item;
+    }
+
+    public static ArrayList<MarketItems> getUnsuccessfulMarketItems() {
+        ArrayList<MarketItems> list = new ArrayList<>();
+        MarketItems items = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = SELECTENDEDITEMS;
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
+                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
+                    list.add(items);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public static boolean deletelMarketItem(int marketItemId) {
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "delete from marketItems where id = " + marketItemId;
+            Statement statement = con.createStatement();
+            if (statement.executeUpdate(sql) < 1) {
+                deleteStatus = false;
+                throw new Exception();
+            }
+            con.close();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
     }
 
     public static ArrayList<MarketItems> Filter(String priceorder, String[] type, String[] rarity, String[] exterior) {
