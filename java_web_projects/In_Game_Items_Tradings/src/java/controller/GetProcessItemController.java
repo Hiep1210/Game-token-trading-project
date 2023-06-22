@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.MarketItemsDao;
 import dao.ProcessItemsDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.MarketItems;
 import model.ProcessItem;
 import model.User;
 
@@ -34,19 +36,26 @@ public class GetProcessItemController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-    protected void processRequest(HttpServletRequest request,HttpServletResponse response) {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             User user = (User) request.getSession().getAttribute("user");
             ArrayList<ProcessItem> processItemList;
-            String redirect = "processItemRequest.jsp";
+            String redirect = "processItem.jsp";
             if (user == null) {
                 redirect = "BuyPageController";
             } else if (user.getRoleid() != 2) {
                 redirect = "BuyPageController";
             } else {
                 processItemList = ProcessItemsDAO.getAllProcessItems();
-                request.setAttribute("processItemList",processItemList);
+                request.setAttribute("processItemList", processItemList);
+                for (ProcessItem processItem : processItemList) {
+                    if (processItem.getTransactionTypeIdId() == 1) {
+                        processItem.setObject(MarketItemsDao.getMarketItem(processItem.getTransactionId()));
+                    }
+                    
+                }
+
             }
             request.getRequestDispatcher(redirect).forward(request, response);
         } catch (Exception e) {
