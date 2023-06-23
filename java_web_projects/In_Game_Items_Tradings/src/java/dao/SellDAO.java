@@ -33,6 +33,30 @@ public class SellDAO {
     private static final String SELECTONEITEM = "SELECT sl.id,sl.seller_id, s.id, s.game_account_name, s.user_id, "
             + "s.price, s.begin_date, s.end_date,g.* FROM SellList sl, SellItems s, gameitems g "
             + "where sl.sell_items_id = s.id and s.item_id = g.id and sl.id = ?";
+
+    public static boolean checkDuplicateSell(int sellid, int sellerid) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM sellList WHERE sell_items_id = ? and seller_id = ?";
+                PreparedStatement st = con.prepareStatement(sql);
+                st.setInt(1, sellid);
+                st.setInt(2, sellerid);
+                ResultSet rs = st.executeQuery();
+                // Check if any rows exist in the result set
+                if (rs.next()) {
+                    throw new NullPointerException();
+                }
+                st.close();
+                con.close();
+                return false;
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        return true;
+     }
     
 public static ArrayList<SellList> getAllSellListItems(int sellerid) {
         ArrayList<SellList> list = new ArrayList<>();
