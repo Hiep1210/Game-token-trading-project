@@ -1,6 +1,6 @@
 package controller;
 
-import dao.MarketItemsDao;
+import dao.MarketItemsDAO;
 import dao.ProcessItemsDAO;
 import dao.UserDAO;
 import java.io.IOException;
@@ -43,9 +43,9 @@ public class ProcessItemController extends HttpServlet {
                 //Get payment request information by payment request id
                 processItemId = Integer.parseInt(rawProcessItemId);
                 processItem = ProcessItemsDAO.getProcessItems(processItemId);
-                processItem.setObject(MarketItemsDao.getMarketItem(processItem.getTransactionId()));
+                processItem.setObject(MarketItemsDAO.getMarketItem(processItem.getTransactionId()));
                 ProcessItemsDAO.deleteProcessItems(processItemId);
-                MarketItemsDao.deletelMarketItem(processItem.getTransactionId());
+                MarketItemsDAO.deletelMarketItem(processItem.getTransactionId());
 
                 // If payment request is accepted add funds to user account
                 if (decision.equals("accept")) {

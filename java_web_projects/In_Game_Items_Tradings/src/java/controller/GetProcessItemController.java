@@ -1,6 +1,6 @@
 package controller;
 
-import dao.MarketItemsDao;
+import dao.MarketItemsDAO;
 import dao.ProcessItemsDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -42,7 +42,7 @@ public class GetProcessItemController extends HttpServlet {
                 request.setAttribute("processItemList", processItemList);
                 for (ProcessItem processItem : processItemList) {
                     if (processItem.getTransactionTypeIdId() == 1) {
-                        processItem.setObject(MarketItemsDao.getMarketItem(processItem.getTransactionId()));
+                        processItem.setObject(MarketItemsDAO.getMarketItem(processItem.getTransactionId()));
                     }
 
                 }

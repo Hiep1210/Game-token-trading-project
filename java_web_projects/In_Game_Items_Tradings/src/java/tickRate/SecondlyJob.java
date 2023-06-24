@@ -5,7 +5,7 @@
 package tickRate;
 
 import dao.CartDAO;
-import dao.MarketItemsDao;
+import dao.MarketItemsDAO;
 import dao.NotificationDAO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -25,12 +25,12 @@ public class SecondlyJob implements Runnable {
 
     private void processUnsuccessfullMarketItem() {
         //Only get ended auctions that is also not in process item
-        ArrayList<MarketItems> unsuccessfulMarketItems = MarketItemsDao.getUnsuccessfulMarketItems();
+        ArrayList<MarketItems> unsuccessfulMarketItems = MarketItemsDAO.getUnsuccessfulMarketItems();
         //Do not execute if there is no unsuccessfull market item (Ended and no one bought their item)
         if (!unsuccessfulMarketItems.isEmpty()) {
             for (MarketItems marketItem : unsuccessfulMarketItems) {
                 CartDAO.deleteCartWithMarketItemId(marketItem.getId());
-                MarketItemsDao.deletelMarketItem(marketItem.getId());
+                MarketItemsDAO.deletelMarketItem(marketItem.getId());
             }
             insertUnsuccessfullMarketItemNotification(unsuccessfulMarketItems);
         }
