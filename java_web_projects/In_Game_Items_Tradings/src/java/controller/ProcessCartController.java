@@ -45,23 +45,32 @@ public class ProcessCartController extends HttpServlet {
         String rawCartId = request.getParameter("cartId");
         String redirect = "InsertBuyRequestNotifcationController";
         ArrayList<Cart> cartList = new ArrayList<>();
+        Cart cartItem;
         ProcessItem processItem;
         double totalCartAmount = 0;
         double updatedUserAmount = 0;
         int cartId = 0;
-        String message = "You do not have enough funds to buy all items in your cart! Please top up or delete some item in your cart!";
+        String message;
         try {
-            
+
             if (user == null) {
                 redirect = "BuyPageController";
             } else {
                 if (rawCartId != null) {
                     cartId = Integer.parseInt(rawCartId);
-                    cartList.add(CartDAO.getCartById(cartId));
+                    cartItem = CartDAO.getCartById(cartId);
+
+                    if (cartItem == null) {
+                        message = "You were too late! This item has aready ended!";
+                        request.setAttribute("message", message);
+                        redirect = "ViewCartController";
+                    } else {
+                        cartList.add(cartItem);
+                    }
                 } else {
                     cartList = CartDAO.getAllCartItems(user.getId());
                 }
-                
+
                 if (cartList.isEmpty()) {
                     redirect = "BuyPageController";
                 } else {
@@ -69,6 +78,7 @@ public class ProcessCartController extends HttpServlet {
                         totalCartAmount += cart.getPrice();
                     }
                     if (totalCartAmount > user.getMoney()) {
+                        message = "You do not have enough funds to buy all items in your cart! Please top up or delete some item in your cart!";
                         request.setAttribute("message", message);
                         redirect = "ViewCartController";
                     } else {
@@ -80,7 +90,7 @@ public class ProcessCartController extends HttpServlet {
                         for (Cart cart : cartList) {
                             //Delete all cart record that contain market item id 
                             CartDAO.deleteCartWithMarketItemId(cart.getMarketItemId());
-                            processItem = new ProcessItem(cart.getUserid(), cart.getBuyer_id(), cart.getMarketItemId() , 1, gameAccountName, LocalDateTime.now());
+                            processItem = new ProcessItem(cart.getUserid(), cart.getBuyer_id(), cart.getMarketItemId(), 1, gameAccountName, LocalDateTime.now());
                             ProcessItemsDAO.insertProcessItems(processItem);
                         }
                         request.setAttribute("cartList", cartList);
