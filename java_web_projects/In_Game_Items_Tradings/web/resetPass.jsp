@@ -22,6 +22,7 @@
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
         <link rel="stylesheet" href="UI/css/styleForm.css">
+                <link rel="stylesheet" href="UI/css/styleInput.css">
         <!-- formValidate JS -->
         <script src="UI/js/formValidate.js"></script>
     </head>
@@ -34,7 +35,7 @@
                 <!-- Display Signup Error -->
                 <div class="form-message">${requestScope.Boy}</div>
                 <!-- Main Form -->
-                <form id="login-form" action="ResetPassController">
+                <form id="login-form" action="ResetPassController" method="post">
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
