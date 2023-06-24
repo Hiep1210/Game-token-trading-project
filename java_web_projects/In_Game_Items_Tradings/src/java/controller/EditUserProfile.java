@@ -68,7 +68,7 @@ public class EditUserProfile extends HttpServlet {
         String dob = null;
         String gender = null;
         String profilePicFilename = null;
-
+        User loggedUser = (User) request.getSession().getAttribute("user");
         try {
             upload = new ServletFileUpload();
             iterator = upload.getItemIterator(request);
@@ -99,7 +99,7 @@ public class EditUserProfile extends HttpServlet {
                 } else { // Process file upload
                     profilePicFilename = item.getName(); // Get the original filename of the uploaded profile picture
                     if ("".equals(profilePicFilename)) {
-                        profilePicFilename = ((User) request.getSession().getAttribute("user")).getAvatar();
+                        profilePicFilename = loggedUser.getAvatar();
                     }
                     request.getSession().setAttribute("profilepic", profilePicFilename);
                     saveProfilePicture(item); // Save the profile picture
@@ -108,7 +108,7 @@ public class EditUserProfile extends HttpServlet {
 
             // Create a User object and perform sign-up logic
             int id = Integer.parseInt(id_raw);
-            User user = new User(id, username, "", dob, email, gender, profilePicFilename, 0, 0);
+            User user = new User(id, username, "", dob, email, gender, profilePicFilename, loggedUser.getRoleid(), loggedUser.getMoney());
             // Perform update logic using the user object
             UserDAO dao = new UserDAO();
             dao.editUserProfile(user);
