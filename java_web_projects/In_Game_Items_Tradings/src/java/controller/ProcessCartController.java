@@ -42,18 +42,26 @@ public class ProcessCartController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute("user");
         String gameAccountName = request.getParameter("gameAccountName");
+        String rawCartId = request.getParameter("cartId");
         String redirect = "InsertBuyRequestNotifcationController";
-        ArrayList<Cart> cartList;
+        ArrayList<Cart> cartList = new ArrayList<>();
         ProcessItem processItem;
         double totalCartAmount = 0;
         double updatedUserAmount = 0;
+        int cartId = 0;
         String message = "You do not have enough funds to buy all items in your cart! Please top up or delete some item in your cart!";
         try {
+            
             if (user == null) {
                 redirect = "BuyPageController";
             } else {
-                //Get all item in user cart
-                cartList = CartDAO.getAllCartItems(user.getId());
+                if (rawCartId != null) {
+                    cartId = Integer.parseInt(rawCartId);
+                    cartList.add(CartDAO.getCartById(cartId));
+                } else {
+                    cartList = CartDAO.getAllCartItems(user.getId());
+                }
+                
                 if (cartList.isEmpty()) {
                     redirect = "BuyPageController";
                 } else {
