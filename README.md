@@ -23,6 +23,8 @@ Tài liệu:
 
 [Project Backlog](https://docs.google.com/spreadsheets/d/1zN-EBGGo1EgroNjnxDXLT6dBLO7TpAEP/edit#gid=199086574)
 
+[Issue List](https://docs.google.com/spreadsheets/d/18_pRTe3tch0cwlA75oSp4HELNh08VzHo/edit?usp=sharing&ouid=107237669840405901934&rtpof=true&sd=true)
+
 [class diagram tutorial](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/uml-class-diagram-tutorial/)
 
 [sequence diagram](https://www.visual-paradigm.com/guide/uml-unified-modeling-language/what-is-sequence-diagram/)
