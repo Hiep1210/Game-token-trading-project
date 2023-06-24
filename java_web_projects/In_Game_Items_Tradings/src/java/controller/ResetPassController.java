@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "resetPassController", urlPatterns = {"/resetPassController"})
+@WebServlet(name = "ResetPassController", urlPatterns = {"/ResetPassController"})
 public class resetPassController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
