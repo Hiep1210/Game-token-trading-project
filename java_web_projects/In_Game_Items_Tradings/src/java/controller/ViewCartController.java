@@ -25,15 +25,10 @@ public class ViewCartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String redirect = "cart.jsp";
         User user = (User) request.getSession().getAttribute("user");
-        if (user == null) { // if session does not contain any user instance
-            redirect = "BuyPageController";
-        } else {
             ArrayList<Cart> clist = new ArrayList<>();
             clist = CartDAO.getAllCartItems(user.getId());
             request.setAttribute("clist", clist);
-        }
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 

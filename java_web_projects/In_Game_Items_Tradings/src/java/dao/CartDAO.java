@@ -154,6 +154,4 @@ public class CartDAO {
         return deleteStatus;
     }
 
-    public static void main(String[] args) throws SQLException {
-    }
 }
