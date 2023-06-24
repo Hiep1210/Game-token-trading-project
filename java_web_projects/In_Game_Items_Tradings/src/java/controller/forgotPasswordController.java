@@ -18,7 +18,7 @@ import model.User;
  *
  * @author ACER
  */
-@WebServlet(name="forgotPasswordController", urlPatterns={"/forgotPasswordController"})
+@WebServlet(name="ForgotPasswordController", urlPatterns={"/ForgotPasswordController"})
 public class forgotPasswordController extends HttpServlet {
    
     /** 
