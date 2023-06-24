@@ -1,7 +1,3 @@
-/*
-*Programmer: Trần Thế Hùng 
-*Description: This files is controller for processing payment request sent by users
- */
 package controller;
 
 import dao.PaymentRequestDAO;
@@ -18,10 +14,6 @@ import model.PaymentRequest;
 import model.Role;
 import model.User;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "ProcessPaymentRequestController", urlPatterns = {"/ProcessPaymentRequestController"})
 public class ProcessPaymentRequestController extends HttpServlet {
 

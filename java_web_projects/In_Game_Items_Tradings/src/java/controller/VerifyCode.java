@@ -8,17 +8,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "LogOutController", urlPatterns = {"/LogOutController"})
-public class LogOutController extends HttpServlet {
+@WebServlet(name = "VerifyCode", urlPatterns = {"/VerifyCode"})
+public class verifyCode extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            session.invalidate();
-            response.sendRedirect("BuyPageController");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        String verifyCode = request.getParameter("cfcode");
+        HttpSession verifyUser = request.getSession();
+        String Code = String.valueOf(verifyUser.getAttribute("verifyCode"));
+        if (verifyCode.equals(Code)) {
+            request.getRequestDispatcher("resetPass.jsp").forward(request, response);
+        } else {
+            request.setAttribute("AlertC", "Code sai hoac khong ton tai");
+            request.getRequestDispatcher("confirmCode.jsp").forward(request, response);
         }
     }
 

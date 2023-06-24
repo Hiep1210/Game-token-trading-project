@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dao.NotificationDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,14 +11,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import model.MarketItems;
 import model.Notification;
-import model.PaymentRequest;
 import model.ProcessItem;
 import model.User;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "InsertProcessNotificationController", urlPatterns = {"/InsertProcessNotificationController"})
 public class InsertProcessNotificationController extends HttpServlet {
 

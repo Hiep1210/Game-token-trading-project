@@ -56,9 +56,9 @@ public class SellDAO {
             logger.log(Level.SEVERE, e.getMessage());
         }
         return true;
-     }
-    
-public static ArrayList<SellList> getAllSellListItems(int sellerid) {
+    }
+
+    public static ArrayList<SellList> getAllSellListItems(int sellerid) {
         ArrayList<SellList> list = new ArrayList<>();
         SellList items = null;
         Connection con = null;
@@ -82,16 +82,16 @@ public static ArrayList<SellList> getAllSellListItems(int sellerid) {
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
-        } 
-        try{
+        }
+        try {
             statement.close();
             con.close();
-        }catch(SQLException s){
+        } catch (SQLException s) {
             logger.log(Level.SEVERE, s.getMessage());
         }
         return list;
     }
-    
+
     public static ArrayList<GameItems> getAllSellItems() {
         ArrayList<GameItems> list = new ArrayList<>();
         try {
@@ -169,8 +169,31 @@ public static ArrayList<SellList> getAllSellListItems(int sellerid) {
         return list;
     }
 
-    public static ArrayList<GameItems> searchByName(String name) {
+    public static ArrayList<GameItems> filterByType(String[] types, String searchTerm, String sortOrder) {
         ArrayList<GameItems> list = new ArrayList<>();
+        if (types == null) {
+            types = new String[0];
+        }
+        int numberOfTypes = types.length;
+        String selectedTypes = "";
+        if (sortOrder == null) {
+            sortOrder = "";
+        }
+        for (int i = 0; i < numberOfTypes; i++) {
+            //Open Parentheses at start
+            if (i == 0) {
+                selectedTypes += "AND (";
+            }
+            selectedTypes += "type = ? ";
+            //Add OR except last element
+            if (i < numberOfTypes - 1) {
+                selectedTypes += "OR ";
+            }
+            //Close Parentheses at end
+            if (i == numberOfTypes - 1) {
+                selectedTypes += ")";
+            }
+        }
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
@@ -178,12 +201,27 @@ public static ArrayList<SellList> getAllSellListItems(int sellerid) {
                 String sql = "SELECT DISTINCT skin_name, item_name, type, rarity, img "
                         + "FROM GameItems "
                         + "WHERE (skin_name) IN (SELECT DISTINCT skin_name FROM GameItems) "
-                        + "AND (skin_name) LIKE ? OR (item_name) LIKE ? OR (type) LIKE ? "
-                        + "ORDER BY rarity, skin_name,item_name ";
+                        + selectedTypes
+                        + "AND (CONCAT(type, ' ', item_name, ' ', skin_name) LIKE ? "
+                        + "OR CONCAT(type, ' ', skin_name) LIKE ? "
+                        + "OR CONCAT(item_name, ' ', skin_name) LIKE ? ) "
+                        + "ORDER BY CASE rarity "
+                        + "    WHEN 'covert' THEN 1 "
+                        + "    WHEN 'classified' THEN 2 "
+                        + "    WHEN 'restricted' THEN 3 "
+                        + "    WHEN 'mil-spec' THEN 4 "
+                        + "    WHEN 'industrial' THEN 5 "
+                        + "    ELSE 6 "
+                        + "END " + sortOrder + ", skin_name, item_name " + sortOrder + " ;";
                 PreparedStatement st = con.prepareStatement(sql);
-                st.setString(1, "%" + name + "%");
-                st.setString(2, "%" + name + "%");
-                st.setString(3, "%" + name + "%");
+                //Set value for selected types
+                for (int i = 1; i <= numberOfTypes; i++) {
+                    st.setString(i, types[i - 1]);
+                }
+                // Set the search term parameter values
+                st.setString(numberOfTypes + 1, "%" + searchTerm + "%");
+                st.setString(numberOfTypes + 2, "%" + searchTerm + "%");
+                st.setString(numberOfTypes + 3, "%" + searchTerm + "%");
                 ResultSet rs = st.executeQuery();
                 //assign value for object items then return it
                 while (rs.next()) {
@@ -198,54 +236,7 @@ public static ArrayList<SellList> getAllSellListItems(int sellerid) {
         return list;
     }
 
-    public static ArrayList<GameItems> sortByRarity(String order) {
-        ArrayList<GameItems> list = new ArrayList<>();
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            if (con != null) {
-                String sql = null;
-                if("rarest".equals(order)) {
-                    sql = "SELECT DISTINCT skin_name, item_name, type, rarity, img "
-                        + "FROM gameItems "
-                        + "WHERE skin_name IN (SELECT DISTINCT skin_name FROM gameItems) "
-                        + "ORDER BY CASE rarity "
-                        + "    WHEN 'covert' THEN 1 "
-                        + "    WHEN 'classified' THEN 2 "
-                        + "    WHEN 'restricted' THEN 3 "
-                        + "    WHEN 'mil-spec' THEN 4 "
-                        + "    WHEN 'industrial' THEN 5 "
-                        + "    ELSE 6 "
-                        + "END;";
-                } else {
-                    sql = "SELECT DISTINCT skin_name, item_name, type, rarity, img "
-                        + "FROM gameItems "
-                        + "WHERE skin_name IN (SELECT DISTINCT skin_name FROM gameItems) "
-                        + "ORDER BY CASE rarity "
-                        + "    WHEN 'covert' THEN 1 "
-                        + "    WHEN 'classified' THEN 2 "
-                        + "    WHEN 'restricted' THEN 3 "
-                        + "    WHEN 'mil-spec' THEN 4 "
-                        + "    WHEN 'industrial' THEN 5 "
-                        + "    ELSE 6 "
-                        + "END DESC;";
-                }
-                PreparedStatement st = con.prepareStatement(sql);
-                ResultSet rs = st.executeQuery();
-                //assign value for object items then return it
-                while (rs.next()) {
-                    list.add(new GameItems(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-                }
-                st.close();
-                con.close();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return list;
-    }
-
-    public static boolean insertSellItem(int sellerid, int sellid ){
+    public static boolean insertSellItem(int sellerid, int sellid) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
@@ -253,7 +244,9 @@ public static ArrayList<SellList> getAllSellListItems(int sellerid) {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, sellerid);
             statement.setInt(2, sellid);
-           if(statement.executeUpdate() < 1) throw new Exception();
+            if (statement.executeUpdate() < 1) {
+                throw new Exception();
+            }
             con.close();
             statement.close();
             return true;
@@ -281,13 +274,5 @@ public static ArrayList<SellList> getAllSellListItems(int sellerid) {
             System.out.println(e.getMessage());
         }
         return deleteStatus;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<GameItems> sellItems = sortByRarity("common");
-        for (GameItems sellItem : sellItems) {
-            System.out.print(sellItem.getSkinName() + "\t");
-            System.out.println(sellItem.getRarity());
-        }
     }
 }

@@ -124,10 +124,4 @@ public class GameItemsDAO {
         }
         return list;
     }
-
-    public static void main(String[] args) {
-        Filter("Pistol", "Covert", "Well-Worn");
-        String name[] = {"Eagle", "Code"};
-        Search(name);
-    }
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dao.MarketItemsDao;
@@ -13,14 +9,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.MarketItems;
 import model.ProcessItem;
 import model.User;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "GetProcessItemController", urlPatterns = {"/GetProcessItemController"})
 public class GetProcessItemController extends HttpServlet {
 
@@ -53,7 +44,7 @@ public class GetProcessItemController extends HttpServlet {
                     if (processItem.getTransactionTypeIdId() == 1) {
                         processItem.setObject(MarketItemsDao.getMarketItem(processItem.getTransactionId()));
                     }
-                    
+
                 }
 
             }

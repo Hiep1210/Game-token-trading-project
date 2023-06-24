@@ -1,8 +1,3 @@
-    /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controller;
 
 import jakarta.mail.Authenticator;
@@ -21,21 +16,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
 import java.util.Properties;
 import java.util.Random;
 import model.User;
 
-/**
- *
- * @author ACER
- */
-@WebServlet(name="sendEmail", urlPatterns={"/sendEmail"})
+@WebServlet(name = "SendEmail", urlPatterns = {"/SendEmail"})
 public class sendEmail extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-                   String regexEmail = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b";
+            throws ServletException, IOException {
+        String regexEmail = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b";
         User newUser = (User) request.getAttribute("userForgetPass");
         String recipient = newUser.getEmail();
         if (recipient.matches(regexEmail)) {
@@ -45,10 +36,10 @@ public class sendEmail extends HttpServlet {
 
             HttpSession verifyUser = request.getSession();
             verifyUser.setAttribute("verifyCode", verifyCode);
-            verifyUser.setMaxInactiveInterval(2*60);
+            verifyUser.setMaxInactiveInterval(2 * 60);
 
             // Set up mail server and authentication
-             String host = "smtp.gmail.com";
+            String host = "smtp.gmail.com";
             String user = "csgit47@gmail.com";
             String password = "svvuwvdjrbiucehn";
 
@@ -75,7 +66,7 @@ public class sendEmail extends HttpServlet {
                 msg.setSubject("Account Verification");
                 msg.setText(message);
                 // Send message
-                Transport.send(msg);             
+                Transport.send(msg);
                 // Redirect to success page
                 request.getRequestDispatcher("confirmCode.jsp").forward(request, response);
             } catch (MessagingException e) {
@@ -84,11 +75,11 @@ public class sendEmail extends HttpServlet {
             }
         }
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-                   String regexEmail = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b";
+            throws ServletException, IOException {
+        String regexEmail = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b";
         User newUser = (User) request.getAttribute("userForgetPass");
         String recipient = newUser.getEmail();
         if (recipient.matches(regexEmail)) {
@@ -98,10 +89,10 @@ public class sendEmail extends HttpServlet {
 
             HttpSession verifyUser = request.getSession();
             verifyUser.setAttribute("verifyCode", verifyCode);
-            verifyUser.setMaxInactiveInterval(2*60);
+            verifyUser.setMaxInactiveInterval(2 * 60);
 
             // Set up mail server and authentication
-             String host = "smtp.gmail.com";
+            String host = "smtp.gmail.com";
             String user = "csgit47@gmail.com";
             String password = "svvuwvdjrbiucehn";
 
@@ -136,23 +127,26 @@ public class sendEmail extends HttpServlet {
                 response.getWriter().print("ko the gui mail");
             }
         }
-    } 
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-public static String generateVerifyCode(){
-      Random rand = new Random();
-      //random tu 0 den 999999
+
+    public static String generateVerifyCode() {
+        Random rand = new Random();
+        //random tu 0 den 999999
         int number = rand.nextInt(999999);
         //chac chan so random se tao ra day 6 chu so
         return String.format("%06d", number);
-}
-public static String generateEmailMessage(String generateVerifyCode){
-    String message = "Đây là mã xác nhận quên mật khẩu của bạn,"
-            +"vui lòng không chia sẻ bất kỳ ai khác."+
-            "Nếu bạn không làm hành động này xin vui lòng bỏ qua."
-            +"Mã xác nhận của bạn là : " + generateVerifyCode;
-    return message;
-}
+    }
+
+    public static String generateEmailMessage(String generateVerifyCode) {
+        String message = "Đây là mã xác nhận quên mật khẩu của bạn,"
+                + "vui lòng không chia sẻ bất kỳ ai khác."
+                + "Nếu bạn không làm hành động này xin vui lòng bỏ qua."
+                + "Mã xác nhận của bạn là : " + generateVerifyCode;
+        return message;
+    }
 }
