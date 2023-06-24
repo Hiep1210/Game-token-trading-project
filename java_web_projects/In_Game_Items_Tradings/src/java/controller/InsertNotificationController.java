@@ -1,7 +1,3 @@
-/*
-*Programmer: Trần Thế Hùng & Nguyễn Chí Trung
-*Description: This file contain the various method to generate a notification of various types
- */
 package controller;
 
 import dao.NotificationDAO;
@@ -20,10 +16,6 @@ import model.PaymentRequest;
 import model.Role;
 import model.User;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "InsertNotificationController", urlPatterns = {"/InsertNotificationController"})
 public class InsertNotificationController extends HttpServlet {
 
@@ -67,7 +59,7 @@ public class InsertNotificationController extends HttpServlet {
                 redirect = "BuyPageController";
             } else {
                 notiContent = request.getParameter("content");
-                notification = new Notification(user.getId(), getCurrentDate(),notiContent, "admin");
+                notification = new Notification(user.getId(), getCurrentDate(), notiContent, "admin");
                 NotificationDAO.insertNotification(notification);
             }
             request.getRequestDispatcher(redirect).forward(request, response);

@@ -14,10 +14,6 @@ import dao.MarketItemsDao;
 import java.util.ArrayList;
 import model.MarketItems;
 
-/**
- *
- * @author Inspiron
- */
 @WebServlet(name = "BuyPageController", urlPatterns = {"/BuyPageController"})
 public class BuyPageController extends HttpServlet {
 
@@ -35,15 +31,5 @@ public class BuyPageController extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

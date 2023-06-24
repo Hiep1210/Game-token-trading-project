@@ -1,7 +1,3 @@
-/*
-*Programmer: Trần Thế Hùng 
-*Description: This files is controller for the feature send top up request
- */
 package controller;
 
 import java.util.logging.Level;
@@ -30,16 +26,14 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.util.Streams;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "SendPaymentRequestController", urlPatterns = {"/SendPaymentRequestController"})
 public class SendPaymentRequestController extends HttpServlet {
-Logger logger
+
+    Logger logger
             = Logger.getLogger(SendPaymentRequestController.class.getName());
     String location = null;
     private static final String HOMEPAGE = "BuyPageController";
+
     @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
@@ -65,30 +59,30 @@ Logger logger
         double money;
         String message = null;
         try {
-            if (user != null) {  
+            if (user != null) {
                 upload = new ServletFileUpload();
                 iterator = upload.getItemIterator(request);
                 item = iterator.next();
                 dataArray[0] = Streams.asString(item.openStream());
                 item = iterator.next();
-            
+
                 money = Double.parseDouble(dataArray[0]);
 
-                paymentRequest = new PaymentRequest(user.getId(), money,strDate, "");
-                
+                paymentRequest = new PaymentRequest(user.getId(), money, strDate, "");
+
                 newInvoiceImageName = PaymentRequestDAO.insertPaymentRequest(paymentRequest);
-                moveImages(item,newInvoiceImageName);
-                
+                moveImages(item, newInvoiceImageName);
+
             }
         } catch (Exception e) {
             message = "Failed to send payment request";
         }
         request.setAttribute("message", message);
-                    request.getRequestDispatcher(redirect).forward(request, response);
+        request.getRequestDispatcher(redirect).forward(request, response);
 
     }
 
-    private void moveImages(FileItemStream item,String newInvoiceImageName) {
+    private void moveImages(FileItemStream item, String newInvoiceImageName) {
         InputStream initialStream;
         Path targetDir;
         Path target;

@@ -17,13 +17,9 @@ import model.MarketItems;
  */
 public class MarketItemsDao {
 
-    private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
+        private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
             + "FROM marketitems m, gameitems g "
-            + "WHERE m.item_id = g.id AND NOW() < m.end_date "
-            + "AND NOT EXISTS ("
-            + "     SELECT 1 FROM processitems p  "
-            + "     WHERE  p.transaction_id = m.id "
-            + "     AND p.transactionType_id = 1) ";
+            + "WHERE m.item_id = g.id AND NOW() > m.end_date ";
 
     private static final String SELECTENDEDITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*  "
             + "FROM marketitems m, gameitems g  "
@@ -162,7 +158,7 @@ public class MarketItemsDao {
                 if (priceorder != null) {
                     sql += " order by price " + priceorder;
                 }
-                Statement call = con.createStatement();
+               Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
                 while (rs.next()) {
@@ -186,8 +182,8 @@ public class MarketItemsDao {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                if(name.length > 0 && name[0] != ""){
-                String sql =SELECTITEMS;
+                if(name[0].equals("")){
+                String sql = SELECTITEMS;
                 for (int i = 0; i < name.length; i++) {
                     sql += " and (item_name Like '%" + name[i] + "%' or skin_name like '%" + name[i] + "%') ";
                 }
@@ -207,15 +203,5 @@ public class MarketItemsDao {
             System.out.println(e.getMessage());
         }
         return list;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<MarketItems> m = getAllMarketItems();
-        String[] type = {"Pistol", "Knife"};
-        String[] r = {"Covert"};
-        String [] a = {"Well-Worn","Factory New"};
-        Filter("asc", type, r,a);
-        String name[] = {};
-        Search(name);
     }
 }
