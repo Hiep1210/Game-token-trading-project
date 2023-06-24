@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "verifyCode", urlPatterns = {"/verifyCode"})
+@WebServlet(name = "VerifyCode", urlPatterns = {"/VerifyCode"})
 public class verifyCode extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
