@@ -1,7 +1,3 @@
-/*
-*Programmer: Trần Thế Hùng 
-*Description: This file describes the model of notification that will appear on dashboard
- */
 package controller;
 
 import dao.PaymentRequestDAO;
@@ -17,10 +13,6 @@ import model.PaymentRequest;
 import model.Role;
 import model.User;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "GetPaymentRequestController", urlPatterns = {"/GetPaymentRequestController"})
 public class GetPaymentRequestController extends HttpServlet {
 
@@ -38,7 +30,7 @@ public class GetPaymentRequestController extends HttpServlet {
         processRequest(request, response);
     }
 
-    protected void processRequest(HttpServletRequest request,HttpServletResponse response) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             User user = (User) request.getSession().getAttribute("user");
             ArrayList<PaymentRequest> paymentRequestList;
@@ -49,7 +41,7 @@ public class GetPaymentRequestController extends HttpServlet {
                 redirect = "BuyPageController";
             } else {
                 paymentRequestList = PaymentRequestDAO.getAllPaymentRequest();
-                request.setAttribute("paymentRequestList",paymentRequestList);
+                request.setAttribute("paymentRequestList", paymentRequestList);
             }
             request.getRequestDispatcher(redirect).forward(request, response);
         } catch (Exception e) {
@@ -68,10 +60,5 @@ public class GetPaymentRequestController extends HttpServlet {
         }
         return isAdmin;
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -1,34 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
-/**
- *
- * @author ksiks
- */
-
-import dao.CartDAO;
 import dao.ProcessItemsDAO;
 import dao.SellDAO;
 import dao.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import model.Cart;
-import model.MarketItems;
 import model.ProcessItem;
 import model.User;
 import model.SellList;
 
 public class SellController extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
@@ -61,7 +48,7 @@ public class SellController extends HttpServlet {
                 } else {
                     for (SellList list : sellList) {
                         totalSellListAmount += list.getPrice();
-                        limitInOneDay +=1;
+                        limitInOneDay += 1;
                     }
                     if (limitInOneDay > 5) {
                         request.setAttribute("message", message);
@@ -73,9 +60,9 @@ public class SellController extends HttpServlet {
                         user.setMoney(updatedUserAmount);
                         //Delete all items in list 
                         for (SellList list : sellList) {
-                             
+
                             SellDAO.deleteSellItem(list.getSellItemId());
-                            processItem = new ProcessItem(list.getUserid(), list.getSeller_id(), list.getSellItemId() , 1, gameAccountName, LocalDateTime.now());
+                            processItem = new ProcessItem(list.getUserid(), list.getSeller_id(), list.getSellItemId(), 1, gameAccountName, LocalDateTime.now());
                             ProcessItemsDAO.insertProcessItems(processItem);
                         }
                         request.setAttribute("sellList", sellList);

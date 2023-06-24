@@ -1,7 +1,3 @@
-/*
-*Programmer: Nguyễn Chí Trung
-*Description: This file retreive notification list according  to user id
- */
 package controller;
 
 import dao.NotificationDAO;
@@ -16,10 +12,6 @@ import java.util.ArrayList;
 import model.Notification;
 import model.User;
 
-/**
- *
- * @author Asus
- */
 @WebServlet(name = "GetNotificationController", urlPatterns = {"/GetNotificationController"})
 public class GetNotificationController extends HttpServlet {
 
@@ -37,13 +29,7 @@ public class GetNotificationController extends HttpServlet {
         int id = user.getId();
         ArrayList<Notification> notificationList = NotificationDAO.getAllUserNotification(id);
         for (Notification noti : notificationList) {
-            out.println("<a class=\"dropdown-item\" href=\"#\">"+noti.getNoti_content() +"</a>");
+            out.println("<a class=\"dropdown-item\" href=\"#\">" + noti.getNoti_content() + "</a>");
         }
     }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
