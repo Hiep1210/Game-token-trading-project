@@ -37,7 +37,7 @@
                         <div class="col-lg-3 search-bar form">
                             <div class="form-group">
                                 <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
-                                <input oninput="searchByName(this)" class="form-control ps-5" type="text" placeholder="Search...">
+                                <input oninput="filterByType()" id="search-input" class="form-control ps-5" type="text" placeholder="Search...">
                             </div>
                         </div>
                         <!-- Filter By Type -->
@@ -49,13 +49,17 @@
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="smg" value="smg" checked>SMGs</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                    <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
+                                    <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
+                                    <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -68,8 +72,8 @@
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li class="dropdown-item" onclick="sortByRarity('rarest', this)">Rarest First</li>
-                                    <li class="dropdown-item" onclick="sortByRarity('common', this)">Common First</li>
+                                    <li class="dropdown-item" onclick="filterByType('asc', this)">Rarest First</li>
+                                    <li class="dropdown-item" onclick="filterByType('desc', this)">Common First</li>
                                 </ul>
                             </div>
                         </div>
@@ -177,8 +181,12 @@
     </script>
 
     <script>
+        function getAmount() {
+            return document.getElementsByClassName("item-card").length;
+        }
+
         function loadMore() {
-            var amount = document.getElementsByClassName("item-card").length;
+            var amount = getAmount();
             console.log(amount);
             $.ajax({
                 url: "/In_Game_Items_Trading/load",
@@ -198,36 +206,71 @@
     </script>
 
     <script>
-        function searchByName(input) {
-            var searchName = input.value;
+        // Create an empty array to store the checked values
+        var checkedValues = ['knife', 'pistol', 'rifle', 'smgs', 'heavy'];
+
+        var selectAllButton = document.getElementById('select-all');
+        var resetButton = document.getElementById('reset-all');
+
+        // Get all the checkbox elements on the page
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        // Add event listener to each checkbox
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                // Check if the checkbox is checked
+                if (this.checked) {
+                    // Push the value into the array
+                    checkedValues.push(this.value);
+                } else {
+                    // Remove the value from the array if unchecked
+                    var index = checkedValues.indexOf(this.value);
+                    if (index !== -1) {
+                        checkedValues.splice(index, 1);
+                    }
+                }
+                // Log the updated array
+                console.log(checkedValues);
+            });
+        });
+
+        selectAllButton.addEventListener('click', function () {
+            checkedValues = [];
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = true;
+                checkedValues.push(checkbox.value);
+            });
+            console.log(checkedValues);
+        });
+
+        resetButton.addEventListener('click', function () {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
+            checkedValues = [];
+            console.log(checkedValues);
+        });
+
+        function filterByType(order) {
+            var searchName = document.getElementById("search-input").value;
             console.log(searchName);
             $.ajax({
-                url: "/In_Game_Items_Trading/searchSell",
-                type: 'GET',
+                url: "/In_Game_Items_Trading/filterSell",
+                type: "GET",
+                //use when passing array
+                traditional: true,
                 data: {
-                    txt: searchName
+                    types: checkedValues,
+                    txt: searchName,
+                    order: order
                 },
                 success: function (data) {
                     var row = document.getElementById("list-content");
                     row.innerHTML = data;
                     document.getElementById("load-button").style.display = "none";
-                }
-            });
-        }
-    </script>
-
-    <script>
-        function sortByRarity(order, name) {
-            $.ajax({
-                url: "/In_Game_Items_Trading/sortSell",
-                type: 'GET',
-                data: {
-                    order: order
                 },
-                success: function (data) {
-                    document.getElementById("rarity-sort").innerHTML = name.innerHTML;
-                    var row = document.getElementById("list-content");
-                    row.innerHTML = data;
+                error: function () {
+                    console.log('Error occurred during AJAX request');
                 }
             });
         }
