@@ -40,10 +40,12 @@
                             <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
                             <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
                             <div class="col-lg-6">
-                                <form action="ProcessCartController" method="post">
+                                <form action="ProcessCartController" method="post" onsubmit="return confirm('Are you sure you want to buy only this item from cart? ')">
+                                    <input type="text" name="cartId" value="${cartlist.id}" hidden=""/>
                                     <button type="submit" class="btn item-card-button ">
                                         <h5 class="card-title item-card-price ps-1">Buy</h5>
                                     </button>
+                                    <input type="text" name="gameAccountName" placeholder="Game account name ..."required="">
                                 </form><!-- comment -->
                             </div>
                             <div class="col-lg-6">
@@ -60,13 +62,10 @@
             </c:forEach>
             <c:if test="${requestScope.clist !=null}">
                 <h2 style="color: wheat; text-align: right;">The total amount in your cart: ${total} $</h2>
-                <button class="btn item-card-button " onclick="showGameAcc()">
-                    <h5 class="card-title item-card-price ps-1">Buy All</h5>
-                </button>
-                <form action="ProcessCartController" method="post">   
-                    <input type="text" name="gameAccountName" required="" hidden="" id="gameacc"> 
-                    <button class="btn item-card-button " type="submit" hidden="" id="butt-gameacc">
-                        <h5 class="card-title item-card-price ps-1">Enter</h5>
+                <form action="ProcessCartController" method="post" onsubmit="return confirm('Are you sure you want to buy all item(s) from cart? ')">
+                    <input type="text"  placeholder="Game acount name..."name="gameAccountName" required="">    
+                    <button type="submit" class="btn item-card-button ">
+                        <h5 class="card-title item-card-price ps-1">Buy All</h5>
                     </button>
                 </form>
             </c:if>

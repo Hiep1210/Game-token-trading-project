@@ -61,15 +61,15 @@
                                             <th scope="col">Deny reason</th>
                                             <th scope="col">Action</th>
                                             <th scope="col"></th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:forEach var = "processItem" items="${requestScope.processItemList}" varStatus="currentStatus">
-                                        <form action='ProcessprocessItemController' method='post'>
-                                            <input type="hidden" name="processItemId" value="${processItem.id}">
-                                            <input type="hidden" name="type" value="payment">
+                                        <form action='ProcessItemController' method='post'>
+                                            <input type="hidden" name="processItemId" value="${processItem.id}">    
                                             <tr>
-                                                <th scope="row">${currentStatus.index}</th>
+                                                <th scope="row">${currentStatus.index + 1}</th>
                                                 <td>
                                                     <c:if test="${processItem.transactionTypeIdId == 1}">
                                                         Buy
@@ -79,10 +79,9 @@
                                                     </c:if>
                                                 </td>
                                                 <td>
-                                                    <img src="UI/image/${processItem.object.getImg()}" alt="game item picture" width="400" 
-                                                         height="500">
+                                                    <img src="UI/image/${processItem.object.getImg()}.png" alt="game item picture" width="300" 
+                                                         height="400">
                                                 </td>
-                                                ${processItem.object.getImg()}
                                                 <td> 
                                                     ${processItem.object.skinName}
                                                     ${processItem.object.itemName}
@@ -96,9 +95,11 @@
                                                 <td>
                                                     ${processItem.gameAccountName}
                                                 </td>
-                                                <input type="text" name="denyReason" value="...">
                                                 <td>
-                                                    Accept<input type="radio" name="decision" value="accept">
+                                                    <input type="text" name="denyReason" value="Seller did not send item!">
+                                                </td>
+                                                <td>
+                                                    Accept<input type="radio" name="decision" value="accept" required="">
                                                     Reject<input type="radio" name="decision" value="reject">
                                                 </td>
                                                 <td><input type='submit' name='action' value='Accept'></td>

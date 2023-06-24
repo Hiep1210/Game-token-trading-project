@@ -30,7 +30,7 @@ public class ProcessPaymentRequestController extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
-        request.getRequestDispatcher("DisplayMarketItemsController").forward(
+        request.getRequestDispatcher("BuyPageController").forward(
                 request, response);
     }
 
@@ -45,11 +45,11 @@ public class ProcessPaymentRequestController extends HttpServlet {
             int paymentRequestId;
             double newMoneyAmount = 0;
             if (user == null) {
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else if (!isAdmin(user.getRoleid())) {
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else if (rawPaymentRequestId == null || decision == null) {
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else {
                 //Get payment request information by payment request id
                 paymentRequestId = Integer.parseInt(rawPaymentRequestId);

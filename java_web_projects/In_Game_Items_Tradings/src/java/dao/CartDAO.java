@@ -63,6 +63,39 @@ public class CartDAO {
         }
         return list;
     }
+    
+    public static Cart getCartById (int cartId) {
+        Cart items = null;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = SELECTONEITEM;
+                statement = con.prepareStatement(sql);
+                statement.setInt(1, cartId);
+                ResultSet rs = statement.executeQuery();
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new Cart(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getDouble(6),
+                            rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12),
+                            rs.getString(13), rs.getString(14), rs.getString(15));
+                }
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } 
+        try{
+            statement.close();
+            con.close();
+        }catch(SQLException s){
+            logger.log(Level.SEVERE, s.getMessage());
+        }
+        return items;
+    }
+    
     public static boolean checkDuplicateCart(int marketid, int buyerid) {
         try {
             DBContext db = new DBContext();
@@ -127,7 +160,6 @@ public class CartDAO {
             }
             con.close();
             statement.close();
-            return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
@@ -147,7 +179,6 @@ public class CartDAO {
             }
             con.close();
             statement.close();
-            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

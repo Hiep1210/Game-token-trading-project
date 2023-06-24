@@ -85,6 +85,37 @@ public class ProcessItemsDAO {
         }
         return processItemList;
     }
+    
+    public static ProcessItem getProcessItems(int processItemId) {
+        ProcessItem processItem = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "SELECT * FROM ProcessItems "
+                        + " WHERE id = " + processItemId;
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model  
+                while (rs.next()) {
+                    processItem = new ProcessItem();
+                    processItem.setId(rs.getInt("id"));
+                    processItem.setTransactionTypeIdId(rs.getInt("transactionType_id"));
+                    processItem.setTransactionId(rs.getInt("transaction_id"));
+                    processItem.setSenderId(rs.getInt("sender_id"));
+                    processItem.setReceiverId(rs.getInt("receiver_id"));
+                    processItem.setGameAccountName(rs.getString("game_account_name"));
+                    processItem.setProcessTime(rs.getObject("process_date", LocalDateTime.class));
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return processItem;
+    }
 
     public static boolean deleteProcessItems(int processItemId) {
         boolean deleteStatus = true;

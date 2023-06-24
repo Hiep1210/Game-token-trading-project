@@ -29,6 +29,9 @@
             <a href="sendAdminNotification.jsp">
                 <li>Send notification to all users</li>
             </a>
+            <a href="GetProcessItemController">
+                <li>Process item</li>
+            </a>
         </details>
     </c:if> 
     <!-- Sidebar Category -->

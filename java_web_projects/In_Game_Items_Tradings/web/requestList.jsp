@@ -76,7 +76,7 @@
                                                     Reject<input type="radio" name="decision" value="reject">
                                                 </td>
                                                 <td><input type='submit' name='action' value='Accept'></td>
-                                            </tr>
+                                            </tr>   
                                         </form>
                                     </c:forEach>
                                     </tbody>

@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ead66dd0-8100-436a-bfb7-f1d4106b4ecb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/UI/css/userProfile.css" beforeDir="false" afterPath="$PROJECT_DIR$/web/UI/css/userProfile.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/topUpRequest.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/topUpRequest.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ForgotPasswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ForgotPasswordController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +24,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/CODE/Semester 5/Game-items-trading-project/java_web_projects/In_Game_Items_Tradings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -38,6 +37,7 @@
       <option name="presentableId" value="Default" />
       <updated>1686622243698</updated>
       <workItem from="1686622245827" duration="16000" />
+      <workItem from="1687600875734" duration="40000" />
     </task>
     <servers />
   </component>

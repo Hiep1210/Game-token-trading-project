@@ -60,7 +60,7 @@ Logger logger
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         PaymentRequest paymentRequest;
         String strDate = formatter.format(date);
-        String redirect = HOMEPAGE;// if redirect attribute is null auto redirect to DisplayMarketItemsController
+        String redirect = HOMEPAGE;// if redirect attribute is null auto redirect to BuyPageController
         String newInvoiceImageName;
         double money;
         String message = null;

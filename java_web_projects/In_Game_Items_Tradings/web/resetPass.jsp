@@ -34,7 +34,7 @@
                 <!-- Display Signup Error -->
                 <div class="form-message">${requestScope.Boy}</div>
                 <!-- Main Form -->
-                <form id="login-form" action="resetPassController">
+                <form id="login-form" action="ResetPassController">
                     <!-- Username -->
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>

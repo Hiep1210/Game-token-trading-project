@@ -10,7 +10,6 @@ import java.sql.Statement;
 import model.User;
 import Context.DBContext;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,12 +19,12 @@ import java.util.ArrayList;
 public class UserDAO {
 
     public static User GetUserInformation(int id) {
-        User user = new User();
+        User user = null;
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "Select * from UserAccount where id= '" + id + "' limit 1;";
+                String sql = "Select * from UserAccount where id=" + id;
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery(sql);
                 while (rs.next()) {
@@ -37,6 +36,7 @@ public class UserDAO {
                     user.setEmail(rs.getString(5));
                     user.setGender(rs.getString(6));
                     user.setAvatar(rs.getString(7));
+                    user.setMoney(rs.getDouble(9));
                 }
                 rs.close();
                 st.close();
@@ -154,27 +154,6 @@ public class UserDAO {
         }
     }
 
-    public static boolean updateLinkedGameAccount(int user, int game) {//nut bam
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            if (con != null) {
-                String sql = "UPDATE `game_items_trading`.`useraccount` SET `game_account_id` = '" + game
-                        + "' WHERE (`id` = '" + user + "');";
-                Statement statement = con.createStatement();
-                int rows = statement.executeUpdate(sql);
-                //if no row updated, throw exception
-                if (rows < 1) {
-                    throw new Exception();
-                }
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
     public static ArrayList<Integer> getAllUserId() {
         ArrayList<Integer> userIdlist = new ArrayList<>();
         int notificationLimit = 10;
@@ -198,28 +177,6 @@ public class UserDAO {
         }
         return userIdlist;
 
-    }
-
-    public static boolean checkDuplicateGameAccount(int game_id) {
-        try {
-            DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            if (con != null) {
-                String sql = "select * from UserAccount where game_account_id = " + game_id;
-                Statement statement = con.createStatement();
-                ResultSet rs = statement.executeQuery(sql);
-                //if rs has entries means this game account is already linked
-                if (rs.next()) {
-                    throw new Exception();
-                }
-                con.close();
-                statement.close();
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return true;
     }
 
     public static boolean ChangePassword(int user_id, String password) {
@@ -318,7 +275,6 @@ public class UserDAO {
 //        System.out.println(dao.FindUserName("laamwwibu1"));
 //        System.out.println(dao.FindUserName("hiep"));
 //        System.out.println(dao.InsertUser(new User(0, "hung", "hung123", 1, 0, 0)));
-//        System.out.println(dao.updateLinkedGameAccount(3, 4));
 //        for (int id : dao.getAllUserId()) {
 //            System.out.println(id);
 //        }

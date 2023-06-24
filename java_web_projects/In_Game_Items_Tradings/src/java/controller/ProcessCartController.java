@@ -42,18 +42,35 @@ public class ProcessCartController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute("user");
         String gameAccountName = request.getParameter("gameAccountName");
+        String rawCartId = request.getParameter("cartId");
         String redirect = "InsertBuyRequestNotifcationController";
-        ArrayList<Cart> cartList;
+        ArrayList<Cart> cartList = new ArrayList<>();
+        Cart cartItem;
         ProcessItem processItem;
         double totalCartAmount = 0;
         double updatedUserAmount = 0;
-        String message = "You do not have enough funds to buy all items in your cart! Please top up or delete some item in your cart!";
+        int cartId = 0;
+        String message;
         try {
+
             if (user == null) {
                 redirect = "BuyPageController";
             } else {
-                //Get all item in user cart
-                cartList = CartDAO.getAllCartItems(user.getId());
+                if (rawCartId != null) {
+                    cartId = Integer.parseInt(rawCartId);
+                    cartItem = CartDAO.getCartById(cartId);
+
+                    if (cartItem == null) {
+                        message = "You were too late! This item has aready ended!";
+                        request.setAttribute("message", message);
+                        redirect = "ViewCartController";
+                    } else {
+                        cartList.add(cartItem);
+                    }
+                } else {
+                    cartList = CartDAO.getAllCartItems(user.getId());
+                }
+
                 if (cartList.isEmpty()) {
                     redirect = "BuyPageController";
                 } else {
@@ -61,6 +78,7 @@ public class ProcessCartController extends HttpServlet {
                         totalCartAmount += cart.getPrice();
                     }
                     if (totalCartAmount > user.getMoney()) {
+                        message = "You do not have enough funds to buy all items in your cart! Please top up or delete some item in your cart!";
                         request.setAttribute("message", message);
                         redirect = "ViewCartController";
                     } else {
@@ -72,7 +90,7 @@ public class ProcessCartController extends HttpServlet {
                         for (Cart cart : cartList) {
                             //Delete all cart record that contain market item id 
                             CartDAO.deleteCartWithMarketItemId(cart.getMarketItemId());
-                            processItem = new ProcessItem(cart.getUserid(), cart.getBuyer_id(), cart.getMarketItemId() , 1, gameAccountName, LocalDateTime.now());
+                            processItem = new ProcessItem(cart.getUserid(), cart.getBuyer_id(), cart.getMarketItemId(), 1, gameAccountName, LocalDateTime.now());
                             ProcessItemsDAO.insertProcessItems(processItem);
                         }
                         request.setAttribute("cartList", cartList);

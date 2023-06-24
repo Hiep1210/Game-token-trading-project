@@ -44,9 +44,9 @@ public class GetPaymentRequestController extends HttpServlet {
             ArrayList<PaymentRequest> paymentRequestList;
             String redirect = "requestList.jsp";
             if (user == null) {
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else if (!isAdmin(user.getRoleid())) {
-                redirect = "DisplayMarketItemsController";
+                redirect = "BuyPageController";
             } else {
                 paymentRequestList = PaymentRequestDAO.getAllPaymentRequest();
                 request.setAttribute("paymentRequestList",paymentRequestList);
