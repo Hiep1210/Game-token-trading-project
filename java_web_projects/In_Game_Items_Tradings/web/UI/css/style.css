@@ -1,3 +1,7 @@
+.hidden{
+    display: none;
+}
+
 .nopadding {
     padding: 0px;
     margin: 0px;
@@ -137,5 +141,9 @@ body {
 }
 
 #logout {
-    color: rgb(218 100, 123);
+    color: rgb(218, 100, 123);
+}
+
+.red-button {
+    background-color: rgb(218,100, 123);
 }

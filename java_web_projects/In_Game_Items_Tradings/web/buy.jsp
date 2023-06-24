@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="UI/css/style.css">
         <link rel="stylesheet" href="UI/css/styleBuy.css">
         <link rel="stylesheet" href="UI/css/styleInput.css"/>
+        <link rel="stylesheet" href="UI/css/styleItemBox.css"/>
     </head>
 
     <body>
@@ -175,7 +176,7 @@
                             <c:forEach var ="market_items" items="${requestScope.marketlist}">
                                 <!-- Item Card -->
                                 <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
-                                    <div class="card">
+                                    <div class="card rarity-${market_items.getRarity().toLowerCase()}"">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
                                             <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
@@ -246,34 +247,34 @@
         </div>
         <script>
             //load page before display message
-    window.onload = function() {
-        if (${requestScope.message != null}) {
-            document.title="GIT";
-            alert('${requestScope.message}');
-        }
-    };
-</script>
+            window.onload = function () {
+                if (${requestScope.message != null}) {
+                    document.title = "GIT";
+                    alert('${requestScope.message}');
+                }
+            };
+        </script>
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script>
-                function addCart(market, buyer) {
-                    console.log(market + "+" + buyer)
-                    $.ajax({
-                        url: "/In_Game_Items_Trading/AddCartController",
-                        type: 'POST',
-                        data: {
-                            marketid: market,
-                            buyerid: buyer
-                        },
-                        success: function (data) {
-                            var button = document.getElementById("button-cart" + market);
-                            button.innerHTML = data;
-                        }
-                    });
-                }
+            function addCart(market, buyer) {
+                console.log(market + "+" + buyer)
+                $.ajax({
+                    url: "/In_Game_Items_Trading/AddCartController",
+                    type: 'POST',
+                    data: {
+                        marketid: market,
+                        buyerid: buyer
+                    },
+                    success: function (data) {
+                        var button = document.getElementById("button-cart" + market);
+                        button.innerHTML = data;
+                    }
+                });
+            }
         </script>
 
     </body>

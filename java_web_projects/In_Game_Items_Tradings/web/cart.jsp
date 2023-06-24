@@ -18,56 +18,74 @@
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
-        <link rel="stylesheet" href="UI/css/styleBuy.css">
+        <link rel="stylesheet" href="UI/css/styleInput.css"/>
+        <link rel="stylesheet" href="UI/css/styleItemBox.css"/>
     </head>
 
     <body>
         <c:set var="redirect" value="BuyPageController"/>
         <%@include file="navbar.jsp" %>
         <!-- Main Content -->
-        <div class="container">
-            <h1 id="cart-size">Your Cart Item(s): ${requestScope.clist.size()} items!</h1>
+        <div class="container-fluid">
+            <h1 class="card-title mb-4" id="cart-size">Your Cart Item(s): ${requestScope.clist.size()} items!</h1>
             <c:if test="${requestScope.message != null}">
                 <h2>${requestScope.message}</h2>
             </c:if>
             <c:set var="total" value="0"/>
-            <c:forEach var ="cartlist" items="${requestScope.clist}">
-                <c:set var="total" value="${cartlist.price + total}"/>
-                <div class="item-card mt-2 mb-2 " id="cart-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
-                    <div class="card" >
-                        <img src="UI/image/${cartlist.getImg()}.png" alt ="displayfailed" class="card-img-top" >
-                        <div class="card-body row">
-                            <h5 class="card-title item-card-price ps-1">$ ${cartlist.price}</h5>
-                            <h5 class="card-title item-card-price ps-1">Buy from ${cartlist.price}</h5>
-                            <div class="col-lg-6">
-                                <form action="ProcessCartController" method="post" onsubmit="return confirm('Are you sure you want to buy only this item from cart? ')">
-                                    <input type="text" name="cartId" value="${cartlist.id}" hidden=""/>
-                                    <button type="submit" class="btn item-card-button ">
-                                        <h5 class="card-title item-card-price ps-1">Buy</h5>
-                                    </button>
-                                    <input type="text" name="gameAccountName" placeholder="Game account name ..."required="">
-                                </form><!-- comment -->
-                            </div>
-                            <div class="col-lg-6">
-                                <form action="DeleteCartController" method="post" onsubmit="return confirm('Are you sure you want to remove this item from cart? ')">
-                                    <input type="text" name="id" value="${cartlist.id}" hidden=""/>
-                                    <button type="submit"  class="btn item-card-button ">
-                                        <h5 class="card-title item-card-price ps-1">Remove</h5>
-                                    </button>
-                                </form>
+            <div class="container-fluid w-75">
+                <div class="row" id="sell-card-box">
+                    <c:forEach var ="cartlist" items="${requestScope.clist}">
+                        <c:set var="total" value="${cartlist.price + total}"/>
+                        <!-- Item Card -->
+                        <div class="sell-card mb-3" id="sell-card">
+                            <div class="row g-0">
+                                <div class="col-md-2">
+                                    <img src="UI/image/${cartlist.getImg()}.png" class="img-fluid rounded" alt="...">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-2">${cartlist.getType()} | ${cartlist.getItemName()} ${cartlist.getSkinName()} (${cartlist.getExterior()})
+                                        </h5>
+                                        <p class="card-text mb-1">Selling price: ${cartlist.getPrice()}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row nopadding">
+                                        <div class="mx-1 my-3">
+                                            <form action="ProcessCartController" method="post" onsubmit="return confirm('Are you sure you want to buy only this item from cart? ')">
+                                                <input type="text" name="cartId" value="${cartlist.id}" hidden=""/>
+                                                <button onclick="showGameAccInput(${cartlist.id})" type="submit" class="btn item-card-button ">
+                                                    <h5 class="card-title ps-1">Buy</h5>
+                                                </button>
+                                                <input id="gameAccInput${cartlist.id}" class="form-control hidden" type="text" name="gameAccountName" placeholder="Game account name ..." required>
+                                            </form>
+                                        </div>
+                                        <div class="mx-1">
+                                            <form action="DeleteCartController" method="post" onsubmit="return confirm('Are you sure you want to remove this item from cart? ')">
+                                                <input type="text" name="id" value="${cartlist.id}" hidden=""/>
+                                                <button type="submit"  class="btn item-card-button red-button">
+                                                    <h5 class="card-title ps-1">Remove</h5>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
-            </c:forEach>
+            </div>
             <c:if test="${requestScope.clist !=null}">
-                <h2 style="color: wheat; text-align: right;">The total amount in your cart: ${total} $</h2>
-                <form action="ProcessCartController" method="post" onsubmit="return confirm('Are you sure you want to buy all item(s) from cart? ')">
-                    <input type="text"  placeholder="Game acount name..."name="gameAccountName" required="">    
-                    <button type="submit" class="btn item-card-button ">
-                        <h5 class="card-title item-card-price ps-1">Buy All</h5>
-                    </button>
-                </form>
+                <div class="row">
+                    <h4 class="card-title text-end">The total amount in your cart: ${total} $</h4>
+                    <form class="d-flex justify-content-end" action="ProcessCartController" method="post" onsubmit="return confirm('Are you sure you want to buy all item(s) from cart? ')">
+                        <input class="form-control w-25 me-3" type="text"  placeholder="Game acount name..."name="gameAccountName" required="">    
+                        <button type="submit" class="btn item-card-button w-25">
+                            <h5 class="card-title item-card-price ps-1">Buy All</h5>
+                        </button>
+                    </form>
+                </div>
             </c:if>
         </div>
 
@@ -76,11 +94,18 @@
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
         <script>
-            function showGameAcc(){
-                var input = document.getElementById("gameacc");
-                input.removeAttribute("hidden");
-                var button = document.getElementById("butt-gameacc");
-                button.removeAttribute("hidden")
+            function showGameAccInput(cartItemId) {
+                var element = document.getElementById("gameAccInput" + cartItemId);
+                if (element) {
+                    var input = Array.from(element.classList);
+                    if (input.includes("hidden")) {
+                        element.classList.remove("hidden");
+                        console.log(element.classList);
+                    } else {
+                        element.classList.add("hidden");
+                        console.log(element.classList);
+                    }
+                }
             }
         </script>
     </body>
