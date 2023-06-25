@@ -5,8 +5,6 @@
 package dao;
 
 import Context.DBContext;
-import static dao.GameItemsDAO.Filter;
-import static dao.GameItemsDAO.Search;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
