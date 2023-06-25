@@ -308,6 +308,23 @@
             });
         }
     </script>
+    <script>
+                function addSellList(sell, seller) {
+                    console.log(sell + "+" + seller);
+                    $.ajax({
+                        url: "/In_Game_Items_Trading/SellCreateController",
+                        type: 'POST',
+                        data: {
+                            sellid: sell,
+                            sellerid: seller
+                        },
+                        success: function (data) {
+                            var button = document.getElementById("button-cart" + market);
+                            button.innerHTML = data;
+                        }
+                    });
+                }
+        </script>
 </body>
 
 </html>
