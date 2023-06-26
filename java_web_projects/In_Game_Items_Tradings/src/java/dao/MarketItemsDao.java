@@ -19,7 +19,7 @@ public class MarketItemsDao {
 
         private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
             + "FROM marketitems m, gameitems g "
-            + "WHERE m.item_id = g.id AND NOW() > m.end_date ";
+            + "WHERE m.item_id = g.id AND NOW() < m.end_date ";
 
     private static final String SELECTENDEDITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*  "
             + "FROM marketitems m, gameitems g  "
@@ -182,7 +182,6 @@ public class MarketItemsDao {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                if(name[0].equals("")){
                 String sql = SELECTITEMS;
                 for (int i = 0; i < name.length; i++) {
                     sql += " and (item_name Like '%" + name[i] + "%' or skin_name like '%" + name[i] + "%') ";
@@ -196,7 +195,6 @@ public class MarketItemsDao {
                     list.add(items);
                 }
                 call.close();
-                }
                 con.close();
             }
         } catch (Exception e) {
