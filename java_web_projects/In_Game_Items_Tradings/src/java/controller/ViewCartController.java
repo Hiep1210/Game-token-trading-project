@@ -16,9 +16,9 @@ public class ViewCartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = (User) request.getSession().getAttribute("user");
+        int id = Integer.parseInt(request.getParameter("id"));
         ArrayList<Cart> clist = new ArrayList<>();
-        clist = CartDAO.getAllCartItems(user.getId());
+        clist = CartDAO.getAllCartItems(id);
         request.setAttribute("clist", clist);
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
