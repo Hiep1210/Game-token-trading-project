@@ -12,7 +12,7 @@ import model.Notification;
 import model.User;
 
 @WebServlet(name = "SellNotificationController", urlPatterns = {"/SellNotificationController"})
-public class sellNotificationController extends HttpServlet {
+public class SellNotificationController extends HttpServlet {
 
     public void sellNotification(HttpServletRequest request, HttpServletResponse response) {
         try {
