@@ -84,7 +84,7 @@
                                 <!-- Dropdown toggler -->
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="">
+                                    <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt=""style="width: 60px; height: 60px; object-fit: contain">
                                 </button>
                                 <!-- Dropdown menu -->
                                 <div class="dropdown-menu dropdown-menu-end">

@@ -110,7 +110,7 @@
                             <div class="container">
                                 <div class="form-group">
                                     <label for="pfp" class="form-label">
-                                        <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="">
+                                        <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="" style="width: 300px; height: 300px; object-fit: scale-down">
                                         <c:set var="profile" value="${sessionScope.user.getAvatar()}"/>
                                     </label>
                                     <input type="file" accept="image/*" name="avatar" class="form-control file-input" id="pfp">
