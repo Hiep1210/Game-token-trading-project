@@ -115,6 +115,12 @@ create table Bid(
     foreign key (auction_id) references Auction(id)    
 );
 
+create table TransactionType(
+	id int not null auto_increment,
+    primary key(id),
+    type VARCHAR(20)
+);
+
 create table ProcessItems(
 	id int not null auto_increment,
     primary key(id),
@@ -124,15 +130,12 @@ create table ProcessItems(
     receiver_id int not null,
     game_account_name VARCHAR(50),
     process_date datetime not null,
+    foreign key(transactionType_id) references TransactionType(id),
     foreign key (sender_id) references UserAccount(id),
     foreign key (receiver_id) references UserAccount(id)
 );
 
-create table TransactionType(
-	id int not null auto_increment,
-    primary key(id),
-    type VARCHAR(20)
-);
+
 
 create table SellItems(
     id int not null auto_increment,
