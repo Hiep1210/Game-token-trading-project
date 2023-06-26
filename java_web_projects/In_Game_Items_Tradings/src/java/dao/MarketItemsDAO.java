@@ -17,9 +17,13 @@ import model.MarketItems;
  */
 public class MarketItemsDAO {
 
-        private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
+    private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
             + "FROM marketitems m, gameitems g "
-            + "WHERE m.item_id = g.id AND NOW() < m.end_date ";
+            + "WHERE m.item_id = g.id AND NOW() < m.end_date "
+            + "AND NOT EXISTS ( "
+            + "     SELECT 1 FROM processitems p   "
+            + "     WHERE  p.transaction_id = m.id  "
+            + "     AND p.transactionType_id = 1) ";
 
     private static final String SELECTENDEDITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*  "
             + "FROM marketitems m, gameitems g  "
@@ -158,7 +162,7 @@ public class MarketItemsDAO {
                 if (priceorder != null) {
                     sql += " order by price " + priceorder;
                 }
-               Statement call = con.createStatement();
+                Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
                 while (rs.next()) {
