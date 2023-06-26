@@ -35,8 +35,13 @@ public class FilterSellItems extends HttpServlet {
             GameItemsDAO gameItem = new GameItemsDAO(gameItems, trimedSkinName);
             listWithTrimed.add(gameItem);
         }
+
         PrintWriter out = response.getWriter();
 
+        if (listWithTrimed.isEmpty()) {
+            out.print("<h2 class=\"card-title\">No items matches</h2>");
+        }
+        
         for (GameItemsDAO gameItems : listWithTrimed) {
             out.println("<div class=\"col-lg-2 item-card mt-2 mb-2 \" id=\"item-card\" data-bs-toggle=\"offcanvas\" href=\"#offcanvas" + gameItems.getTrimedSkinName() + "\">\n"
                     + "                                <div class=\"card rarity-" + gameItems.getGameItems().getRarity().toLowerCase() + "\" data-bs-toggle = \"dropdown\" aria-expanded=\"false\">\n"
