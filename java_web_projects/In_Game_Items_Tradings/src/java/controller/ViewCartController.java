@@ -16,11 +16,22 @@ public class ViewCartController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        User user = (User) request.getSession().getAttribute("user");
+        String redirect = "cart.jsp";
         ArrayList<Cart> clist = new ArrayList<>();
-        clist = CartDAO.getAllCartItems(id);
-        request.setAttribute("clist", clist);
-        request.getRequestDispatcher("cart.jsp").forward(request, response);
+        int id;
+        if (user != null) {
+            id = user.getId();
+            clist = CartDAO.getAllCartItems(id);
+            request.setAttribute("clist", clist);
+        } else {
+            redirect = "BuyPageController";
+        }
+        request.getRequestDispatcher(redirect).forward(request, response);
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
     }
 
 }
