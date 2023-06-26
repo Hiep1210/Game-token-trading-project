@@ -15,12 +15,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 import java.util.Properties;
 import java.util.Random;
 import model.User;
 
-@WebServlet(name = "SendEmail", urlPatterns = {"/SendEmail"})
+@WebServlet(name = "SendEmail", urlPatterns = {"/sendEmail"})
 public class sendEmail extends HttpServlet {
 
     @Override
@@ -142,11 +143,11 @@ public class sendEmail extends HttpServlet {
         return String.format("%06d", number);
     }
 
-    public static String generateEmailMessage(String generateVerifyCode) {
-        String message = "Đây là mã xác nhận quên mật khẩu của bạn,"
-                + "vui lòng không chia sẻ bất kỳ ai khác."
-                + "Nếu bạn không làm hành động này xin vui lòng bỏ qua."
-                + "Mã xác nhận của bạn là : " + generateVerifyCode;
+    public static String generateEmailMessage(String generateVerifyCode) {  
+        String message = "Here is your confirmation code, Please do not share this to anybody.\n"
+                + "If you did not request this, please ignore this message\n"
+                + "Your confirmation code is: \n"
+                + generateVerifyCode;
         return message;
     }
 }
