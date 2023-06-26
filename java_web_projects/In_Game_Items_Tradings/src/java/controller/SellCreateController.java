@@ -5,7 +5,6 @@
 package controller;
 
 import java.io.IOException;
-import dao.CartDAO;
 import dao.SellDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -60,7 +59,7 @@ public class SellCreateController extends HttpServlet {
         int sellid = Integer.parseInt(request.getParameter("sellid"));
         int sellerid = Integer.parseInt(request.getParameter("sellerid"));
         String message = "Failed to add sell list";
-        if (SellDAO.checkDuplicateSellList(sellid, sellerid)) {
+        if (SellDAO.checkDuplicateSell(sellid, sellerid)) {
             message = "Already Added to sell list";
         } else {
             if (SellDAO.insertSellItem(sellid, sellerid)) {

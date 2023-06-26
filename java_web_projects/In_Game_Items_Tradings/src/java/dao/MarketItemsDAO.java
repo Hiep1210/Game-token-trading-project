@@ -19,7 +19,7 @@ public class MarketItemsDAO {
 
         private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
             + "FROM marketitems m, gameitems g "
-            + "WHERE m.item_id = g.id AND NOW() > m.end_date ";
+            + "WHERE m.item_id = g.id AND NOW() < m.end_date ";
 
     private static final String SELECTENDEDITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*  "
             + "FROM marketitems m, gameitems g  "

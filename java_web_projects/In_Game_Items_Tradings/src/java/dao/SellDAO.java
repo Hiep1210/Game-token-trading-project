@@ -169,14 +169,17 @@ public class SellDAO {
 
     public static ArrayList<GameItems> filterByType(String[] types, String searchTerm, String sortOrder) {
         ArrayList<GameItems> list = new ArrayList<>();
+        String selectedTypes = "";
         if (types == null) {
             types = new String[0];
+            selectedTypes = "AND (type = 'nonexisttype')";
         }
         int numberOfTypes = types.length;
-        String selectedTypes = "";
+        
         if (sortOrder == null) {
             sortOrder = "";
         }
+        //iterate through all element in selectedType
         for (int i = 0; i < numberOfTypes; i++) {
             //Open Parentheses at start
             if (i == 0) {
