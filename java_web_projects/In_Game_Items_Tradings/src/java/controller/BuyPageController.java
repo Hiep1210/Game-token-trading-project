@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import dao.MarketItemsDao;
+import dao.MarketItemsDAO;
 import java.util.ArrayList;
 import model.MarketItems;
 
@@ -20,7 +20,7 @@ public class BuyPageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<MarketItems> marketlist = MarketItemsDao.getAllMarketItems();
+        ArrayList<MarketItems> marketlist = MarketItemsDAO.getAllMarketItems();
         request.setAttribute("marketlist", marketlist);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
 

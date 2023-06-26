@@ -94,3 +94,7 @@
 .summit-button button:hover {
     background-color: rgb(80, 67, 151);
 }
+
+.red-button {
+    background-color: rgb(218,100, 123);
+}

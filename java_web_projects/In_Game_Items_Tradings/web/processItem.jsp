@@ -102,7 +102,7 @@
                                                     Accept<input type="radio" name="decision" value="accept" required="">
                                                     Reject<input type="radio" name="decision" value="reject">
                                                 </td>
-                                                <td><input type='submit' name='action' value='Accept'></td>
+                                                <td><input type='submit' name='action' value='Confirm'></td>
                                             </tr>
                                         </form>
                                     </c:forEach>

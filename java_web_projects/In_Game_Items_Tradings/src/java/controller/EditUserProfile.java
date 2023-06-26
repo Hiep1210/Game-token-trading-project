@@ -80,13 +80,13 @@ public class EditUserProfile extends HttpServlet {
                 }
             }
 
-            // Create a User object and perform sign-up logic
+            // Create a User object and perform update profile logic
             int id = Integer.parseInt(id_raw);
             User user = new User(id, username, "", dob, email, gender, profilePicFilename, loggedUser.getRoleid(), loggedUser.getMoney());
             // Perform update logic using the user object
             UserDAO dao = new UserDAO();
             dao.editUserProfile(user);
-            // Redirect the user to the appropriate page after sign-up
+            // Redirect the user to the appropriate page after update
             request.getSession().setAttribute("user", user);
             response.sendRedirect("UserProfileController");
         } catch (Exception e) {

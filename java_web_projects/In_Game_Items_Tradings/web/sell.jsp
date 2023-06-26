@@ -106,23 +106,61 @@
                                 <div class="offcanvas-body">
                                     <img class="img-fluid" src="UI/image/${sellList.gameItems.img}.png" alt="">
                                     <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Exterior:</p>
+                                        <p class="sell-info-select-name">Extrior:</p>
+                                        <details class="sidebar-category">
+                                            <summary>Exterior</summary>
+                                            <ul class="nopadding d-flex flex-column">
+                                                <div class="category-group">
+                                                    <input type="checkbox" name="exterior" value="Factory New" id="fn">
+                                                    <label for="knife">Factory New</label>
+                                                </div>
+                                                <div class="category-group">
+                                                    <input type="checkbox" name="exterior" value="Minimal Wear" id="mw">
+                                                    <label for="glove">Minimal Wear</label>
+                                                </div>
+                                                <div class="category-group">
+                                                    <input type="checkbox" name="exterior" value="Field-Tested" id="ft">
+                                                    <label for="gun">Field-Tested</label>
+                                                </div>
+                                                <div class="category-group">
+                                                    <input type="checkbox" name="exterior" value="Well-Worn" id="ww">
+                                                    <label for="gun">Well-Worn</label>
+                                                </div>
+                                                <div class="category-group">
+                                                    <input type="checkbox" name="exterior" value="Battle-Scarred" id="bs">
+                                                    <label for="gun">Battle-Scarred</label>
+                                                </div>
+                                            </ul>
+                                        </details>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
                                         <p class="sell-info-select-name">Rarity:</p>
                                         <h5>${sellList.gameItems.rarity}</h5>
                                     </div>
-                                    <div class="d-flex justify-content-between mt-2">
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
                                         <p class="sell-info-select-name">Sell time:</p>
-                                        <h5>1:00:00</h5>
+                                        <input class="mb-3" type="radio" name ="sellTime">
+                                        <label class="mb-3">1 Day</label>
+                                        <input class="mb-3" type="radio" name ="sellTime">
+                                        <label class="mb-3">2 Day</label>
+                                        <input class="mb-3" type="radio" name ="sellTime">
+                                        <label class="mb-3">3 Day</label>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
                                         <p class="sell-info-select-name">Sell Price:</p>
-
+                                        <div class="form-group">
+                                            <input type="number" name="page" value="${pageContext.request.servletPath}" hidden=""/>
+                                            <input class="form-control" type="text" name ="search" placeholder="Enter the price">
+                                            <input type="submit" hidden=""/>
+                                        </div>
                                     </div>
-                                    <div class="summit-button mt-2">
-                                        <button type="submit">Add to Sell List</button>
-                                    </div>
+                                    <c:if test="${sessionScope.user != null}">
+                                        <div class="summit-button mt-2">
+                                            <button class="btn item-card-button"  onclick="addSellList(${sell_items.id},${sessionScope.user.id})" id="button-cart${sell_items.id}">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:forEach>    
@@ -271,6 +309,23 @@
                 },
                 error: function () {
                     console.log('Error occurred during AJAX request');
+                }
+            });
+        }
+    </script>
+    <script>
+        function addSellList(sell, seller) {
+            console.log(sell + "+" + seller);
+            $.ajax({
+                url: "/In_Game_Items_Trading/SellCreateController",
+                type: 'POST',
+                data: {
+                    sellid: sell,
+                    sellerid: seller
+                },
+                success: function (data) {
+                    var button = document.getElementById("button-cart" + market);
+                    button.innerHTML = data;
                 }
             });
         }

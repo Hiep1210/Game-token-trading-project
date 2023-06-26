@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.MarketItems;
-import dao.MarketItemsDao;
+import dao.MarketItemsDAO;
 import java.util.ArrayList;
 
 @WebServlet(name = "SearchBuyController", urlPatterns = {"/SearchBuyController"})
@@ -24,7 +24,7 @@ public class SearchBuyController extends HttpServlet {
             throws ServletException, IOException {
         String input = request.getParameter("search").trim();
         String[] analyze = input.split("\\s");
-        ArrayList<MarketItems> marketItems = MarketItemsDao.Search(analyze);
+        ArrayList<MarketItems> marketItems = MarketItemsDAO.Search(analyze);
         request.setAttribute("marketlist", marketItems);
         request.getRequestDispatcher("buy.jsp").forward(request, response);
     }
