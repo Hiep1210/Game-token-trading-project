@@ -248,13 +248,13 @@ public class UserDAO {
         return null;
     }
 
-    public boolean ResetPassword(String username, String pass) {
+    public boolean ResetPassword(int id, String pass) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + pass
-                        + "' where username = '" + username + "';";
+                        + "' where id = '" + id + "';";
                 Statement st = con.createStatement();
                 int rows = st.executeUpdate(sql);
                 if (rows < 1) {
