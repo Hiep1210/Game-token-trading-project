@@ -8,19 +8,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.User;
 
 @WebServlet(name = "ResetPassController", urlPatterns = {"/ResetPassController"})
 public class ResetPassController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user = request.getParameter("username");
         String newPass = request.getParameter("newpass");
         String newCfPass = request.getParameter("cfpass");
         UserDAO dao = new UserDAO();
         HttpSession session = request.getSession();
+        User newUser = (User) request.getSession().getAttribute("userForgetPass");
         if (newPass.equals(newCfPass)) {
-            dao.ResetPassword(user, newPass);
+            dao.ResetPassword(newUser.getId(), newPass);
             session.invalidate();
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
