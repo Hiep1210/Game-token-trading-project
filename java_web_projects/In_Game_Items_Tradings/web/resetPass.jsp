@@ -36,12 +36,6 @@
                 <div class="form-message">${requestScope.Boy}</div>
                 <!-- Main Form -->
                 <form id="login-form" action="ResetPassController" method="post">
-                    <!-- Username -->
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input id="username" name="username" type="text" placeholder="Enter your username" class="form-control">
-                        <span class="form-message"></span>
-                    </div>
                     <!-- Password -->
                     <div class="form-group">
                         <label for="newpass" class="form-label">New Password</label>
@@ -49,7 +43,7 @@
                         <span class="form-message"></span>
                     </div>
                     <div class="form-group">
-                        <label for="cfpass" class="form-label">Password</label>
+                        <label for="cfpass" class="form-label">Confirm Password</label>
                         <input id="cfpass" name="cfpass" type="password" placeholder="Enter Your Password Again" class="form-control">
                         <span class="form-message"></span>
                     </div>
@@ -69,16 +63,5 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            Validator({
-                form: '#login-form',
-                formGroupSelector: '.form-group',
-                errorSelector: '.form-message',
-                rules: [
-                    Validator.isRequired('#username', 'Please enter your username'),
-                ]
-            });
-        </script>
     </body>
 </html>
