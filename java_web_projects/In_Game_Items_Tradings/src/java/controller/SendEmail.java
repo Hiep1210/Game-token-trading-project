@@ -28,7 +28,7 @@ public class sendEmail extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String regexEmail = "\\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}\\b";
-        User newUser = (User) request.getAttribute("userForgetPass");
+        User newUser = (User) request.getSession().getAttribute("userForgetPass");
         String recipient = newUser.getEmail();
         if (recipient.matches(regexEmail)) {
             // Get recipient email address and message from form data
