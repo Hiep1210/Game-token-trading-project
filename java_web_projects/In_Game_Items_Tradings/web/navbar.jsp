@@ -44,6 +44,13 @@
                         </a>
                         <h5>Auction</h5>
                     </div>
+                   <!-- Blog Button -->
+                    <div class="col-lg-3 navbar-item nopadding">
+                        <a href="ThreadController">
+                            <i class="material-icons navbar-item-icon">compare_arrows</i>
+                        </a>
+                        <h5>Blog</h5>
+                    </div>
                 </div>
             </div>
             <!-- Navbar User  -->
