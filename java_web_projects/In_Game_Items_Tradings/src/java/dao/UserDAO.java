@@ -268,6 +268,38 @@ public class UserDAO {
         return false;
     }
 
+    public boolean userNameIsExist(String username) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String query = "select count(*) as num from [User] where username = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public boolean emailIsExist(String email) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String query = "select count(*) as num from [User] where email = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
         User userInfo = GetUserInformation(1);
