@@ -13,7 +13,7 @@
             <a href="ChangePassword.jsp">
                 <li>Change Password</li>
             </a>
-            <a href="#">
+            <a href="createAuction.jsp">
                 <li>Create auction</li>
             </a>
         </ul>
