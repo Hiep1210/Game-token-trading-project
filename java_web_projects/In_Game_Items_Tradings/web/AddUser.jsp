@@ -20,7 +20,7 @@
         <div class="super_container">
             <!-- Header -->
 
-            <jsp:include page="Navbar.jsp"></jsp:include>
+            <jsp:include page="navbar.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="AddUser" style="margin: auto; width: 50%">
