@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import model.User;
+import java.sql.SQLException;
 import Context.DBContext;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
