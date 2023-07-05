@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,7 +74,7 @@ public class SellDAO {
                 //run a loop to save queries into model
                 while (rs.next()) {
                     items = new SellList(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getInt(5), rs.getDouble(6),
-                            rs.getString(7), rs.getString(8), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12),
+                             rs.getObject(7, LocalDateTime.class), rs.getObject(8, LocalDateTime.class), rs.getInt(9), rs.getString(10), rs.getString(11), rs.getString(12),
                             rs.getString(13), rs.getString(14), rs.getString(15));
                     list.add(items);
                 }
