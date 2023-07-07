@@ -14,43 +14,37 @@
             <option value="">Select Filter</option>
             <option value="id">ID</option>
             <option value="username">Username</option>
-            <option value="role">Role</option> <%-- Add role filter here --%> 
-        </select> 
-        <%-- Add role filter value here --%> 
-        <%-- Only display if role filter is selected --%> 
-        <%-- Example: --%> 
-        <%-- if (filterType != null && filterType.equals("role")) { --%> 
-            <select name="filterValue"> 
-                <option value="">Select Role</option> 
-                <option value="user">User</option> 
-                <option value="admin">Admin</option> 
-            </select> 
-        <%-- } else { --%> 
-            <input type="text" name="filterValue"> 
-        <%-- } --%> 
-        <input type="submit" value="Filter"> 
-    </form> 
-    <br/> 
-    <table border="1"> 
-        <tr> 
-            <th>ID</th> 
-            <th>Username</th> 
-            <th>Password</th> 
-            <th>DOB</th> 
-            <th>Email</th> 
-            <th>Gender</th> 
-            <th>Avatar</th> 
-            <th>Role ID</th> 
-            <th>Money</th> 
-            <th>Edit</th> 
-            <th>Delete</th> 
-        </tr> 
-        <c:forEach var="user" items="${users}"> 
+        </select>
+        <input type="text" name="filterValue">
+        Role:
+        <select name="roleFilter">
+            <option value="">Select Role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+        <input type="submit" value="Filter">
+    </form>
+    <br/>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>DOB</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Avatar</th>
+            <th>Role ID</th>
+            <th>Money</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <c:forEach var="user" items="${users}">
             <%-- Add filter logic here --%> 
-            <%-- Only display users that match the filter --%> 
-            <%-- If no filter is selected, display all users --%> 
+            <%-- Only display users that match the filters --%> 
+            <%-- If no filters are selected, display all users --%> 
             <%-- Example: --%> 
-            <%-- if (filterType == null || (filterType.equals("id") && user.getId() == filterValue) || (filterType.equals("username") && user.getUsername().equals(filterValue)) || (filterType.equals("role") && user.getRole().equals(filterValue))) { --%> 
+            <%-- if ((filterType == null || (filterType.equals("id") && user.getId() == filterValue) || (filterType.equals("username") && user.getUsername().equals(filterValue))) && (roleFilter == null || user.getRole().equals(roleFilter))) { --%> 
                 <%-- Display user row --%> 
                 <tr> 
                     <td>${user.id}</td> 
@@ -73,9 +67,9 @@
                     <td><a href="editUser.jsp?id=${user.id}">Edit</a></td>
                     <td><a href="deleteUser?id=${user.id}">Delete</a></td>
                 </tr>
-            <%-- } --%>
-        </c:forEach>
-    </table>
-    <%-- Add other code here --%>
-</body>
-</html>
+            <%-- } --%> 
+        </c:forEach> 
+    </table> 
+    <%-- Add other code here --%> 
+</body> 
+</html> 
