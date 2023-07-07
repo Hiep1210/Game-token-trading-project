@@ -21,9 +21,17 @@
                 <td>Type:</td>
                 <td><input type="text" name="type"></td>
             </tr>
-            <tr>
-                <td>Rarity:</td>
-                <td><input type="text" name="rarity"></td>
+            <tr> 
+                <td>Rarity:</td> 
+                <td><select name="rarity"> 
+                        <option value="">Select Rarity</option> 
+                        <option value="Consumer">Consumer</option> 
+                        <option value="Industrial">Industrial</option> 
+                        <option value="Mil-spec">Mil-spec</option> 
+                        <option value="Restricted">Restricted</option> 
+                        <option value="Classified">Classified</option> 
+                        <option value="Covert">Covert</option> 
+                    </select></td> 
             </tr>
             <tr>
                 <td>Exterior:</td>
