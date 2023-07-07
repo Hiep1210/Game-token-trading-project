@@ -24,7 +24,7 @@
             <th>ID</th>
             <th>Username</th>
             <th>Password</th>
-            <th>DOB</th>
+            <th>Date of birth</th>
             <th>Email</th>
             <th>Gender</th>
             <th>Avatar</th>
