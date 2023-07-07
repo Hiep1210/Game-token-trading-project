@@ -15,7 +15,7 @@
             <option value="id">ID</option>
             <option value="username">Username</option>
         </select>
-        <input type="text" name="filterValue">
+        
         Role:
         <select name="roleFilter">
             <option value="">Select Role</option>
