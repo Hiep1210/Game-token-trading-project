@@ -19,7 +19,14 @@
             </tr>
             <tr>
                 <td>Type:</td>
-                <td><input type="text" name="type"></td>
+                <td><select name="type">
+                        <option value="">Select Type</option>
+                        <option value="Pistol">Pistol</option>
+                        <option value="Rifles">Rifles</option>
+                        <option value="SMGs">SMGs</option> 
+                        <option value="Heavy">Heavy</option> 
+                        <option value="Knife">Knife</option> 
+                    </select></td> 
             </tr>
             <tr> 
                 <td>Rarity:</td> 
