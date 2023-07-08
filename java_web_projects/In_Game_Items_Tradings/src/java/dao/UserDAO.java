@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import model.User;
+import java.sql.SQLException;
 import Context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -299,6 +300,55 @@ public class UserDAO {
         } catch (SQLException e) {
         }
         return false;
+    }
+
+    public ArrayList<User> getListUser(String role, String status, String sort) {
+
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            // query to get all User from DB
+            String query = "select * "
+                    + "from [User] u "
+                    + "left join [Role] r on u.roleid = r.roleid ";
+            // check cac truong hop 
+            // role va status blank
+            if (role.isEmpty() && !status.isEmpty()) {
+                query += "where status = " + "'" + status + "' ";
+            }
+            // role co gia tri va status = blank
+            if (!role.isEmpty() && status.isEmpty()) {
+                query += "where rolename = " + "'" + role + "' ";
+            }
+            // ca role va status deu co gia tri
+            if (!role.isEmpty() && !status.isEmpty()) {
+                query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
+            }
+            //order by
+            query += "order by " + "'" + sort + "' ";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            while (rslt.next()) {
+                User u = new User();
+                u.setId(rslt.getInt("id"));
+                
+                u.setUsername(rslt.getString("username"));
+                u.setDob(rslt.getString("dob"));
+                
+                u.setEmail(rslt.getString("email"));
+                u.setGender(rslt.getString("gender"));
+                u.setAvatar(rslt.getString("avatar"));
+                u.setRoleid(rslt.getInt("roleid"));
+                u.setMoney(rslt.getDouble("money"));
+                list.add(u);
+
+            }
+            return list;
+        } catch (SQLException e) {
+        }
+        return null;
     }
 
     public static void main(String[] args) {

@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class SellList extends MarketItems{
     int id;
     int seller_id;
     
-    public SellList(int id, int buyer_id, int mid, String game, int user_id, double price, String begindate, String enddate, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
+    public SellList(int id, int buyer_id, int mid, String game, int user_id, double price, LocalDateTime begindate, LocalDateTime enddate, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
         super(mid, game, user_id, price, begindate, enddate ,gid, skin_name, item_name, type, rarity, exterior, img);
         this.id = id;
         

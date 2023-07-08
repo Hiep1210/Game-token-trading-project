@@ -8,6 +8,7 @@ import Context.DBContext;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.MarketItems;
 
@@ -47,8 +48,9 @@ public class MarketItemsDAO {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13));
                     list.add(items);
                 }
                 call.close();
@@ -74,8 +76,9 @@ public class MarketItemsDAO {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    item = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
+                    item = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13));
                 }
                 call.close();
                 con.close();
@@ -99,8 +102,9 @@ public class MarketItemsDAO {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13));
                     list.add(items);
                 }
                 call.close();
@@ -166,8 +170,9 @@ public class MarketItemsDAO {
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
                 while (rs.next()) {
-                    list.add(new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13)));
+                    list.add(new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13)));
                 }
                 call.close();
                 con.close();
@@ -194,8 +199,9 @@ public class MarketItemsDAO {
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
-                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getString(5), rs.getString(6), rs.getInt(7),
-                            rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13));
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13));
                     list.add(items);
                 }
                 call.close();
