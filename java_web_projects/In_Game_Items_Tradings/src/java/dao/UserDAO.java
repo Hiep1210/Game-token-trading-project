@@ -10,6 +10,7 @@ import java.sql.Statement;
 import model.User;
 import Context.DBContext;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
