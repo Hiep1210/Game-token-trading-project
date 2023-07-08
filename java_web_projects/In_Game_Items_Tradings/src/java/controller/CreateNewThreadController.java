@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -29,20 +30,23 @@ public class CreateNewThreadController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateNewThreadController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateNewThreadController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String tit = request.getParameter("title");
+        String content = request.getParameter("content");
+        String ttag = request.getParameter("tag");
+        User user = (User) request.getSession().getAttribute("user");        
+        String tauthor = user.getUsername();
+        int user_id = user.getId();
+        if(tit != null){
+            dao.ThreadDAO.insertNewThread(tit,content,ttag,tauthor,user_id);
+            request.setAttribute("nice","success");
+            request.getRequestDispatcher("createNewThread.jsp").forward(request, response);
+            
+        }else{
+            request.setAttribute("nice", "bug");
+            request.getRequestDispatcher("createNewThread.jsp").forward(request, response);
+            
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -68,7 +72,8 @@ public class CreateNewThreadController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+         processRequest(request, response);
+
     }
 
     /** 
