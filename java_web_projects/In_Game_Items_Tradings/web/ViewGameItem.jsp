@@ -22,6 +22,58 @@
 </head>
 <body>
     <h1>View Game Items</h1>
+    <div class="container-fluid main-content">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 sidebar">
+                    <%@include file="sidebar.jsp" %>
+                </div>
+                <!-- Page Info -->
+                <div class="col-lg-9 page-info">
+                    <div class="container">
+                        <c:choose>
+                            <c:when test="${(requestScope.paymentRequestList != null) }">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Skin Name</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Picture</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var = "paymentRequest" items="${requestScope.paymentRequestList}">
+                                        <form action='ProcessPaymentRequestController' method='post'>
+                                            <input type="hidden" name="paymentRequestId" value="${paymentRequest.id}">
+                                            <input type="hidden" name="type" value="payment">
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>${paymentRequest.money}</td>
+                                                <td> ${paymentRequest.date}</td>
+                                                <td><img src="UI/image/${paymentRequest.img}" alt="invoice picture" width="400" 
+                                                         height="500"></td>
+                                                <td>
+                                                    Accept<input type="radio" name="decision" value="accept">
+                                                    Reject<input type="radio" name="decision" value="reject">
+                                                </td>
+                                                <td><input type='submit' name='action' value='Accept'></td>
+                                            </tr>   
+                                        </form>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+                            </c:when>   
+                            <c:otherwise>
+                                <p>Currently 0 payment request to process</p>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <%-- Display table of game items --%>
     <table>
