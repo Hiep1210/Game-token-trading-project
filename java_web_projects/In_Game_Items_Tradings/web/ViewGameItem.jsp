@@ -80,34 +80,7 @@
         </div>
 
     <%-- Display table of game items --%>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Skin Name</th>
-            <th>Item Name</th>
-            <th>Type</th>
-            <th>Rarity</th>
-            <th>Exterior</th>
-            <th>Image</th>
-            <th></th>
-            <th></th>
-        </tr>
-        
-        <c:forEach var="gameItem" items="${gameItems}">
-            <tr>
-                <td>${gameItem.id}</td>
-                <td>${gameItem.skinName}</td>
-                <td>${gameItem.itemName}</td>
-                <td>${gameItem.type}</td>
-                <td>${gameItem.rarity}</td>
-                <td>${gameItem.exterior}</td>
-                <td>${gameItem.img}</td>
-                
-                <!-- Add more columns as per your database schema -->
-            </tr>
-        </c:forEach>
-        
-    </table>
+   
 
     <%-- Link to add a new game item --%>
     <br>
