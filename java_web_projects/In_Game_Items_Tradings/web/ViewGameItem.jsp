@@ -75,6 +75,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
+                    <a href="addGameItem.jsp">Add New Game Item</a>
                 </div>
             </div>
         </div>
@@ -83,8 +84,7 @@
    
 
     <%-- Link to add a new game item --%>
-    <br>
-    <a href="addGameItem.jsp">Add New Game Item</a>
+    
 
 </body>
 </html>
