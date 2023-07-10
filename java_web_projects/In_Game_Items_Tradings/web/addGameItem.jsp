@@ -34,8 +34,8 @@
             <option value="Covert">Covert</option>
             </select><br>
         
-        <label for="img">Image URL:</label>
-        <input type="text" name="img" id="img"><br>
+        <label for="img">Image:</label>
+            <input type="file" name="img" id="img"><br>
         <input type="submit" value="Add">
     </form>
 
