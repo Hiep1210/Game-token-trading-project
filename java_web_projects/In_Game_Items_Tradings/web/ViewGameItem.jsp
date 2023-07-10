@@ -38,9 +38,11 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Skin Name</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Picture</th>
-                                            <th scope="col">Action</th>
+                                            <th scope="col">Item Name</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Rarity</th>
+                                            <th scope="col">image</th>
+                                            <th scope="col"></th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
