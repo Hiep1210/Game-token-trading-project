@@ -47,15 +47,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var = "paymentRequest" items="${requestScope.paymentRequestList}">
-                                        <form action='ProcessPaymentRequestController' method='post'>
-                                            <input type="hidden" name="paymentRequestId" value="${paymentRequest.id}">
-                                            <input type="hidden" name="type" value="payment">
+                                        <c:forEach var = "gameItem" items="${requestScope.gameItemList}">
+                                        <form action='ViewGameItemsController' method='post'>
+                                            <input type="hidden" name="gameItemId" value="${gameItem.id}">
+                                            
                                             <tr>
                                                 <th scope="row">1</th>
-                                                <td>${paymentRequest.money}</td>
-                                                <td> ${paymentRequest.date}</td>
-                                                <td><img src="UI/image/${paymentRequest.img}" alt="invoice picture" width="400" 
+                                                <td>${gameItem.skinName}</td>
+                                                <td>${gameItem.itemName}</td>
+                                                <td>${gameItem.type}</td>
+                                                <td>${gameItem.rarity}</td>
+                                                <td><img src="UI/image/${gameItem.img}" alt="invoice picture" width="400" 
                                                          height="500"></td>
                                                 <td>
                                                     Accept<input type="radio" name="decision" value="accept">
