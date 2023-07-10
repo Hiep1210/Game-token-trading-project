@@ -25,7 +25,14 @@
             </select><br>
 
         <label for="rarity">Rarity:</label>
-        <input type="text" name="rarity" id="rarity"><br>
+            <select name="rarity" id="rarity">
+            <option value="Consumer">Consumer</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Mil-spec">Mil-spec</option>
+            <option value="Restricted">Restricted</option>
+            <option value="Classified">Classified</option>
+            <option value="Covert">Covert</option>
+            </select><br>
         
         <label for="img">Image URL:</label>
         <input type="text" name="img" id="img"><br>
