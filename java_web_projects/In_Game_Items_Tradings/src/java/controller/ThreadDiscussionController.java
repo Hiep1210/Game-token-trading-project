@@ -5,6 +5,8 @@
 
 package controller;
 
+import dao.CommentDAO;
+import dao.ThreadDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Thread;
+import java.util.ArrayList;
+import model.Comment;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name="CommentController", urlPatterns={"/CommentController"})
-public class CommentController extends HttpServlet {
+@WebServlet(name="ThreadDiscussionController", urlPatterns={"/ThreadDiscussionController"})
+public class ThreadDiscussionController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -29,19 +34,12 @@ public class CommentController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CommentController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CommentController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+       int tid = Integer.parseInt(request.getParameter("threadid"));
+//       Thread thread = ThreadDAO.getThreadById(tid);
+//       request.setAttribute("t", thread);
+       ArrayList<Comment> lc = CommentDAO.getAllComment(tid);
+       request.setAttribute("commentlist", lc);
+       request.getRequestDispatcher("threadDiscussion.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -81,3 +79,4 @@ public class CommentController extends HttpServlet {
     }// </editor-fold>
 
 }
+ 

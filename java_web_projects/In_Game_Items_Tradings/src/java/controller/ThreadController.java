@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.Thread;
 /**
@@ -25,8 +26,8 @@ public class ThreadController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        ArrayList<Thread> threadlist = ThreadDAO.getAllThread();
+    throws ServletException, IOException {    
+       ArrayList<Thread> threadlist = ThreadDAO.getAllThread();
        request.setAttribute("threadlist", threadlist);
        request.getRequestDispatcher("thread.jsp").forward(request, response);
     } 
