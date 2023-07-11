@@ -49,7 +49,7 @@
                                 </c:if>  
                                 <!-- Main Form -->
                                 <form  id="auction-form"action='CreateAuctionController' method='post'>
-                                    <input type="hidden" value="1" name="itemId">
+                                    <input type="hidden" value="41" name="itemId">
                                     <div class="form-group">
                                         <label for="lowestBid" class="form-label">Enter the starting bid for your auction</label>
                                         <input type="number" step="0.01" min="0.01"id="lowestBid" name="lowestBid" class="form-control"  placeholder="Insert starting bid" required>
@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Choose auction duration:</label>
-                                        1 <input type="radio"  name="auctionDuration" value="1" required >
+                                        1<input type="radio"  name="auctionDuration" value="1" required >
                                         3<input type="radio"  name="auctionDuration" value="3">
                                         5<input type="radio"  name="auctionDuration" value="5">
                                         10<input type="radio" name="auctionDuration" value="10">
