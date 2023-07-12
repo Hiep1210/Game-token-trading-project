@@ -21,6 +21,7 @@ public class Auction {
     private LocalDateTime startingDate;
     private LocalDateTime endingDate;
     private GameItems gameItem;
+    private ArrayList bidList;
 
     public Auction() {
     }
@@ -109,9 +110,12 @@ public class Auction {
         this.gameItem = gameItem;
     }
 
-    @Override
-    public String toString() {
-        return "Auction{" + "auctionId=" + auctionId + ", sellerId=" + sellerId + ", itemId=" + itemId + ", lowestBid=" + lowestBid + ", gameAccountName=" + gameAccountName + ", startingDate=" + startingDate + ", endingDate=" + endingDate + ", gameItem=" + gameItem + '}';
+    public ArrayList getBidList() {
+        return bidList;
+    }
+
+    public void setBidList(ArrayList bidList) {
+        this.bidList = bidList;
     }
 
 }
