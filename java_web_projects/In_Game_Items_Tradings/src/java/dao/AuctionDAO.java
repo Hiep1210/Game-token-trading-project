@@ -68,7 +68,7 @@ public class AuctionDAO {
         }
         return auctionList;
     }
-    
+
     public static ArrayList<Auction> getAllAuctionFromUser(int userId) {
         ArrayList<Auction> auctionList = new ArrayList<>();
         Auction auction;
@@ -114,7 +114,7 @@ public class AuctionDAO {
         }
         return auctionList;
     }
-    
+
     public static Auction getAuction(int auctionId) {
         Auction auction = null;
         GameItems gameItem = null;
@@ -267,6 +267,75 @@ public class AuctionDAO {
         return auctionList;
     }
 
+    public static ArrayList<Auction> filter(String priceorder, String[] type, String[] rarity, String[] exterior) {
+        ArrayList<Auction> auctionList = new ArrayList<>();
+        Auction auction;
+        GameItems gameItem;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "SELECT * FROM auction auc, gameitems gei "
+                        + " WHERE NOW() < auc.ending_date AND auc.item_id = gei.id ";
+//                        + " ORDER BY auc.ending_date DESC";
+                if (type != null) {
+                    sql += " and (";
+                    for (int i = 0; i < type.length - 1; i++) {
+                        sql += " type = '" + type[i] + "' or ";
+                    }
+                    sql += " type = '" + type[type.length - 1] + "') ";
+                }
+                if (rarity != null) {
+                    sql += " and (";
+                    for (int i = 0; i < rarity.length - 1; i++) {
+                        sql += " rarity = '" + rarity[i] + "' or ";
+                    }
+                    sql += " rarity = '" + rarity[rarity.length - 1] + "') ";
+                }
+                if (exterior != null) {
+                    sql += " and (";
+                    for (int i = 0; i < exterior.length - 1; i++) {
+                        sql += " exterior = '" + exterior[i] + "' or ";
+                    }
+                    sql += " exterior = '" + exterior[exterior.length - 1] + "') ";
+                }
+                if (priceorder != null) {
+                    sql += " order by price " + priceorder;
+                }
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //assign value for object items then return it
+                while (rs.next()) {
+                    auction = new Auction();
+                    gameItem = new GameItems();
+                    //Get auction information
+                    auction.setAuctionId(rs.getInt("id"));
+                    auction.setSellerId(rs.getInt("seller_id"));
+                    auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
+                    auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
+                    auction.setGameAccountName(rs.getString("game_account_name"));
+                    //Get game item information
+                    gameItem.setId(rs.getInt("id"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
+                    gameItem.setType(rs.getString("type"));
+                    gameItem.setRarity(rs.getString("rarity"));
+                    gameItem.setExterior(rs.getString("exterior"));
+                    gameItem.setImg(rs.getString("img"));
+                    //Add game item object to auction object
+                    auction.setGameItem(gameItem);
+                    auctionList.add(auction);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return auctionList;
+    }
+
 //    public static ArrayList<Auction> getAllEndedUnsuccessfullAuction() {
 //        ArrayList<Bid> bidList = null;
 //        ArrayList<Auction> auctionList = null;
@@ -316,7 +385,6 @@ public class AuctionDAO {
 //        }
 //        return auctionList;
 //    }
-
     public static void deleteAllEndedUnsuccessfullAuction() {
         try {
             DBContext db = new DBContext();
