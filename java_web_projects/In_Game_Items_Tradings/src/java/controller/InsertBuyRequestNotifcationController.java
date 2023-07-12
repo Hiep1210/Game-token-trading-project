@@ -7,8 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.Cart;
 import model.Notification;
@@ -46,8 +45,8 @@ public class InsertBuyRequestNotifcationController extends HttpServlet {
                             + " using game account : " + gameAccountName + ".Please wait for admin to trasnfer this item to you!";
                     sellerNotificationContent = "Your item :" + cart.getItemName() + "|" + cart.getType()
                             + " has been sold using game account :" + cart.getgameAccountName() + ".Please transfer this item to the server game account!";
-                    notificationForBuyer = new Notification(cart.getBuyer_id(), getCurrentDate(), buyerNotificationContent, "buy");
-                    notificationForSeller = new Notification(cart.getUserid(), getCurrentDate(), sellerNotificationContent, "sell");
+                    notificationForBuyer = new Notification(cart.getBuyer_id(), LocalDateTime.now() , buyerNotificationContent, "buy");
+                    notificationForSeller = new Notification(cart.getUserid(), LocalDateTime.now() , sellerNotificationContent, "sell");
                     NotificationDAO.insertNotification(notificationForBuyer);
                     NotificationDAO.insertNotification(notificationForSeller);
                 }
@@ -56,13 +55,6 @@ public class InsertBuyRequestNotifcationController extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-
-    private String getCurrentDate() {
-        java.util.Date date = new java.util.Date();
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = formatter.format(date);
-        return strDate;
     }
 
 }
