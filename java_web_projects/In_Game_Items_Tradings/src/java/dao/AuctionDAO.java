@@ -277,7 +277,19 @@ public class AuctionDAO {
             if (con != null) {
                 String sql = "SELECT * FROM auction auc, gameitems gei "
                         + " WHERE NOW() < auc.ending_date AND auc.item_id = gei.id ";
-//                        + " ORDER BY auc.ending_date DESC";
+                //Sql for odering by price needs to have a different base sql
+                if (priceorder != null) {
+                    sql = "WITH bid as( "
+                            + "	SELECT auction_id, max(amount) amount "
+                            + "    FROM bid "
+                            + "	GROUP BY auction_id "
+                            + "    ) "
+                            + " SELECT *  "
+                            + " FROM auction auc  "
+                            + " LEFT OUTER JOIN bid b  ON b.auction_id = auc.id "
+                            + " LEFT OUTER JOIN gameitems gei on auc.item_id = gei.id "
+                            + " WHERE NOW() < auc.ending_date ";
+                }
                 if (type != null) {
                     sql += " and (";
                     for (int i = 0; i < type.length - 1; i++) {
@@ -300,11 +312,59 @@ public class AuctionDAO {
                     sql += " exterior = '" + exterior[exterior.length - 1] + "') ";
                 }
                 if (priceorder != null) {
-                    sql += " order by price " + priceorder;
+                    sql += " ORDER BY b.amount " + priceorder + ", auc.lowest_bid " + priceorder;
                 }
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
+                while (rs.next()) {
+                    auction = new Auction();
+                    gameItem = new GameItems();
+                    //Get auction information
+                    auction.setAuctionId(rs.getInt("id"));
+                    auction.setSellerId(rs.getInt("seller_id"));
+                    auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
+                    auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
+                    auction.setGameAccountName(rs.getString("game_account_name"));
+                    //Get game item information
+                    gameItem.setId(rs.getInt("id"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
+                    gameItem.setType(rs.getString("type"));
+                    gameItem.setRarity(rs.getString("rarity"));
+                    gameItem.setExterior(rs.getString("exterior"));
+                    gameItem.setImg(rs.getString("img"));
+                    //Add game item object to auction object
+                    auction.setGameItem(gameItem);
+                    auctionList.add(auction);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return auctionList;
+    }
+
+    public static ArrayList<Auction> search(String[] name) {
+        ArrayList<Auction> auctionList = new ArrayList<>();
+        Auction auction;
+        GameItems gameItem;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "SELECT * FROM auction auc, gameitems gei "
+                        + " WHERE NOW() < auc.ending_date AND auc.item_id = gei.id ";
+                for (int i = 0; i < name.length; i++) {
+                    sql += " and (item_name Like '%" + name[i] + "%' or skin_name like '%" + name[i] + "%') ";
+                }
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
                 while (rs.next()) {
                     auction = new Auction();
                     gameItem = new GameItems();
