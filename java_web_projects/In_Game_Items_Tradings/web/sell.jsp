@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Buy Page</title>
+        <title>Sell Page</title>
         <!-- Link Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             <!-- Item Details -->
-                            <div class="offcanvas offcanvas-start" data-bs-theme="dark" tabindex="-1" id="offcanvas${sellList.trimedSkinName}"
+                            <div class="offcanvas offcanvas-start item-details" data-bs-theme="dark" tabindex="-1" id="offcanvas${sellList.trimedSkinName}"
                                  aria-labelledby="offcanvas${sellList.gameItems.img}">
                                 <div class="offcanvas-header">
                                     <h5 class="offcanvas-title" id="offcanvas">
@@ -106,32 +106,14 @@
                                 <div class="offcanvas-body">
                                     <img class="img-fluid" src="UI/image/${sellList.gameItems.img}.png" alt="">
                                     <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Extrior:</p>
-                                        <details class="sidebar-category">
-                                            <summary>Exterior</summary>
-                                            <ul class="nopadding d-flex flex-column">
-                                                <div class="category-group">
-                                                    <input type="checkbox" name="exterior" value="Factory New" id="fn">
-                                                    <label for="knife">Factory New</label>
-                                                </div>
-                                                <div class="category-group">
-                                                    <input type="checkbox" name="exterior" value="Minimal Wear" id="mw">
-                                                    <label for="glove">Minimal Wear</label>
-                                                </div>
-                                                <div class="category-group">
-                                                    <input type="checkbox" name="exterior" value="Field-Tested" id="ft">
-                                                    <label for="gun">Field-Tested</label>
-                                                </div>
-                                                <div class="category-group">
-                                                    <input type="checkbox" name="exterior" value="Well-Worn" id="ww">
-                                                    <label for="gun">Well-Worn</label>
-                                                </div>
-                                                <div class="category-group">
-                                                    <input type="checkbox" name="exterior" value="Battle-Scarred" id="bs">
-                                                    <label for="gun">Battle-Scarred</label>
-                                                </div>
-                                            </ul>
-                                        </details>
+                                        <p class="sell-info-select-name">Exterior:</p>
+                                        <select name="exterior" class="form-control w-50">
+                                            <option value="Factory New">Factory New</option>
+                                            <option value="Minimal Wear">Minimal Wear</option>
+                                            <option value="Field-Tested">Field-Tested</option>
+                                            <option value="Well-Worn">Well-Worn</option>
+                                            <option value="Battle-Scarred">Battle-Scarred</option>
+                                        </select>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
                                         <p class="sell-info-select-name">Rarity:</p>
@@ -139,25 +121,29 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mt-2">
                                         <p class="sell-info-select-name">Sell time:</p>
-                                        <input class="mb-3" type="radio" name ="sellTime">
+                                        <input class="mb-3" type="radio" name ="sellTime" value="1">
                                         <label class="mb-3">1 Day</label>
-                                        <input class="mb-3" type="radio" name ="sellTime">
+                                        <input class="mb-3" type="radio" name ="sellTime" value="2">
                                         <label class="mb-3">2 Day</label>
-                                        <input class="mb-3" type="radio" name ="sellTime">
+                                        <input class="mb-3" type="radio" name ="sellTime" value="3">
                                         <label class="mb-3">3 Day</label>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
                                         <p class="sell-info-select-name">Sell Price:</p>
-                                        <div class="form-group">
-                                            <input type="number" name="page" value="${pageContext.request.servletPath}" hidden=""/>
-                                            <input class="form-control" type="text" name ="search" placeholder="Enter the price">
-                                            <input type="submit" hidden=""/>
+                                        <div class="form-group w-50">
+                                            <input class="form-control" type="number" name ="price" placeholder="Enter price">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <p class="sell-info-select-name">Game Account:</p>
+                                        <div class="form-group w-50">
+                                            <input class="form-control" type="text" name ="gameAccount" placeholder="G.Account Name">
                                         </div>
                                     </div>
                                     <c:if test="${sessionScope.user != null}">
                                         <div class="summit-button mt-2">
-                                            <button class="btn item-card-button"  onclick="addSellList(${sell_items.id},${sessionScope.user.id})" id="button-cart${sell_items.id}">
-                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            <button class="btn item-card-button" onclick="handleButtonClick(event)">
+                                                Add to Sell List
                                             </button>
                                         </div>
                                     </c:if>
@@ -246,13 +232,10 @@
     <script>
         // Create an empty array to store the checked values
         var checkedValues = ['knife', 'pistol', 'rifle', 'smgs', 'heavy'];
-
         var selectAllButton = document.getElementById('select-all');
         var resetButton = document.getElementById('reset-all');
-
         // Get all the checkbox elements on the page
         var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
         // Add event listener to each checkbox
         checkboxes.forEach(function (checkbox) {
             checkbox.addEventListener('change', function () {
@@ -271,7 +254,6 @@
                 console.log(checkedValues);
             });
         });
-
         selectAllButton.addEventListener('click', function () {
             checkedValues = [];
             checkboxes.forEach(function (checkbox) {
@@ -280,7 +262,6 @@
             });
             console.log(checkedValues);
         });
-
         resetButton.addEventListener('click', function () {
             checkboxes.forEach(function (checkbox) {
                 checkbox.checked = false;
@@ -288,7 +269,6 @@
             checkedValues = [];
             console.log(checkedValues);
         });
-
         function filterByType(order) {
             var searchName = document.getElementById("search-input").value;
             console.log(searchName);
@@ -312,22 +292,63 @@
                 }
             });
         }
-    </script>
+    </script>    
     <script>
-        function addSellList(sell, seller) {
-            console.log(sell + "+" + seller);
-            $.ajax({
-                url: "/In_Game_Items_Trading/SellCreateController",
-                type: 'POST',
-                data: {
-                    sellid: sell,
-                    sellerid: seller
-                },
-                success: function (data) {
-                    var button = document.getElementById("button-cart" + market);
-                    button.innerHTML = data;
+        function handleButtonClick(event) {
+            var clickedButton = event.target;
+            var parentContainer = clickedButton.closest('.item-details');
+
+            if (parentContainer) {
+                var exteriorElement = parentContainer.querySelector('select[name="exterior"]');
+                var sellTimeElement = parentContainer.querySelector('input[name="sellTime"]:checked');
+                var priceElement = parentContainer.querySelector('input[name="price"]');
+                var gameAccountElement = parentContainer.querySelector('input[name="gameAccount"]');
+                var imageElement = parentContainer.querySelector('img');
+
+                // Check if all necessary elements exist
+                if (exteriorElement && sellTimeElement && priceElement && gameAccountElement && imageElement) {
+                    var exterior = exteriorElement.value;
+                    var sellTime = sellTimeElement.value;
+                    var price = priceElement.value;
+                    var gameAccount = gameAccountElement.value;
+
+                    // Get the image name
+                    var skinName = imageElement.getAttribute('src');
+                    skinName = skinName.split('/').pop().split('.')[0];
+
+                    // Perform further actions with the input values
+                    console.log("Exterior: " + exterior);
+                    console.log("Sell Time: " + sellTime);
+                    console.log("Price: " + price);
+                    console.log("Game Account: " + gameAccount);
+                    console.log("Skin Name: " + skinName);
+
+                    // Create data object to send to the backend
+                    var data = {
+                        exterior: exterior,
+                        sellTime: sellTime,
+                        gameAccount: gameAccount,
+                        price: price,
+                        skinName: skinName
+                    };
+
+                    // Send AJAX request
+                    $.ajax({
+                        url: '/In_Game_Items_Trading/addSellList',
+                        type: 'POST', // Change to "GET" if necessary
+                        data: data,
+                        success: function (data) {
+                            // Handle the response from the backend
+                            console.log(data);
+                            // Do something with the response
+                        }
+                    });
+                } else {
+                    console.log("Error: Required elements not found in the parent container.");
                 }
-            });
+            } else {
+                console.log("Error: Parent container not found for the clicked button.");
+            }
         }
     </script>
 </body>

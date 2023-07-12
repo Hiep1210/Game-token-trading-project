@@ -124,4 +124,40 @@ public class GameItemsDAO {
         }
         return list;
     }
+
+    public static GameItems getItemBySkinName(String skinName, String exterior) {
+        GameItems item = new GameItems();
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "SELECT * "
+                        + "FROM GameItems "
+                        + "WHERE img = '" + skinName + "'"
+                        + "AND exterior = '" + exterior + "'";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //assign value for object items then return it
+                while (rs.next()) {
+                    item.setId(rs.getInt(1));
+                    item.setSkinName(rs.getString(2));
+                    item.setItemName(rs.getString(3));
+                    item.setType(rs.getString(4));
+                    item.setRarity(rs.getString(5));
+                    item.setImg(rs.getString(6));
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return item;
+    }
+
+    public static void main(String[] args) {
+        String trimedName = "CZ75-Auto_Victoria";
+        GameItems item = getItemBySkinName(trimedName, "Factory New");
+        System.out.println(item.getId());
+    }
 }
