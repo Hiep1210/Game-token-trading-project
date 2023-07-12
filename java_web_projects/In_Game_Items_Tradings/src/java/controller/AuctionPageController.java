@@ -40,20 +40,23 @@ public class AuctionPageController extends HttpServlet {
         ArrayList<Auction> auctionList = AuctionDAO.getAllAuctions();
         ArrayList<Auction> joinedAuctionList = new ArrayList<>();
         ArrayList<Auction> notJoinedAuctionList = new ArrayList<>();
+        ArrayList<Auction> filteredAuctionList = (ArrayList<Auction>) request.getAttribute("filteredAuctionList");
+        if (filteredAuctionList != null) {
+            auctionList = filteredAuctionList;
+        }
         //If user is logged in, create an array list for auctions that user has joined in and exclude auction that user created
         if (user != null) {
             for (Auction auction : auctionList) {
                 //Exclude auction that user created
                 if (auction.getSellerId() != user.getId()) {
                     auction.setBidList(BidDAO.getBidsFromAuctionId(auction.getAuctionId()));
-                    if (checkIfUserIsBidder(auction.getBidList() , user)) {
+                    if (checkIfUserIsBidder(auction.getBidList(), user)) {
                         joinedAuctionList.add(auction);
                     } else {
                         notJoinedAuctionList.add(auction);
                     }
                 }
             }
-            
             request.setAttribute("joinedAuctionList", joinedAuctionList);
             request.setAttribute("notJoinedAuctionList", notJoinedAuctionList);
             //If user is not logged in, show every thing
