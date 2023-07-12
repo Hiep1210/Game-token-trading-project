@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import model.GameItems;
 import model.Notification;
 import model.User;
@@ -25,7 +26,7 @@ public class SellNotificationController extends HttpServlet {
                 redirect = "BuyPageController";
             } else { // if the user sell the item correctly
                 notiContent = "You have sold " + gameItems.getSkinName() + " " + gameItems.getItemName() + "successfully";
-                notification = new Notification(user.getId(), getCurrentDate(), notiContent, "sell");
+                notification = new Notification(user.getId(), LocalDateTime.now(), notiContent, "sell");
                 NotificationDAO.insertNotification(notification);
             }
             request.getRequestDispatcher(redirect).forward(request, response);
@@ -34,10 +35,4 @@ public class SellNotificationController extends HttpServlet {
         }
     }
 
-    private String getCurrentDate() {
-        java.util.Date date = new java.util.Date();
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = formatter.format(date);
-        return strDate;
-    }
 }
