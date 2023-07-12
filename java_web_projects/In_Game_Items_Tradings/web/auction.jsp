@@ -93,7 +93,7 @@
                     <!-- Filter Selection Section -->
                     <div class="filter sidebar">
                         <div class="container">
-                            <form action="#" method="post">
+                            <form action="SortAuctionController" method="post">
                                 <!-- Filter Type -->
                                 <details class="sidebar-category">
                                     <summary>Type</summary>
