@@ -65,10 +65,27 @@ create table Cart(
 create table TradeItems(
 	id int not null auto_increment,
     primary key(id),
+    game_account_name nvarchar(50),
+    creator int,
+    foreign key(creator) references UserAccount(id),
+    begin_date date,
+    end_date date
+);
+create table OfferItem(
+	id int not null auto_increment,
+    primary key(id),
     give_id int,
     foreign key(give_id) references GameItems(id),
+    trade_id int,
+    foreign key(trade_id) references TradeItems(id)
+);
+create table ReceiveItem(
+	id int not null auto_increment,
+    primary key(id),
     rec_id int,
-    foreign key(rec_id) references gameitems(id)
+    foreign key(rec_id) references gameitems(id),
+    trade_id int,
+    foreign key(trade_id) references TradeItems(id)
 );
 create table PaymentRequest ( -- adminscreen --
 	id int not null auto_increment,
