@@ -1,0 +1,50 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package tickRate;
+
+import dao.CartDAO;
+import dao.MarketItemsDAO;
+import dao.NotificationDAO;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import model.MarketItems;
+import model.Notification;
+
+/**
+ *
+ * @author Asus
+ */
+public class MarketItemsJobs implements Runnable {
+
+    public void run() {
+        processUnsuccessfullMarketItem();
+    }
+
+    private void processUnsuccessfullMarketItem() {
+        //Only get ended auctions that is also not in process item
+        ArrayList<MarketItems> unsuccessfulMarketItems = MarketItemsDAO.getUnsuccessfulMarketItems();
+        //Do not execute if there is no unsuccessfull market item (Ended and no one bought their item)
+        if (!unsuccessfulMarketItems.isEmpty()) {
+            for (MarketItems marketItem : unsuccessfulMarketItems) {
+                CartDAO.deleteCartWithMarketItemId(marketItem.getId());
+                MarketItemsDAO.deletelMarketItem(marketItem.getId());
+            }
+            insertUnsuccessfullMarketItemNotification(unsuccessfulMarketItems);
+        }
+    }
+
+    private void insertUnsuccessfullMarketItemNotification(ArrayList<MarketItems> unsuccessfulMarketItems) {
+        String sellerNotificationContent;
+        Notification notificationForSeller;
+        for (MarketItems marketItem : unsuccessfulMarketItems) {
+            sellerNotificationContent = "Your listing has ended! No one have bought your : " + marketItem.getItemName() + "|" + marketItem.getType();
+            notificationForSeller = new Notification(marketItem.getUserid(), LocalDateTime.now() , sellerNotificationContent, "sell");
+            NotificationDAO.insertNotification(notificationForSeller);
+        }
+    }
+
+}
