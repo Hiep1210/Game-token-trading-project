@@ -68,7 +68,53 @@ public class AuctionDAO {
         }
         return auctionList;
     }
-
+    
+    public static ArrayList<Auction> getAllAuctionFromUser(int userId) {
+        ArrayList<Auction> auctionList = new ArrayList<>();
+        Auction auction;
+        GameItems gameItem;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "SELECT * FROM auction auc, gameitems gei "
+                        + " WHERE NOW() < auc.ending_date AND auc.item_id = gei.id AND auc.seller_id = " + userId
+                        + " ORDER BY auc.ending_date DESC";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    auction = new Auction();
+                    gameItem = new GameItems();
+                    //Get auction information
+                    auction.setAuctionId(rs.getInt("id"));
+                    auction.setSellerId(rs.getInt("seller_id"));
+                    auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
+                    auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
+                    auction.setGameAccountName(rs.getString("game_account_name"));
+                    //Get game item information
+                    gameItem.setId(rs.getInt("id"));
+                    gameItem.setSkinName(rs.getString("skin_name"));
+                    gameItem.setItemName(rs.getString("item_name"));
+                    gameItem.setType(rs.getString("type"));
+                    gameItem.setRarity(rs.getString("rarity"));
+                    gameItem.setExterior(rs.getString("exterior"));
+                    gameItem.setImg(rs.getString("img"));
+                    //Add game item object to auction object
+                    auction.setGameItem(gameItem);
+                    auctionList.add(auction);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return auctionList;
+    }
+    
     public static Auction getAuction(int auctionId) {
         Auction auction = null;
         GameItems gameItem = null;
@@ -148,7 +194,7 @@ public class AuctionDAO {
         return insertStatus;
     }
 
-    public static boolean deleteAuction(int auctionId ) {
+    public static boolean deleteAuction(int auctionId) {
         //Return true if delete process was successfull
         boolean deleteStatus = true;
         try {
@@ -169,7 +215,7 @@ public class AuctionDAO {
     }
 
     //Function to get all auction that has ended
-    public static ArrayList<Auction> getAllEndedAuction() {
+    public static ArrayList<Auction> getAllEndedSuccessfullAuction() {
         ArrayList<Auction> auctionList = new ArrayList<>();
         Auction auction = null;
         GameItems gameItem = null;
@@ -179,12 +225,13 @@ public class AuctionDAO {
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
                 String sql = "SELECT * "
-                        + "FROM auction auc, gameitems gei "
-                        + "WHERE NOW() < auc.ending_date AND auc.item_id = gei.id "
-                        + "AND NOT EXISTS ("
-                        + "	SELECT 1 FROM processitems p  "
-                        + "	WHERE  p.transaction_id = auc.id ) ";
-                Statement call = con.createStatement(); 
+                        + "FROM auction auc, gameitems gei , bid bid "
+                        + "WHERE NOW() > auc.ending_date AND auc.item_id = gei.id AND auc.id = bid.auction_id "
+                        + "AND NOT EXISTS ( "
+                        + "	SELECT 1 FROM processitems p   "
+                        + "	WHERE  p.transaction_id = auc.id ) "
+                        + "ORDER BY auc.id, bid.amount DESC";
+                Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
                 while (rs.next()) {
@@ -220,7 +267,7 @@ public class AuctionDAO {
         return auctionList;
     }
 
-//    public static ArrayList<Auction> getAllSuccessfullAuction() {
+//    public static ArrayList<Auction> getAllEndedUnsuccessfullAuction() {
 //        ArrayList<Bid> bidList = null;
 //        ArrayList<Auction> auctionList = null;
 //        Auction auction = null;
@@ -269,78 +316,30 @@ public class AuctionDAO {
 //        }
 //        return auctionList;
 //    }
-//    public static ArrayList<Auction> getAllUnsuccessfullAuction() {
-//        ArrayList<Bid> bidList = null;
-//        ArrayList<Auction> auctionList = null;
-//        Auction auction = null;
-//        GameItems gameItem = null;
-//        Bid bid = null;
-//        try {
-//            DBContext db = new DBContext();
-//            Connection con = db.getConnection();
-//            //if connection is secured, proceed to execute query and retrieve data into and return a list
-//            if (con != null) {
-//                String sql = "SELECT a.id, a.seller_id ,a.game_account_name, b.bidder_id, b.game_account_name ,b.amount, a.item_id"
-//                        + "FROM bid b"
-//                        + "JOIN auction a ON b.auction_id = a.id"
-//                        + "WHERE b.amount = ("
-//                        + "  SELECT MAX(amount)"
-//                        + "  FROM bid"
-//                        + "  WHERE auction_id = b.auction_id"
-//                        + ") AND NOW() > a.ending_date";
-//                Statement call = con.createStatement();
-//                ResultSet rs = call.executeQuery(sql);
-//                //run a loop to save queries into model
-//                while (rs.next()) {
-//                    bidList = new ArrayList<Bid>();
-//                    auction = new Auction();
-//                    gameItem = new GameItems();
-//                    bid = new Bid();
-//                    //Get auction information
-//                    auction.setAuctionId(rs.getInt(1));
-//                    auction.setSellerId(rs.getInt(2));
-//                    auction.setGameAccountName(rs.getString(3));
-//                    //Get bid information
-//                    bid.setBidderId(rs.getInt(4));
-//                    bid.setGameAccountName(rs.getString(5));
-//                    bid.setAmount(rs.getDouble(6));
-//                    bidList.add(bid);
-//                    auction.setBidList(bidList);
-//                    //Get game item information
-//                    gameItem.setId(rs.getInt(7));
-//                    auction.setGameItem(gameItem);
-//                }
-//                call.close();
-//                con.close();
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return auctionList;
-//    }
-//
-//    public static void deleteUnsuccessfulAuction() {
-//        try {
-//            DBContext db = new DBContext();
-//            Connection con = db.getConnection();
-//            String sql = " DELETE FROM Auction auc"
-//                    + "WHERE auc.id IN"
-//                    + "(SELECT id FROM ("
-//                    + "	select auc.id "
-//                    + "	from auction auc"
-//                    + "	left outer join bid bid"
-//                    + "	on auc.id = bid.auction_id"
-//                    + "	where bid.id is null) as auction) "
-//                    + " AND NOW() > auc.ending_date ";
-//            Statement call = con.createStatement();
-//            //Loop through all payment request id and delete it from the table
-//            call.executeUpdate(sql);
-//            call.close();
-//            con.close();
-//        } catch (Exception e) {
-//            System.out.println("Error in deleteUnsuccessfulAuction ");
-//        }
-//    }
+
+    public static void deleteAllEndedUnsuccessfullAuction() {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = " DELETE FROM Auction auc"
+                    + "WHERE auc.id IN"
+                    + "(SELECT id FROM ("
+                    + "	select auc.id "
+                    + "	from auction auc"
+                    + "	left outer join bid bid"
+                    + "	on auc.id = bid.auction_id"
+                    + "	where bid.id is null) as auction) "
+                    + " AND NOW() > auc.ending_date ";
+            Statement call = con.createStatement();
+            //Loop through all payment request id and delete it from the table
+            call.executeUpdate(sql);
+            call.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error in deleteUnsuccessfulAuction ");
+        }
+    }
+
     public static void main(String[] args) {
 //
 //        ArrayList<Auction> auctionList = getAllEndedAuction();
