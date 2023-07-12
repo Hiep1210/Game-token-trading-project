@@ -41,8 +41,11 @@ public class AuctionPageController extends HttpServlet {
         ArrayList<Auction> joinedAuctionList = new ArrayList<>();
         ArrayList<Auction> notJoinedAuctionList = new ArrayList<>();
         ArrayList<Auction> filteredAuctionList = (ArrayList<Auction>) request.getAttribute("filteredAuctionList");
+        ArrayList<Auction> searchAuctionList = (ArrayList<Auction>) request.getAttribute("searchAuctionList");
         if (filteredAuctionList != null) {
             auctionList = filteredAuctionList;
+        } else if (searchAuctionList != null ) {
+            auctionList = searchAuctionList;
         }
         //If user is logged in, create an array list for auctions that user has joined in and exclude auction that user created
         if (user != null) {
