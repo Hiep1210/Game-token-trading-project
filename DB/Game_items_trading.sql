@@ -514,25 +514,33 @@ INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES (
 INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('4', '5');
 INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('5', '3');
 
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('1', '2', '1', '100', '2023-06-17 16:33:53', '2023-06-18 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('2', '2', '6', '100', '2023-06-17 16:33:53', '2023-06-18 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('3', '2', '11', '100', '2023-06-17 16:33:53', '2023-06-18 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('4', '2', '16', '100', '2023-06-17 16:33:53', '2023-06-23 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('5', '2', '21', '100', '2023-06-17 16:33:53', '2023-06-23 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('6', '2', '26', '100', '2023-06-17 16:33:53', '2023-06-23 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('7', '2', '31', '100', '2023-06-17 16:33:53', '2023-06-27 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('8', '2', '36	', '100', '2023-06-17 16:33:53', '2023-06-27 16:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('9', '2', '1', '100', '2023-06-17 16:33:53', '2023-06-17 20:33:53', 'gamer');
-INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('10', '2', '1', '100', '2023-06-17 16:33:53', '2023-06-17 20:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('1', '2', '1', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('2', '2', '6', '100', '2023-06-17 16:33:53', '2023-07-18 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('3', '2', '11', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('4', '2', '16', '100', '2023-06-17 16:33:53', '2023-07-23 10:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('5', '5', '21', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('6', '5', '26', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('7', '5', '31', '100', '2023-06-17 16:33:53', '2023-07-30 8:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('8', '5', '36', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('9', '5', '41', '100', '2023-06-17 16:33:53', '2023-07-30 20:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('11', '5', '46', '100', '2023-06-17 16:33:53', '2023-07-30 20:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('12', '5', '51', '100', '2023-06-17 16:33:53', '2023-07-30 20:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('13', '5', '56', '100', '2023-06-17 16:33:53', '2023-07-30 21:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('14', '5', '61', '100', '2023-06-17 16:33:53', '2023-07-30 13:33:53', 'gamer');
+INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('15', '5', '66', '100', '2023-06-17 16:33:53', '2023-07-30 11:33:53', 'gamer');
 
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('1', '3', '1', '2023-06-17 18:33:53', '200', 'gamer 1');
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('2', '4', '1', '2023-06-17 19:33:53', '300', 'gamer 2');
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('3', '5', '1', '2023-06-17 20:33:53', '400', 'gamer 3');
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('4', '3', '2', '2023-06-17 18:33:53', '200', 'gamer 1');
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('5', '4', '2', '2023-06-17 19:33:53', '300', 'gamer 2');
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('6', '5', '3', '2023-06-17 19:33:53', '100', 'gamer 3');
-INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('7', '3', '9', '2023-06-17 19:33:53', '100', 'gamer 2');
 
+
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('1', '2', '5', '2023-06-17 18:33:53', '100', 'gamer 2');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('2', '2', '6', '2023-06-17 19:33:53', '100', 'gamer 2');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('3', '2', '7', '2023-06-17 19:33:53', '400', 'gamer 2');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('4', '3', '1', '2023-06-17 19:33:53', '200', 'gamer 3');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('5', '3', '2', '2023-06-17 19:33:53', '300', 'gamer 3');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('6', '3', '5', '2023-06-17 20:33:53', '200', 'gamer 3');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('7', '4', '5', '2023-06-17 21:33:53', '300', 'gamer 4');
+INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_time`, `amount`, `game_account_name`) VALUES ('8', '4', '6', '2023-06-17 21:33:53', '200', 'gamer 4');
+
+	
 INSERT INTO `game_items_trading`.`transactiontype` (`id`, `type`) VALUES ('1', 'buy');
 INSERT INTO `game_items_trading`.`transactiontype` (`id`, `type`) VALUES ('2', 'auction');
 
