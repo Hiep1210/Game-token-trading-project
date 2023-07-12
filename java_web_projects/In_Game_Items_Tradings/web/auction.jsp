@@ -26,6 +26,9 @@
     <body>
         <%@include file="navbar.jsp" %>
         <!-- Main Content -->
+        <c:if test="${requestScope.errorMessage != null}">
+            <h2 style="color: plum">${requestScope.errorMessage}</h2>
+        </c:if>
         <div class="container-fluid">
             <div class="row"> 
                 <div class="col-lg-5">
@@ -70,10 +73,9 @@
 
                 <div class="col-lg-2 flex-column p-4">
                     <div class="col-lg-12 search-bar form">
-                        <form action="SearchBuyController" method = "post">
+                        <form action="SearchAuctionController" method = "post">
                             <div class="form-group">
                                 <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
-                                <input type="text" name="page" value="${pageContext.request.servletPath}" hidden=""/>
                                 <input class="form-control ps-5" type="text" name ="search" placeholder="Enter the item or its skin's name or part of name">
                                 <input type="submit" hidden=""/>
                             </div>
@@ -352,6 +354,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <input type="hidden" name="auctionId" value="${auction.auctionId}">                          
+                                                <input class="form-contro" type="text"  placeholder="Game acount name..."name="gameAccountName" required="">                          
                                                 <div class="summit-button mt-2">
                                                     <button type="submit" name="action" value="Bid"><i class="fa-solid fa-gavel"></i>Bid for this item</button>
                                                 </div>
