@@ -27,7 +27,7 @@
         <!-- Main Content -->
         <div class="container-fluid">
             <div class="row">
-                <h1 class="card-title mb-4" id="cart-size">Number of your active auction(s): ${requestScope.auctionList.size()} auctions!</h1>
+                <h1 class="card-title mb-4" id="cart-size">Your active auction(s): ${requestScope.auctionList.size()} auctions!</h1>
                 <c:if test="${requestScope.message != null}">
                     <h2>${requestScope.message}</h2>
                 </c:if>

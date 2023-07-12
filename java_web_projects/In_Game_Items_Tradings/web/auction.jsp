@@ -280,7 +280,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
                                             <p class="sell-info-select-name">Current highest bid:</p>
-                                            ${auction.bidList.get(0).amount}
+                                            ${auction.bidList.get(0).amount} $
                                         </div>
                                         <c:if test="${sessionScope.user != null}">
 
@@ -292,8 +292,8 @@
                                                     <c:set var="bidId" value="${auction.bidList.get(0).bidId}"/>
                                                     <c:set var="gameAccountName" value="${auction.bidList.get(0).gameAccountName}"/>
                                                     <div class="d-flex justify-content-between mt-2">
-                                                        <p class="sell-info-select-name">Your current bid:</p>
-                                                        ${auction.bidList.get(0).amount}
+                                                        <p class="sell-info-select-name">Your current bid :</p>
+                                                        ${auction.bidList.get(0).amount} $
                                                     </div>
                                                     <div class="d-flex justify-content-between mt-2">
                                                         <p class="sell-info-select-name">Game account used:</p>
@@ -309,8 +309,8 @@
                                                             <c:set var="bidId" value="${userBid.bidId}"/>
                                                             <c:set var="gameAccountName" value="${userBid.gameAccountName}"/>
                                                             <div class="d-flex justify-content-between mt-2">
-                                                                <p class="sell-info-select-name">Your current bid:</p>
-                                                                ${userBid.amount}
+                                                                <p class="sell-info-select-name">Your current bid :</p>
+                                                                ${userBid.amount} $
                                                             </div>
                                                             <div class="d-flex justify-content-between mt-2">
                                                                 <p class="sell-info-select-name">Game account used to bid:</p>
@@ -362,24 +362,34 @@
                                             <h5 id="sideCountdownNotJoined${currentStatus.index}"></h5>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
-                                            <p class="sell-info-select-name">Number of bidders:</p>
+                                            <p class="sell-info-select-name">Number of bidders :</p>
                                             ${auction.bidList.size()}
-                                        </div>
+                                        </div>     
                                         <c:if test="${sessionScope.user != null}">
+
+                                            <c:choose>
+                                                <%-- if no on has bid on this auction --%>
+                                                <c:when test="${empty auction.bidList}">
+                                                    <div class="d-flex justify-content-between mt-2">
+                                                        <p class="sell-info-select-name">Starting bid price :</p>
+                                                        ${auction.lowestBid} $
+                                                    </div>  
+                                                    <c:set var="min" value="${auction.lowestBid}"/>
+                                                    <h5>Be the first one to bid!</h5>
+                                                </c:when>
+                                                <%-- if someone has bid this auction --%>
+                                                <c:otherwise>
+                                                    <div class="d-flex justify-content-between mt-2">
+                                                        <p class="sell-info-select-name">Current highest bid :</p>
+                                                        ${auction.bidList.get(0).amount} $
+                                                    </div>  
+                                                    <h3>The amount you need to add to your bid is : ${auction.bidList.get(0).amount + 1}$</h3>
+                                                    <c:set var="min" value="${auction.bidList.get(0).amount + 1}"/>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <form action="InsertBidController" method="post">
-                                                <c:choose>
-                                                    <%-- if no on has bid on this auction --%>
-                                                    <c:when test="${empty auction.bidList}">
-                                                        <h5>No bids placed yet.</h5>
-                                                        <input type="number" step="any" min="${auction.lowestBid}" value="${auction.lowestBid}" name="bidAmount">
-                                                    </c:when>
-                                                    <%-- if someone has bid this auction --%>
-                                                    <c:otherwise>          
-                                                        <h3>The amount you need to add to your bid is : ${auction.bidList.get(0).amount + 1}$</h3>
-                                                        <input type="number" step="any" min="${auction.bidList.get(0).amount + 1}" value="${auction.bidList.get(0).amount + 1}" name="bidAmount">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <input type="hidden" name="auctionId" value="${auction.auctionId}">                          
+                                                <input type="hidden" name="auctionId" value="${auction.auctionId}">      
+                                                <input type="number" step="any" min="${min}" value="${min}" name="bidAmount">
                                                 <input class="form-contro" type="text"  placeholder="Game acount name..."name="gameAccountName" required="">                          
                                                 <div class="summit-button mt-2">
                                                     <button type="submit" name="action" value="Bid"><i class="fa-solid fa-gavel"></i>Bid for this item</button>
