@@ -33,9 +33,7 @@ public class ProcessItemController extends HttpServlet {
             String redirect = "InsertProcessNotificationController";
             int processItemId;
             double newMoneyAmount = 0;
-            if (user == null) {
-                redirect = "BuyPageController";
-            } else if (user.getRoleid() != 2) {
+            if (user == null || user.getRoleid() != 2) {
                 redirect = "BuyPageController";
             } else if (rawProcessItemId == null || decision == null) {
                 redirect = "BuyPageController";

@@ -173,7 +173,7 @@
                             <c:if test="${requestScope.marketlist.size() == 0}">
                                 <h1 style="text-align: center; color: grey">Found 0 result</h1>
                             </c:if>
-                            <c:forEach var ="market_items" items="${requestScope.marketlist}">
+                            <c:forEach var ="market_items" items="${requestScope.marketlist}" varStatus="currentStatus">
                                 <!-- Item Card -->
                                 <div class="col-lg-2 item-card mt-2 mb-2 " id="item-card" data-bs-toggle="offcanvas" href="#offcanvas${market_items.id}">
                                     <div class="card rarity-${market_items.getRarity().toLowerCase()}"">
@@ -206,7 +206,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
                                             <p class="sell-info-select-name">Time Left:</p>
-                                            <h5>1:00:00</h5>
+                                            <h5 id="countdown${currentStatus.index}"></h5>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
                                             <p class="sell-info-select-name">Sell Price:</p>
@@ -276,7 +276,46 @@
                 });
             }
         </script>
+        
+         <script>
+            // Define the countdown details for each timer
+            var countdowns = [
+            <c:forEach var="market" items="${requestScope.marketlist}" varStatus="currentStatus">
+            {name: "countdown${currentStatus.index}", endDate: "${market.enddate}"}
+                <c:if test="${not currentStatus.last}">
+            ,
+                </c:if>
+            </c:forEach>
+            ];
+            // Update all countdowns
+            function updateCountdowns() {
+                countdowns.forEach(function (countdown) {
+                    var endDate = new Date(countdown.endDate);
 
+                    var now = new Date();
+                    var distance = endDate.getTime() - now.getTime();
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        var countdownElement = document.getElementById(countdown.name);
+                        countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                    // If the countdown is finished, update the HTML element
+                    if (distance < 0) {
+                        countdownElement.innerHTML = countdown.name + ": EXPIRED";
+                    }
+                });
+            }
+
+            // Update countdowns every 1 second
+            var countdownInterval = setInterval(updateCountdowns, 1000);
+
+            // Call updateCountdowns once immediately to display the initial countdowns
+            updateCountdowns();
+        </script>
     </body>
 
 </html>

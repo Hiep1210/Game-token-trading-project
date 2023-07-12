@@ -17,32 +17,39 @@
             <div class="navbar-item-box col-lg-8">
                 <div class="row nopadding">
                     <!-- Trade Button -->
-                    <div class="col-lg-3 navbar-item nopadding">
+                    <div class="col-lg-2 navbar-item nopadding">
                         <a href="">
                             <i class="material-icons navbar-item-icon">compare_arrows</i>
                         </a>
                         <h5>Trade</h5>
                     </div>
                     <!-- Sell Button -->
-                    <div class="col-lg-3 navbar-item nopadding">
+                    <div class="col-lg-2 navbar-item nopadding">
                         <a href="SellPageController">
                             <i class="material-icons navbar-item-icon">sell</i>
                         </a>
                         <h5>Sell</h5>
                     </div>
                     <!-- Buy Button -->
-                    <div class="col-lg-3 navbar-item nopadding">
+                    <div class="col-lg-2 navbar-item nopadding">
                         <a href="BuyPageController">
                             <i class="material-icons navbar-item-icon">shopping_cart</i>
                         </a>
                         <h5>Buy</h5>
                     </div>
                     <!-- Auction Button -->
-                    <div class="col-lg-3 navbar-item nopadding">
-                        <a href="#">
+                    <div class="col-lg-2 navbar-item nopadding">
+                        <a href="AuctionPageController">
                             <i class="material-icons navbar-item-icon">gavel</i>
                         </a>
                         <h5>Auction</h5>
+                    </div>
+                   <!-- Blog Button -->
+                    <div class="col-lg-2 navbar-item nopadding">
+                        <a href="ThreadController">
+                            <i class="material-icons navbar-item-icon">compare_arrows</i>
+                        </a>
+                        <h5>Blog</h5>
                     </div>
                 </div>
             </div>
@@ -84,13 +91,13 @@
                                 <!-- Dropdown toggler -->
                                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
-                                    <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt="">
+                                    <img class="img-fluid rounded-circle" src="UI/image/profile_pics/${sessionScope.user.getAvatar()}" alt=""style="width: 60px; height: 60px; object-fit: contain">
                                 </button>
                                 <!-- Dropdown menu -->
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="UserProfileController">User Profile</a>
                                     <a class="dropdown-item" href="#">Transaction History</a>
-                                    <a class="dropdown-item" href="ViewCartController?id=${sessionScope.user.id}">View Your Cart</a>
+                                    <a class="dropdown-item" href="ViewCartController">View Your Cart</a>
                                     <div class="dropdown-divider"></div>
                                     <a id="logout" class="dropdown-item" href="LogOutController">Log out</a>
                                 </div>

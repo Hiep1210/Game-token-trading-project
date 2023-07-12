@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import model.Notification;
 import com.microsoft.sqlserver.jdbc.ISQLServerBulkRecord;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -41,7 +42,7 @@ public class NotificationDAO {
                     notification = new Notification();
                     notification.setNoti_id(rs.getInt("id"));
                     notification.setUser_id(rs.getInt("user_id"));
-                    notification.setDate(rs.getString("date"));
+                    notification.setDate(rs.getObject("date", LocalDateTime.class));
                     notification.setNoti_content(rs.getString("noti_content"));
                     notification.setContent_type(rs.getString("content_type"));
                     list.add(notification);
@@ -65,7 +66,7 @@ public class NotificationDAO {
                 String sql = "INSERT INTO notification (date, user_id, "
                         + "noti_content, content_type) VALUES (?, ?, ?, ?)";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
-                preparedStatement.setString(1, notification.getDate());
+                preparedStatement.setObject(1, notification.getDate());
                 preparedStatement.setInt(2, notification.getUser_id());
                 preparedStatement.setString(3, notification.getNoti_content());
                 preparedStatement.setString(4, notification.getContent_type());

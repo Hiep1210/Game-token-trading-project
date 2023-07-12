@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import model.User;
+import java.sql.SQLException;
 import Context.DBContext;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -248,13 +250,13 @@ public class UserDAO {
         return null;
     }
 
-    public boolean ResetPassword(String username, String pass) {
+    public boolean ResetPassword(int id, String pass) {
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "UPDATE `game_items_trading`.`useraccount` SET `password` = '" + pass
-                        + "' where username = '" + username + "';";
+                        + "' where id = '" + id + "';";
                 Statement st = con.createStatement();
                 int rows = st.executeUpdate(sql);
                 if (rows < 1) {
@@ -266,6 +268,87 @@ public class UserDAO {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public boolean userNameIsExist(String username) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String query = "select count(*) as num from [User] where username = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public boolean emailIsExist(String email) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String query = "select count(*) as num from [User] where email = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public ArrayList<User> getListUser(String role, String status, String sort) {
+
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            // query to get all User from DB
+            String query = "select * "
+                    + "from [User] u "
+                    + "left join [Role] r on u.roleid = r.roleid ";
+            // check cac truong hop 
+            // role va status blank
+            if (role.isEmpty() && !status.isEmpty()) {
+                query += "where status = " + "'" + status + "' ";
+            }
+            // role co gia tri va status = blank
+            if (!role.isEmpty() && status.isEmpty()) {
+                query += "where rolename = " + "'" + role + "' ";
+            }
+            // ca role va status deu co gia tri
+            if (!role.isEmpty() && !status.isEmpty()) {
+                query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
+            }
+            //order by
+            query += "order by " + "'" + sort + "' ";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            while (rslt.next()) {
+                User u = new User();
+                u.setId(rslt.getInt("id"));
+                
+                u.setUsername(rslt.getString("username"));
+                u.setDob(rslt.getString("dob"));
+                
+                u.setEmail(rslt.getString("email"));
+                u.setGender(rslt.getString("gender"));
+                u.setAvatar(rslt.getString("avatar"));
+                u.setRoleid(rslt.getInt("roleid"));
+                u.setMoney(rslt.getDouble("money"));
+                list.add(u);
+
+            }
+            return list;
+        } catch (SQLException e) {
+        }
+        return null;
     }
 
     public static void main(String[] args) {

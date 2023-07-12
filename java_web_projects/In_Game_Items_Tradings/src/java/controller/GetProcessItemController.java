@@ -33,9 +33,7 @@ public class GetProcessItemController extends HttpServlet {
             User user = (User) request.getSession().getAttribute("user");
             ArrayList<ProcessItem> processItemList;
             String redirect = "processItem.jsp";
-            if (user == null) {
-                redirect = "BuyPageController";
-            } else if (user.getRoleid() != 2) {
+            if (user == null || user.getRoleid() != 2) {
                 redirect = "BuyPageController";
             } else {
                 processItemList = ProcessItemsDAO.getAllProcessItems();

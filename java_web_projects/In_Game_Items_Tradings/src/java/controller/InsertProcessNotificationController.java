@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import model.MarketItems;
 import model.Notification;
 import model.ProcessItem;
@@ -55,8 +56,8 @@ public class InsertProcessNotificationController extends HttpServlet {
                             + " has been canceled. Reason : " + denyReason;
 
                 }
-                notificationForBuyer = new Notification(processItem.getReceiverId(), getCurrentDate(), buyerNotificationContent, "buy");
-                notificationForSeller = new Notification(processItem.getSenderId(), getCurrentDate(), sellerNotificationContent, "sell");
+                notificationForBuyer = new Notification(processItem.getReceiverId(), LocalDateTime.now(), buyerNotificationContent, "buy");
+                notificationForSeller = new Notification(processItem.getSenderId(),LocalDateTime.now(), sellerNotificationContent, "sell");
                 NotificationDAO.insertNotification(notificationForBuyer);
                 NotificationDAO.insertNotification(notificationForSeller);
             }
@@ -65,13 +66,6 @@ public class InsertProcessNotificationController extends HttpServlet {
             System.out.println("Error in insertProcessNotification");
             System.out.println(e);
         }
-    }
-
-    private String getCurrentDate() {
-        java.util.Date date = new java.util.Date();
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = formatter.format(date);
-        return strDate;
     }
 
 }

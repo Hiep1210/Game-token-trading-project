@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -32,7 +33,7 @@ public class ForgotPasswordController extends HttpServlet {
     throws ServletException, IOException {
            String uname = request.getParameter("username");
            String email = request.getParameter("email");
-           
+           HttpSession ses = request.getSession();
             UserDAO dao = new UserDAO();
             User checkUser = dao.getUserByUsername(uname);
             if(checkUser == null){
@@ -40,7 +41,7 @@ public class ForgotPasswordController extends HttpServlet {
                 request.getRequestDispatcher("forgotPassword.jsp").forward(request, response);
             }else{
                 if(email.equals(checkUser.getEmail())){
-                    request.setAttribute("userForgetPass", checkUser);
+                    ses.setAttribute("userForgetPass", checkUser);
                     request.getRequestDispatcher("sendEmail").forward(request, response);
                 }else{
                     request.setAttribute("Alert", "Account not existed");

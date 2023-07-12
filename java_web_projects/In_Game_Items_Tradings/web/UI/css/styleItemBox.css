@@ -48,3 +48,8 @@
 .rarity-consumer {
     border: 2px solid white;
 }
+
+.sell-card {
+    background-color: rgb(49, 47, 61);
+    border-radius: 5px;
+}

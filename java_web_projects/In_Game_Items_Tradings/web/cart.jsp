@@ -34,7 +34,7 @@
             <c:set var="total" value="0"/>
             <div class="container-fluid w-75">
                 <div class="row" id="sell-card-box">
-                    <c:forEach var ="cartlist" items="${requestScope.clist}">
+                    <c:forEach var ="cartlist" items="${requestScope.clist}" varStatus="currentStatus">
                         <c:set var="total" value="${cartlist.price + total}"/>
                         <!-- Item Card -->
                         <div class="sell-card mb-3" id="sell-card">
@@ -47,6 +47,8 @@
                                         <h5 class="card-title mb-2">${cartlist.getType()} | ${cartlist.getItemName()} ${cartlist.getSkinName()} (${cartlist.getExterior()})
                                         </h5>
                                         <p class="card-text mb-1">Selling price: ${cartlist.getPrice()}</p>
+                                        <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
+                                          
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -107,6 +109,46 @@
                     }
                 }
             }
+        </script>
+        
+        <script>
+            // Define the countdown details for each timer
+            var countdowns = [
+            <c:forEach var="cart" items="${requestScope.clist}" varStatus="currentStatus">
+            {name: "countdown${currentStatus.index}", endDate: "${cart.enddate}"}
+                <c:if test="${not currentStatus.last}">
+            ,
+                </c:if>
+            </c:forEach>
+            ];
+            // Update all countdowns
+            function updateCountdowns() {
+                countdowns.forEach(function (countdown) {
+                    var endDate = new Date(countdown.endDate);
+
+                    var now = new Date();
+                    var distance = endDate.getTime() - now.getTime();
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    var countdownElement = document.getElementById(countdown.name);
+                    countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                    // If the countdown is finished, update the HTML element
+                    if (distance < 0) {
+                        countdownElement.innerHTML = countdown.name + ": EXPIRED";
+                    }
+                });
+            }
+
+            // Update countdowns every 1 second
+            var countdownInterval = setInterval(updateCountdowns, 1000);
+
+            // Call updateCountdowns once immediately to display the initial countdowns
+            updateCountdowns();
         </script>
     </body>
 

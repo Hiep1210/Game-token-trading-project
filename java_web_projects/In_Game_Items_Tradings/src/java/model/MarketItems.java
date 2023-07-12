@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Inspiron
@@ -14,10 +16,10 @@ public class MarketItems extends GameItems {
     private String gameAccountName;
     private int userid;
     private double price;
-    private String begindate;
-    private String enddate;
+    private LocalDateTime begindate;
+    private LocalDateTime enddate;
 
-    public MarketItems(int id, String gameAccountName, int userid, double price, String begindate, String enddate,
+    public MarketItems(int id, String gameAccountName, int userid, double price, LocalDateTime begindate, LocalDateTime enddate,
             int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
         super(gid, skinname, itemname, type, rarity, exterior, img);
         this.id = id;
@@ -60,19 +62,19 @@ public class MarketItems extends GameItems {
         this.price = price;
     }
 
-    public String getBegindate() {
+    public LocalDateTime getBegindate() {
         return begindate;
     }
 
-    public void setBegindate(String begindate) {
+    public void setBegindate(LocalDateTime begindate) {
         this.begindate = begindate;
     }
 
-    public String getEnddate() {
+    public LocalDateTime getEnddate() {
         return enddate;
     }
 
-    public void setEnddate(String enddate) {
+    public void setEnddate(LocalDateTime enddate) {
         this.enddate = enddate;
     }
 

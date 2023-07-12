@@ -13,7 +13,7 @@
             <a href="ChangePassword.jsp">
                 <li>Change Password</li>
             </a>
-            <a href="#">
+            <a href="createAuction.jsp">
                 <li>Create auction</li>
             </a>
         </ul>
@@ -31,6 +31,9 @@
             </a>
             <a href="GetProcessItemController">
                 <li>Process item</li>
+            </a>
+            <a href="ViewGameItemController">
+                <li>View Game Items</li>
             </a>
         </details>
     </c:if> 

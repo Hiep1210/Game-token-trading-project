@@ -71,11 +71,12 @@ public class EditUserProfile extends HttpServlet {
                             break;
                     }
                 } else { // Process file upload
-                    profilePicFilename = item.getName(); // Get the original filename of the uploaded profile picture
+                    // Get the original filename of the uploaded profile picture
+                    profilePicFilename = item.getName();
+                    //User not select any picture
                     if ("".equals(profilePicFilename)) {
                         profilePicFilename = loggedUser.getAvatar();
                     }
-                    request.getSession().setAttribute("profilepic", profilePicFilename);
                     saveProfilePicture(item); // Save the profile picture
                 }
             }
@@ -121,7 +122,7 @@ public class EditUserProfile extends HttpServlet {
         String jarPath = null;
         ProtectionDomain domain;
         try {
-            domain = SendPaymentRequestController.class.getProtectionDomain();
+            domain = EditUserProfile.class.getProtectionDomain();
             path = domain.getCodeSource().getLocation().getPath();
             jarPath = URLDecoder.decode(path, "UTF-8");
         } catch (Exception e) {

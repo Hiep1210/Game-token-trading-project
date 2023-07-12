@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.Notification;
 import model.PaymentRequest;
@@ -59,7 +60,7 @@ public class InsertNotificationController extends HttpServlet {
                 redirect = "BuyPageController";
             } else {
                 notiContent = request.getParameter("content");
-                notification = new Notification(user.getId(), getCurrentDate(), notiContent, "admin");
+                notification = new Notification(user.getId(), LocalDateTime.now() , notiContent, "admin");
                 NotificationDAO.insertNotification(notification);
             }
             request.getRequestDispatcher(redirect).forward(request, response);
@@ -99,7 +100,7 @@ public class InsertNotificationController extends HttpServlet {
                 } else {
                     notiContent = "Your payment request for " + paymentRequest.getMoney() + "$ has been DENIED!";
                 }
-                notification = new Notification(paymentRequest.getUser_id(), getCurrentDate(), notiContent, "payment");
+                notification = new Notification(paymentRequest.getUser_id(), LocalDateTime.now(), notiContent, "payment");
                 NotificationDAO.insertNotification(notification);
             }
             request.getRequestDispatcher(redirect).forward(request, response);
@@ -107,14 +108,7 @@ public class InsertNotificationController extends HttpServlet {
             System.out.println(e);
         }
     }
-
-    private String getCurrentDate() {
-        java.util.Date date = new java.util.Date();
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = formatter.format(date);
-        return strDate;
-    }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";

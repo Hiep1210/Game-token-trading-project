@@ -58,7 +58,11 @@ public class SellCreateController extends HttpServlet {
         PrintWriter out = response.getWriter();
         int sellid = Integer.parseInt(request.getParameter("sellid"));
         int sellerid = Integer.parseInt(request.getParameter("sellerid"));
+        String exterior = request.getParameter("marketid");
+        String dayInStock = request.getParameter("dayInStock");
+        double price = Double.parseDouble(request.getParameter("price"));
         String message = "Failed to add sell list";
+        //check the item choosed is already in list or not
         if (SellDAO.checkDuplicateSell(sellid, sellerid)) {
             message = "Already Added to sell list";
         } else {
