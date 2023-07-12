@@ -21,7 +21,7 @@ import java.util.Properties;
 import java.util.Random;
 import model.User;
 
-@WebServlet(name = "SendEmail", urlPatterns = {"/sendEmail"})
+@WebServlet(name = "sendEmail", urlPatterns = {"/sendEmail"})
 public class sendEmail extends HttpServlet {
 
     @Override
