@@ -32,8 +32,8 @@
             <a href="GetProcessItemController">
                 <li>Process item</li>
             </a>
-            <a href="ListUser.jsp">
-                <li>View user list</li>
+            <a href="ViewGameItemController">
+                <li>View Game Items</li>
             </a>
         </details>
     </c:if> 

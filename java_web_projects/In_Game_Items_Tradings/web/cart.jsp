@@ -47,7 +47,7 @@
                                         <h5 class="card-title mb-2">${cartlist.getType()} | ${cartlist.getItemName()} ${cartlist.getSkinName()} (${cartlist.getExterior()})
                                         </h5>
                                         <p class="card-text mb-1">Selling price: ${cartlist.getPrice()}</p>
-                                        <p class="card-text mb-1">Time Left: <p id="countdown${currentStatus.index}"></p></p>
+                                        <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
                                           
                                     </div>
                                 </div>

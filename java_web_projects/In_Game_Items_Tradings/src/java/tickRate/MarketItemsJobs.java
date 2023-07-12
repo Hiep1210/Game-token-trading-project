@@ -9,6 +9,7 @@ import dao.MarketItemsDAO;
 import dao.NotificationDAO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.MarketItems;
 import model.Notification;
@@ -17,7 +18,7 @@ import model.Notification;
  *
  * @author Asus
  */
-public class SecondlyJob implements Runnable {
+public class MarketItemsJobs implements Runnable {
 
     public void run() {
         processUnsuccessfullMarketItem();
@@ -41,16 +42,9 @@ public class SecondlyJob implements Runnable {
         Notification notificationForSeller;
         for (MarketItems marketItem : unsuccessfulMarketItems) {
             sellerNotificationContent = "Your listing has ended! No one have bought your : " + marketItem.getItemName() + "|" + marketItem.getType();
-            notificationForSeller = new Notification(marketItem.getUserid(), getCurrentDate(), sellerNotificationContent, "sell");
+            notificationForSeller = new Notification(marketItem.getUserid(), LocalDateTime.now() , sellerNotificationContent, "sell");
             NotificationDAO.insertNotification(notificationForSeller);
         }
-    }
-
-    private String getCurrentDate() {
-        java.util.Date date = new java.util.Date();
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = formatter.format(date);
-        return strDate;
     }
 
 }

@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,21 +14,21 @@ import java.sql.Date;
 public class Notification {
     private int noti_id;
     private int user_id;
-    private String date;
+    private LocalDateTime date;
     private String noti_content;
     private String content_type;
 
     public Notification() {
     }
         
-    public Notification(int user_id, String date, String noti_content, String content_type) {
+    public Notification(int user_id, LocalDateTime date, String noti_content, String content_type) {
         this.user_id = user_id;
         this.date = date;
         this.noti_content = noti_content;
         this.content_type = content_type;
     }    
     
-    public Notification(int noti_id, int user_id, String date, String noti_content, String content_type) {
+    public Notification(int noti_id, int user_id, LocalDateTime date, String noti_content, String content_type) {
         this.noti_id = noti_id;
         this.user_id = user_id;
         this.date = date;
@@ -51,11 +52,11 @@ public class Notification {
         this.user_id = user_id;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

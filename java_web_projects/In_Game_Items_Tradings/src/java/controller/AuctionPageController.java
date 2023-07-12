@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Auction;
+import model.Bid;
+import model.User;
 
 /**
  *
@@ -34,17 +36,49 @@ public class AuctionPageController extends HttpServlet {
     }
 
     public void goToAuctionPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
         ArrayList<Auction> auctionList = AuctionDAO.getAllAuctions();
-        double amount;
-        for (Auction auction : auctionList) {
-            amount = BidDAO.getHighestBidFromAuctionId(auction.getAuctionId());
-            //If highest bid is > 0 set as lowest bid, if not found amount would be = -1 
-            if (amount > 0) {
-                auction.setLowestBid(amount);
+        ArrayList<Auction> joinedAuctionList = new ArrayList<>();
+        ArrayList<Auction> notJoinedAuctionList = new ArrayList<>();
+        ArrayList<Auction> filteredAuctionList = (ArrayList<Auction>) request.getAttribute("filteredAuctionList");
+        ArrayList<Auction> searchAuctionList = (ArrayList<Auction>) request.getAttribute("searchAuctionList");
+        if (filteredAuctionList != null) {
+            auctionList = filteredAuctionList;
+        } else if (searchAuctionList != null ) {
+            auctionList = searchAuctionList;
+        }
+        //If user is logged in, create an array list for auctions that user has joined in and exclude auction that user created
+        if (user != null) {
+            for (Auction auction : auctionList) {
+                //Exclude auction that user created
+                if (auction.getSellerId() != user.getId()) {
+                    auction.setBidList(BidDAO.getBidsFromAuctionId(auction.getAuctionId()));
+                    if (checkIfUserIsBidder(auction.getBidList(), user)) {
+                        joinedAuctionList.add(auction);
+                    } else {
+                        notJoinedAuctionList.add(auction);
+                    }
+                }
+            }
+            request.setAttribute("joinedAuctionList", joinedAuctionList);
+            request.setAttribute("notJoinedAuctionList", notJoinedAuctionList);
+            //If user is not logged in, show every thing
+        } else {
+            for (Auction auction : auctionList) {
+                auction.setBidList(BidDAO.getBidsFromAuctionId(auction.getAuctionId()));
+            }
+            request.setAttribute("notJoinedAuctionList", auctionList);
+        }
+        request.getRequestDispatcher("auction.jsp").forward(request, response);
+    }
+
+    public boolean checkIfUserIsBidder(ArrayList<Bid> bidList, User user) {
+        for (Bid bid : bidList) {
+            if (bid.getBidderId() == user.getId()) {
+                return true;
             }
         }
-        request.setAttribute("auctionList", auctionList);
-        request.getRequestDispatcher("auction.jsp").forward(request, response);
+        return false;
     }
 
 }

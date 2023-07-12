@@ -60,8 +60,8 @@
                                                 <td><img src="UI/image/${gameItem.img}" alt="invoice picture" width="400" 
                                                          height="500"></td>
                                                 <td>
-                                                    <td><a href="EditGameItem.jsp?id=<%= id %>">Edit</a></td>
-                                                    <td><a href="DeleteGameItem.jsp?id=<%= id %>">Delete</a></td>
+                                                    <td><a href="EditGameItem.jsp">Edit</a></td>
+                                                    <td><a href="DeleteGameItem">Delete</a></td>
                                                 </td>
                                                 <td><input type='submit' name='action' value='Accept'></td>
                                             </tr>   
