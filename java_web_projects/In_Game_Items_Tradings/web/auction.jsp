@@ -46,11 +46,11 @@
                                             <div class="card-body">
                                                 <h5 class="card-title mb-2"> ${gameItem.itemName} | ${gameItem.skinName}</h5>
                                                 <c:if test="${sessionScope.user.id == auction.bidList.get(0).bidderId}">
-                                                    <p class="card-text mb-1">Current highest bid: <span> ${auction.bidList.get(0).amount} $ was placed by you.</span></p>
+                                                    <p class="card-text mb-1">Current highest bid: <span  style="color: greenyellow"> ${auction.bidList.get(0).amount} $ was placed by you.</span></p>
                                                 </c:if>
 
                                                 <c:if test="${sessionScope.user.id != auction.bidList.get(0).bidderId}">
-                                                    <p class="card-text mb-1">Current highest bid: <span> ${auction.bidList.get(0).amount} $ </span></p>
+                                                    <p class="card-text mb-1">Current highest bid: <span style="color: red" > ${auction.bidList.get(0).amount} $ </span></p>
                                                 </c:if>    
                                                 <p class="card-text mb-1">Time Left: <span id="countdownJoined${currentStatus.index}"></span></p>
                                             </div>
@@ -278,28 +278,52 @@
                                             <p class="sell-info-select-name">Number of bidders:</p>
                                             ${auction.bidList.size()}
                                         </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Current highest bid:</p>
+                                            ${auction.bidList.get(0).amount}
+                                        </div>
                                         <c:if test="${sessionScope.user != null}">
+
+                                            <c:choose>
+                                                <%-- if user is highest bidder set min value to bid is 0 --%>
+                                                <c:when test="${sessionScope.user.id == auction.bidList.get(0).bidderId }">
+                                                    <c:set var="min" value="1"/>
+
+                                                    <c:set var="bidId" value="${auction.bidList.get(0).bidId}"/>
+                                                    <c:set var="gameAccountName" value="${auction.bidList.get(0).gameAccountName}"/>
+                                                    <div class="d-flex justify-content-between mt-2">
+                                                        <p class="sell-info-select-name">Your current bid:</p>
+                                                        ${auction.bidList.get(0).amount}
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mt-2">
+                                                        <p class="sell-info-select-name">Game account used:</p>
+                                                        ${auction.bidList.get(0).gameAccountName}
+                                                    </div>
+                                                    <h3>You are the current highest bidder, the amount you need to add to your bid is : 0 $</h3>
+                                                </c:when>
+                                                <%-- if user is not highest bidder set min value to bid is highest current bidder - his bid + 1--%>
+                                                <c:otherwise>          
+                                                    <c:forEach var ="userBid" items="${auction.bidList}">
+                                                        <c:if test="${userBid.bidderId == sessionScope.user.id}">
+                                                            <c:set var="min" value="${auction.bidList.get(0).amount - userBid.amount + 1}"/>
+                                                            <c:set var="bidId" value="${userBid.bidId}"/>
+                                                            <c:set var="gameAccountName" value="${userBid.gameAccountName}"/>
+                                                            <div class="d-flex justify-content-between mt-2">
+                                                                <p class="sell-info-select-name">Your current bid:</p>
+                                                                ${userBid.amount}
+                                                            </div>
+                                                            <div class="d-flex justify-content-between mt-2">
+                                                                <p class="sell-info-select-name">Game account used to bid:</p>
+                                                                ${userBid.gameAccountName}
+                                                            </div>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <h3>The amount you need to add to your bid is : ${min}$</h3>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <form action="InsertBidController" method="post">
-                                                <c:choose>
-                                                    <%-- if user is highest bidder set min value to bid is 0 --%>
-                                                    <c:when test="${sessionScope.user.id == auction.bidList.get(0).bidderId }">
-                                                        <c:set var="min" value="1"/>
-                                                        <h3>You are the current highest bidder, the amount you need to add to your bid is : 0 $</h3>
-                                                        <input type="hidden" name="bidId" value="${auction.bidList.get(0).bidId}">
-                                                        <input type="hidden" name="gameAccountName" value="${auction.bidList.get(0).gameAccountName}">
-                                                    </c:when>
-                                                    <%-- if user is not highest bidder set min value to bid is highest current bidder - his bid + 1--%>
-                                                    <c:otherwise>          
-                                                        <c:forEach var ="userBid" items="${auction.bidList}">
-                                                            <c:if test="${userBid.bidderId == sessionScope.user.id}">
-                                                                <c:set var="min" value="${auction.bidList.get(0).amount - userBid.amount + 1}"/>
-                                                                <input type="hidden" name="bidId" value="${userBid.bidId}">
-                                                                <input type="hidden" name="gameAccountName" value="${userBid.gameAccountName}">
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        <h3>The amount you need to add to your bid is : ${min}$</h3>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <input type="hidden" name="bidId" value="${bidId}">
+                                                <input type="hidden" name="gameAccountName" value="${gameAccountName}">
                                                 <input type="hidden" name="auctionId" value="${auction.auctionId}">
                                                 <input type="number" step="any" min="${min}" value="${min}" name="bidAmount">
                                                 <div class="summit-button mt-2">
