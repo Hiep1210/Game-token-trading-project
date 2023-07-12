@@ -286,6 +286,7 @@
                                                         <c:set var="min" value="1"/>
                                                         <h3>You are the current highest bidder, the amount you need to add to your bid is : 0 $</h3>
                                                         <input type="hidden" name="bidId" value="${auction.bidList.get(0).bidId}">
+                                                        <input type="hidden" name="gameAccountName" value="${auction.bidList.get(0).gameAccountName}">
                                                     </c:when>
                                                     <%-- if user is not highest bidder set min value to bid is highest current bidder - his bid + 1--%>
                                                     <c:otherwise>          
@@ -293,6 +294,7 @@
                                                             <c:if test="${userBid.bidderId == sessionScope.user.id}">
                                                                 <c:set var="min" value="${auction.bidList.get(0).amount - userBid.amount + 1}"/>
                                                                 <input type="hidden" name="bidId" value="${userBid.bidId}">
+                                                                <input type="hidden" name="gameAccountName" value="${userBid.gameAccountName}">
                                                             </c:if>
                                                         </c:forEach>
                                                         <h3>The amount you need to add to your bid is : ${min}$</h3>
