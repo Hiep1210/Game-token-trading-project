@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import model.GameItems;
 import model.SellItems;
 
 /**
@@ -50,7 +49,7 @@ public class SellListDAO {
         }
     }
 
-    public static int getSellItemId(SellItems sellItem) throws SQLException {
+    public static int getSellItemId(SellItems sellItem) {
         Connection con = null;
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -71,16 +70,14 @@ public class SellListDAO {
             if (rs.next()) {
                 sellItemId = rs.getInt("id");
             }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, e.getMessage());
         } finally {
-            // Close the result set, statement, and connection
-            if (rs != null) {
-                rs.close();
-            }
-            if (st != null) {
+            try {
                 st.close();
-            }
-            if (con != null) {
                 con.close();
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
             }
         }
 
@@ -119,11 +116,21 @@ public class SellListDAO {
         try {
             DBContext db = new DBContext();
             con = db.getConnection();
-            String sql = "SELECT * FROM SellList where seller_id = " + sellerId;
+            String sql = "SELECT sl.id, si.exterior, si.sell_time, si.price, si.game_account_name, sl.seller_id, gi.skin_name, gi.item_name, gi.type, gi.rarity, gi.img "
+                    + "FROM SellItems si "
+                    + "INNER JOIN SellList sl ON si.id = sl.sell_item_id "
+                    + "INNER JOIN GameItems gi ON si.item_id = gi.id "
+                    + "WHERE sl.seller_id = " + sellerId + " ORDER BY id desc";
             statement = con.prepareStatement(sql);
             ResultSet rs = statement.executeQuery(sql);
-            if (rs.next()) {
-                sellListItemsList.add(new SellItems(rs.getInt(1), sellerId, rs.getInt(3)));
+            while (rs.next()) {
+                SellItems sellItem = new SellItems(rs.getInt("id"), rs.getString("exterior"), rs.getInt("sell_time"), rs.getDouble("price"), rs.getString("game_account_name"), rs.getInt("seller_id"));
+                sellItem.setSkinName(rs.getString("skin_name"));
+                sellItem.setItemName(rs.getString("item_name"));
+                sellItem.setType(rs.getString("type"));
+                sellItem.setRarity(rs.getString("rarity"));
+                sellItem.setImg(rs.getString("img"));
+                sellListItemsList.add(sellItem);
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
@@ -138,16 +145,58 @@ public class SellListDAO {
         return sellListItemsList;
     }
 
+    public static SellItems getSellListItemInfo(int sellItemId) {
+        SellItems sellItem = null;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            String sql = "SELECT si.id, si.exterior, si.sell_time, si.price, si.game_account_name, gi.id, gi.skin_name, gi.item_name, gi.type, gi.rarity, gi.img "
+                    + "FROM SellItems si "
+                    + "INNER JOIN GameItems gi ON si.item_id = gi.id "
+                    + "WHERE si.id = ?";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, sellItemId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                sellItem = new SellItems();
+                sellItem.setId(rs.getInt("id"));
+                sellItem.setExterior(rs.getString("exterior"));
+                sellItem.setSellTime(rs.getInt("sell_time"));
+                sellItem.setPrice(rs.getDouble("price"));
+                sellItem.setGameAccount(rs.getString("game_account_name"));
+                sellItem.setSkinName(rs.getString("skin_name"));
+                sellItem.setItemName(rs.getString("item_name"));
+                sellItem.setType(rs.getString("type"));
+                sellItem.setRarity(rs.getString("rarity"));
+                sellItem.setImg(rs.getString("img"));
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            try {
+                statement.close();
+                con.close();
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
+            }
+        }
+        return sellItem;
+    }
+
     public static void main(String[] args) {
 
-        SellItems sellItem = new SellItems("Factory New", 1, 300, "lamp", 2, 32);
-        insertSellListItem(sellItem);
-
-//        ArrayList<SellItems> list = getUserSellList(2);
-//        System.out.println(list.size());
-//        for (SellItems sellItems : list) {
+        SellItems item = getSellListItemInfo(1);
+        System.out.println(item.getImg());
+//        ArrayList<SellItems> sellListItemsList = getUserSellList(2);
+//        for (SellItems sellItems : sellListItemsList) {
 //            System.out.println(sellItems.getId());
+//            System.out.println(sellItems.getExterior());
+//            System.out.println(sellItems.getSellTime());
+//            System.out.println(sellItems.getPrice());
+//            System.out.println(sellItems.getGameAccount());
 //            System.out.println(sellItems.getSellerId());
-//        }
+//            System.out.println(sellItems.getImg());
     }
 }

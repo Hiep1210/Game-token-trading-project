@@ -162,26 +162,28 @@
                             <h1 class="form-label">Sell List</h1>
                         </div>
                         <div class="container">
-                            <div class="row" id="sell-card-box">
-                                <!-- Item Card -->
-                                <div class="sell-card mb-3" id="sell-card">
-                                    <div class="row g-0">
-                                        <div class="col-md-4">
-                                            <img src="UI/image/Bayonet_Fade.png" class="img-fluid rounded" alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-2">Butterfly Knife | Gamma Doppler (Factory New)
-                                                </h5>
-                                                <p class="card-text mb-1">Selling price: $2000</p>
-                                                <p class="card-text">You get: $1800</p>
+                            <div class="row" id="sell-list-content">
+                                <c:forEach var ="sellList" items="${requestScope.userSellList}">
+                                    <!-- Item Card -->
+                                    <div class="sell-card mb-3" id="sell-card">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 mb-2">
+                                                <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
                                             </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
+                                                    </h5>
+                                                    <p class="card-text mb-1">Selling price: ${sellList.price}</p>
+                                                    <p class="card-text">You get: $1800</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn item-card-button sell-list-cart-button mt-2">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
                                         </div>
-                                        <button class="btn item-card-button mt-2">
-                                            <i class="fa-solid fa-cart-shopping"></i>
-                                        </button>
                                     </div>
-                                </div>
+                                </c:forEach>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <span>Total:</span>
@@ -332,17 +334,20 @@
                         skinName: skinName
                     };
 
-                    // Send AJAX request
                     $.ajax({
                         url: '/In_Game_Items_Trading/addSellList',
-                        type: 'POST', // Change to "GET" if necessary
+                        type: 'POST',
                         data: data,
                         success: function (data) {
-                            // Handle the response from the backend
                             console.log(data);
-                            // Do something with the response
+                            var row = document.getElementById("sell-list-content");
+                            row.innerHTML = data + row.innerHTML;
+                        },
+                        error: function () {
+                            console.log('Error occurred during AJAX request');
                         }
                     });
+
                 } else {
                     console.log("Error: Required elements not found in the parent container.");
                 }

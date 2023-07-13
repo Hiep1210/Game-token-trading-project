@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import model.GameItems;
 import model.SellItems;
 import model.User;
@@ -38,24 +39,32 @@ public class AddSellListController extends HttpServlet {
         if (gameItem != null) {
             SellItems sellItem = new SellItems(exterior, sellTime, price, gameAccount, sellerId, gameItem.getId());
 
-            try {
-                SellListDAO.insertSellListItem(sellItem);
-                int sellItemId = SellListDAO.getSellItemId(sellItem);
-                System.out.println("selliteid = " + sellItemId);
-                
-                SellListDAO.addToSellList(sellerId, sellItemId);
-                // Commit the transaction here
-            } catch (Exception e) {
-                // Handle transaction errors
-                // For example, you can roll back the transaction and show an error message to the user
-                return;
-            }
+            SellListDAO.insertSellListItem(sellItem);
+            int sellItemId = SellListDAO.getSellItemId(sellItem);
+            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);            
+            SellListDAO.addToSellList(sellerId, sellItemId);
 
-            // Redirect or display a success message to the user
-        } else {
-            // Handle case when gameItem is not found
-            // For example, you can show an error message to the user
+            PrintWriter out = response.getWriter();
+            out.println("<!-- Item Card -->\n"
+                    + "                                <div class=\"sell-card mb-3\" id=\"sell-card\">\n"
+                    + "                                    <div class=\"row g-0\">\n"
+                    + "                                        <div class=\"col-md-4\">\n"
+                    + "                                            <img src=\"UI/image/" + sellItemInfo.getImg() + ".png\" class=\"img-fluid rounded\" alt=\"...\">\n"
+                    + "                                        </div>\n"
+                    + "                                        <div class=\"col-md-8\">\n"
+                    + "                                            <div class=\"card-body\">\n"
+                    + "                                                <h5 class=\"card-title mb-2\">" + sellItemInfo.getType() + " | " + sellItemInfo.getItemName() + " " + sellItemInfo.getSkinName() + " (" + sellItem.getExterior() + ")\n"
+                    + "                                                </h5>\n"
+                    + "                                                <p class=\"card-text mb-1\">Selling price: " + sellItemInfo.getPrice() + "</p>\n"
+                    + "                                                <p class=\"card-text\">You get: $1800</p>\n"
+                    + "                                            </div>\n"
+                    + "                                        </div>\n"
+                    + "                                        <button class=\"btn item-card-button sell-list-cart-button mt-2\">\n"
+                    + "                                            <i class=\"fa-solid fa-cart-shopping\"></i>\n"
+                    + "                                        </button>\n"
+                    + "                                    </div>\n"
+                    + "                                </div>");
+
         }
     }
-
 }
