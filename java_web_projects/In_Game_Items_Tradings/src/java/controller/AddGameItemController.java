@@ -37,6 +37,8 @@ public class AddGameItemController extends HttpServlet {
     String location = null;
     private static final String HOMEPAGE = "BuyPageController";
     
+    
+    
     @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
@@ -55,7 +57,9 @@ public class AddGameItemController extends HttpServlet {
         ServletFileUpload upload;
         FileItemIterator iterator;
         FileItemStream item;
-        String[] dataArray = new String[2];
+        String picGameItem = null;
+        GameItems gameItem;
+        String newGameItemImage;
     try {
         User user = (User) request.getSession().getAttribute("user");
 
@@ -65,7 +69,20 @@ public class AddGameItemController extends HttpServlet {
         } else if (!isAdmin(user.getRoleid())) {
             redirect = "BuyPageController";
         } else {
-            
+             upload = new ServletFileUpload();
+                iterator = upload.getItemIterator(request);
+                item = iterator.next();
+            String skinName = request.getParameter("skinName");
+            String itemName = request.getParameter("itemName");
+            String type = request.getParameter("type");
+            String rarity = request.getParameter("rarity");
+            picGameItem = item.getName();
+            gameItem = new GameItems(skinName, itemName, type, rarity, picGameItem);
+            newGameItemImage = GameItemsDAO.insertGameItem(gameItem);
+            moveImages(item, newGameItemImage);
+                    
+                    
+                     // Save the profile picture
         }
         request.getRequestDispatcher(redirect).forward(request, response);
     } catch (Exception e) {
