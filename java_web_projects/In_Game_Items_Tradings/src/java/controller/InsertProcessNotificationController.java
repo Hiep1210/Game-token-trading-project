@@ -60,10 +60,10 @@ public class InsertProcessNotificationController extends HttpServlet {
                     } else if (processItem.getTransactionTypeIdId() == 2) {
                         auction = (Auction) processItem.getObject();
                         bid = (Bid) auction.getBidList().get(0);
-                        buyerNotificationContent = "Item" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getType()
+                        buyerNotificationContent = "Item" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getSkinName()
                                 + "has been transfered to game account : " + processItem.getGameAccountName();
-                        sellerNotificationContent = "Item :" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getType()
-                                + "has successfully sold for :" + bid.getAmount();
+                        sellerNotificationContent = "Item :" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getSkinName()
+                                + "has successfully sold for : " + bid.getAmount();
                     }
                 } else {
                     if (processItem.getTransactionTypeIdId() == 1) {
@@ -74,9 +74,9 @@ public class InsertProcessNotificationController extends HttpServlet {
                     } else if (processItem.getTransactionTypeIdId() == 2) {
                         auction = (Auction) processItem.getObject();
                         bid = (Bid) auction.getBidList().get(0);
-                        buyerNotificationContent = "Item" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getType()
+                        buyerNotificationContent = "Item" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getSkinName()
                                 + "has been canceled. Reason: " + denyReason + ", you have been refunded " + bid.getAmount();
-                        sellerNotificationContent = "Item :" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getType()
+                        sellerNotificationContent = "Item :" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getSkinName()
                                 + " has been canceled. Reason : " + denyReason;
                     }
                 }
