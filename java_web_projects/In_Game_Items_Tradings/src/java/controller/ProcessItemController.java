@@ -1,5 +1,7 @@
 package controller;
 
+import dao.AuctionDAO;
+import dao.BidDAO;
 import dao.MarketItemsDAO;
 import dao.ProcessItemsDAO;
 import dao.UserDAO;
@@ -9,6 +11,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Auction;
+import model.Bid;
 import model.MarketItems;
 import model.ProcessItem;
 import model.User;
@@ -31,6 +35,8 @@ public class ProcessItemController extends HttpServlet {
             ProcessItem processItem;
             String decision = request.getParameter("decision");
             String redirect = "InsertProcessNotificationController";
+            Auction auction;
+            Bid bid = new Bid();
             int processItemId;
             double newMoneyAmount = 0;
             if (user == null || user.getRoleid() != 2) {
@@ -41,19 +47,39 @@ public class ProcessItemController extends HttpServlet {
                 //Get payment request information by payment request id
                 processItemId = Integer.parseInt(rawProcessItemId);
                 processItem = ProcessItemsDAO.getProcessItems(processItemId);
-                processItem.setObject(MarketItemsDAO.getMarketItem(processItem.getTransactionId()));
+                if (processItem.getTransactionTypeIdId() == 1) {
+                    processItem.setObject(MarketItemsDAO.getMarketItem(processItem.getTransactionId()));
+                    MarketItemsDAO.deletelMarketItem(processItem.getTransactionId());
+                } else if (processItem.getTransactionTypeIdId() == 2) {
+                    auction = AuctionDAO.getAuction(processItem.getTransactionId());
+                    auction.setBidList(BidDAO.getBidsFromAuctionId(auction.getAuctionId()));
+                    bid = (Bid) auction.getBidList().get(0);
+                    processItem.setObject(auction);
+                    BidDAO.deleteBid(bid.getBidId());
+                    AuctionDAO.deleteAuction(processItem.getTransactionId());
+                }
                 ProcessItemsDAO.deleteProcessItems(processItemId);
-                MarketItemsDAO.deletelMarketItem(processItem.getTransactionId());
-
                 // If payment request is accepted add funds to user account
                 if (decision.equals("accept")) {
-                    userForTransaction = UserDAO.GetUserInformation(processItem.getSenderId());
-                    newMoneyAmount = userForTransaction.getMoney() + ((MarketItems) processItem.getObject()).getPrice();
-                    UserDAO.updateUserMoney(processItem.getSenderId(), newMoneyAmount);
+                    if (processItem.getTransactionTypeIdId() == 1) {
+                        userForTransaction = UserDAO.GetUserInformation(processItem.getSenderId());
+                        newMoneyAmount = userForTransaction.getMoney() + ((MarketItems) processItem.getObject()).getPrice();
+                        UserDAO.updateUserMoney(processItem.getSenderId(), newMoneyAmount);
+                    } else if (processItem.getTransactionTypeIdId() == 2) {
+                        userForTransaction = UserDAO.GetUserInformation(processItem.getSenderId());
+                        newMoneyAmount = userForTransaction.getMoney() + (bid.getAmount());
+                        UserDAO.updateUserMoney(processItem.getSenderId(), newMoneyAmount);
+                    }
                 } else {
-                    userForTransaction = UserDAO.GetUserInformation(processItem.getReceiverId());
-                    newMoneyAmount = userForTransaction.getMoney() + ((MarketItems) processItem.getObject()).getPrice();
-                    UserDAO.updateUserMoney(processItem.getReceiverId(), newMoneyAmount);
+                    if (processItem.getTransactionTypeIdId() == 1) {
+                        userForTransaction = UserDAO.GetUserInformation(processItem.getReceiverId());
+                        newMoneyAmount = userForTransaction.getMoney() + ((MarketItems) processItem.getObject()).getPrice();
+                        UserDAO.updateUserMoney(processItem.getReceiverId(), newMoneyAmount);
+                    } else if (processItem.getTransactionTypeIdId() == 2) {
+                        userForTransaction = UserDAO.GetUserInformation(processItem.getReceiverId());
+                        newMoneyAmount = userForTransaction.getMoney() + (bid.getAmount());
+                        UserDAO.updateUserMoney(processItem.getSenderId(), newMoneyAmount);
+                    }
                 }
                 request.setAttribute("processItem", processItem);
             }
