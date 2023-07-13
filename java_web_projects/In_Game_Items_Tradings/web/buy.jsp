@@ -26,7 +26,6 @@
     <body>
         <c:set var="redirect" value="BuyPageController"/>
         <%@include file="navbar.jsp" %>
-        <!-- Main Content -->
         <div class="container-fluid main-content">
             <div class="row">
                 <!-- Filter Section -->
@@ -276,8 +275,8 @@
                 });
             }
         </script>
-        
-         <script>
+
+        <script>
             // Define the countdown details for each timer
             var countdowns = [
             <c:forEach var="market" items="${requestScope.marketlist}" varStatus="currentStatus">
