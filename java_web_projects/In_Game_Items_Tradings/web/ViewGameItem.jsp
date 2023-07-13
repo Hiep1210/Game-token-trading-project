@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,52 +19,110 @@
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
         <link rel="stylesheet" href="UI/css/userProfile.css">
+        <link rel="stylesheet" href="UI/css/style.css">
+        <link rel="stylesheet" href="UI/css/styleInput.css">
+        <link rel="stylesheet" href="UI/css/styleItemBox.css">
+        <link rel="stylesheet" href="UI/css/styleSell.css">
         <script src="UI/js/formValidate.js"></script>
 </head>
 <body>
-    <h1>View Game Items</h1>
+
     <div class="container-fluid main-content">
+        
             <div class="row">
+                <%@include file="navbar.jsp" %>
                 <!-- Sidebar -->
                 <div class="col-lg-3 sidebar">
                     <%@include file="sidebar.jsp" %>
                 </div>
                 <!-- Page Info -->
                 <div class="col-lg-9 page-info">
+                    <h1>View Game Items</h1>
+                    <!-- Tool bar -->
+                    <div class="row mt-2">
+                        <!-- Search Bar -->
+                        <div class="col-lg-3 search-bar form">
+                            <div class="form-group">
+                                <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
+                                <input oninput="filterByType()" id="search-input" class="form-control ps-5" type="text" placeholder="Search...">
+                            </div>
+                        </div>
+                        <!-- Filter By Type -->
+                        <div class="col-lg-1 filter-type">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger">Type</button>
+                                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="smg" value="smg" checked>SMGs</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
+                                    <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
+                                    <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Sort by Rarity -->
+                        <div class="col-lg-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-danger" id="rarity-sort">Rarity</button>
+                                <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li class="dropdown-item" onclick="filterByType('asc', this)">Rarest First</li>
+                                    <li class="dropdown-item" onclick="filterByType('desc', this)">Common First</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                            <a href="addGameItem.jsp">Add New Game Item</a>
+                        </div>
+                    </div>
+</div>
                     <div class="container">
                         <c:choose>
-                            <c:when test="${(requestScope.paymentRequestList != null) }">
+                            <c:when test="${(requestScope.sellList != null) }">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
+                                            
                                             <th scope="col">Skin Name</th>
                                             <th scope="col">Item Name</th>
                                             <th scope="col">Type</th>
                                             <th scope="col">Rarity</th>
                                             <th scope="col">image</th>
-                                            <th scope="col"></th>
-                                            <th scope="col"></th>
+                                            <th scope="col">Action</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var = "gameItem" items="${requestScope.gameItemList}">
-                                        <form action='ViewGameItemsController' method='post'>
-                                            <input type="hidden" name="gameItemId" value="${gameItem.id}">
-                                            
+                                        <c:forEach var = "sellList" items="${requestScope.sellList}">
+                                        <form action='ViewGameItemController' method='post'>
+                                                                                        
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td>${gameItem.skinName}</td>
-                                                <td>${gameItem.itemName}</td>
-                                                <td>${gameItem.type}</td>
-                                                <td>${gameItem.rarity}</td>
-                                                <td><img src="UI/image/${gameItem.img}" alt="invoice picture" width="400" 
-                                                         height="500"></td>
+                                                
+                                                <td>${sellList.gameItems.skinName}</td>
+                                                <td>${sellList.gameItems.itemName}</td>
+                                                <td>${sellList.gameItems.type}</td>
+                                                <td>${sellList.gameItems.rarity}</td>
+                                                <td><img src="UI/image/${sellList.gameItems.img}.png" alt="invoice picture" width="200" 
+                                                         height="300"></td>
                                                 <td>
                                                     <td><a href="EditGameItem.jsp">Edit</a></td>
                                                     <td><a href="DeleteGameItem">Delete</a></td>
                                                 </td>
-                                                <td><input type='submit' name='action' value='Accept'></td>
+                                                
                                             </tr>   
                                         </form>
                                     </c:forEach>
@@ -74,8 +133,9 @@
                                 <p>Currently 0 payment request to process</p>
                             </c:otherwise>
                         </c:choose>
+                               
                     </div>
-                    <a href="addGameItem.jsp">Add New Game Item</a>
+                    
                 </div>
             </div>
         </div>
