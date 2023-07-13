@@ -215,7 +215,7 @@ public class AuctionDAO {
     }
 
     //Function to get all auction that has ended
-    public static ArrayList<Auction> getAllEndedSuccessfullAuction() {
+    public static ArrayList<Auction> getAllEndedAuction() {
         ArrayList<Auction> auctionList = new ArrayList<>();
         Auction auction = null;
         GameItems gameItem = null;
@@ -224,13 +224,13 @@ public class AuctionDAO {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = "SELECT * "
-                        + "FROM auction auc, gameitems gei , bid bid "
-                        + "WHERE NOW() > auc.ending_date AND auc.item_id = gei.id AND auc.id = bid.auction_id "
-                        + "AND NOT EXISTS ( "
-                        + "	SELECT 1 FROM processitems p   "
-                        + "	WHERE  p.transaction_id = auc.id ) "
-                        + "ORDER BY auc.id, bid.amount DESC";
+                String sql = "SELECT * FROM auction auc, gameitems gei "
+                        + " WHERE NOW() > auc.ending_date AND auc.item_id = gei.id "
+                        + " AND NOT EXISTS ( "
+                        + "     SELECT 1 FROM processitems p   "
+                        + "     WHERE  p.transaction_id = auc.id  "
+                        + "     AND p.transactionType_id = 2) "
+                        + " ORDER BY auc.ending_date DESC";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model
