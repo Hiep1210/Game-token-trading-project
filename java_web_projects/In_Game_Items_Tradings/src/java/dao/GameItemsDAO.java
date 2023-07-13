@@ -165,16 +165,16 @@ public class GameItemsDAO {
             Connection con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql1 = "INSERT INTO GameItems (skin_name, "
-                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,Factory New,?)";
-                String sql2 = "INSERT INTO GameItems (skin_name, "
-                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,Minimal Wear,?)";
-                String sql3 = "INSERT INTO GameItems (skin_name, "
-                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,Field-Tested,?)";
-                String sql4 = "INSERT INTO GameItems (skin_name, "
-                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,Well-Worn,?)";
-                String sql5 = "INSERT INTO GameItems (skin_name, "
-                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,Battle-Scared,?)";
+                String sql1 = "INSERT INTO GameItems (skin_name,"
+                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,'Factory New',?)";
+                String sql2 = "INSERT INTO GameItems (skin_name,"
+                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,'Minimal Wear',?)";
+                String sql3 = "INSERT INTO GameItems (skin_name,"
+                        + "item_name, type ,rarity, exterior,img) VALUES ( ?, ?, ?, ?,'Field-Tested',?)";
+                String sql4 = "INSERT INTO GameItems (skin_name,"
+                        + "item_name, type ,rarity, exterior,img) VALUES ( ?, ?, ?, ?,'Well-Worn',?)";
+                String sql5 = "INSERT INTO GameItems (skin_name,"
+                        + "item_name, type ,rarity, exterior, img) VALUES ( ?, ?, ?, ?,'Battle-Scared',?)";
                 PreparedStatement preparedStatement1 = con.prepareStatement(sql1,
                         Statement.RETURN_GENERATED_KEYS);
                 PreparedStatement preparedStatement2 = con.prepareStatement(sql2,
@@ -189,48 +189,38 @@ public class GameItemsDAO {
                 preparedStatement1.setString(2, gameItem.getItemName());
                 preparedStatement1.setString(3, gameItem.getType());
                 preparedStatement1.setString(4, gameItem.getRarity());
-                preparedStatement1.setString(5, gameItem.getExterior());
-                preparedStatement1.setString(6, gameItem.getImg());
+                preparedStatement1.setString(5, gameItem.getImg());
                 preparedStatement2.setString(1, gameItem.getSkinName());
                 preparedStatement2.setString(2, gameItem.getItemName());
                 preparedStatement2.setString(3, gameItem.getType());
                 preparedStatement2.setString(4, gameItem.getRarity());
-                preparedStatement2.setString(5, gameItem.getExterior());
-                preparedStatement2.setString(6, gameItem.getImg());
+                preparedStatement2.setString(5, gameItem.getImg());
                 preparedStatement3.setString(1, gameItem.getSkinName());
                 preparedStatement3.setString(2, gameItem.getItemName());
                 preparedStatement3.setString(3, gameItem.getType());
                 preparedStatement3.setString(4, gameItem.getRarity());
-                preparedStatement3.setString(5, gameItem.getExterior());
-                preparedStatement3.setString(6, gameItem.getImg());
+                preparedStatement3.setString(5, gameItem.getImg());
                 preparedStatement4.setString(1, gameItem.getSkinName());
                 preparedStatement4.setString(2, gameItem.getItemName());
                 preparedStatement4.setString(3, gameItem.getType());
                 preparedStatement4.setString(4, gameItem.getRarity());
-                preparedStatement4.setString(5, gameItem.getExterior());
-                preparedStatement4.setString(6, gameItem.getImg());
+                preparedStatement4.setString(5, gameItem.getImg());
                 preparedStatement5.setString(1, gameItem.getSkinName());
                 preparedStatement5.setString(2, gameItem.getItemName());
                 preparedStatement5.setString(3, gameItem.getType());
                 preparedStatement5.setString(4, gameItem.getRarity());
-                preparedStatement5.setString(5, gameItem.getExterior());
-                preparedStatement5.setString(6, gameItem.getImg());
+                preparedStatement5.setString(5, gameItem.getImg());
                 // if insert command failed
-                if (preparedStatement1.executeUpdate() != 1) {
-                    System.out.println("ERROR INSERTING PAYMENTREQUEST, "
-                            + "NO ROWS AFFECTED");
-                }
-                generatedKey = preparedStatement1.getGeneratedKeys();
-                if (generatedKey.next()) {
-                    key = generatedKey.getInt(1);
-                } else {
-                    throw new SQLException("ERROR INSERTING PAYMENTREQUEST,"
-                            + " NO ID OBTAINED.");
-                }
+                
+                preparedStatement1.executeUpdate();
+                preparedStatement2.executeUpdate();
+                preparedStatement3.executeUpdate();
+                preparedStatement4.executeUpdate();
+                preparedStatement5.executeUpdate();
                 con.close();
             }
         } catch (Exception e) {
-            System.out.println("Error in insertPaymentRequest");
+            System.out.println("Error in insertGameItem");
             System.out.println(e);
         }
         return String.valueOf(key);
