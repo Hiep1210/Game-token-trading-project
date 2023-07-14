@@ -29,7 +29,16 @@
         <c:if test="${requestScope.errorMessage != null}">
             <h2 style="color: plum">${requestScope.errorMessage}</h2>
         </c:if>
-        <form action="CreateOfferController" method="post">
+            <script>
+            //load page before display message
+            window.onload = function () {
+                if (${requestScope.mess != null}) {
+                    document.title = "GIT";
+                    alert('${requestScope.mess}');
+                }
+            };
+        </script>
+        <form action="CreateOfferController" method="get">
 
             <div class="container-fluid">
                 <div class="row"> 
@@ -141,7 +150,6 @@
                         <!-- Filter Selection Section -->
                         <div class="filter sidebar">
                             <div class="container">
-                                <form action="SortAuctionController" method="post">
                                     <!-- Filter Type -->
                                     <details class="sidebar-category">
                                         <summary>Type</summary>
@@ -236,10 +244,11 @@
                                                 <label for="sort">Sort Price Descending</label>
                                         </ul>
                                     </details>
-                                    <button type="submit" class="btn item-card-button">
-                                        Find
+                                    <c:if test="${sessionScope.user != null}">
+                                        <button type="submit" class="btn item-card-button" >
+                                        Create Trade Offer
                                     </button>
-                                </form>
+                                    </c:if>          
                             </div>
                             <c:if test="${sessionScope.user !=null}">
                                 <div style="margin-top: 30px">
@@ -323,7 +332,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="submit" value="heyy"/>
                             <div class="row">
 
                                 <c:forEach var ="gItem" items="${requestScope.gItem}" varStatus="currentStatus">
@@ -376,12 +384,12 @@
                 </div>
             </div>
         </form>
-            <!-- Link Bootstrap JS -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-            </script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-            <script>
+        <!-- Link Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script>
                                                     function filterByType(order) {
                                                         var searchName = document.getElementById("search-input").value;
                                                         console.log(searchName);
@@ -405,20 +413,31 @@
                                                             }
                                                         });
                                                     }
-            </script>
-            <script>
-                function handleCheckboxChange(checkbox) {
-                    if (checkbox.checked) {
-                        // Create a new <h4> element
-                        var h4Element = document.createElement("h4");
-                        h4Element.textContent = "true";
+        </script>
+        <script>
+            function handleCheckboxChange(checkbox) {
+                var h4Element;
+                var iElement;
+                if (checkbox.checked) {
+                    // Create a new <h4> element
+                    h4Element = document.createElement("h4");
+                    h4Element.textContent = "Selected";
 
-                        // Replace the <i> element with the new <h4> element
-                        var iElement = checkbox.parentElement.querySelector("i");
-                        iElement.parentNode.replaceChild(h4Element, iElement);
-                    }
+                    // Replace the <i> element with the new <h4> element
+                    iElement = checkbox.parentElement.querySelector("i");
+                    iElement.parentNode.replaceChild(h4Element, iElement);
+                } else {
+                    h4Element = checkbox.parentElement.querySelector("h4");
+
+// Replace the <h4> element with the original <i> element
+                    iElement = document.createElement("i");
+                    iElement.textContent = "compare_arrows";
+                    iElement.className = "material-icons navbar-item-icon"; // Add a class
+                    iElement.style.color = "white"; // Add a style
+                    h4Element.parentNode.replaceChild(iElement, h4Element);
                 }
-            </script>
+            }
+        </script>
     </body>
 
 </html>

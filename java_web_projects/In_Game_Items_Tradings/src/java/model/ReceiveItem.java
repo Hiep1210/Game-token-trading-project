@@ -9,9 +9,10 @@ package model;
  * @author Inspiron
  */
 public class ReceiveItem {
+
     private int id;
     private int recId;
-    private  int tradeId;
+    private int tradeId;
     private GameItems rec;
     private TradeItem trade;
 
@@ -21,6 +22,13 @@ public class ReceiveItem {
         this.tradeId = tradeId;
         this.rec = rec;
         this.trade = trade;
+    }
+
+    public ReceiveItem(int id, int recId, int tradeId, GameItems rec) {
+        this.id = id;
+        this.recId = recId;
+        this.tradeId = tradeId;
+        this.rec = rec;
     }
 
     public int getId() {
@@ -62,5 +70,5 @@ public class ReceiveItem {
     public void setTrade(TradeItem trade) {
         this.trade = trade;
     }
-    
+
 }

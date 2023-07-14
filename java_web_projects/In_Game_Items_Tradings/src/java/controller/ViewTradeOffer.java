@@ -5,31 +5,31 @@
 
 package controller;
 
+import dao.TradeDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.GameItems;
-import dao.GameItemsDAO;
 import java.util.ArrayList;
+import java.util.HashMap;
+import model.OfferItem;
+import model.ReceiveItem;
+import model.TradeItem;
+
 /**
  *
  * @author Inspiron
  */
-@WebServlet(name="TradePageController", urlPatterns={"/TradePageController"})
-public class TradePageController extends HttpServlet {
+@WebServlet(name="ViewTradeOffer", urlPatterns={"/ViewTradeOffer"})
+public class ViewTradeOffer extends HttpServlet {
    
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ArrayList<GameItems> gItem = GameItemsDAO.getAllGameItems();
-        System.out.println(request.getAttribute("mess"));
-        request.setAttribute("gItem", gItem);
-        request.getRequestDispatcher("trade.jsp").forward(request, response);
+        doPost(request, response);
     } 
 
     /** 
@@ -42,7 +42,17 @@ public class TradePageController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+        ArrayList<TradeItem> trade = TradeDAO.getAllTradeOffers();
+        HashMap<Integer, ArrayList<OfferItem>> offerItem = new HashMap<>();
+        HashMap<Integer, ArrayList<ReceiveItem>> receiveItem = new HashMap<>();
+        for (int i = 0; i < trade.size(); i++) {
+            offerItem.put(trade.get(i).getId(), TradeDAO.getAllOffersInATrade(trade.get(i).getId()));
+            receiveItem.put(trade.get(i).getId(), TradeDAO.getAllRecsInATrade(trade.get(i).getId()));
+        }
+        request.setAttribute("trade", trade);
+        request.setAttribute("offer", offerItem);
+        request.setAttribute("rec", receiveItem);
+        request.getRequestDispatcher("ViewTrade.jsp").forward(request, response);
     }
 
 
