@@ -86,7 +86,7 @@
                                 <div class="card rarity-${sellList.gameItems.rarity.toLowerCase()}" data-bs-toggle = "dropdown" aria-expanded="false">
                                     <img src="UI/image/${sellList.gameItems.img}.png" alt ="displayfailed" class="card-img-top">
                                     <div class="card-body">
-                                        <p>${sellList.gameItems.type} | ${sellList.gameItems.itemName} ${sellList.gameItems.skinName}</p>
+                                        <p class="item-full-name">${sellList.gameItems.type} | ${sellList.gameItems.itemName} ${sellList.gameItems.skinName}</p>
                                         <a href="#" class="btn item-card-button">
                                             <i class="fa-solid fa-cart-shopping"></i>
                                         </a>
@@ -142,7 +142,7 @@
                                     </div>
                                     <c:if test="${sessionScope.user != null}">
                                         <div class="summit-button mt-2">
-                                            <button class="btn item-card-button" onclick="handleButtonClick(event)">
+                                            <button class="btn item-card-button" onclick="addToSellList(event)">
                                                 Add to Sell List
                                             </button>
                                         </div>
@@ -157,41 +157,39 @@
                 </div>
                 <!-- Sell List -->
                 <div class="col-lg-4">
-                    <form class="form">
-                        <div class="sell-header">
-                            <h1 class="form-label">Sell List</h1>
-                        </div>
-                        <div class="container">
-                            <div class="row" id="sell-list-content">
-                                <c:forEach var ="sellList" items="${requestScope.userSellList}">
-                                    <!-- Item Card -->
-                                    <div class="sell-card mb-3" id="sell-card">
-                                        <div class="row g-0">
-                                            <div class="col-md-4 mb-2">
-                                                <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
-                                                    </h5>
-                                                    <p class="card-text mb-1">Selling price: ${sellList.price}</p>
-                                                    <p class="card-text">You get: $1800</p>
-                                                </div>
-                                            </div>
-                                            <button class="btn item-card-button sell-list-cart-button mt-2">
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                            </button>
+                    <div class="sell-header">
+                        <h1 class="fw-bold text-light">Sell List</h1>
+                    </div>
+                    <div class="container">
+                        <div class="row" id="sell-list-content">
+                            <c:forEach var ="sellList" items="${requestScope.userSellList}">
+                                <!-- Item Card -->
+                                <div class="sell-card mb-3" id="sell-card-${sellList.id}">
+                                    <div class="row g-0">
+                                        <div class="col-md-4 mb-2">
+                                            <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
                                         </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
+                                                </h5>
+                                                <p class="card-text">Selling price: ${sellList.price}</p>
+                                                <p class="card-text">Selling time: ${sellList.sellTime}</p>
+                                                <p class="card-text">Game Account: ${sellList.gameAccount}</p>
+                                            </div>
+                                        </div>
+                                        <button class="btn item-card-button sell-list-cart-button mt-2" onclick="deleteSellListItem(${sellList.id})">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
                                     </div>
-                                </c:forEach>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Total:</span>
-                                <span>$6000</span>
-                            </div>
-
+                                </div>
+                            </c:forEach>
                         </div>
-                    </form>
+                        <div class="d-flex justify-content-between">
+                            <span>Total:</span>
+                            <span>$6000</span>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -205,7 +203,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
     </script>
-
+    <!-- script for load more -->
     <script>
         function getAmount() {
             return document.getElementsByClassName("item-card").length;
@@ -223,6 +221,7 @@
                 success: function (data) {
                     var row = document.getElementById("list-content");
                     row.innerHTML += data;
+                    updateButtons();
                     if (data.length === 0) {
                         document.getElementById("load-button").style.display = "none";
                     }
@@ -231,6 +230,7 @@
         }
     </script>
 
+    <!-- Script for filter -->
     <script>
         // Create an empty array to store the checked values
         var checkedValues = ['knife', 'pistol', 'rifle', 'smgs', 'heavy'];
@@ -294,9 +294,13 @@
                 }
             });
         }
-    </script>    
+    </script>
+    <!-- Script for add to sell list -->
     <script>
-        function handleButtonClick(event) {
+        // Retrieve the sell list state from local storage
+        var sellListLength = localStorage.getItem("sellListLength") || 0;
+
+        function addToSellList(event) {
             var clickedButton = event.target;
             var parentContainer = clickedButton.closest('.item-details');
 
@@ -339,9 +343,14 @@
                         type: 'POST',
                         data: data,
                         success: function (data) {
-                            console.log(data);
                             var row = document.getElementById("sell-list-content");
                             row.innerHTML = data + row.innerHTML;
+                            sellListLength++;
+
+                            // Update the sell list length in local storage
+                            localStorage.setItem("sellListLength", sellListLength);
+
+                            updateButtons();
                         },
                         error: function () {
                             console.log('Error occurred during AJAX request');
@@ -354,6 +363,46 @@
             } else {
                 console.log("Error: Parent container not found for the clicked button.");
             }
+        }
+
+        // Update the buttons based on the sell list state
+        function updateButtons() {
+            if (sellListLength >= 5) {
+                var buttons = document.querySelectorAll(".summit-button .item-card-button");
+                for (var i = 0; i < buttons.length; i++) {
+                    var button = buttons[i];
+                    button.innerText = "Sell List is Full";
+                    button.removeAttribute("onclick");
+                }
+            }
+        }
+
+        // Call the updateButtons function when the page loads
+        window.addEventListener('load', updateButtons);
+    </script>
+
+    <!-- Script for delete from sell list -->
+    <script>
+        function deleteSellListItem(sellItemId) {
+            console.log(sellItemId);
+            $.ajax({
+                url: '/In_Game_Items_Trading/deleteSellListItem',
+                type: 'POST',
+                data: {
+                    sellItemId: sellItemId
+                },
+                success: function (data) {
+                    sellListLength--;
+                    localStorage.setItem("sellListLength", sellListLength);
+                    console.log("item with id " + sellItemId + " deleted");
+                    //Deleted item from the DOM
+                    $('#sell-card-' + sellItemId).remove();
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors that occur during the AJAX request
+                    console.error(error);
+                }
+            });
         }
     </script>
 </body>

@@ -38,7 +38,7 @@
     object-fit: scale-down;
 }
 
-.card-body p {
+.card-body .item-full-name {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     /* Limit the text to 2 lines */
