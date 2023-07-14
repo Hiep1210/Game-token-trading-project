@@ -46,3 +46,7 @@
     overflow: hidden;
     min-height: 48px;
 }
+
+.sell-list-cart-button {
+    background-color: rgb(237,66, 69);
+}

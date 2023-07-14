@@ -5,20 +5,20 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  *
- * @author ksiks
+ * @author VICTUS
  */
-public class SellList extends MarketItems{
+public class SellList extends MarketItems {
+
     int id;
-    int seller_id;
-    
-    public SellList(int id, int buyer_id, int mid, String game, int user_id, double price, LocalDateTime begindate, LocalDateTime enddate, int gid, String skin_name, String item_name, String type, String rarity, String exterior, String img) {
-        super(mid, game, user_id, price, begindate, enddate ,gid, skin_name, item_name, type, rarity, exterior, img);
+    int sellerId;
+
+    public SellList(int id, int sellerId, int mid, String gameAccountName, int userid, double price, LocalDateTime begindate, LocalDateTime enddate, int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
+        super(mid, gameAccountName, userid, price, begindate, enddate, gid, skinname, itemname, type, rarity, exterior, img);
         this.id = id;
-        
+        this.sellerId = sellerId;
     }
 
     public int getId() {
@@ -29,17 +29,12 @@ public class SellList extends MarketItems{
         this.id = id;
     }
 
-    public int getSeller_id() {
-        return seller_id;
+    public int getSellerId() {
+        return sellerId;
     }
 
-    public void setSeller_id(int seller_id) {
-        this.seller_id = seller_id;
-    }
-    
-    public int getSellItemId() {
-        return super.getId();
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
     }
 
-   
 }

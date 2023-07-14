@@ -1,5 +1,7 @@
 package controller;
 
+import dao.AuctionDAO;
+import dao.BidDAO;
 import dao.MarketItemsDAO;
 import dao.ProcessItemsDAO;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import model.Auction;
 import model.ProcessItem;
 import model.User;
 
@@ -32,6 +35,7 @@ public class GetProcessItemController extends HttpServlet {
         try {
             User user = (User) request.getSession().getAttribute("user");
             ArrayList<ProcessItem> processItemList;
+            Auction auction;
             String redirect = "processItem.jsp";
             if (user == null || user.getRoleid() != 2) {
                 redirect = "BuyPageController";
@@ -41,8 +45,11 @@ public class GetProcessItemController extends HttpServlet {
                 for (ProcessItem processItem : processItemList) {
                     if (processItem.getTransactionTypeIdId() == 1) {
                         processItem.setObject(MarketItemsDAO.getMarketItem(processItem.getTransactionId()));
+                    } else if (processItem.getTransactionTypeIdId() == 2) {
+                        auction  = AuctionDAO.getAuction(processItem.getTransactionId());
+                        auction.setBidList(BidDAO.getBidsFromAuctionId(auction.getAuctionId()));
+                        processItem.setObject(auction);
                     }
-
                 }
 
             }

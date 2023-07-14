@@ -20,6 +20,10 @@ public class GameItems {
 
     public GameItems() {
     }
+    
+    public GameItems(int id) {
+        this.id= id;
+    }
 
     public GameItems(int id, String skinName, String itemName, String type, String rarity, String exterior, String img) {
         this.id = id;
@@ -32,6 +36,24 @@ public class GameItems {
     }
 
     public GameItems(String skinName, String itemName, String type, String rarity, String img) {
+        this.skinName = skinName;
+        this.itemName = itemName;
+        this.type = type;
+        this.rarity = rarity;
+        this.img = img;
+    }
+
+    public GameItems(String skinName, String itemName, String type, String rarity, String exterior, String img) {
+        this.skinName = skinName;
+        this.itemName = itemName;
+        this.type = type;
+        this.rarity = rarity;
+        this.exterior = exterior;
+        this.img = img;
+    }
+
+    public GameItems(int gid, String skinName, String itemName, String type, String rarity, String img) {
+        this.id = gid;
         this.skinName = skinName;
         this.itemName = itemName;
         this.type = type;
@@ -94,7 +116,5 @@ public class GameItems {
     public void setImg(String img) {
         this.img = img;
     }
-
-    
 
 }
