@@ -68,42 +68,73 @@
                                         <c:forEach var = "processItem" items="${requestScope.processItemList}" varStatus="currentStatus">
                                         <form action='ProcessItemController' method='post'>
                                             <input type="hidden" name="processItemId" value="${processItem.id}">    
-                                            <tr>
-                                                <th scope="row">${currentStatus.index + 1}</th>
-                                                <td>
-                                                    <c:if test="${processItem.transactionTypeIdId == 1}">
+                                            <c:if test="${processItem.transactionTypeIdId == 1}">
+                                                <tr>
+                                                    <th scope="row">${currentStatus.index + 1}</th>
+                                                    <td>
                                                         Buy
-                                                    </c:if>
-                                                    <c:if test="${processItem.transactionTypeIdId == 2}">
+                                                    </td>
+                                                    <td>
+                                                        <img src="UI/image/${processItem.object.getImg()}.png" alt="game item picture" width="300" 
+                                                             height="400">
+                                                    </td>
+                                                    <td> 
+                                                        ${processItem.object.skinName}
+                                                        ${processItem.object.itemName}
+                                                        ${processItem.object.type}
+                                                        ${processItem.object.rarity}
+                                                        ${processItem.object.exterior}
+                                                    </td>
+                                                    <td>
+                                                        ${processItem.object.getgameAccountName()}
+                                                    </td>
+                                                    <td>
+                                                        ${processItem.gameAccountName}
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="denyReason" value="Seller did not send item!">
+                                                    </td>
+                                                    <td>
+                                                        Accept<input type="radio" name="decision" value="accept" required="">
+                                                        Reject<input type="radio" name="decision" value="reject">
+                                                    </td>
+                                                    <td><input type='submit' name='action' value='Confirm'></td>
+                                                </tr>
+                                            </c:if>
+
+                                            <c:if test="${processItem.transactionTypeIdId == 2}">
+                                                <tr>
+                                                    <th scope="row">${currentStatus.index + 1}</th>
+                                                    <td>
                                                         Auction
-                                                    </c:if>
-                                                </td>
-                                                <td>
-                                                    <img src="UI/image/${processItem.object.getImg()}.png" alt="game item picture" width="300" 
-                                                         height="400">
-                                                </td>
-                                                <td> 
-                                                    ${processItem.object.skinName}
-                                                    ${processItem.object.itemName}
-                                                    ${processItem.object.type}
-                                                    ${processItem.object.rarity}
-                                                    ${processItem.object.exterior}
-                                                </td>
-                                                <td>
-                                                    ${processItem.object.getgameAccountName()}
-                                                </td>
-                                                <td>
-                                                    ${processItem.gameAccountName}
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="denyReason" value="Seller did not send item!">
-                                                </td>
-                                                <td>
-                                                    Accept<input type="radio" name="decision" value="accept" required="">
-                                                    Reject<input type="radio" name="decision" value="reject">
-                                                </td>
-                                                <td><input type='submit' name='action' value='Confirm'></td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                        <img src="UI/image/${processItem.object.gameItem.getImg()}.png" alt="game item picture" width="300" 
+                                                             height="400">
+                                                    </td>
+                                                    <td> 
+                                                        ${processItem.object.gameItem.skinName}
+                                                        ${processItem.object.gameItem.itemName}
+                                                        ${processItem.object.gameItem.type}
+                                                        ${processItem.object.gameItem.rarity}
+                                                        ${processItem.object.gameItem.exterior}
+                                                    </td>
+                                                    <td>
+                                                        ${processItem.object.bidList.get(0).gameAccountName}
+                                                    </td>
+                                                    <td>
+                                                        ${processItem.object.gameAccountName}
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="denyReason" value="Seller did not send item!">
+                                                    </td>
+                                                    <td>
+                                                        Accept<input type="radio" name="decision" value="accept" required="">
+                                                        Reject<input type="radio" name="decision" value="reject">
+                                                    </td>
+                                                    <td><input type='submit' name='action' value='Confirm'></td>
+                                                </tr>
+                                            </c:if>
                                         </form>
                                     </c:forEach>
                                     </tbody>

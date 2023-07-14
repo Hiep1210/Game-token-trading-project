@@ -28,6 +28,7 @@ import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.util.Streams;
 
 @WebServlet(name = "AddGameItemController", urlPatterns = {"/AddGameItemController"})
 public class AddGameItemController extends HttpServlet {
@@ -36,7 +37,7 @@ public class AddGameItemController extends HttpServlet {
             = Logger.getLogger(SendPaymentRequestController.class.getName());
     String location = null;
     private static final String HOMEPAGE = "BuyPageController";
-    
+
     @Override
     protected void doGet(HttpServletRequest request,
             HttpServletResponse response)
@@ -55,23 +56,65 @@ public class AddGameItemController extends HttpServlet {
         ServletFileUpload upload;
         FileItemIterator iterator;
         FileItemStream item;
-        String[] dataArray = new String[2];
-    try {
-        User user = (User) request.getSession().getAttribute("user");
+        String skinName = null;
+        String itemName = null;
+        String type = null;
+        String rarity = null;
+        String picGameItem = null;
+        GameItems gameItem;
+        String newGameItemImage;
+        try {
+            User user = (User) request.getSession().getAttribute("user");
 
-        String redirect = "addGameItem.jsp";
-        if (user == null) {
-            redirect = "BuyPageController";
-        } else if (!isAdmin(user.getRoleid())) {
-            redirect = "BuyPageController";
-        } else {
-            
+            String redirect = "addGameItem.jsp";
+            if (user == null) {
+                redirect = "BuyPageController";
+            } else if (!isAdmin(user.getRoleid())) {
+                redirect = "BuyPageController";
+            } else {
+                upload = new ServletFileUpload();
+                iterator = upload.getItemIterator(request);
+                while (iterator.hasNext()) {
+                    item = iterator.next();
+                    if (item.isFormField()) { // Process form fields
+                        String fieldName = item.getFieldName();
+                        String fieldValue = Streams.asString(item.openStream());
+                        switch (fieldName) {
+                            case "skinName":
+                                skinName = fieldValue;
+                                break;
+                            case "itemName":
+                                itemName = fieldValue;
+                                break;
+                            case "type":
+                                type = fieldValue;
+                                break;
+                            case "rarity":
+                                rarity = fieldValue;
+                                break;
+                            default:
+                                break;
+                        }
+                    } else { // Process file upload
+                        // Get the original filename of the uploaded profile picture
+                        picGameItem = item.getName().substring(0,item.getName().lastIndexOf("."));
+                        //User not select any picture
+                        if ("".equals(picGameItem)) {
+                            redirect = "BuyPageController";
+                            break;
+                        }
+                        saveGameItemPic(item); // Save the profile picture
+                    }
+                }
+                gameItem = new GameItems(skinName, itemName, type, rarity, picGameItem);
+                GameItemsDAO.insertGameItem(gameItem);
+                // Save the profile picture
+            }
+            request.getRequestDispatcher(redirect).forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        request.getRequestDispatcher(redirect).forward(request, response);
-    } catch (Exception e) {
-        System.out.println(e);
     }
-}
 
     public boolean isAdmin(int role_id) {
         ArrayList<Role> roleList = RoleDAO.getRoleList();
@@ -84,24 +127,23 @@ public class AddGameItemController extends HttpServlet {
         }
         return isAdmin;
     }
-    
-    private void moveImages(FileItemStream item, String newInvoiceImageName) {
+
+    private void saveGameItemPic(FileItemStream item) {
         InputStream initialStream;
         Path targetDir;
         Path target;
         try {
-            //Move image to new location in project folder called image
             if (location == null) {
                 location = getLocation();
             }
             initialStream = item.openStream();
-            targetDir = Paths.get(location);//get location of image file in project 
-            target = targetDir.resolve(newInvoiceImageName + ".webp");//get location of copied image in the project(targetDir + id of inserted record + .webp)
-            Files.copy(initialStream, target,
-                    StandardCopyOption.REPLACE_EXISTING);//change name and copy image into target file
+            targetDir = Paths.get(location, "image"); // Create a "profile_pics" directory inside the location
+            targetDir.toFile().mkdirs(); // Create the directory if it doesn't exist
+            target = targetDir.resolve(item.getName().substring(0,item.getName().lastIndexOf("."))); // Save the profile picture with its original filename
+            Files.copy(initialStream, target, StandardCopyOption.REPLACE_EXISTING);
             IOUtils.closeQuietly(initialStream);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            System.out.println(e);
         }
     }
 
@@ -110,15 +152,14 @@ public class AddGameItemController extends HttpServlet {
         String jarPath = null;
         ProtectionDomain domain;
         try {
-            //get location of image file in project
-            domain = SendPaymentRequestController.class.getProtectionDomain();
-            path = domain.getCodeSource().getLocation().getPath();//get location of jar file in class News Controller
+            domain = EditUserProfile.class.getProtectionDomain();
+            path = domain.getCodeSource().getLocation().getPath();
             jarPath = URLDecoder.decode(path, "UTF-8");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            System.out.println(e);
         }
         return jarPath.replace("build/web/WEB-INF/classes/", "").substring(1)
-                + "web/UI/image/";//return the location invoice images file
+                + "web/UI/"; // Update this path to the desired location for profile pictures
     }
 
 }

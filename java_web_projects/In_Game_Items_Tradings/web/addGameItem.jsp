@@ -38,7 +38,7 @@
         <div class="col-lg-9 page-info">
             <h1>Add Game Item</h1>
             <div class="container">
-                <form action="AddGameItemController" method="post">
+                <form action="AddGameItemController" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="skinName" class="form-label">Skin Name</label>
                         <input type="text" name="skinName" id="skinName" class="form-control" required>
