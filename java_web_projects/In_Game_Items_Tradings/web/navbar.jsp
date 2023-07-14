@@ -18,7 +18,7 @@
                 <div class="row nopadding">
                     <!-- Trade Button -->
                     <div class="col-lg-2 navbar-item nopadding">
-                        <a href="">
+                        <a href="TradePageController">
                             <i class="material-icons navbar-item-icon">compare_arrows</i>
                         </a>
                         <h5>Trade</h5>

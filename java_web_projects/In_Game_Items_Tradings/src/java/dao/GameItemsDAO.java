@@ -6,6 +6,7 @@ package dao;
 
 import Context.DBContext;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -67,6 +68,30 @@ public class GameItemsDAO {
         return list;
     }
 
+    public static GameItems getGameItemById(int id) {
+        GameItems item = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "Select * from GameItems where id = ?";
+                PreparedStatement call = con.prepareStatement(sql);
+                call.setInt(1, id);
+                ResultSet rs = call.executeQuery();
+                //assign value for object items then return it
+                while (rs.next()) {
+                    item = new GameItems(rs.getInt(1), rs.getString(2), rs.getString(3),
+                            rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return item;
+    }
+
     public static ArrayList<GameItems> Filter(String type, String rarity, String exterior) {
         ArrayList<GameItems> list = new ArrayList<>();
         try {
@@ -123,5 +148,8 @@ public class GameItemsDAO {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+    public static void main(String[] args) {
+        getGameItemById(1);
     }
 }

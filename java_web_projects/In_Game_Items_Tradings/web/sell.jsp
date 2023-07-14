@@ -106,7 +106,7 @@
                                 <div class="offcanvas-body">
                                     <img class="img-fluid" src="UI/image/${sellList.gameItems.img}.png" alt="">
                                     <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Extrior:</p>
+                                        <p class="sell-info-select-name">Exterior:</p>
                                         <details class="sidebar-category">
                                             <summary>Exterior</summary>
                                             <ul class="nopadding d-flex flex-column">
