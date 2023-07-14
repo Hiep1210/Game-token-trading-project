@@ -26,7 +26,7 @@ public class LoadMoreController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             printAddButton = "<div class=\"summit-button mt-2\">\n"
-                    + "                                        <button class=\"btn item-card-button\" onclick=\"handleButtonClick(event)\">\n"
+                    + "                                        <button class=\"btn item-card-button\" onclick=\"addToSellList(event)\">\n"
                     + "                                                Add to Sell List\n"
                     + "                                            </button>\n"
                     + "                                    </div>";
@@ -46,7 +46,7 @@ public class LoadMoreController extends HttpServlet {
                     + "                                <div class=\"card rarity-" + gameItems.getGameItems().getRarity().toLowerCase() + "\" data-bs-toggle = \"dropdown\" aria-expanded=\"false\">\n"
                     + "                                    <img src=\"UI/image/" + gameItems.getGameItems().getImg() + ".png\" alt =\"displayfailed\" class=\"card-img-top\">\n"
                     + "                                    <div class=\"card-body\">\n"
-                    + "                                        <p>" + gameItems.getGameItems().getType() + " | " + gameItems.getGameItems().getItemName() + " " + gameItems.getGameItems().getSkinName() + "</p>\n"
+                    + "                                        <p class=\"item-full-name\">" + gameItems.getGameItems().getType() + " | " + gameItems.getGameItems().getItemName() + " " + gameItems.getGameItems().getSkinName() + "</p>\n"
                     + "                                        <a href=\"#\" class=\"btn item-card-button\">\n"
                     + "                                            <i class=\"fa-solid fa-cart-shopping\"></i>\n"
                     + "                                        </a>\n"

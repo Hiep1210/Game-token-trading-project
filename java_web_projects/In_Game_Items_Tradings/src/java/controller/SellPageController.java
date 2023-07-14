@@ -24,8 +24,10 @@ public class SellPageController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         ArrayList<SellItems> userSellList = new ArrayList<>();
+        int userSellListLength = 0;
         if (user != null) {
             userSellList = SellListDAO.getUserSellList(user.getId());
+            userSellListLength = userSellList.size();
         }
         
         ArrayList<GameItems> allSellItems = SellDAO.getTopTwelveItems();
@@ -40,6 +42,7 @@ public class SellPageController extends HttpServlet {
         
         request.setAttribute("sellList", sellItemList);
         request.setAttribute("userSellList", userSellList);
+        request.setAttribute("userSellListLength", userSellListLength);
         request.getRequestDispatcher("sell.jsp").forward(request, response);
     }
 }

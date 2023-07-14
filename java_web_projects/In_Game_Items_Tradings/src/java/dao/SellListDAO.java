@@ -184,11 +184,61 @@ public class SellListDAO {
         }
         return sellItem;
     }
+    
+    public static void deleteSellListItem(int sellerId, int sellItemId) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            String sql = "DELETE FROM SellList WHERE (seller_id = ? AND sell_item_id = ?);";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, sellerId);
+            statement.setInt(2, sellItemId);
+            if (statement.executeUpdate() < 1) {
+                throw new NullPointerException();
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            try {
+                statement.close();
+                con.close();
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
+            }
+        }
+    }
+    
+    public static void deleteSellItemsItem(int sellerId, int itemId) {
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            String sql = "DELETE FROM SellItems WHERE (seller_id = ? AND id = ?);";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, sellerId);
+            statement.setInt(2, itemId);
+            if (statement.executeUpdate() < 1) {
+                throw new NullPointerException();
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            try {
+                statement.close();
+                con.close();
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
-        SellItems item = getSellListItemInfo(1);
-        System.out.println(item.getImg());
+//        deleteSellListItem(2, 3);
+        deleteSellItemsItem(2, 3);
 //        ArrayList<SellItems> sellListItemsList = getUserSellList(2);
 //        for (SellItems sellItems : sellListItemsList) {
 //            System.out.println(sellItems.getId());

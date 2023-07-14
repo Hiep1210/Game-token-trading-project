@@ -27,6 +27,11 @@ public class AddSellListController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
+        int userSellListLength = SellListDAO.getUserSellList(user.getId()).size();
+        if (userSellListLength == 5) {
+            return;
+        }
+
         String skinName = request.getParameter("skinName");
         String exterior = request.getParameter("exterior");
         int sellTime = Integer.parseInt(request.getParameter("sellTime"));
@@ -41,7 +46,7 @@ public class AddSellListController extends HttpServlet {
 
             SellListDAO.insertSellListItem(sellItem);
             int sellItemId = SellListDAO.getSellItemId(sellItem);
-            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);            
+            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
             SellListDAO.addToSellList(sellerId, sellItemId);
 
             PrintWriter out = response.getWriter();
@@ -55,12 +60,13 @@ public class AddSellListController extends HttpServlet {
                     + "                                            <div class=\"card-body\">\n"
                     + "                                                <h5 class=\"card-title mb-2\">" + sellItemInfo.getType() + " | " + sellItemInfo.getItemName() + " " + sellItemInfo.getSkinName() + " (" + sellItem.getExterior() + ")\n"
                     + "                                                </h5>\n"
-                    + "                                                <p class=\"card-text mb-1\">Selling price: " + sellItemInfo.getPrice() + "</p>\n"
-                    + "                                                <p class=\"card-text\">You get: $1800</p>\n"
+                    + "                                                <p class=\"card-text\">Selling price: " + sellItemInfo.getPrice() + "</p>\n"
+                    + "                                                <p class=\"card-text\">Selling time: " + sellItemInfo.getSellTime() + "</p>\n"
+                    + "                                                <p class=\"card-text\">Game Account: " + sellItemInfo.getGameAccount() + "</p>\n"
                     + "                                            </div>\n"
                     + "                                        </div>\n"
                     + "                                        <button class=\"btn item-card-button sell-list-cart-button mt-2\">\n"
-                    + "                                            <i class=\"fa-solid fa-cart-shopping\"></i>\n"
+                    + "                                            <i class=\"fa-solid fa-trash\"></i>\n"
                     + "                                        </button>\n"
                     + "                                    </div>\n"
                     + "                                </div>");
