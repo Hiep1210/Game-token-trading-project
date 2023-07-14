@@ -297,6 +297,11 @@
     </script>
     <!-- Script for add to sell list -->
     <script>
+        function getUserSellListLength() {
+            localStorage.setItem("sellListLength", `${requestScope.userSellListLength}`);
+        }
+        window.addEventListener('load', getUserSellListLength());
+
         // Retrieve the sell list state from local storage
         var sellListLength = localStorage.getItem("sellListLength") || 0;
 
@@ -391,7 +396,7 @@
                 data: {
                     sellItemId: sellItemId
                 },
-                success: function (data) {
+                success: function () {
                     sellListLength--;
                     localStorage.setItem("sellListLength", sellListLength);
                     console.log("item with id " + sellItemId + " deleted");

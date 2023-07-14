@@ -24,16 +24,12 @@ public class DeleteSellListItem extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        System.out.println(user.getId());
-        System.out.println("sellid String" + request.getParameter("sellItemId"));
         int sellItemId = Integer.parseInt(request.getParameter("sellItemId"));
-        System.out.println("sellid" + sellItemId);
 
         if (user != null) {
             int sellerId = user.getId();
             SellListDAO.deleteSellListItem(sellerId, sellItemId);
             SellListDAO.deleteSellItemsItem(sellerId, sellItemId);
-            System.out.println("im here");
             PrintWriter out = response.getWriter();
             out.print("Item deleted successfully");
         }
