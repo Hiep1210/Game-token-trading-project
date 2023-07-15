@@ -8,11 +8,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import model.User;
-import java.sql.SQLException;
 import Context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -349,6 +349,28 @@ public class UserDAO {
         } catch (SQLException e) {
         }
         return null;
+    }
+    public static HashMap<Integer, User> getAllUser(){
+        HashMap<Integer, User> list = new HashMap<>();
+        try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "Select * from UserAccount";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                while(rs.next()){
+                    User user = new User(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getInt(8),rs.getDouble(9));
+                    list.put(user.getId(),user);
+                }
+                rs.close();
+                call.close();
+                con.close();
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
 
     public static void main(String[] args) {
