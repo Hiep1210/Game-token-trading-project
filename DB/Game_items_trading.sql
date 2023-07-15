@@ -40,6 +40,28 @@ CREATE TABLE Notification (
     noti_content VARCHAR(10000),
     content_type VARCHAR(50)
 );
+
+create table SellItems(
+    id int not null auto_increment,
+    primary key(id),
+    exterior varchar(50),
+    sell_time int,
+    price double,
+	game_account_name varchar(50),
+    seller_id int,
+    item_id int,
+    foreign key(item_id) references GameItems(id)
+);
+
+create table SellList(
+	id int not null auto_increment,
+    primary key(id),
+    seller_id int not null,
+	sell_item_id int not null,
+    foreign key(sell_item_id) references SellItems(id),
+    foreign key(seller_id) references UserAccount(id)
+);
+
 create table MarketItems(
 	id int not null auto_increment,
     primary key(id),
@@ -48,7 +70,7 @@ create table MarketItems(
     foreign key(user_id) references UserAccount(id),
     item_id int,
     price double,
-    foreign key(item_id) references GameItems(id),
+    foreign key(item_id) references SellItems(item_id),
     begin_date datetime,
     end_date datetime
 );
@@ -150,27 +172,6 @@ create table ProcessItems(
     foreign key(transactionType_id) references TransactionType(id),
     foreign key (sender_id) references UserAccount(id),
     foreign key (receiver_id) references UserAccount(id)
-);
-
-create table SellItems(
-    id int not null auto_increment,
-    primary key(id),
-    exterior varchar(50),
-    sell_time int,
-    price double,
-	game_account_name varchar(50),
-    seller_id int,
-    item_id int,
-    foreign key(item_id) references GameItems(id)
-);
-
-create table SellList(
-	id int not null auto_increment,
-    primary key(id),
-    seller_id int not null,
-	sell_item_id int not null,
-    foreign key(sell_item_id) references SellItems(id),
-    foreign key(seller_id) references UserAccount(id)
 );
 
 INSERT INTO role (`id`, `role_name`) VALUES ('1', 'user');
