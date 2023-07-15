@@ -565,3 +565,23 @@ INSERT INTO `game_items_trading`.`processitems` (`id`, `transactionType_id`, `tr
 INSERT INTO `game_items_trading`.`processitems` (`id`, `transactionType_id`, `transaction_id`, `sender_id`, `receiver_id`, `game_account_name`, `process_date`) VALUES ('4', '1', '18', '5', '2', 'br', '2023-06-18 16:33:53');
 INSERT INTO `game_items_trading`.`processitems` (`id`, `transactionType_id`, `transaction_id`, `sender_id`, `receiver_id`, `game_account_name`, `process_date`) VALUES ('5', '1', '19', '5', '2', 'br', '2023-06-18 16:33:53');
 INSERT INTO `game_items_trading`.`processitems` (`id`, `transactionType_id`, `transaction_id`, `sender_id`, `receiver_id`, `game_account_name`, `process_date`) VALUES ('6', '1', '20', '5', '2', 'br', '2023-06-18 16:33:53');
+
+INSERT INTO `game_items_trading`.`tradeitems` (`game_account_name`, `creator`, `begin_date`, `end_date`) VALUES ('hiep1210', '3', '2023-07-14', '2023-09-01');
+INSERT INTO `game_items_trading`.`tradeitems` (`game_account_name`, `creator`, `begin_date`, `end_date`) VALUES ('hoang', '2', '2023-07-14', '2023-09-01');
+INSERT INTO `game_items_trading`.`tradeitems` (`game_account_name`, `creator`, `begin_date`, `end_date`) VALUES ('lam', '4', '2023-07-14', '2023-09-01');
+
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('6', '1');
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('10', '1');
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('23', '2');
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('12', '2');
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('14', '2');
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('4', '3');
+INSERT INTO `game_items_trading`.`offeritem` (`give_id`, `trade_id`) VALUES ('5', '1');
+
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('14', '1');
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('17', '1');
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('24', '1');
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('34', '2');
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('12', '2');
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('11', '3');
+INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('3', '3');
