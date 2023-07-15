@@ -38,11 +38,15 @@
     object-fit: scale-down;
 }
 
-.card-body p {
+.card-body .item-full-name {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     /* Limit the text to 2 lines */
     -webkit-box-orient: vertical;
     overflow: hidden;
     min-height: 48px;
+}
+
+.sell-list-cart-button {
+    background-color: rgb(237,66, 69);
 }

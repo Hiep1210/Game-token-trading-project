@@ -4,29 +4,54 @@
  */
 package model;
 
-import java.time.LocalDateTime;
-
 /**
  *
- * @author ksiks
+ * @author VICTUS
  */
 public class SellItems extends GameItems {
+
     private int id;
-    private String gameAccountName;
-    private int userid;
+    private String exterior;
+    private int sellTime;
     private double price;
-    LocalDateTime begindate;
-    LocalDateTime enddate;
-    
-    public SellItems(int id, String gameAccountName, int userid, double price, LocalDateTime begindate, LocalDateTime enddate,
-            int gid, String skinname, String itemname, String type, String rarity, String exterior, String img) {
-        super(gid, skinname, itemname, type, rarity, exterior, img);
+    private String gameAccount;
+    private int sellerId;
+
+    public SellItems() {
+    }
+
+    public SellItems(int id, int sellerId, int gid) {
+        super(gid);
         this.id = id;
-        this.gameAccountName = gameAccountName;
-        this.userid = userid;
+        this.sellerId = sellerId;
+    }
+
+    public SellItems(int id, String exterior, int sellTime, double price, String gameAccount, int sellerId) {
+        this.id = id;
+        this.exterior = exterior;
+        this.sellTime = sellTime;
         this.price = price;
-        this.begindate = begindate;
-        this.enddate = enddate;
+        this.gameAccount = gameAccount;
+        this.sellerId = sellerId;
+    }
+
+    public SellItems(String exterior, int sellTime, double price, String gameAccount, int sellerId, int gid) {
+        super(gid);
+        this.exterior = exterior;
+        this.sellTime = sellTime;
+        this.price = price;
+        this.gameAccount = gameAccount;
+        this.sellerId = sellerId;
+    }
+
+    public SellItems(int id, String exterior, int sellTime, double price, String gameAccount, int sellerId, int gid, String skinName, String itemName, String type, String rarity, String img) {
+        super(gid, skinName, itemName, type, rarity, img);
+        this.id = id;
+        this.exterior = exterior;
+        this.sellTime = sellTime;
+        this.price = price;
+        this.gameAccount = gameAccount;
+        this.sellerId = sellerId;
     }
 
     public int getId() {
@@ -37,20 +62,20 @@ public class SellItems extends GameItems {
         this.id = id;
     }
 
-    public String getgameAccountName() {
-        return gameAccountName;
+    public String getExterior() {
+        return exterior;
     }
 
-    public void setgameAccountName(String gameAccountName) {
-        this.gameAccountName = gameAccountName;
+    public void setExterior(String exterior) {
+        this.exterior = exterior;
     }
 
-    public int getUserid() {
-        return userid;
+    public int getSellTime() {
+        return sellTime;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setSellTime(int sellTime) {
+        this.sellTime = sellTime;
     }
 
     public double getPrice() {
@@ -61,33 +86,27 @@ public class SellItems extends GameItems {
         this.price = price;
     }
 
-    public String getGameAccountName() {
-        return gameAccountName;
+    public String getGameAccount() {
+        return gameAccount;
     }
 
-    public void setGameAccountName(String gameAccountName) {
-        this.gameAccountName = gameAccountName;
+    public void setGameAccount(String gameAccount) {
+        this.gameAccount = gameAccount;
     }
 
-    public LocalDateTime getBegindate() {
-        return begindate;
+    public int getSellerId() {
+        return sellerId;
     }
 
-    public void setBegindate(String LocalDateTime) {
-        this.begindate = begindate;
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
     }
 
-    public LocalDateTime getEnddate() {
-        return enddate;
+    public int getGameItemId() {
+        return super.getId();
     }
 
-    public void setEnddate(String LocalDateTime) {
-        this.enddate = enddate;
+    public void setGameItemId(int gid) {
+        super.setId(gid);
     }
-
-    
-
-    
-
-    
 }

@@ -18,13 +18,13 @@ import model.MarketItems;
  */
 public class MarketItemsDAO {
 
-    private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* "
-            + "FROM marketitems m, gameitems g "
-            + "WHERE m.item_id = g.id AND NOW() < m.end_date "
-            + "AND NOT EXISTS ( "
-            + "     SELECT 1 FROM processitems p   "
-            + "     WHERE  p.transaction_id = m.id  "
-            + "     AND p.transactionType_id = 1) ";
+    private static final String SELECTITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* \n"
+            + "FROM marketitems m, gameitems g \n"
+            + "WHERE m.item_id = g.id AND NOW() < m.end_date\n"
+            + "AND NOT EXISTS (\n"
+            + "SELECT 1 FROM processitems p \n"
+            + "WHERE  p.transaction_id = m.id\n"
+            + "AND p.transactionType_id = 1)";
 
     private static final String SELECTENDEDITEMS = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*  "
             + "FROM marketitems m, gameitems g  "
@@ -211,5 +211,10 @@ public class MarketItemsDAO {
             System.out.println(e.getMessage());
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<MarketItems> list = getAllMarketItems();
+        System.out.println(list);
     }
 }

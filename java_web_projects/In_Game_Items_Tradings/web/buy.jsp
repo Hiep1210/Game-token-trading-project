@@ -26,7 +26,6 @@
     <body>
         <c:set var="redirect" value="BuyPageController"/>
         <%@include file="navbar.jsp" %>
-        <!-- Main Content -->
         <div class="container-fluid main-content">
             <div class="row">
                 <!-- Filter Section -->
@@ -276,8 +275,8 @@
                 });
             }
         </script>
-        
-         <script>
+
+        <script>
             // Define the countdown details for each timer
             var countdowns = [
             <c:forEach var="market" items="${requestScope.marketlist}" varStatus="currentStatus">
@@ -300,8 +299,8 @@
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    var countdownElement = document.getElementById(countdown.name);
-                    countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                        var countdownElement = document.getElementById(countdown.name);
+                        countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
                     // If the countdown is finished, update the HTML element
                     if (distance < 0) {
