@@ -100,7 +100,7 @@
                                         <div class="card-body">
                                             <p class="item-full-name">${sellList.gameItems.type} | ${sellList.gameItems.itemName} ${sellList.gameItems.skinName}</p>
                                             <a href="#" class="btn item-card-button">
-                                                <i class="fa-solid fa-cart-shopping"></i>
+                                                <i class="fa-solid fa-gavel"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -155,7 +155,7 @@
                                         <c:if test="${sessionScope.user != null}">
                                             <div class="summit-button mt-2">
                                                 <button class="btn item-card-button" onclick="addToSellList(event)">
-                                                    Add to Sell List
+                                                    Create Auction
                                                 </button>
                                             </div>
                                         </c:if>
@@ -352,7 +352,7 @@
                 for (var i = 0; i < buttons.length; i++) {
                     var button = buttons[i];
                     if (userSellItemsAmount < 5) {
-                        button.innerText = "Add to Sell List";
+                        button.innerText = "Create Auction";
                         button.setAttribute("onclick", "addToSellList(event)");
                     } else {
                         button.innerText = "Sell List is Full";
