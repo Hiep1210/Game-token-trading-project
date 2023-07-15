@@ -155,22 +155,21 @@ create table ProcessItems(
 create table SellItems(
     id int not null auto_increment,
     primary key(id),
-	game_account_name varchar(50),
-    user_id int,
-    foreign key(user_id) references UserAccount(id),
-    item_id int,
+    exterior varchar(50),
+    sell_time int,
     price double,
-    foreign key(item_id) references GameItems(id),
-    begin_date date,
-    end_date date
+	game_account_name varchar(50),
+    seller_id int,
+    item_id int,
+    foreign key(item_id) references GameItems(id)
 );
 
 create table SellList(
 	id int not null auto_increment,
     primary key(id),
     seller_id int not null,
-	sell_items_id int not null,
-    foreign key(sell_items_id) references SellItems(id),
+	sell_item_id int not null,
+    foreign key(sell_item_id) references SellItems(id),
     foreign key(seller_id) references UserAccount(id)
 );
 
