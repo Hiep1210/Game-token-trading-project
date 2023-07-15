@@ -12,16 +12,19 @@
         <title>JSP Page</title>
     </head>
     <body>
-       
         <c:forEach var="thread" items="${threadlist}">       
-            <form action="ThreadDiscussionController" method="get">
+            <form action="ThreadDiscussionController" method="post">
             <input name="threadid" value="${thread.id}" type="hidden">   
             Title:  ${thread.ttitle}
+            || Tag: ${thread.ttag} || Author: ${thread.tauthor}<br/>
             <button type="submit">Go to discuss</button>
-            </form>
-            
-            Tag: ${thread.ttag} Author: ${thread.tauthor}<br/>
+            </form>         
         </c:forEach>
+        <form action="ManageThreadController" method="get">
+            <c:set var="userid" value="${requestScope.user}"/>
+            <input name="userid" value="${user.id}" type="hidden">
+            <button type="submit">Manage your thread</button>
+        </form>
             <div>
             <a href="createNewThread.jsp">
                 Create New Thread

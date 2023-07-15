@@ -60,4 +60,43 @@ public class CommentDAO {
             System.out.println(e.getMessage());
     }
 }
+
+    public static boolean updateComment(String ccontent, int user_id, int cid){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "Update COMMENT Set ccontent = '"+ ccontent +"', where id ='"+ cid +"' and user_id ='" + user_id + "'";
+                 Statement st = con.createStatement();
+                int rows = st.executeUpdate(sql);
+                if (rows < 1) {
+                    throw new Exception();
+                }
+                return true;
+            }
+    }catch(Exception e){
+            System.out.println(e.getMessage());
+    }
+        return false;
 }
+    public static boolean deleteComment( int cid){
+         try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "Delete from COMMENT where id ='" + cid + "'";
+                 Statement st = con.createStatement();
+                int rows = st.executeUpdate(sql);
+                if (rows < 1) {
+                    throw new Exception();
+                }
+                return true;
+            }
+    }catch(Exception e){
+            System.out.println(e.getMessage());
+    }
+        return false;
+}
+    }
+
+
