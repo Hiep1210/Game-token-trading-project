@@ -57,9 +57,9 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
-                                    <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
-                                    <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
+                                    <li class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all">Select All</li>
+                                    <li class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</li>
+                                    <li class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</li>
                                 </ul>
                             </div>
                         </div>
@@ -76,6 +76,12 @@
                                     <li class="dropdown-item" onclick="filterByType('desc', this)">Common First</li>
                                 </ul>
                             </div>
+                        </div>
+                        <!-- View all Sell Items -->
+                        <div class="col-lg-3">
+                            <button class="btn btn-primary">
+                                View your sell items
+                            </button>
                         </div>
                     </div>
                     <!-- Item List -->
@@ -185,13 +191,15 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <span>Total:</span>
-                            <span>$6000</span>
-                        </div>
+                        <c:if test="${sessionScope.user != null}">
+                            <div class="summit-button mt-2">
+                                <button class="btn" onclick="sellAll()">
+                                    Sell All
+                                </button>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -403,9 +411,26 @@
                     //Deleted item from the DOM
                     $('#sell-card-' + sellItemId).remove();
                 },
-                error: function (xhr, status, error) {
+                error: function (error) {
                     // Handle any errors that occur during the AJAX request
                     console.error(error);
+                }
+            });
+        }
+    </script>
+
+    <!-- scripit for sell to market -->
+    <script>
+        function sellAll() {
+            $.ajax({
+                url: '/In_Game_Items_Trading/sellToMarket',
+                method: 'POST',
+                success: function (response) {
+                    $('#sell-list-content').remove();
+                },
+                error: function (error) {
+                    // Handle the error response from the backend
+                    console.error('Error occurred during AJAX request');
                 }
             });
         }

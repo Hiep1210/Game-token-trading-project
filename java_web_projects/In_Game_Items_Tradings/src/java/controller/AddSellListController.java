@@ -51,7 +51,7 @@ public class AddSellListController extends HttpServlet {
 
             PrintWriter out = response.getWriter();
             out.println("<!-- Item Card -->\n"
-                    + "                                <div class=\"sell-card mb-3\" id=\"sell-card\">\n"
+                    + "                                <div class=\"sell-card mb-3\" id=\"sell-card-" + sellItemId + "\">\n"
                     + "                                    <div class=\"row g-0\">\n"
                     + "                                        <div class=\"col-md-4\">\n"
                     + "                                            <img src=\"UI/image/" + sellItemInfo.getImg() + ".png\" class=\"img-fluid rounded\" alt=\"...\">\n"
@@ -65,7 +65,7 @@ public class AddSellListController extends HttpServlet {
                     + "                                                <p class=\"card-text\">Game Account: " + sellItemInfo.getGameAccount() + "</p>\n"
                     + "                                            </div>\n"
                     + "                                        </div>\n"
-                    + "                                        <button class=\"btn item-card-button sell-list-cart-button mt-2\">\n"
+                    + "                                        <button class=\"btn item-card-button sell-list-cart-button mt-2\" onclick=\"deleteSellListItem(" + sellItemId + ")\">\n"
                     + "                                            <i class=\"fa-solid fa-trash\"></i>\n"
                     + "                                        </button>\n"
                     + "                                    </div>\n"

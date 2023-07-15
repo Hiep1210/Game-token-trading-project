@@ -19,7 +19,7 @@ public class SellItems extends GameItems {
 
     public SellItems() {
     }
-    
+
     public SellItems(int id, int sellerId, int gid) {
         super(gid);
         this.id = id;
@@ -93,7 +93,7 @@ public class SellItems extends GameItems {
     public void setGameAccount(String gameAccount) {
         this.gameAccount = gameAccount;
     }
-    
+
     public int getSellerId() {
         return sellerId;
     }
@@ -104,5 +104,9 @@ public class SellItems extends GameItems {
 
     public int getGameItemId() {
         return super.getId();
+    }
+
+    public void setGameItemId(int gid) {
+        super.setId(gid);
     }
 }

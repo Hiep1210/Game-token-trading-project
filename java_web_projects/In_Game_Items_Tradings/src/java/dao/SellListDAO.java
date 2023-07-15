@@ -10,7 +10,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import model.SellItems;
 
@@ -152,7 +156,7 @@ public class SellListDAO {
         try {
             DBContext db = new DBContext();
             con = db.getConnection();
-            String sql = "SELECT si.id, si.exterior, si.sell_time, si.price, si.game_account_name, gi.id, gi.skin_name, gi.item_name, gi.type, gi.rarity, gi.img "
+            String sql = "SELECT si.id, si.seller_id, si.exterior, si.sell_time, si.price, si.game_account_name, gi.id, gi.skin_name, gi.item_name, gi.type, gi.rarity, gi.img "
                     + "FROM SellItems si "
                     + "INNER JOIN GameItems gi ON si.item_id = gi.id "
                     + "WHERE si.id = ?";
@@ -161,16 +165,18 @@ public class SellListDAO {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 sellItem = new SellItems();
-                sellItem.setId(rs.getInt("id"));
-                sellItem.setExterior(rs.getString("exterior"));
-                sellItem.setSellTime(rs.getInt("sell_time"));
-                sellItem.setPrice(rs.getDouble("price"));
-                sellItem.setGameAccount(rs.getString("game_account_name"));
-                sellItem.setSkinName(rs.getString("skin_name"));
-                sellItem.setItemName(rs.getString("item_name"));
-                sellItem.setType(rs.getString("type"));
-                sellItem.setRarity(rs.getString("rarity"));
-                sellItem.setImg(rs.getString("img"));
+                sellItem.setId(rs.getInt(1));
+                sellItem.setSellerId(rs.getInt(2));
+                sellItem.setExterior(rs.getString(3));
+                sellItem.setSellTime(rs.getInt(4));
+                sellItem.setPrice(rs.getDouble(5));
+                sellItem.setGameAccount(rs.getString(6));
+                sellItem.setGameItemId(rs.getInt(7));
+                sellItem.setSkinName(rs.getString(8));
+                sellItem.setItemName(rs.getString(8));
+                sellItem.setType(rs.getString(10));
+                sellItem.setRarity(rs.getString(11));
+                sellItem.setImg(rs.getString(12));
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
@@ -184,7 +190,7 @@ public class SellListDAO {
         }
         return sellItem;
     }
-    
+
     public static void deleteSellListItem(int sellerId, int sellItemId) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -209,7 +215,7 @@ public class SellListDAO {
             }
         }
     }
-    
+
     public static void deleteSellItemsItem(int sellerId, int itemId) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -235,10 +241,54 @@ public class SellListDAO {
         }
     }
 
-    public static void main(String[] args) {
+    public static void sellToMarket(SellItems sellItem) {
+        System.out.println("sellerId = " + sellItem.getSellerId());
+        System.out.println("game item id = " + sellItem.getGameItemId());
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            String sql = "INSERT INTO MarketItems (game_account_name, user_id, item_id, price, begin_date, end_date) VALUES (?, ?, ?, ?, ?, ?)";
+            statement = con.prepareStatement(sql);
+            statement.setString(1, sellItem.getGameAccount());
+            statement.setInt(2, sellItem.getSellerId());
+            statement.setInt(3, sellItem.getGameItemId());
+            statement.setDouble(4, sellItem.getPrice());
+            Date currentDate = new Date();
+        Timestamp timestamp = new Timestamp(currentDate.getTime());
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(timestamp);
+        calendar.add(Calendar.DAY_OF_MONTH, sellItem.getSellTime());
+        Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
+
+            System.out.println(timestamp + " " + endDate);
+        statement.setTimestamp(5, timestamp);
+        statement.setTimestamp(6, endDate);
+
+            System.out.println("add a row");
+
+            if (statement.executeUpdate() < 1) {
+                throw new NullPointerException();
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            try {
+                statement.close();
+                con.close();
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SellItems sellItem = new SellItems(2, "Factory New", 2, 1500, "lamphung", 2);
+        sellToMarket(sellItem);
 //        deleteSellListItem(2, 3);
-        deleteSellItemsItem(2, 3);
+//        deleteSellItemsItem(2, 3);
 //        ArrayList<SellItems> sellListItemsList = getUserSellList(2);
 //        for (SellItems sellItems : sellListItemsList) {
 //            System.out.println(sellItems.getId());
@@ -248,5 +298,6 @@ public class SellListDAO {
 //            System.out.println(sellItems.getGameAccount());
 //            System.out.println(sellItems.getSellerId());
 //            System.out.println(sellItems.getImg());
+//        }
     }
 }
