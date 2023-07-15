@@ -64,7 +64,7 @@
                                         <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
                                         <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
                                         <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
-                                        <li class="dropdown-item"><input type="checkbox" name="smg" value="smg" checked>SMGs</li>
+                                        <li class="dropdown-item"><input type="checkbox" name="smg" value="smgs" checked>SMGs</li>
                                         <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
                                         <li>
                                             <hr class="dropdown-divider">
