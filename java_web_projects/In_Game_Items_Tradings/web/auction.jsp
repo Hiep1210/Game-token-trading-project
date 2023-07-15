@@ -88,9 +88,6 @@
                                 <h5><a href="ViewAuctionCreatedController">View Your Auctions</a></h5>
                             </button> 
                         </c:if>
-                        <div class="cart-total">
-                            <h5>Sort By</h5>
-                        </div>
                     </div>
                     <!-- Filter Selection Section -->
                     <div class="filter sidebar">
