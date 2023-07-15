@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Inspiron
@@ -12,11 +14,11 @@ public class TradeItem {
     private int id;
     private String gAcc;
     private int creatorId;
-    private String begin;
-    private String end;
+    private LocalDateTime begin;
+    private LocalDateTime end;
     private User creator;
 
-    public TradeItem(int id, String gAcc, int creatorId, String begin, String end, User creator) {
+    public TradeItem(int id, String gAcc, int creatorId, LocalDateTime begin, LocalDateTime end, User creator) {
         this.id = id;
         this.gAcc = gAcc;
         this.creatorId = creatorId;
@@ -49,19 +51,19 @@ public class TradeItem {
         this.creatorId = creatorId;
     }
 
-    public String getBegin() {
+    public LocalDateTime getBegin() {
         return begin;
     }
 
-    public void setBegin(String begin) {
+    public void setBegin(LocalDateTime begin) {
         this.begin = begin;
     }
 
-    public String getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 

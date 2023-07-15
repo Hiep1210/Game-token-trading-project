@@ -22,6 +22,12 @@ public class OfferItem {
         this.give = give;
         this.trade = trade;
     }
+    public OfferItem(int id, int giveId, int tradeId, GameItems give){
+        this.id = id;
+        this.giveId = giveId;
+        this.tradeId = tradeId;
+        this.give = give;
+    }
 
     public int getId() {
         return id;
