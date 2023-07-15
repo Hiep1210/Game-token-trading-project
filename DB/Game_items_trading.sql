@@ -491,43 +491,6 @@ INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values 
 INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values ('Lore','Bayonet','Knife','Covert', 'Well-Worn','Bayonet_Lore');
 INSERT INTO gameItems(skin_name, item_name, type, rarity, exterior, img) values ('Lore','Bayonet','Knife','Covert', 'Battle-Scarred','Bayonet_Lore');
 
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '1',100, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '6',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '11',4000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '16',5000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '21',6000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '26',7000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '31',8000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '36',9000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '41',1000000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '46',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '51',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '56',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '61',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '66',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '71',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('lam','3', '76',3000, '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('hung', '5', '81', '4000', '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('hung', '5', '86', '4000', '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('hung', '5', '91', '4000', '2023-06-17', '2023-09-01');
-INSERT INTO `game_items_trading`.`marketitems` (`game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('hung', '5', '96', '4000', '2023-06-17', '2023-09-01');
-
-
-INSERT INTO cart (buyer_id, market_items_id) VALUES (1, 3);
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('1', '4');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('1', '5');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('1', '6');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('1', '7');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('2', '3');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('2', '6');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('2', '7');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('3', '5');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('3', '4');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('4', '3');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('4', '6');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('4', '5');
-INSERT INTO `game_items_trading`.`cart` (`buyer_id`, `market_items_id`) VALUES ('5', '3');
-
 INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('1', '2', '1', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
 INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('2', '2', '6', '100', '2023-06-17 16:33:53', '2023-07-18 16:33:53', 'gamer');
 INSERT INTO `game_items_trading`.`auction` (`id`, `seller_id`, `item_id`, `lowest_bid`, `starting_date`, `ending_date`, `game_account_name`) VALUES ('3', '2', '11', '100', '2023-06-17 16:33:53', '2023-07-30 16:33:53', 'gamer');
