@@ -40,7 +40,7 @@ CREATE TABLE Notification (
     noti_content VARCHAR(10000),
     content_type VARCHAR(50)
 );
-create table MarketItems(-- show item on market-- 
+create table MarketItems(
 	id int not null auto_increment,
     primary key(id),
 	game_account_name varchar(50),
@@ -49,8 +49,8 @@ create table MarketItems(-- show item on market--
     item_id int,
     price double,
     foreign key(item_id) references GameItems(id),
-    begin_date date,
-    end_date date
+    begin_date datetime,
+    end_date datetime
 );
 
 create table Cart(
@@ -176,6 +176,26 @@ create table SellList(
     foreign key(seller_id) references UserAccount(id)
 );
 
+create table SellItems(
+    id int not null auto_increment,
+    primary key(id),
+    exterior varchar(50),
+    sell_time int,
+    price double,
+	game_account_name varchar(50),
+    seller_id int,
+    item_id int,
+    foreign key(item_id) references GameItems(id)
+);
+
+create table SellList(
+	id int not null auto_increment,
+    primary key(id),
+    seller_id int not null,
+	sell_item_id int not null,
+    foreign key(sell_item_id) references SellItems(id),
+    foreign key(seller_id) references UserAccount(id)
+);
 
 INSERT INTO role (`id`, `role_name`) VALUES ('1', 'user');
 INSERT INTO role (`id`, `role_name`) VALUES ('2', 'admin');
