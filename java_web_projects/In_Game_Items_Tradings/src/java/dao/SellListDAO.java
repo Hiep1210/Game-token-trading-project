@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -275,8 +274,6 @@ public class SellListDAO {
     }
 
     public static void sellToMarket(SellItems sellItem) {
-        System.out.println("sellerId = " + sellItem.getSellerId());
-        System.out.println("game item id = " + sellItem.getGameItemId());
         Connection con = null;
         PreparedStatement statement = null;
         try {
@@ -296,11 +293,8 @@ public class SellListDAO {
             calendar.add(Calendar.DAY_OF_MONTH, sellItem.getSellTime());
             Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
 
-            System.out.println(timestamp + " " + endDate);
             statement.setTimestamp(5, timestamp);
             statement.setTimestamp(6, endDate);
-
-            System.out.println("add a row");
 
             if (statement.executeUpdate() < 1) {
                 throw new NullPointerException();
@@ -317,23 +311,4 @@ public class SellListDAO {
         }
     }
 
-    public static void main(String[] args) {
-
-        int amount = getUserSellItemsAmount(2);
-        System.out.println(amount);
-//        SellItems sellItem = new SellItems(2, "Factory New", 2, 1500, "lamphung", 2);
-//        sellToMarket(sellItem);
-//        deleteSellListItem(2, 3);
-//        deleteSellItemsItem(2, 3);
-//        ArrayList<SellItems> sellListItemsList = getUserSellList(2);
-//        for (SellItems sellItems : sellListItemsList) {
-//            System.out.println(sellItems.getId());
-//            System.out.println(sellItems.getExterior());
-//            System.out.println(sellItems.getSellTime());
-//            System.out.println(sellItems.getPrice());
-//            System.out.println(sellItems.getGameAccount());
-//            System.out.println(sellItems.getSellerId());
-//            System.out.println(sellItems.getImg());
-//        }
-    }
 }
