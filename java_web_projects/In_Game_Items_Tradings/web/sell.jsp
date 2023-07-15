@@ -77,12 +77,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- View all Sell Items -->
-                        <div class="col-lg-3">
-                            <button class="btn btn-primary">
-                                View your sell items
-                            </button>
-                        </div>
                     </div>
                     <!-- Item List -->
                     <div class="row" id="list-content">
@@ -199,6 +193,23 @@
                             </div>
                         </c:if>
                     </div>
+                    <details class="user-sell-items mt-5">
+                        <summary class="text-white fs-2 fw-bold">Your Selling Items</summary>
+                        <ul class="nopadding">
+                            <a href="UserProfileController">
+                                <li>Profile</li>
+                            </a>
+                            <a href="topUpRequest.jsp">
+                                <li>Top up</li>
+                            </a>
+                            <a href="ChangePassword.jsp">
+                                <li>Change Password</li>
+                            </a>
+                            <a href="createAuction.jsp">
+                                <li>Create auction</li>
+                            </a>
+                        </ul>
+                    </details>
                 </div>
             </div>
         </div>
@@ -305,13 +316,13 @@
     </script>
     <!-- Script for add to sell list -->
     <script>
-        function getUserSellListLength() {
-            localStorage.setItem("sellListLength", `${requestScope.userSellListLength}`);
+        function getUserSellItemsAmount() {
+            localStorage.setItem("userSellItemsAmount", `${requestScope.userSellItemsAmount}`);
         }
-        window.addEventListener('load', getUserSellListLength());
+        window.addEventListener('load', getUserSellItemsAmount());
 
         // Retrieve the sell list state from local storage
-        var sellListLength = localStorage.getItem("sellListLength") || 0;
+        var userSellItemsAmount = localStorage.getItem("userSellItemsAmount") || 0;
 
         function addToSellList(event) {
             var clickedButton = event.target;
@@ -358,10 +369,12 @@
                         success: function (data) {
                             var row = document.getElementById("sell-list-content");
                             row.innerHTML = data + row.innerHTML;
-                            sellListLength++;
-
+                            userSellItemsAmount++;
+                            if (userSellItemsAmount >= 5) {
+                                userSellItemsAmount = 5;
+                            }
                             // Update the sell list length in local storage
-                            localStorage.setItem("sellListLength", sellListLength);
+                            localStorage.setItem("userSellItemsAmount", userSellItemsAmount);
 
                             updateButtons();
                         },
@@ -380,10 +393,13 @@
 
         // Update the buttons based on the sell list state
         function updateButtons() {
-            if (sellListLength >= 5) {
-                var buttons = document.querySelectorAll(".summit-button .item-card-button");
-                for (var i = 0; i < buttons.length; i++) {
-                    var button = buttons[i];
+            var buttons = document.querySelectorAll(".summit-button .item-card-button");
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                if (userSellItemsAmount < 5) {
+                    button.innerText = "Add to Sell List";
+                    button.setAttribute("onclick", "addToSellList(event)");
+                } else {
                     button.innerText = "Sell List is Full";
                     button.removeAttribute("onclick");
                 }
@@ -405,11 +421,12 @@
                     sellItemId: sellItemId
                 },
                 success: function () {
-                    sellListLength--;
-                    localStorage.setItem("sellListLength", sellListLength);
+                    userSellItemsAmount--;
+                    localStorage.setItem("userSellItemsAmount", userSellItemsAmount);
                     console.log("item with id " + sellItemId + " deleted");
                     //Deleted item from the DOM
                     $('#sell-card-' + sellItemId).remove();
+                    updateButtons();
                 },
                 error: function (error) {
                     // Handle any errors that occur during the AJAX request

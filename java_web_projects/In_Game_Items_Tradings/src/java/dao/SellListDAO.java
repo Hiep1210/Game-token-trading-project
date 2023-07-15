@@ -216,6 +216,39 @@ public class SellListDAO {
         }
     }
 
+    public static int getUserSellItemsAmount(int sellerId) {
+        int userSellItemsAmount = 0;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            String sql = "SELECT * FROM SellItems WHERE seller_id = ?;";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, sellerId); // Set the parameter value for the seller_id
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                // Increment the counter for each row
+                userSellItemsAmount++;
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
+            }
+        }
+        return userSellItemsAmount;
+    }
+
     public static void deleteSellItemsItem(int sellerId, int itemId) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -256,16 +289,16 @@ public class SellListDAO {
             statement.setInt(3, sellItem.getGameItemId());
             statement.setDouble(4, sellItem.getPrice());
             Date currentDate = new Date();
-        Timestamp timestamp = new Timestamp(currentDate.getTime());
+            Timestamp timestamp = new Timestamp(currentDate.getTime());
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(timestamp);
-        calendar.add(Calendar.DAY_OF_MONTH, sellItem.getSellTime());
-        Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(timestamp);
+            calendar.add(Calendar.DAY_OF_MONTH, sellItem.getSellTime());
+            Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
 
             System.out.println(timestamp + " " + endDate);
-        statement.setTimestamp(5, timestamp);
-        statement.setTimestamp(6, endDate);
+            statement.setTimestamp(5, timestamp);
+            statement.setTimestamp(6, endDate);
 
             System.out.println("add a row");
 
@@ -285,8 +318,11 @@ public class SellListDAO {
     }
 
     public static void main(String[] args) {
-        SellItems sellItem = new SellItems(2, "Factory New", 2, 1500, "lamphung", 2);
-        sellToMarket(sellItem);
+
+        int amount = getUserSellItemsAmount(2);
+        System.out.println(amount);
+//        SellItems sellItem = new SellItems(2, "Factory New", 2, 1500, "lamphung", 2);
+//        sellToMarket(sellItem);
 //        deleteSellListItem(2, 3);
 //        deleteSellItemsItem(2, 3);
 //        ArrayList<SellItems> sellListItemsList = getUserSellList(2);
