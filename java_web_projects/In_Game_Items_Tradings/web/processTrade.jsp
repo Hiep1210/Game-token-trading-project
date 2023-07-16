@@ -62,8 +62,8 @@
                                     <th scope="col">Sender's Items</th>
                                     <th scope="col">Sender's Game Account</th>
                                     <th scope="col">Receiver's Items</th>
-                                    <th scope="col">Sender's Game Account</th>
-                                    <th scope="col">Receiver game account name</th>
+                                    <th scope="col">Receiver's Game Account</th>
+                                    <th scope="col">Deny Reason</th>
                                     <th scope="col">Create Date</th>
                                     <th scope="col">Action</th>
                                     <th scope="col"></th>
@@ -76,19 +76,19 @@
                                     <input type="hidden" name="processItemId" value="${trade.id}">    
                                     <tr>
                                         <th scope="row">${currentStatus.index + 1}</th>
-                                        <td>
+                                        <td class="offer"><div class="offer">
                                             <c:forEach var="offer" items="${requestScope.offer[trade.transactionId]}">
-                                                <a href="#" id="">${offer.give.skinName}|${offer.give.itemName}|${offer.give.exterior}</a><br>
+                                                <a style="text-decoration: none" href="#" id="">${offer.give.skinName}|${offer.give.itemName}|${offer.give.exterior}</a><br><br>
                                             </c:forEach>
-                                        </td>
+                                            </div></td>
                                         <td>
                                             ${trade.object.gAcc}
                                         </td>
-                                        <td>
+                                        <td class="receive"><div class="receive">
                                             <c:forEach var="rec" items="${requestScope.rec[trade.transactionId]}">
-                                                <a href="#" id="">${rec.rec.skinName}|${rec.rec.itemName}|${rec.rec.exterior}</a><br>
+                                                <a style="text-decoration: none" href="#" id="">${rec.rec.skinName}|${rec.rec.itemName}|${rec.rec.exterior}</a><br><br>
                                         </c:forEach>
-                                        </td>
+                                            </div> </td>
                                         <td>
                                             ${trade.gameAccountName}
                                         </td>

@@ -30,7 +30,8 @@ public class TradeDAO {
 
     static Logger logger
             = Logger.getLogger(CartDAO.class.getName());
-    private static final String SELECTTRADE = "SELECT * FROM tradeitems t, useraccount u where t.creator = u.id;";
+    private static final String SELECTTRADE = "SELECT * FROM tradeitems t, useraccount u where t.creator = u.id"
+            + " and not exists(select 1 from processitems p where p.transaction_id = t.id and p.transactionType_id=3) order by t.begin_date desc";
     private static final String SELECTOFFERITEMS = "SELECT * FROM game_items_trading.offeritem o, gameitems g where o.give_id = g.id and o.trade_id = ?";
     private static final String SELECTRECITEMS = "SELECT * FROM receiveitem r, gameitems g where r.rec_id = g.id and r.trade_id = ?";
     private static final String SELECTENDEDTRADE = "SELECT * FROM tradeitems t, useraccount u"

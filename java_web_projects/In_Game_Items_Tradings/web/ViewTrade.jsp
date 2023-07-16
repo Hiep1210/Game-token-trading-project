@@ -61,7 +61,6 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-2">${offer.give.getType()} | ${offer.give.getItemName()} ${offer.give.getSkinName()} (${offer.give.getExterior()})
                                                     </h5>
-                                                    <p class="card-text mb-1">Selling price: </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -81,7 +80,6 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-2">${rec.rec.getType()} | ${rec.rec.getItemName()} ${rec.rec.getSkinName()} (${rec.rec.getExterior()})
                                                     </h5>
-                                                    <p class="card-text mb-1">Selling price: </p>
                                                 </div>
                                             </div>
 
