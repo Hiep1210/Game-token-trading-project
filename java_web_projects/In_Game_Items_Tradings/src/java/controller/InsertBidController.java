@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.AuctionDAO;
 import dao.BidDAO;
 import dao.UserDAO;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import model.Auction;
 import model.Bid;
 import model.User;
 
@@ -37,7 +39,7 @@ public class InsertBidController extends HttpServlet {
         double newMoneyAmount = 0;
         String gameAccountName = "";
         Bid bid;
-        LocalDateTime currentTime;
+        Auction auction;
         try {
             gameAccountName = request.getParameter("gameAccountName");
             amount = Double.parseDouble(request.getParameter("bidAmount"));
@@ -48,11 +50,14 @@ public class InsertBidController extends HttpServlet {
             System.out.println(e);
         }
         User user = (User) request.getSession().getAttribute("user");
+        auction = AuctionDAO.getAuction(actionId);
         /* If user does not have enough money*/
         if (user.getMoney() < amount) {
             request.setAttribute("errorMessage", "You do not have enough funds to bid! Please top up your account before bidding");
         } else if (gameAccountName.trim().isEmpty()) {
             request.setAttribute("errorMessage", "Game account name must not be empty!");
+        } else if ( auction == null || auction.getEndingDate().isBefore(LocalDateTime.now())) {
+            request.setAttribute("errorMessage", "Auction has ended!");
         } else {
             /* If form does not contain userBidId (meaning user is bidding for the first time on this auction ) add new bid to table*/
             if (bidId == 0) {

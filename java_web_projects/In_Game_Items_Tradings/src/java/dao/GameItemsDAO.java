@@ -251,6 +251,34 @@ public class GameItemsDAO {
         return String.valueOf(key);
     }
 
+    public static void editGameItem(GameItems gameItem) {
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+
+            // Prepare the SQL statement
+            String sql = "UPDATE GameItems "
+                    + "SET skin_name = ?, item_name = ?, type = ?, rarity = ?, img= ? "
+                    + "WHERE id = " + gameItem.getId();
+            PreparedStatement st = con.prepareStatement(sql);
+            st = con.prepareStatement(sql);
+            st.setString(1, gameItem.getSkinName());
+            st.setString(2, gameItem.getItemName());
+            st.setString(3, gameItem.getType());
+            st.setString(4, gameItem.getRarity());
+            st.setString(5, gameItem.getImg());
+            // Execute the SQL statement
+            st.executeUpdate();
+            if (st.executeUpdate() != 1) {
+                System.out.println("ERROR INSERTING User");
+            }
+            st.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         String trimedName = "CZ75-Auto_Victoria";
         GameItems item = getItemBySkinName(trimedName, "Factory New");

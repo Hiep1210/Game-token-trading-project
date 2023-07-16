@@ -35,9 +35,6 @@
                         <button class="buy-button">
                             <h5><a href="ViewCartController?id=${sessionScope.user.id}">View Your Cart</a></h5>
                         </button>
-                        <div class="cart-total">
-                            <h5>Sort By</h5>
-                        </div>
                     </div>
                     <!-- Filter Selection Section -->
                     <div class="filter sidebar">

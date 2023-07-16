@@ -5,15 +5,16 @@
 package dao;
 
 import Context.DBContext;
+import static com.mysql.cj.conf.PropertyKey.logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.logging.Level;
 import model.Auction;
-import model.Bid;
 import model.GameItems;
 
 /**
@@ -396,77 +397,39 @@ public class AuctionDAO {
         return auctionList;
     }
 
-//    public static ArrayList<Auction> getAllEndedUnsuccessfullAuction() {
-//        ArrayList<Bid> bidList = null;
-//        ArrayList<Auction> auctionList = null;
-//        Auction auction = null;
-//        GameItems gameItem = null;
-//        Bid bid = null;
-//        try {
-//            DBContext db = new DBContext();
-//            Connection con = db.getConnection();
-//            //if connection is secured, proceed to execute query and retrieve data into and return a list
-//            if (con != null) {
-//                String sql = "SELECT a.id, a.seller_id ,a.game_account_name, b.bidder_id, b.game_account_name ,b.amount, a.item_id"
-//                        + "FROM bid b"
-//                        + "JOIN auction a ON b.auction_id = a.id"
-//                        + "WHERE b.amount = ("
-//                        + "  SELECT MAX(amount)"
-//                        + "  FROM bid"
-//                        + "  WHERE auction_id = b.auction_id"
-//                        + ") AND NOW() > a.ending_date";
-//                Statement call = con.createStatement();
-//                ResultSet rs = call.executeQuery(sql);
-//                //run a loop to save queries into model
-//                while (rs.next()) {
-//                    bidList = new ArrayList<Bid>();
-//                    auction = new Auction();
-//                    gameItem = new GameItems();
-//                    bid = new Bid();
-//                    //Get auction information
-//                    auction.setAuctionId(rs.getInt(1));
-//                    auction.setSellerId(rs.getInt(2));
-//                    auction.setGameAccountName(rs.getString(3));
-//                    //Get bid information
-//                    bid.setBidderId(rs.getInt(4));
-//                    bid.setGameAccountName(rs.getString(5));
-//                    bid.setAmount(rs.getDouble(6));
-//                    bidList.add(bid);
-//                    auction.setBidList(bidList);
-//                    //Get game item information
-//                    gameItem.setId(rs.getInt(7));
-//                    auction.setGameItem(gameItem);
-//                }
-//                call.close();
-//                con.close();
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return auctionList;
-//    }
-    public static void deleteAllEndedUnsuccessfullAuction() {
+   public static int getUserAuctionItemAmount(int sellerId) {
+        int userSellItemsAmount = 0;
+        Connection con = null;
+        PreparedStatement statement = null;
         try {
             DBContext db = new DBContext();
-            Connection con = db.getConnection();
-            String sql = " DELETE FROM Auction auc"
-                    + "WHERE auc.id IN"
-                    + "(SELECT id FROM ("
-                    + "	select auc.id "
-                    + "	from auction auc"
-                    + "	left outer join bid bid"
-                    + "	on auc.id = bid.auction_id"
-                    + "	where bid.id is null) as auction) "
-                    + " AND NOW() > auc.ending_date ";
-            Statement call = con.createStatement();
-            //Loop through all payment request id and delete it from the table
-            call.executeUpdate(sql);
-            call.close();
-            con.close();
+            con = db.getConnection();
+            String sql = "SELECT * FROM Auction WHERE seller_id = ?;";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, sellerId); // Set the parameter value for the seller_id
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                // Increment the counter for each row
+                userSellItemsAmount++;
+            }
         } catch (Exception e) {
-            System.out.println("Error in deleteUnsuccessfulAuction ");
+            e.getMessage();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException s) {
+                System.out.println(s.getMessage());;
+            }
         }
+        return userSellItemsAmount;
     }
+
 
     public static void main(String[] args) {
 //
