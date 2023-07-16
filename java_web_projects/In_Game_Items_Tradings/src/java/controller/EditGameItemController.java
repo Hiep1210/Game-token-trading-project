@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.GameItems;
 import dao.SellDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.file.Files;
@@ -46,11 +47,13 @@ public class EditGameItemController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    int id = Integer.parseInt(request.getParameter("id"));
+    processRequest(request, response);
+}
+
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         ServletFileUpload upload;
