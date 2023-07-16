@@ -21,26 +21,13 @@ public class DeleteGameItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("BuyPageController");
+        processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String skinName = request.getParameter("skinName");
-        String itemName = request.getParameter("itemName");
-        String type = request.getParameter("type");
-        String rarity = request.getParameter("rarity");
-        String img = request.getParameter("img");
-        
-        if (!GameItemsDAO.deleteGameItem(skinName, itemName, type, rarity, img)) {
-            request.setAttribute("message", "deleted game item failed");
-            request.getRequestDispatcher("ViewGameItemController").forward(request, response);
-        } else {
-            User user = (User) request.getSession().getAttribute("user");
-            int userid = user.getId();
-            response.sendRedirect("ViewGameItemController?id=" + userid);
-        }
+        processRequest(request, response);
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
