@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.User;
 import dao.CommentDAO;
+import dao.ThreadDAO;
 
 /**
  *
@@ -29,7 +30,16 @@ public class UpdateCommentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        int tid = Integer.parseInt(request.getParameter("threadid"));
+        request.setAttribute("id", tid);
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        String content = request.getParameter("ccontent");
+        CommentDAO.updateComment(content, cid);
+        request.getRequestDispatcher("ThreadDiscussionController").forward(request, response);
 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -42,7 +52,8 @@ public class UpdateCommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-  
+       
+        processRequest(request, response);
     } 
 
     /** 
@@ -55,14 +66,7 @@ public class UpdateCommentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int tid = Integer.parseInt(request.getParameter("threadid"));
-        request.setAttribute("id", tid);
-        User user = (User) request.getSession().getAttribute("user");
-        int uid = user.getId();
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        String content = request.getParameter("ccontent");
-        CommentDAO.updateComment(content, uid, cid);
-        request.getRequestDispatcher("ThreadDiscussionController").forward(request, response);
+       processRequest(request, response);
 
     }
 
