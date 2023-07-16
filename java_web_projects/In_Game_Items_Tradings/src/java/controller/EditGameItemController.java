@@ -49,11 +49,38 @@ public class EditGameItemController extends HttpServlet {
     @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    int id = Integer.parseInt(request.getParameter("id"));
-    processRequest(request, response);
+    // Retrieve the game item ID from the request parameters
+    String itemIdStr = request.getParameter("id");
+
+    // Check if itemIdStr is not null and not empty
+    
+        try {
+            int itemId = Integer.parseInt(itemIdStr);
+
+            // Use the game item ID to fetch the details of the game item from the database
+            GameItems gameItem = GameItemsDAO.getGameItemById(itemId);
+
+            if (gameItem != null) {
+                // Store the game item data in request attributes
+                request.setAttribute("gameItem", gameItem);
+
+                // Forward the user to the EditGameItem.jsp page
+                RequestDispatcher dispatcher = request.getRequestDispatcher("EditGameItem.jsp");
+                dispatcher.forward(request, response);
+                return; // Make sure to return after forwarding
+            }
+        } catch (NumberFormatException e) {
+            // Handle the case when the itemIdStr is not a valid integer
+            System.out.println("Invalid itemId: " + itemIdStr);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    
+
+    // If there was an error or the game item with the specified ID was not found,
+    // redirect the user back to the ViewGameItem.jsp
+    response.sendRedirect("ViewGameItem.jsp");
 }
-
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         ServletFileUpload upload;
