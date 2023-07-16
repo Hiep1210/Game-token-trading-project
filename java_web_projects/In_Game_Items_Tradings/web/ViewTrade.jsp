@@ -42,10 +42,13 @@
         <!-- Main Content -->
         <div class="container-fluid">
             <div class="container-fluid w-75">
-                <c:forEach var="trade" items="${requestScope.trade}" varStatus="currentStatus">
+                <c:forEach var="trade"  items="${requestScope.trade}" varStatus="currentStatus">
+                    <form id="del" onsubmit="return confirm('Are You sure you want to delete offer')" action="DeleteOfferController" method="post"  >
+                        <input type="hidden" value="${trade.id}" name="trad"/>
+                    </form>
                     <form action="ProcessTradeController" method="post">
-                    <input type="hidden" value="${trade.id}" name="trade"/>
-                    <input type="hidden" value="${trade.creator.id}" name="sender"/>
+                        <input type="hidden" value="${trade.id}" name="trade"/>
+                        <input type="hidden" value="${trade.creator.id}" name="sender"/>
                         <div class="row mb-3" id="trade" >
                             <!-- Item Card -->
                             <div class="col-md-6 offer">
@@ -91,76 +94,85 @@
                                 <p>From: ${trade.gAcc}</p>
                                 <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
                                 <div class="d-flex align-items-center">
+                                    <c:if test="${sessionScope.user.id == trade.creator.id}">
+                                        <button type="submit"  form="del" class="btn item-card-button" style="height: 80px; width: auto; margin-left: auto; background-color: red">
+                                            <b>Delete Offer</b>
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${sessionScope.user.id != trade.creator.id}">
                                     <input class="hidden" id="gameAccInput${trade.id}" style="margin-left:15px; background-color: rgb(28, 26, 36); color: wheat" type="text" placeholder="Your game account name" name="gAcc" required="" />
-                                    <button type="submit" onclick="showGameAccInput(${trade.id})" class="btn item-card-button" style="height: 80px; width: auto; margin-left: auto">
+                                            <button type="submit" onclick="showGameAccInput(${trade.id})" class="btn item-card-button" style="height: 80px; width: auto; margin-left: auto">
                                         <b>Accept Offer</b>
                                     </button>
+                                    </c:if>
                                 </div>
                             </div>
-
                         </div>
                     </form>
-                    </c:forEach>
-            </div>
-        </div>
-        <!-- Link Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+                                        </c:forEach>
+                                        </div>
+                                        </div>
+                                        <!-- Link Bootstrap JS -->
+                                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                                            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAd                                            VQSZe" crossorigin                                                                  ="                                                              anonymous"        >
+              </script        >
+                  <script>
+        function showGameAccInput(trade)
+        
+        
+        
+        
+                  {
+                  var element = document.getElementById("gameAccInput" + trade);
+                  if (element) {
+                      var input = Array.from(element.classList);
+                      if (input.includes("hidden")) {
+                          element.classList.remove("hidden");
+                          console.log(element.classList);
+                      } else {
+                          element.classList.add("hidden");
+                          console.log(element.classList);
+                      }
+                      }
+        }
+                  
+            
+        
         </script>
-        <script>
-            function showGameAccInput(trade) {
-                var element = document.getElementById("gameAccInput" + trade);
-                if (element) {
-                    var input = Array.from(element.classList);
-                    if (input.includes("hidden")) {
-                        element.classList.remove("hidden");
-                        console.log(element.classList);
-                    } else {
-                        element.classList.add("hidden");
-                        console.log(element.classList);
-                    }
-                }
-            }
-        </script>
-        <script>
-            // Define the countdown details for each timer
-            var countdowns = [
-            <c:forEach var="cart" items="${requestScope.trade}" varStatus="currentStatus">
-            {name: "countdown${currentStatus.index}", endDate: "${cart.end}"}
-                <c:if test="${not currentStatus.last}">
-            ,
-                </c:if>
-            </c:forEach>
-            ];
-            // Update all countdowns
-            function updateCountdowns() {
-                countdowns.forEach(function (countdown) {
-                    var endDate = new Date(countdown.endDate);
+<scr            ipt>
+// Define the countdown details for each timer
+var countdowns = [
+                                            <c:forEach var="cart" items="${requestScope.trade}" varStatus="currentStatus">
+                                                {name: "countdown${currentStatus.index}", endDate: "${cart.end}"}
+                                                <c:if test="${not currentStatus.last}">
+                                                    ,
+                                                </c:if>
+                                            </c:forEach>
+                                            ];
+                                            // Update all countdowns
+                                            function updateCountdowns() {
+                                            countdowns.forEach(function (countdown) {
+                                            var endDate = new Date(countdown.endDate);
+                                            var now = new Date();
+                                            var distance = endDate.getTime() - now.getTime();
+                                            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                                            var countdownElement = document.getElementById(countdown.name);
+                                            countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                                            // If the countdown is finished, update the HTML element
+                                            if (distance < 0) {
+                                            countdownElement.innerHTML = countdown.name + ": EXPIRED";
+                                            }
+                                            });
+                                            }
 
-                    var now = new Date();
-                    var distance = endDate.getTime() - now.getTime();
+                                            // Update countdowns every 1 second
+                                            var countdownInterval = setInterval(updateCountdowns, 1000);
+                                            // Call updateCountdowns once immediately to display the initial countdowns
+                                            updateCountdowns();
+                                        </script>
+                                        </body>
 
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    var countdownElement = document.getElementById(countdown.name);
-                    countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-                    // If the countdown is finished, update the HTML element
-                    if (distance < 0) {
-                        countdownElement.innerHTML = countdown.name + ": EXPIRED";
-                    }
-                });
-            }
-
-            // Update countdowns every 1 second
-            var countdownInterval = setInterval(updateCountdowns, 1000);
-
-            // Call updateCountdowns once immediately to display the initial countdowns
-            updateCountdowns();
-        </script>
-    </body>
-
-</html>
+                                        </html>
