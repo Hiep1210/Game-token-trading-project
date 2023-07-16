@@ -12,8 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import model.SellItems;
 
@@ -23,7 +21,7 @@ import model.SellItems;
  */
 public class SellListDAO {
 
-    public static void insertSellListItem(SellItems item) {
+    public static void insertSellItemsItem(SellItems item) {
         Connection con = null;
         PreparedStatement statement = null;
         try {
@@ -215,39 +213,6 @@ public class SellListDAO {
         }
     }
 
-    public static int getUserSellItemsAmount(int sellerId) {
-        int userSellItemsAmount = 0;
-        Connection con = null;
-        PreparedStatement statement = null;
-        try {
-            DBContext db = new DBContext();
-            con = db.getConnection();
-            String sql = "SELECT * FROM SellItems WHERE seller_id = ?;";
-            statement = con.prepareStatement(sql);
-            statement.setInt(1, sellerId); // Set the parameter value for the seller_id
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                // Increment the counter for each row
-                userSellItemsAmount++;
-            }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException s) {
-                logger.log(Level.SEVERE, s.getMessage());
-            }
-        }
-        return userSellItemsAmount;
-    }
-
     public static void deleteSellItemsItem(int sellerId, int itemId) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -273,7 +238,7 @@ public class SellListDAO {
         }
     }
 
-    public static void sellToMarket(SellItems sellItem) {
+    public static void sellToMarket(SellItems sellItem, Timestamp beginDate, Timestamp endDate) {
         Connection con = null;
         PreparedStatement statement = null;
         try {
@@ -285,15 +250,7 @@ public class SellListDAO {
             statement.setInt(2, sellItem.getSellerId());
             statement.setInt(3, sellItem.getGameItemId());
             statement.setDouble(4, sellItem.getPrice());
-            Date currentDate = new Date();
-            Timestamp timestamp = new Timestamp(currentDate.getTime());
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(timestamp);
-            calendar.add(Calendar.DAY_OF_MONTH, sellItem.getSellTime());
-            Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
-
-            statement.setTimestamp(5, timestamp);
+            statement.setTimestamp(5, beginDate);
             statement.setTimestamp(6, endDate);
 
             if (statement.executeUpdate() < 1) {

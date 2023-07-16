@@ -4,6 +4,7 @@ import dao.AuctionDAO;
 import dao.BidDAO;
 import dao.MarketItemsDAO;
 import dao.ProcessItemsDAO;
+import dao.TradeDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -11,10 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import model.Auction;
 import model.Bid;
 import model.MarketItems;
+import model.OfferItem;
 import model.ProcessItem;
+import model.ReceiveItem;
+import model.TradeItem;
 import model.User;
 
 @WebServlet(name = "ProcessItemController", urlPatterns = {"/ProcessItemController"})
@@ -23,7 +29,21 @@ public class ProcessItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
-        request.getRequestDispatcher("BuyPageController").forward(request, response);
+        User user = (User) request.getSession().getAttribute("user");
+        if(user == null){
+            response.sendRedirect("login.jsp");
+        }
+        ArrayList<ProcessItem> tradeProcess = ProcessItemsDAO.getAllTradeOffersInProcess();
+        HashMap<Integer, ArrayList<OfferItem>> offerItem = new HashMap<>();
+        HashMap<Integer, ArrayList<ReceiveItem>> receiveItem = new HashMap<>();
+        for (int i = 0; i < tradeProcess.size(); i++) {
+            offerItem.put(tradeProcess.get(i).getTransactionId(), TradeDAO.getAllOffersInATrade(tradeProcess.get(i).getTransactionId()));
+            receiveItem.put(tradeProcess.get(i).getTransactionId(), TradeDAO.getAllRecsInATrade(tradeProcess.get(i).getTransactionId()));
+        }
+        request.setAttribute("trade", tradeProcess);
+        request.setAttribute("offer", offerItem);
+        request.setAttribute("rec", receiveItem);
+        request.getRequestDispatcher("processTrade.jsp").forward(request, response);
     }
 
     @Override
@@ -57,6 +77,14 @@ public class ProcessItemController extends HttpServlet {
                     processItem.setObject(auction);
                     BidDAO.deleteBid(bid.getBidId());
                     AuctionDAO.deleteAuction(processItem.getTransactionId());
+                }else if (processItem.getTransactionTypeIdId() == 3){
+                    int tradeId = processItem.getTransactionId();
+                    TradeDAO.deleteOfferItems(tradeId);
+                    TradeDAO.deleteRecitems(tradeId);
+                    TradeDAO.deleteTrade(tradeId);
+                    ProcessItemsDAO.deleteProcessItems(processItemId);
+                    request.setAttribute("message", "Trade offer processed");
+                    doGet(request, response);
                 }
                 ProcessItemsDAO.deleteProcessItems(processItemId);
                 // If payment request is accepted add funds to user account

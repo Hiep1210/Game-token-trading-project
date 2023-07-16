@@ -40,14 +40,16 @@
             };
         </script>
         <!-- Main Content -->
-        <form action="CreateOfferController" method="post">
-            <div class="container-fluid">
-                <div class="container-fluid w-75">
-                    <c:forEach var="trade" items="${requestScope.trade}" varStatus="currentStatus">
+        <div class="container-fluid">
+            <div class="container-fluid w-75">
+                <c:forEach var="trade" items="${requestScope.trade}" varStatus="currentStatus">
+                    <form action="ProcessTradeController" method="post">
+                    <input type="hidden" value="${trade.id}" name="trade"/>
+                    <input type="hidden" value="${trade.creator.id}" name="sender"/>
                         <div class="row mb-3" id="trade" >
                             <!-- Item Card -->
                             <div class="col-md-6 offer">
-                                <h4 class="card-text mb-1 text-center" >You Offer</h4>
+                                <h4 class="card-text mb-1 text-center" >You Receive</h4>
                                 <c:forEach var="offer" items="${requestScope.offer[trade.id]}" >
                                     <input type="hidden" value="${offer.id}" name="offer"/>
                                     <div class="sell-card mb-3" id="sell-card">
@@ -59,7 +61,6 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-2">${offer.give.getType()} | ${offer.give.getItemName()} ${offer.give.getSkinName()} (${offer.give.getExterior()})
                                                     </h5>
-                                                    <p class="card-text mb-1">Selling price: </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +68,7 @@
                                 </c:forEach>
                             </div>
                             <div class="col-md-6 receive">
-                                <h4 class="card-text mb-1 text-center">You Receive</h4>
+                                <h4 class="card-text mb-1 text-center">You Offer</h4>
                                 <c:forEach var="rec" items="${requestScope.rec[trade.id]}">
                                     <input type="hidden" value="${rec.id}" name="receive"/>
                                     <div class="sell-card mb-3" id="sell-card">
@@ -79,7 +80,6 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title mb-2">${rec.rec.getType()} | ${rec.rec.getItemName()} ${rec.rec.getSkinName()} (${rec.rec.getExterior()})
                                                     </h5>
-                                                    <p class="card-text mb-1">Selling price: </p>
                                                 </div>
                                             </div>
 
@@ -91,26 +91,25 @@
                                 <p>From: ${trade.gAcc}</p>
                                 <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
                                 <div class="d-flex align-items-center">
-                                    <label for="gacc" hidden>Game Account Name: </label>
-                                    <input style="margin-left:15px; background-color: rgb(28, 26, 36); color: wheat" type="text" placeholder="Your game account name" name="gAcc" hidden=""/>
-                                    <button type="submit" class="btn item-card-button" style="height: 80px; width: auto; margin-left: auto">
+                                    <input class="hidden" id="gameAccInput${trade.id}" style="margin-left:15px; background-color: rgb(28, 26, 36); color: wheat" type="text" placeholder="Your game account name" name="gAcc" required="" />
+                                    <button type="submit" onclick="showGameAccInput(${trade.id})" class="btn item-card-button" style="height: 80px; width: auto; margin-left: auto">
                                         <b>Accept Offer</b>
                                     </button>
                                 </div>
                             </div>
 
                         </div>
+                    </form>
                     </c:forEach>
-                </div>
             </div>
-        </form>
+        </div>
         <!-- Link Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
         <script>
-            function showGameAccInput(cartItemId) {
-                var element = document.getElementById("gameAccInput" + cartItemId);
+            function showGameAccInput(trade) {
+                var element = document.getElementById("gameAccInput" + trade);
                 if (element) {
                     var input = Array.from(element.classList);
                     if (input.includes("hidden")) {

@@ -30,9 +30,13 @@ public class TradeDAO {
 
     static Logger logger
             = Logger.getLogger(CartDAO.class.getName());
-    private static final String SELECTTRADE = "SELECT * FROM tradeitems t, useraccount u where t.creator = u.id;";
+    private static final String SELECTTRADE = "SELECT * FROM tradeitems t, useraccount u where t.creator = u.id"
+            + " and not exists(select 1 from processitems p where p.transaction_id = t.id and p.transactionType_id=3) order by t.begin_date desc";
     private static final String SELECTOFFERITEMS = "SELECT * FROM game_items_trading.offeritem o, gameitems g where o.give_id = g.id and o.trade_id = ?";
     private static final String SELECTRECITEMS = "SELECT * FROM receiveitem r, gameitems g where r.rec_id = g.id and r.trade_id = ?";
+    private static final String SELECTENDEDTRADE = "SELECT * FROM tradeitems t, useraccount u"
+            + " where t.creator = u.id and now() > t.end_date\n" +
+"and not exists(select 1 from processitems p where p.transaction_id = t.id and p.transactionType_id=3);";
     public static ArrayList<TradeItem> getAllTradeOffers(){
         ArrayList<TradeItem> list = new ArrayList<>();
         TradeItem items = null;
@@ -98,7 +102,7 @@ public class TradeDAO {
             con = db.getConnection();
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
-                String sql = SELECTOFFERITEMS;
+                String sql = SELECTRECITEMS;
                 statement = con.prepareStatement(sql);
                 statement.setInt(1, tradeId);
                 ResultSet rs = statement.executeQuery();
@@ -190,7 +194,7 @@ public class TradeDAO {
         }
         return false;
     }
-
+    
     public static boolean insertReceiveItems(int rec, int tradeId) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -217,7 +221,87 @@ public class TradeDAO {
         }
         return false;
     }
+    public static boolean deleteOfferItems(int tradeid) {
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "delete from offeritem where trade_id =  " + tradeid;
+            Statement statement = con.createStatement();
+            if (statement.executeUpdate(sql) < 1) {
+                deleteStatus = false;
+                throw new Exception();
+            }
+            con.close();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
+    }
+    public static boolean deleteRecitems(int tradeid){
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "delete from receiveitem where trade_id =  " + tradeid;
+            Statement statement = con.createStatement();
+            if (statement.executeUpdate(sql) < 1) {
+                deleteStatus = false;
+                throw new Exception();
+            }
+            con.close();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
+    }
+    public static boolean deleteTrade(int tradeid){
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "delete from tradeitems where id =  " + tradeid;
+            Statement statement = con.createStatement();
+            if (statement.executeUpdate(sql) < 1) {
+                deleteStatus = false;
+                throw new Exception();
+            }
+            con.close();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
+    }
+    public static ArrayList<TradeItem> getUnsuccessfulTrade() {
+        ArrayList<TradeItem> list = new ArrayList<>();
+        TradeItem items = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = SELECTENDEDTRADE;
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new TradeItem(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getObject(4, LocalDateTime.class), 
+                            rs.getObject(5, LocalDateTime.class), new User(rs.getInt(6), "", "", "", "", "", "", 0, 0));
+                    list.add(items);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
     public static void main(String[] args) {
+        getUnsuccessfulTrade();
         getAllTradeOffers();
         getAllOffersInATrade(5);
         int[] offers = {1,2,3};

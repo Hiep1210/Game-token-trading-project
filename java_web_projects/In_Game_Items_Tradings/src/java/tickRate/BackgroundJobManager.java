@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import tickRate.MarketItemsJobs;
 import tickRate.AuctionJobs;
+import tickRate.TradeItemJob;
 
 @WebListener
 public class BackgroundJobManager implements ServletContextListener {
@@ -16,8 +17,9 @@ public class BackgroundJobManager implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new MarketItemsJobs(), 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(new MarketItemsJobs(), 0, 15, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(new AuctionJobs(), 0, 15, TimeUnit.SECONDS);
+       scheduler.scheduleAtFixedRate(new TradeItemJob(), 0, 15, TimeUnit.SECONDS);
     }
 
     @Override

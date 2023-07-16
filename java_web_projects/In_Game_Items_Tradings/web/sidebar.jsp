@@ -32,6 +32,9 @@
             <a href="GetProcessItemController">
                 <li>Process item</li>
             </a>
+            <a href="ProcessItemController">
+                <li>Process trade item</li>
+            </a>
             <a href="ViewGameItemController">
                 <li>View Game Items</li>
             </a>

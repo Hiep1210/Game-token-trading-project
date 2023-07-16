@@ -5,13 +5,17 @@
 package dao;
 
 import Context.DBContext;
+import static dao.TradeDAO.logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import model.ProcessItem;
+import model.TradeItem;
+import model.User;
 
 /**
  *
@@ -85,7 +89,6 @@ public class ProcessItemsDAO {
         }
         return processItemList;
     }
-    
     public static ProcessItem getProcessItems(int processItemId) {
         ProcessItem processItem = null;
         try {
@@ -137,7 +140,39 @@ public class ProcessItemsDAO {
         }
         return deleteStatus;
     }
-
+    public static ArrayList<ProcessItem> getAllTradeOffersInProcess(){
+        ArrayList<ProcessItem> list = new ArrayList<>();
+        ProcessItem items = null;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "SELECT * FROM  processitems p, tradeitems t where p.transactionType_id = 3"
+                        + " and t.id = p.transaction_id order by p.id desc;";
+                statement = con.prepareStatement(sql);
+                ResultSet rs = statement.executeQuery();
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new ProcessItem(rs.getInt(4), rs.getInt(5), rs.getInt(3), 3, rs.getString(6), rs.getObject(7, LocalDateTime.class));
+                    items.setObject(new TradeItem(rs.getInt(3), rs.getString(9), rs.getInt(10),
+                            rs.getObject(11, LocalDateTime.class), rs.getObject(12, LocalDateTime.class), null));
+                    items.setId(rs.getInt(1));
+                    list.add(items);
+                }
+            }
+            con.close();
+            statement.close();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        }
+        return list;
+    }
+    public static void main(String[] args) {
+        getAllTradeOffersInProcess();
+    }
 //    public static void main(String[] args) {
 //        ProcessItem processItem = new ProcessItem(1, 2, 1, 2,"Dave", LocaDateTime. );
 //

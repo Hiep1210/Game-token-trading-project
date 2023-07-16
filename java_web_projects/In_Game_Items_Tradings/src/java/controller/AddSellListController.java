@@ -27,6 +27,7 @@ public class AddSellListController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
+        //if sell list already have 5 item then return
         int userSellListLength = SellListDAO.getUserSellList(user.getId()).size();
         if (userSellListLength == 5) {
             return;
@@ -43,11 +44,16 @@ public class AddSellListController extends HttpServlet {
 
         if (gameItem != null) {
             SellItems sellItem = new SellItems(exterior, sellTime, price, gameAccount, sellerId, gameItem.getId());
-
-            SellListDAO.insertSellListItem(sellItem);
+            
+            //insert item to sellitems table
+            SellListDAO.insertSellItemsItem(sellItem);
+            
+            //Insert item to selllist table
             int sellItemId = SellListDAO.getSellItemId(sellItem);
-            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
             SellListDAO.addToSellList(sellerId, sellItemId);
+            
+            //get sell item info for printing to UI
+            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
 
             PrintWriter out = response.getWriter();
             out.println("<!-- Item Card -->\n"

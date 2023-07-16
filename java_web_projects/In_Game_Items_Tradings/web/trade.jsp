@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                                 <!-- Filter By Type -->
-                                <div class="col-lg-3 filter-type" style="">
+                                <div class="col-lg-2 filter-type" style="">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-danger">Type</button>
                                         <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
@@ -76,7 +76,7 @@
                                     </div>
                                 </div>
                                 <!-- Sort by Rarity -->
-                                <div class="col-lg-3">
+                                <div class="col-lg-2">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-danger" id="rarity-sort">Rarity</button>
                                         <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
@@ -89,6 +89,29 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <!-- Sort by Exterior -->
+                                <div class="col-lg-2">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger">Exterior</button>
+                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="visually-hidden">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Battle-Scarred" checked>Battle-Scarred</li>
+                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Factory New" checked>Pistol</li>
+                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Field-Tested" checked>Rifle</li>
+                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Minimal Wear" checked>SMGs</li>
+                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Well-Worn" checked>Heavy</li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
+                                            <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
+                                            <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
                                 <c:forEach var ="gItem" items="${requestScope.gItem}" varStatus="currentStatus">
@@ -97,7 +120,7 @@
                                         <div class="card rarity-${gItem.rarity.toLowerCase()}">
                                             <img  data-bs-toggle="offcanvas" href="#offcanvas${gItem.id}" src="UI/image/${gItem.img}.png" class="img-fluid rounded" alt="...">
                                             <div class="card-body">
-                                                <p>${gItem.type} | ${gItem.itemName} ${gItem.skinName}</p>
+                                                <p>${gItem.type} | ${gItem.itemName} ${gItem.skinName} (${gItem.exterior})</p>
                                                 <input id="itemno${gItem.id}" type="checkbox" value="${gItem.id}" name="offer" hidden="" onchange="handleCheckboxChange(this)"/>
                                                 <label for="itemno${gItem.id}" class="btn item-card-button">
                                                     <i style="color:white" class="material-icons navbar-item-icon">compare_arrows</i>
@@ -340,7 +363,7 @@
                                         <div class="card rarity-${gItem.rarity.toLowerCase()}">
                                             <img  data-bs-toggle="offcanvas" href="#offcanvas${gItem.id}" src="UI/image/${gItem.img}.png" class="img-fluid rounded" alt="...">
                                             <div class="card-body">
-                                                <p>${gItem.type} | ${gItem.itemName} ${gItem.skinName}</p>
+                                                <p>${gItem.type} | ${gItem.itemName} ${gItem.skinName} (${gItem.exterior})</p>
                                                 <input id="itemno${gItem.id}right" type="checkbox" value="${gItem.id}" name="receive" hidden="" onchange="handleCheckboxChange(this)"/>
                                                 <label for="itemno${gItem.id}right" class="btn item-card-button">
                                                     <i style="color:white" class="material-icons navbar-item-icon">compare_arrows</i>
@@ -437,6 +460,7 @@
                     h4Element.parentNode.replaceChild(iElement, h4Element);
                 }
             }
+            
         </script>
     </body>
 
