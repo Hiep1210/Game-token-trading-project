@@ -63,11 +63,12 @@ public class InsertCommentController extends HttpServlet {
         int tid = Integer.parseInt(request.getParameter("threadid"));
         request.setAttribute("id", tid);
         String comment = request.getParameter("ccontent");
-        if(comment != null){
+        if(comment.isEmpty()){
+            request.getRequestDispatcher("threadDiscussion.jsp").forward(request, response);
+        }else{
             CommentDAO.insertComment(comment, uid, tid);
             request.getRequestDispatcher("ThreadDiscussionController").forward(request, response);
-        }else{
-            request.getRequestDispatcher("threadDiscussion.jsp").forward(request, response);
+            
         }
         }catch (Exception e){
             System.out.println(e.getMessage());
