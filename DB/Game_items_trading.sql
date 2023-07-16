@@ -173,6 +173,25 @@ create table ProcessItems(
     foreign key (sender_id) references UserAccount(id),
     foreign key (receiver_id) references UserAccount(id)
 );
+CREATE TABLE THREAD(
+id INT not null auto_increment,
+primary key (id),
+ttitle varchar(50),
+tcontent varchar(500),
+ttag varchar(50),
+tauthor varchar(50),
+user_id int,
+foreign key(user_id) references UserAccount(id)
+);
+CREATE TABLE COMMENT(
+id INT not null auto_increment,
+primary key(id),
+ccontent varchar(100),
+user_id int,
+thread_id int,
+foreign key(user_id) references UserAccount(id),
+foreign key(thread_id) references THREAD(id)
+);
 
 INSERT INTO role (`id`, `role_name`) VALUES ('1', 'user');
 INSERT INTO role (`id`, `role_name`) VALUES ('2', 'admin');
