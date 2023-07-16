@@ -5,14 +5,18 @@
 package controller;
 
 import dao.AuctionDAO;
+import dao.GameItemsDAO;
+import dao.SellDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import model.Auction;
+import model.GameItems;
 import model.User;
 
 /**
@@ -23,11 +27,8 @@ import model.User;
 public class CreateAuctionController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
-        //Users are not allowed to access this servlet through the doGet method
-        request.getRequestDispatcher("BuyPageController").forward(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        createAuction(request, response);
     }
 
     @Override
@@ -36,31 +37,32 @@ public class CreateAuctionController extends HttpServlet {
     }
 
     public void createAuction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // if redirect attribute is null auto redirect to BuyPageController
-        Auction auction;
-        String redirect = "AuctionPageController";
-        int itemId;
-        double lowestBid;
-        int auctionDuration;
-        String gameAccountName;
-        User user;
-        try {
-            user = (User) request.getSession().getAttribute("user");
-            itemId = Integer.parseInt(request.getParameter("itemId")) ;
-            lowestBid = Double.parseDouble(request.getParameter("lowestBid"));
-            auctionDuration = Integer.parseInt(request.getParameter("auctionDuration"));
-            gameAccountName = request.getParameter("content");
-            auction = new Auction(itemId, user.getId() , lowestBid, gameAccountName, 
-                    LocalDateTime.now() , LocalDateTime.now().plusDays(auctionDuration));
-            AuctionDAO.insertAuction(auction);
-
-        } catch (Exception e) {
-            request.setAttribute("errorMessage", "Something went wrong creating your auction!");
-            redirect = "createAuction.jsp";
-            System.out.println(e);
-        } finally {
-            request.getRequestDispatcher(redirect).forward(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String redirect = "createAuction.jsp";
+        ArrayList<Auction> userAuctionList;
+        ArrayList<GameItems> allSellItems;
+        ArrayList<GameItemsDAO> sellItemList = new ArrayList<>();
+        int userAuctionAmount = 0;
+        if (user != null) {
+            allSellItems = SellDAO.getTopTwelveItems();
+            userAuctionList = new ArrayList<>();
+            userAuctionList = AuctionDAO.getAllAuctionFromUser(user.getId());
+            userAuctionAmount = AuctionDAO.getUserAuctionItemAmount(user.getId());
+            for (GameItems gameItems : allSellItems) {
+                //trim all spaces character for offcanvas ids
+                String trimedSkinName = gameItems.getSkinName().replaceAll("\\s", "");
+                GameItemsDAO gameItem = new GameItemsDAO(gameItems, trimedSkinName);
+                sellItemList.add(gameItem);
+            }
+            request.setAttribute("userSellList", userAuctionList);
+            request.setAttribute("sellList", sellItemList);
+            request.setAttribute("userSellItemsAmount", userAuctionAmount);
+        } else {
+            redirect = "BuyPageController";
         }
+
+        request.getRequestDispatcher("createAuction.jsp").forward(request, response);
     }
 
 }

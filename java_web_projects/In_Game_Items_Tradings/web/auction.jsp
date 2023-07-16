@@ -88,9 +88,6 @@
                                 <h5><a href="ViewAuctionCreatedController">View Your Auctions</a></h5>
                             </button> 
                         </c:if>
-                        <div class="cart-total">
-                            <h5>Sort By</h5>
-                        </div>
                     </div>
                     <!-- Filter Selection Section -->
                     <div class="filter sidebar">
@@ -411,21 +408,6 @@
                 integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script>
-function showGameAccInput(cartItemId) {
-var element = document.getElementById("gameAccInput" + cartItemId);
-if (element) {
-var input = Array.from(element.classList);
-if (input.includes("hidden")) {
-element.classList.remove("hidden");
-console.log(element.classList);
-} else {
-element.classList.add("hidden");
-console.log(element.classList);
-}
-}
-}
-        </script>
 
         <script>
             // Define the countdown details for each timer

@@ -37,7 +37,7 @@
             <h1>Edit Game Item</h1>
 
             <%-- Add your edit form here --%>
-            <form action="UpdateGameItemController" method="post">
+            <form action="EditGameItemController" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="skin-name">Skin Name:</label>
                     <input type="text" class="form-control" id="skin-name" name="skinName" value="${sellList.gameItems.skinName}" required>
@@ -58,12 +58,20 @@
                 </div>
                 <div class="form-group">
                     <label for="rarity">Rarity:</label>
-                    <input type="text" class="form-control" id="rarity" name="rarity" value="${sellList.gameItems.rarity}" required>
+                    <select class="form-control" id="rarity" name="rarity" required>
+                        <option value="knife" ${sellList.gameItems.rarity == 'Consumer' ? 'selected' : ''}>Consumer</option>
+                        <option value="pistol" ${sellList.gameItems.rarity == 'Industrial' ? 'selected' : ''}>Pistol</option>
+                        <option value="rifle" ${sellList.gameItems.rarity == 'Mil-spec' ? 'selected' : ''}>Mil-spec</option>
+                        <option value="smg" ${sellList.gameItems.rarity == 'Restricted' ? 'selected' : ''}>Restricted</option>
+                        <option value="heavy" ${sellList.gameItems.rarity == 'Classified' ? 'selected' : ''}>Classified</option>
+                        <option value="heavy" ${sellList.gameItems.rarity == 'Covert' ? 'selected' : ''}>Covert</option>
+                    </select>
                 </div>
-                <div class="form-group">
-                    <label for="image">Image:</label>
-                    <input type="text" class="form-control" id="image" name="image" value="${sellList.gameItems.img}" required>
-                </div>
+                
+                <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" name="image" id="image" class="form-control"  value="${sellList.gameItems.img}" required>
+                    </div>
                 <button type="submit" class="btn btn-primary">Update Game Item</button>
             </form>
 

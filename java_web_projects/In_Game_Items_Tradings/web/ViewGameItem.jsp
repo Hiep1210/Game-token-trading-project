@@ -25,6 +25,26 @@
         <link rel="stylesheet" href="UI/css/styleSell.css">
         <script src="UI/js/formValidate.js"></script>
 </head>
+<style>
+    /* Change the font color of table header */
+    table thead th {
+        color: white;
+    }
+
+    /* Change the font color of table rows */
+    table tbody td {
+        color: white;
+    }
+    
+    h1{
+        color: white;
+    }
+
+    /* Optional: Change the background color of table header */
+    
+</style>
+
+
 <body>
 
     <div class="container-fluid main-content">
@@ -87,9 +107,11 @@
                         
                         <div class="col-lg-6">
                             <a href="addGameItem.jsp">Add New Game Item</a>
+                            
+                            
                         </div>
                     </div>
-</div>
+
                     <div class="container">
                         <c:choose>
                             <c:when test="${(requestScope.sellList != null) }">
@@ -101,7 +123,7 @@
                                             <th scope="col">Item Name</th>
                                             <th scope="col">Type</th>
                                             <th scope="col">Rarity</th>
-                                            <th scope="col">image</th>
+                                            <th scope="col">Image</th>
                                             <th scope="col">Action</th>
                                             
                                         </tr>
@@ -119,8 +141,20 @@
                                                 <td><img src="UI/image/${sellList.gameItems.img}.png" alt="invoice picture" width="200" 
                                                          height="300"></td>
                                                 <td>
-                                                    <td><a href="EditGameItem.jsp">Edit</a></td>
-                                                    <td><a href="DeleteGameItem">Delete</a></td>
+                                                    <td>
+                                                <form action="EditGameItemController" method="post">
+                                                    <input type="hidden" name="id" value="${sellList.gameItems.id}">
+                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                </form>
+                                                     </td>
+
+                                                    <td>
+                                                <form action="DeleteGameItemController" method="post">
+                                                    <input type="hidden" name="id" value="${sellList.gameItems.id}">
+                                                    <button type="submit" class="btn btn-primary">Delete</button>
+                                                </form>
+</td>
+
                                                 </td>
                                                 
                                             </tr>   

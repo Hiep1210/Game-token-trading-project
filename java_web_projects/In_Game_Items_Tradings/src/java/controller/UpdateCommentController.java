@@ -5,9 +5,6 @@
 
 package controller;
 
-import dao.CommentDAO;
-import dao.ThreadDAO;
-import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,18 +12,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Thread;
-import java.util.ArrayList;
-import java.util.HashMap;
-import model.Comment;
 import model.User;
+import dao.CommentDAO;
+import dao.ThreadDAO;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name="ThreadDiscussionController", urlPatterns={"/ThreadDiscussionController"})
-public class ThreadDiscussionController extends HttpServlet {
+@WebServlet(name="UpdateCommentController", urlPatterns={"/UpdateCommentController"})
+public class UpdateCommentController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,6 +30,16 @@ public class ThreadDiscussionController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        int tid = Integer.parseInt(request.getParameter("threadid"));
+        request.setAttribute("id", tid);
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        String content = request.getParameter("ccontent");
+        CommentDAO.updateComment(content, cid);
+        request.getRequestDispatcher("ThreadDiscussionController").forward(request, response);
+
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -47,7 +52,8 @@ public class ThreadDiscussionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
+       
+        processRequest(request, response);
     } 
 
     /** 
@@ -60,20 +66,9 @@ public class ThreadDiscussionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        try{
-       HashMap<Integer, User> userList = UserDAO.getAllUser();
-       request.setAttribute("userlist", userList);
-       int tid = Integer.parseInt(request.getParameter("threadid"));
-       ArrayList<Comment> lc = CommentDAO.getAllComment(tid);
-       Thread thread = ThreadDAO.getThreadById(tid);
-       request.setAttribute("t", thread);
-       request.setAttribute("commentlist", lc);
-       request.getRequestDispatcher("threadDiscussion.jsp").forward(request, response);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+       processRequest(request, response);
+
     }
-   
 
     /** 
      * Returns a short description of the servlet.
@@ -85,4 +80,3 @@ public class ThreadDiscussionController extends HttpServlet {
     }// </editor-fold>
 
 }
- 

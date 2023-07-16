@@ -24,6 +24,18 @@
     <link rel="stylesheet" href="UI/css/styleSell.css">
     <script src="UI/js/formValidate.js"></script>
 </head>
+<style>
+    /* Style for the form labels */
+    form label {
+        color: white;
+    }
+    
+    h1{
+        color: white;
+    }
+    
+</style>
+
 <body>
 
 <div class="container-fluid main-content">
@@ -71,7 +83,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
+                        <label for="image" class="form-label">Image (Please choose image with .png format only)</label>
                         <input type="file" name="image" id="image" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Item</button>

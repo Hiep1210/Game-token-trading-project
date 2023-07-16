@@ -5,9 +5,6 @@
 
 package controller;
 
-import dao.CommentDAO;
-import dao.ThreadDAO;
-import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,18 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Thread;
+import dao.ThreadDAO;
 import java.util.ArrayList;
-import java.util.HashMap;
-import model.Comment;
-import model.User;
-
+import model.Thread;
 /**
  *
  * @author ACER
  */
-@WebServlet(name="ThreadDiscussionController", urlPatterns={"/ThreadDiscussionController"})
-public class ThreadDiscussionController extends HttpServlet {
+@WebServlet(name="SearchThreadController", urlPatterns={"/SearchThreadController"})
+public class SearchThreadController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -47,7 +41,14 @@ public class ThreadDiscussionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-
+        String scontent = request.getParameter("search");
+        if(!scontent.isEmpty()){        
+        ArrayList<Thread> listSearch = ThreadDAO.Search(scontent);
+        request.setAttribute("list", listSearch);
+        request.getRequestDispatcher("threadSearchList.jsp").forward(request, response);
+        }else{
+            request.getRequestDispatcher("ThreadController").forward(request, response);
+        }
     } 
 
     /** 
@@ -60,20 +61,8 @@ public class ThreadDiscussionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        try{
-       HashMap<Integer, User> userList = UserDAO.getAllUser();
-       request.setAttribute("userlist", userList);
-       int tid = Integer.parseInt(request.getParameter("threadid"));
-       ArrayList<Comment> lc = CommentDAO.getAllComment(tid);
-       Thread thread = ThreadDAO.getThreadById(tid);
-       request.setAttribute("t", thread);
-       request.setAttribute("commentlist", lc);
-       request.getRequestDispatcher("threadDiscussion.jsp").forward(request, response);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        
     }
-   
 
     /** 
      * Returns a short description of the servlet.
@@ -85,4 +74,3 @@ public class ThreadDiscussionController extends HttpServlet {
     }// </editor-fold>
 
 }
- 

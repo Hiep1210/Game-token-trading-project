@@ -78,9 +78,123 @@ public class ThreadDAO {
                 t.setUser_id(rs.getInt(6));
                 return t;
             }
+           ps.close();
+           con.close();
         }catch(Exception e){
             System.out.println(e.getMessage());
     }
         return null;
 }
+    public static boolean UpdateThread(int id, String ttitle, String tcontent, String ttag ){
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "Update THREAD Set ttitle = '"+ ttitle +"', tcontent='"+ tcontent +"', ttag='"+ ttag +"' where id ='"+ id +"'";
+                 Statement st = con.createStatement();
+                int rows = st.executeUpdate(sql);
+                if (rows < 1) {
+                    throw new Exception();
+                }
+                return true;
+            }
+    }catch(Exception e){
+            System.out.println(e.getMessage());
+    }
+        return false;
+}
+          public static ArrayList<Thread> getAllThreadByUserId(int id){
+        ArrayList<Thread> list = new ArrayList<>();
+        Thread t = null;
+        
+        try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            
+            if(con != null){
+                String sql = "Select id,ttitle,tcontent,ttag,tauthor,user_id from THREAD where user_id ='" + id + "';";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                while(rs.next()){
+                t = new Thread(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getInt(6));
+                list.add(t);
+            }       
+            call.close();
+            con.close();
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+          public static boolean deleteThread( int tid){
+         try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "Delete from THREAD where id ='" + tid + "'";
+                 Statement st = con.createStatement();
+                int rows = st.executeUpdate(sql);
+                if (rows < 1) {
+                    throw new Exception();
+                }
+                return true;
+            }
+    }catch(Exception e){
+            System.out.println(e.getMessage());
+    }
+        return false;
+}
+          public static ArrayList<Thread> Search(String title){
+              ArrayList<Thread> listSearch = new ArrayList<>();
+              try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            Statement st = con.createStatement();
+            String sql= "Select * from THREAD where ttitle LIKE N'%" + title + "%' or tcontent LIKE N'%" + title + "%'";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+               Thread t = new Thread();
+               t.setId(rs.getInt(1));
+               t.setTtitle(rs.getString(2));
+               t.setTcontent(rs.getString(3));
+               t.setTtag(rs.getString(4));
+               t.setTauthor(rs.getString(5));
+               t.setUser_id(rs.getInt(6));
+               
+               listSearch.add(t);
+            }
+            st.close();
+            con.close();
+              }catch(Exception e){
+                  System.out.println(e.getMessage());
+              }
+              return listSearch;
+          }
+          public static ArrayList<Thread> SearchByTag(String tag){
+                  ArrayList<Thread> listSearch = new ArrayList<>();
+              try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            Statement st = con.createStatement();
+            String sql= "Select * from THREAD where ttag LIKE N'%" + tag + "%'" ;
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+               Thread t = new Thread();
+               t.setId(rs.getInt(1));
+               t.setTtitle(rs.getString(2));
+               t.setTcontent(rs.getString(3));
+               t.setTtag(rs.getString(4));
+               t.setTauthor(rs.getString(5));
+               t.setUser_id(rs.getInt(6));
+               
+               listSearch.add(t);
+            }
+            st.close();
+            con.close();
+              }catch(Exception e){
+                  System.out.println(e.getMessage());
+              }
+              return listSearch;
+                  }
 }

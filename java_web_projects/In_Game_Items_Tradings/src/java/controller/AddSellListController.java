@@ -27,6 +27,7 @@ public class AddSellListController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
+        //if sell list already have 5 item then return
         int userSellListLength = SellListDAO.getUserSellList(user.getId()).size();
         if (userSellListLength == 5) {
             return;
@@ -43,15 +44,20 @@ public class AddSellListController extends HttpServlet {
 
         if (gameItem != null) {
             SellItems sellItem = new SellItems(exterior, sellTime, price, gameAccount, sellerId, gameItem.getId());
-
-            SellListDAO.insertSellListItem(sellItem);
+            
+            //insert item to sellitems table
+            SellListDAO.insertSellItemsItem(sellItem);
+            
+            //Insert item to selllist table
             int sellItemId = SellListDAO.getSellItemId(sellItem);
-            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
             SellListDAO.addToSellList(sellerId, sellItemId);
+            
+            //get sell item info for printing to UI
+            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
 
             PrintWriter out = response.getWriter();
             out.println("<!-- Item Card -->\n"
-                    + "                                <div class=\"sell-card mb-3\" id=\"sell-card\">\n"
+                    + "                                <div class=\"sell-card mb-3\" id=\"sell-card-" + sellItemId + "\">\n"
                     + "                                    <div class=\"row g-0\">\n"
                     + "                                        <div class=\"col-md-4\">\n"
                     + "                                            <img src=\"UI/image/" + sellItemInfo.getImg() + ".png\" class=\"img-fluid rounded\" alt=\"...\">\n"
@@ -65,7 +71,7 @@ public class AddSellListController extends HttpServlet {
                     + "                                                <p class=\"card-text\">Game Account: " + sellItemInfo.getGameAccount() + "</p>\n"
                     + "                                            </div>\n"
                     + "                                        </div>\n"
-                    + "                                        <button class=\"btn item-card-button sell-list-cart-button mt-2\">\n"
+                    + "                                        <button class=\"btn item-card-button sell-list-cart-button mt-2\" onclick=\"deleteSellListItem(" + sellItemId + ")\">\n"
                     + "                                            <i class=\"fa-solid fa-trash\"></i>\n"
                     + "                                        </button>\n"
                     + "                                    </div>\n"

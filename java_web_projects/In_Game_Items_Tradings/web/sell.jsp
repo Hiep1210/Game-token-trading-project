@@ -52,14 +52,14 @@
                                     <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
                                     <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
                                     <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
-                                    <li class="dropdown-item"><input type="checkbox" name="smg" value="smg" checked>SMGs</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="smg" value="smgs" checked>SMGs</li>
                                     <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
-                                    <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
-                                    <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
+                                    <li class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all">Select All</li>
+                                    <li class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</li>
+                                    <li class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</li>
                                 </ul>
                             </div>
                         </div>
@@ -77,6 +77,11 @@
                                 </ul>
                             </div>
                         </div>
+                        <c:if test="${sessionScope.user != null}">
+                            <div class="col-lg-3">
+                                <a type="button" class="btn btn-warning" href="ViewUserMarketItems">Your Selling Items</a>
+                            </div>
+                        </c:if>
                     </div>
                     <!-- Item List -->
                     <div class="row" id="list-content">
@@ -157,41 +162,43 @@
                 </div>
                 <!-- Sell List -->
                 <div class="col-lg-4">
-                    <div class="sell-header">
-                        <h1 class="fw-bold text-light">Sell List</h1>
-                    </div>
-                    <div class="container">
-                        <div class="row" id="sell-list-content">
-                            <c:forEach var ="sellList" items="${requestScope.userSellList}">
-                                <!-- Item Card -->
-                                <div class="sell-card mb-3" id="sell-card-${sellList.id}">
-                                    <div class="row g-0">
-                                        <div class="col-md-4 mb-2">
-                                            <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
-                                                </h5>
-                                                <p class="card-text">Selling price: ${sellList.price}</p>
-                                                <p class="card-text">Selling time: ${sellList.sellTime}</p>
-                                                <p class="card-text">Game Account: ${sellList.gameAccount}</p>
+                    <c:if test="${sessionScope.user != null}">
+                        <div class="sell-header">
+                            <h1 class="fw-bold text-light">Sell List</h1>
+                        </div>
+                        <div class="container">
+                            <div class="row" id="sell-list-content">
+                                <c:forEach var ="sellList" items="${requestScope.userSellList}">
+                                    <!-- Item Card -->
+                                    <div class="sell-card mb-3" id="sell-card-${sellList.id}">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 mb-2">
+                                                <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
                                             </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
+                                                    </h5>
+                                                    <p class="card-text">Selling price: ${sellList.price}</p>
+                                                    <p class="card-text">Selling time: ${sellList.sellTime}</p>
+                                                    <p class="card-text">Game Account: ${sellList.gameAccount}</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn item-card-button sell-list-cart-button mt-2" onclick="deleteSellListItem(${sellList.id})">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
                                         </div>
-                                        <button class="btn item-card-button sell-list-cart-button mt-2" onclick="deleteSellListItem(${sellList.id})">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
                                     </div>
-                                </div>
-                            </c:forEach>
+                                </c:forEach>
+                            </div>
+                            <div class="summit-button mt-2">
+                                <button class="btn" onclick="sellAll()">
+                                    Sell All
+                                </button>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <span>Total:</span>
-                            <span>$6000</span>
-                        </div>
-                    </div>
+                    </c:if>
                 </div>
-
             </div>
         </div>
     </div>
@@ -202,6 +209,12 @@
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+    </script>
+    <!-- script for stop dropdown closed on click -->
+    <script>
+        $('.dropdown-menu').click(function (e) {
+            e.stopPropagation();
+        });
     </script>
     <!-- script for load more -->
     <script>
@@ -297,13 +310,13 @@
     </script>
     <!-- Script for add to sell list -->
     <script>
-        function getUserSellListLength() {
-            localStorage.setItem("sellListLength", `${requestScope.userSellListLength}`);
+        function getUserSellItemsAmount() {
+            localStorage.setItem("userSellItemsAmount", `${requestScope.userSellItemsAmount}`);
         }
-        window.addEventListener('load', getUserSellListLength());
+        window.addEventListener('load', getUserSellItemsAmount());
 
         // Retrieve the sell list state from local storage
-        var sellListLength = localStorage.getItem("sellListLength") || 0;
+        var userSellItemsAmount = localStorage.getItem("userSellItemsAmount") || 0;
 
         function addToSellList(event) {
             var clickedButton = event.target;
@@ -350,10 +363,12 @@
                         success: function (data) {
                             var row = document.getElementById("sell-list-content");
                             row.innerHTML = data + row.innerHTML;
-                            sellListLength++;
-
+                            userSellItemsAmount++;
+                            if (userSellItemsAmount >= 5) {
+                                userSellItemsAmount = 5;
+                            }
                             // Update the sell list length in local storage
-                            localStorage.setItem("sellListLength", sellListLength);
+                            localStorage.setItem("userSellItemsAmount", userSellItemsAmount);
 
                             updateButtons();
                         },
@@ -372,10 +387,13 @@
 
         // Update the buttons based on the sell list state
         function updateButtons() {
-            if (sellListLength >= 5) {
-                var buttons = document.querySelectorAll(".summit-button .item-card-button");
-                for (var i = 0; i < buttons.length; i++) {
-                    var button = buttons[i];
+            var buttons = document.querySelectorAll(".summit-button .item-card-button");
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                if (userSellItemsAmount < 5) {
+                    button.innerText = "Add to Sell List";
+                    button.setAttribute("onclick", "addToSellList(event)");
+                } else {
                     button.innerText = "Sell List is Full";
                     button.removeAttribute("onclick");
                 }
@@ -397,15 +415,33 @@
                     sellItemId: sellItemId
                 },
                 success: function () {
-                    sellListLength--;
-                    localStorage.setItem("sellListLength", sellListLength);
+                    userSellItemsAmount--;
+                    localStorage.setItem("userSellItemsAmount", userSellItemsAmount);
                     console.log("item with id " + sellItemId + " deleted");
                     //Deleted item from the DOM
                     $('#sell-card-' + sellItemId).remove();
+                    updateButtons();
                 },
-                error: function (xhr, status, error) {
+                error: function (error) {
                     // Handle any errors that occur during the AJAX request
                     console.error(error);
+                }
+            });
+        }
+    </script>
+
+    <!-- scripit for sell to market -->
+    <script>
+        function sellAll() {
+            $.ajax({
+                url: '/In_Game_Items_Trading/sellToMarket',
+                method: 'POST',
+                success: function () {
+                    $('.sell-card').remove();
+                },
+                error: function (error) {
+                    // Handle the error response from the backend
+                    console.error('Error occurred during AJAX request');
                 }
             });
         }
