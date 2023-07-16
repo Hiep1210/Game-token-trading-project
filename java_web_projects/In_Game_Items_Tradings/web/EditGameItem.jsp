@@ -21,11 +21,22 @@
     <link rel="stylesheet" href="UI/css/userProfile.css">
     <link rel="stylesheet" href="UI/css/style.css">
     <link rel="stylesheet" href="UI/css/styleInput.css">
+    <style>
+    /* Style for the form labels */
+    form label {
+        color: white;
+    }
+    
+    h1{
+        color: white;
+    }
+    
+</style>
 </head>
 <body>
+    
 
 <div class="container-fluid main-content">
-
     <div class="row">
         <%@include file="navbar.jsp" %>
         <!-- Sidebar -->
@@ -40,37 +51,37 @@
             <form action="EditGameItemController" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="skin-name">Skin Name:</label>
-                    <input type="text" class="form-control" id="skin-name" name="skinName" value="${sellList.gameItems.skinName}" required>
+                    <input type="text" class="form-control" id="skin-name" name="skinName" value="${gameItem.skinName}" required>
                 </div>
                 <div class="form-group">
                     <label for="item-name">Item Name:</label>
-                    <input type="text" class="form-control" id="item-name" name="itemName" value="${sellList.gameItems.itemName}" required>
+                    <input type="text" class="form-control" id="item-name" name="itemName" value="${gameItem.itemName}" required>
                 </div>
                 <div class="form-group">
                     <label for="type">Type:</label>
                     <select class="form-control" id="type" name="type" required>
-                        <option value="knife" ${sellList.gameItems.type == 'knife' ? 'selected' : ''}>Knife</option>
-                        <option value="pistol" ${sellList.gameItems.type == 'pistol' ? 'selected' : ''}>Pistol</option>
-                        <option value="rifle" ${sellList.gameItems.type == 'rifle' ? 'selected' : ''}>Rifle</option>
-                        <option value="smg" ${sellList.gameItems.type == 'smg' ? 'selected' : ''}>SMGs</option>
-                        <option value="heavy" ${sellList.gameItems.type == 'heavy' ? 'selected' : ''}>Heavy</option>
+                        <option value="knife" ${gameItem.type == 'Knife' ? 'selected' : ''}>Knife</option>
+                        <option value="pistol" ${gameItem.type == 'Pistol' ? 'selected' : ''}>Pistol</option>
+                        <option value="rifle" ${gameItem.type == 'Rifle' ? 'selected' : ''}>Rifle</option>
+                        <option value="smg" ${gameItem.type == 'SMGs' ? 'selected' : ''}>SMGs</option>
+                        <option value="heavy" ${gameItem.type == 'Heavy' ? 'selected' : ''}>Heavy</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="rarity">Rarity:</label>
                     <select class="form-control" id="rarity" name="rarity" required>
-                        <option value="knife" ${sellList.gameItems.rarity == 'Consumer' ? 'selected' : ''}>Consumer</option>
-                        <option value="pistol" ${sellList.gameItems.rarity == 'Industrial' ? 'selected' : ''}>Pistol</option>
-                        <option value="rifle" ${sellList.gameItems.rarity == 'Mil-spec' ? 'selected' : ''}>Mil-spec</option>
-                        <option value="smg" ${sellList.gameItems.rarity == 'Restricted' ? 'selected' : ''}>Restricted</option>
-                        <option value="heavy" ${sellList.gameItems.rarity == 'Classified' ? 'selected' : ''}>Classified</option>
-                        <option value="heavy" ${sellList.gameItems.rarity == 'Covert' ? 'selected' : ''}>Covert</option>
+                        <option value="Consumer" ${gameItem.rarity == 'Consumer' ? 'selected' : ''}>Consumer</option>
+                        <option value="Industrial" ${gameItem.rarity == 'Industrial' ? 'selected' : ''}>Industrial</option>
+                        <option value="Mil-spec" ${gameItem.rarity == 'Mil-spec' ? 'selected' : ''}>Mil-spec</option>
+                        <option value="Restricted" ${gameItem.rarity == 'Restricted' ? 'selected' : ''}>Restricted</option>
+                        <option value="Classified" ${gameItem.rarity == 'Classified' ? 'selected' : ''}>Classified</option>
+                        <option value="Covert" ${gameItem.rarity == 'Covert' ? 'selected' : ''}>Covert</option>
                     </select>
                 </div>
                 
                 <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
-                        <input type="file" name="image" id="image" class="form-control"  value="${sellList.gameItems.img}" required>
+                        <input type="file" accept="image/*" name="image" id="image" class="form-control" required>
                     </div>
                 <button type="submit" class="btn btn-primary">Update Game Item</button>
             </form>
