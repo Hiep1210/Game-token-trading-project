@@ -5,6 +5,7 @@
 package dao;
 
 import Context.DBContext;
+import static dao.CartDAO.logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.GameItems;
+import model.MarketItems;
 import model.SellList;
 
 /**
@@ -106,7 +108,7 @@ public class SellDAO {
             selectedTypes = "AND (type = 'nonexisttype')";
         }
         int numberOfTypes = types.length;
-        
+
         if (sortOrder == null) {
             sortOrder = "";
         }
@@ -206,5 +208,38 @@ public class SellDAO {
             System.out.println(e.getMessage());
         }
         return deleteStatus;
+    }
+    
+    public static int getUserSellingAmount(int sellerId) {
+        int userSellItemsAmount = 0;
+        Connection con = null;
+        PreparedStatement statement = null;
+        try {
+            DBContext db = new DBContext();
+            con = db.getConnection();
+            String sql = "SELECT * FROM MarketItems WHERE user_id = ?";
+            statement = con.prepareStatement(sql);
+            statement.setInt(1, sellerId); // Set the parameter value for the seller_id
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                // Increment the counter for each row
+                userSellItemsAmount++;
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException s) {
+                logger.log(Level.SEVERE, s.getMessage());
+            }
+        }
+        return userSellItemsAmount;
     }
 }

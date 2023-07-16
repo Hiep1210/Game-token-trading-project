@@ -77,6 +77,11 @@
                                 </ul>
                             </div>
                         </div>
+                        <c:if test="${sessionScope.user != null}">
+                            <div class="col-lg-3">
+                                <a type="button" class="btn btn-warning" href="ViewUserMarketItems">Your Selling Items</a>
+                            </div>
+                        </c:if>
                     </div>
                     <!-- Item List -->
                     <div class="row" id="list-content">
@@ -157,59 +162,42 @@
                 </div>
                 <!-- Sell List -->
                 <div class="col-lg-4">
-                    <div class="sell-header">
-                        <h1 class="fw-bold text-light">Sell List</h1>
-                    </div>
-                    <div class="container">
-                        <div class="row" id="sell-list-content">
-                            <c:forEach var ="sellList" items="${requestScope.userSellList}">
-                                <!-- Item Card -->
-                                <div class="sell-card mb-3" id="sell-card-${sellList.id}">
-                                    <div class="row g-0">
-                                        <div class="col-md-4 mb-2">
-                                            <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
-                                                </h5>
-                                                <p class="card-text">Selling price: ${sellList.price}</p>
-                                                <p class="card-text">Selling time: ${sellList.sellTime}</p>
-                                                <p class="card-text">Game Account: ${sellList.gameAccount}</p>
-                                            </div>
-                                        </div>
-                                        <button class="btn item-card-button sell-list-cart-button mt-2" onclick="deleteSellListItem(${sellList.id})">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </c:forEach>
+                    <c:if test="${sessionScope.user != null}">
+                        <div class="sell-header">
+                            <h1 class="fw-bold text-light">Sell List</h1>
                         </div>
-                        <c:if test="${sessionScope.user != null}">
+                        <div class="container">
+                            <div class="row" id="sell-list-content">
+                                <c:forEach var ="sellList" items="${requestScope.userSellList}">
+                                    <!-- Item Card -->
+                                    <div class="sell-card mb-3" id="sell-card-${sellList.id}">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 mb-2">
+                                                <img src="UI/image/${sellList.getImg()}.png" class="img-fluid rounded" alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-2">${sellList.type} | ${sellList.itemName} ${sellList.skinName} (${sellList.exterior})
+                                                    </h5>
+                                                    <p class="card-text">Selling price: ${sellList.price}</p>
+                                                    <p class="card-text">Selling time: ${sellList.sellTime}</p>
+                                                    <p class="card-text">Game Account: ${sellList.gameAccount}</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn item-card-button sell-list-cart-button mt-2" onclick="deleteSellListItem(${sellList.id})">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
                             <div class="summit-button mt-2">
                                 <button class="btn" onclick="sellAll()">
                                     Sell All
                                 </button>
                             </div>
-                        </c:if>
-                    </div>
-                    <details class="user-sell-items mt-5">
-                        <summary class="text-white fs-2 fw-bold">Your Selling Items</summary>
-                        <ul class="nopadding">
-                            <a href="UserProfileController">
-                                <li>Profile</li>
-                            </a>
-                            <a href="topUpRequest.jsp">
-                                <li>Top up</li>
-                            </a>
-                            <a href="ChangePassword.jsp">
-                                <li>Change Password</li>
-                            </a>
-                            <a href="createAuction.jsp">
-                                <li>Create auction</li>
-                            </a>
-                        </ul>
-                    </details>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -221,6 +209,12 @@
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+    </script>
+    <!-- script for stop dropdown closed on click -->
+    <script>
+        $('.dropdown-menu').click(function (e) {
+            e.stopPropagation();
+        });
     </script>
     <!-- script for load more -->
     <script>
@@ -442,8 +436,8 @@
             $.ajax({
                 url: '/In_Game_Items_Trading/sellToMarket',
                 method: 'POST',
-                success: function (response) {
-                    $('#sell-list-content').remove();
+                success: function () {
+                    $('.sell-card').remove();
                 },
                 error: function (error) {
                     // Handle the error response from the backend
