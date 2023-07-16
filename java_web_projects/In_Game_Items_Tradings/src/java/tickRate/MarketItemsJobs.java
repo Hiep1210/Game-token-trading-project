@@ -36,7 +36,6 @@ public class MarketItemsJobs implements Runnable {
             insertUnsuccessfullMarketItemNotification(unsuccessfulMarketItems);
         }
     }
-
     private void insertUnsuccessfullMarketItemNotification(ArrayList<MarketItems> unsuccessfulMarketItems) {
         String sellerNotificationContent;
         Notification notificationForSeller;

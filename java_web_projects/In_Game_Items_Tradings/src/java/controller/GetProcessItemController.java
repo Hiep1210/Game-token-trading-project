@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Auction;
 import model.ProcessItem;
+import model.TradeItem;
 import model.User;
 
 @WebServlet(name = "GetProcessItemController", urlPatterns = {"/GetProcessItemController"})
@@ -49,7 +50,7 @@ public class GetProcessItemController extends HttpServlet {
                         auction  = AuctionDAO.getAuction(processItem.getTransactionId());
                         auction.setBidList(BidDAO.getBidsFromAuctionId(auction.getAuctionId()));
                         processItem.setObject(auction);
-                    }
+                    } 
                 }
 
             }

@@ -64,7 +64,7 @@ public class InsertProcessNotificationController extends HttpServlet {
                                 + "has been transfered to game account : " + processItem.getGameAccountName();
                         sellerNotificationContent = "Item :" + auction.getGameItem().getItemName() + "|" + auction.getGameItem().getSkinName()
                                 + "has successfully sold for : " + bid.getAmount();
-                    }
+                    } 
                 } else {
                     if (processItem.getTransactionTypeIdId() == 1) {
                         buyerNotificationContent = "Item" + ((MarketItems) processItem.getObject()).getItemName() + "|" + ((MarketItems) processItem.getObject()).getType()
