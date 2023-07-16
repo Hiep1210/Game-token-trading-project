@@ -12,6 +12,21 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <form action="SearchThreadController" method="get">
+            <input type="text" name="search"/>
+            <button type="submit">Search</button>
+        </form>
+        <form action="SearchThreadByTag" method="get">
+            <label for="tag">Choose a tag:</label>
+            <select name="tag" id="tag">
+                <option value=""></option>
+                <option value="Help">Help</option>
+                <option value="Funny">Funny</option>
+                <option value="Game">Game</option>
+                <option value="Troll">Troll</option>
+               </select>
+            <button type="submit">Search</button>
+        </form>
         <c:forEach var="thread" items="${threadlist}">       
             <form action="ThreadDiscussionController" method="post">
             <input name="threadid" value="${thread.id}" type="hidden">   
@@ -20,7 +35,7 @@
             <button type="submit">Go to discuss</button>
             </form>         
         </c:forEach>
-        <form action="ManageThreadController" method="get">
+        <form action="ManageThreadController" method="post">
             <c:set var="userid" value="${requestScope.user}"/>
             <input name="userid" value="${user.id}" type="hidden">
             <button type="submit">Manage your thread</button>
