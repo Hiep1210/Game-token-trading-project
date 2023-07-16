@@ -85,7 +85,7 @@ public class ThreadDAO {
     }
         return null;
 }
-    public boolean UpdateThread(int id, String ttitle, String tcontent, String ttag ){
+    public static boolean UpdateThread(int id, String ttitle, String tcontent, String ttag ){
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
@@ -127,4 +127,74 @@ public class ThreadDAO {
         }
         return list;
     }
+          public static boolean deleteThread( int tid){
+         try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if(con != null){
+                String sql = "Delete from THREAD where id ='" + tid + "'";
+                 Statement st = con.createStatement();
+                int rows = st.executeUpdate(sql);
+                if (rows < 1) {
+                    throw new Exception();
+                }
+                return true;
+            }
+    }catch(Exception e){
+            System.out.println(e.getMessage());
+    }
+        return false;
+}
+          public static ArrayList<Thread> Search(String title){
+              ArrayList<Thread> listSearch = new ArrayList<>();
+              try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            Statement st = con.createStatement();
+            String sql= "Select * from THREAD where ttitle LIKE N'%" + title + "%' or tcontent LIKE N'%" + title + "%'";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+               Thread t = new Thread();
+               t.setId(rs.getInt(1));
+               t.setTtitle(rs.getString(2));
+               t.setTcontent(rs.getString(3));
+               t.setTtag(rs.getString(4));
+               t.setTauthor(rs.getString(5));
+               t.setUser_id(rs.getInt(6));
+               
+               listSearch.add(t);
+            }
+            st.close();
+            con.close();
+              }catch(Exception e){
+                  System.out.println(e.getMessage());
+              }
+              return listSearch;
+          }
+          public static ArrayList<Thread> SearchByTag(String tag){
+                  ArrayList<Thread> listSearch = new ArrayList<>();
+              try{
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            Statement st = con.createStatement();
+            String sql= "Select * from THREAD where ttag LIKE N'%" + tag + "%'" ;
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+               Thread t = new Thread();
+               t.setId(rs.getInt(1));
+               t.setTtitle(rs.getString(2));
+               t.setTcontent(rs.getString(3));
+               t.setTtag(rs.getString(4));
+               t.setTauthor(rs.getString(5));
+               t.setUser_id(rs.getInt(6));
+               
+               listSearch.add(t);
+            }
+            st.close();
+            con.close();
+              }catch(Exception e){
+                  System.out.println(e.getMessage());
+              }
+              return listSearch;
+                  }
 }

@@ -5,8 +5,6 @@
 
 package controller;
 
-import dao.CommentDAO;
-import dao.ThreadDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,17 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import dao.ThreadDAO;
 import java.util.ArrayList;
-import java.util.HashMap;
-import model.Comment;
-import model.User;
 import model.Thread;
 /**
  *
  * @author ACER
  */
-@WebServlet(name="InsertCommentController", urlPatterns={"/InsertCommentController"})
-public class InsertCommentController extends HttpServlet {
+@WebServlet(name="SearchThreadController", urlPatterns={"/SearchThreadController"})
+public class SearchThreadController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,7 +29,6 @@ public class InsertCommentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -45,8 +40,17 @@ public class InsertCommentController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {      
+    throws ServletException, IOException {
+        String scontent = request.getParameter("search");
+        if(!scontent.isEmpty()){        
+        ArrayList<Thread> listSearch = ThreadDAO.Search(scontent);
+        request.setAttribute("list", listSearch);
+        request.getRequestDispatcher("threadSearchList.jsp").forward(request, response);
+        }else{
+            request.getRequestDispatcher("ThreadController").forward(request, response);
         }
+    } 
+
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -57,22 +61,7 @@ public class InsertCommentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        try{
-        User user = (User) request.getSession().getAttribute("user");
-        int uid = user.getId();
-        int tid = Integer.parseInt(request.getParameter("threadid"));
-        request.setAttribute("id", tid);
-        String comment = request.getParameter("ccontent");
-        if(comment.isEmpty()){
-            request.getRequestDispatcher("threadDiscussion.jsp").forward(request, response);
-        }else{
-            CommentDAO.insertComment(comment, uid, tid);
-            request.getRequestDispatcher("ThreadDiscussionController").forward(request, response);
-            
-        }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        
     }
 
     /** 

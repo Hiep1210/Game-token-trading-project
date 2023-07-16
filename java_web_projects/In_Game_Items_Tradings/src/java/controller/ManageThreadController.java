@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Thread;
 import model.User;
-
+import dao.ThreadDAO;
 /**
  *
  * @author ACER
@@ -33,9 +33,9 @@ public class ManageThreadController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        int id = Integer.parseInt(request.getParameter("userid"));
+        int id = user.getId();
         if( user != null){
-            ArrayList<Thread> thread = dao.ThreadDAO.getAllThreadByUserId(id);
+            ArrayList<Thread> thread = ThreadDAO.getAllThreadByUserId(id);
             request.setAttribute("userthread", thread );
             request.getRequestDispatcher("threadmanage.jsp").forward(request, response);
         }else{

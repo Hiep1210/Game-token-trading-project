@@ -24,13 +24,13 @@
                 <textarea type="text" name="ccontent" rows="4">${value}</textarea>
                 <button type="submit" name="action" value="insert">Post Comment</button>
                 </form>
-        <form action="UpdateCommentController" method="post">
         <c:forEach var="comment" items="${commentlist}">
+            <form action="UpdateCommentController" method="post">
             <input type="hidden" value="${t.id}" name="threadid"/>
             <input type="hidden" value="${comment.id}" name="cid"/>
-            <input type="hidden" value="${userlist.id}" name="uid"/>
+            <input type="hidden" value="${comment.user_id}" name="uid"/>
                 ${userlist[comment.user_id].username}:
-                <input type="textbox"  value="${comment.ccontent}" name="ccontent"/>
+                <input type="text"  value="${comment.ccontent}" name="ccontent"/>    
                 <c:if test="${sessionScope.user.id eq comment.user_id}">
                 <button type="submit">Update</button>
                 </form>

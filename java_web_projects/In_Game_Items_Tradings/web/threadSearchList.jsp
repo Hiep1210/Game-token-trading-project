@@ -1,6 +1,6 @@
 <%-- 
-    Document   : thread
-    Created on : Jun 28, 2023, 4:35:16 PM
+    Document   : threadSearchList
+    Created on : Jul 16, 2023, 3:43:08 PM
     Author     : ACER
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -27,23 +27,13 @@
                </select>
             <button type="submit">Search</button>
         </form>
-        <c:forEach var="thread" items="${threadlist}">       
-            <form action="ThreadDiscussionController" method="post">
-            <input name="threadid" value="${thread.id}" type="hidden">   
-            Title:  ${thread.ttitle}
-            || Tag: ${thread.ttag} || Author: ${thread.tauthor}<br/>
+    <c:forEach var="sl" items="${list}">
+        <form action="ThreadDiscussionController" method="post">
+            <input name="threadid" value="${sl.id}" type="hidden">   
+            Title:  ${sl.ttitle}
+            || Tag: ${sl.ttag} || Author: ${sl.tauthor}<br/>
             <button type="submit">Go to discuss</button>
-            </form>         
-        </c:forEach>
-        <form action="ManageThreadController" method="post">
-            <c:set var="userid" value="${requestScope.user}"/>
-            <input name="userid" value="${user.id}" type="hidden">
-            <button type="submit">Manage your thread</button>
-        </form>
-            <div>
-            <a href="createNewThread.jsp">
-                Create New Thread
-            </a>
-        </div>
+            </form>
+    </c:forEach>
     </body>
 </html>
