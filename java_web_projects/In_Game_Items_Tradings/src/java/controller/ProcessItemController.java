@@ -33,6 +33,7 @@ public class ProcessItemController extends HttpServlet {
         if(user == null){
             response.sendRedirect("login.jsp");
         }
+        
         ArrayList<ProcessItem> tradeProcess = ProcessItemsDAO.getAllTradeOffersInProcess();
         HashMap<Integer, ArrayList<OfferItem>> offerItem = new HashMap<>();
         HashMap<Integer, ArrayList<ReceiveItem>> receiveItem = new HashMap<>();

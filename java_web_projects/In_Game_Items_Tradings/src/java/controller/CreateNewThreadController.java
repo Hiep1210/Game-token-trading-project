@@ -43,8 +43,7 @@ public class CreateNewThreadController extends HttpServlet {
             
         }else{
             request.setAttribute("nice", "bug");
-            request.getRequestDispatcher("createNewThread.jsp").forward(request, response);
-            
+            request.getRequestDispatcher("createNewThread.jsp").forward(request, response);           
         }
     }
 
