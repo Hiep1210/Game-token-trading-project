@@ -66,7 +66,7 @@ public class ProcessItemsDAO {
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
                 String sql = "SELECT * FROM ProcessItems "
-                        + " ORDER BY id DESC";
+                        + " ORDER BY id ASC";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //run a loop to save queries into model  
