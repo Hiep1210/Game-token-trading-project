@@ -56,6 +56,8 @@
                     <%@include file="sidebar.jsp" %>
                 </div>
                 <!-- Page Info -->
+                
+
                 <div class="col-lg-9 page-info">
                     <h1>View Game Items</h1>
                     <!-- Tool bar -->
@@ -112,67 +114,53 @@
                         </div>
                     </div>
 
-                    <div class="container">
-                        <c:choose>
-                            <c:when test="${(requestScope.sellList != null) }">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            
-                                            <th scope="col">Skin Name</th>
-                                            <th scope="col">Item Name</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Rarity</th>
-                                            <th scope="col">Image</th>
-                                            <th scope="col">Action</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var = "sellList" items="${requestScope.sellList}">
-                                        <form action='ViewGameItemController' method='post'>
-                                                                                        
-                                            <tr>
-                                                
-                                                <td>${sellList.gameItems.skinName}</td>
-                                                <td>${sellList.gameItems.itemName}</td>
-                                                <td>${sellList.gameItems.type}</td>
-                                                <td>${sellList.gameItems.rarity}</td>
-                                                <td><img src="UI/image/${sellList.gameItems.img}.png" alt="invoice picture" width="200" 
-                                                         height="300"></td>
-                                                <td>
-                                                    <td>
-                                                <form action="EditGameItemController" method="post">
-                                                    <input type="hidden" name="id" value="${sellList.gameItems.id}">
-                                                    <button type="submit" class="btn btn-primary">Edit</button>
-                                                </form>
-                                                     </td>
+                     <div class="container">
+        <c:choose>
+            <c:when test="${not empty itemList}">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <th scope="col">Skin Name</th>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Rarity</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="gameItem" items="${itemList}">
+                            <tr>
+                                
+                                <td>${gameItem.gameItems.skinName}</td>
+                                <td>${gameItem.gameItems.itemName}</td>
+                                <td>${gameItem.gameItems.type}</td>
+                                <td>${gameItem.gameItems.rarity}</td>
+                                <td><img src="UI/image/${gameItem.gameItems.img}.png" alt="Game Item Image" width="100" height="100"></td>
+                                <td>
+                                    <form action="EditGameItemController" method="post">
+                                        <input type="hidden" name="id" value="${gameItem.gameItems.id}">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="DeleteGameItemController" method="post">
+                                        <input type="hidden" name="id" value="${gameItem.gameItems.id}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:when>
+            <c:otherwise>
+                <p>No game items to display.</p>
+            </c:otherwise>
+        </c:choose>
+    </div>
 
-                                                    <td>
-                                                <form action="DeleteGameItemController" method="post">
-                                                    <input type="hidden" name="id" value="${sellList.gameItems.id}">
-                                                    <button type="submit" class="btn btn-primary">Delete</button>
-                                                </form>
-</td>
-
-                                                </td>
-                                                
-                                            </tr>   
-                                        </form>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:when>   
-                            <c:otherwise>
-                                <p>Currently 0 payment request to process</p>
-                            </c:otherwise>
-                        </c:choose>
-                               
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
 
     <%-- Display table of game items --%>
    

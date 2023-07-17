@@ -26,9 +26,7 @@ import model.User;
 public class InsertAuctionController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
         request.getRequestDispatcher("BuyPageController").forward(request, response);
     }
@@ -39,7 +37,6 @@ public class InsertAuctionController extends HttpServlet {
     }
 
     public void createAuction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("moaugs");
         // if redirect attribute is null auto redirect to BuyPageController
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");

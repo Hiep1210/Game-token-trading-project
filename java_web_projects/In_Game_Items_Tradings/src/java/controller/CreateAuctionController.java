@@ -40,14 +40,11 @@ public class CreateAuctionController extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         String redirect = "createAuction.jsp";
-        ArrayList<Auction> userAuctionList;
         ArrayList<GameItems> allSellItems;
         ArrayList<GameItemsDAO> sellItemList = new ArrayList<>();
         int userAuctionAmount = 0;
         if (user != null) {
             allSellItems = SellDAO.getTopTwelveItems();
-            userAuctionList = new ArrayList<>();
-            userAuctionList = AuctionDAO.getAllAuctionFromUser(user.getId());
             userAuctionAmount = AuctionDAO.getUserAuctionItemAmount(user.getId());
             for (GameItems gameItems : allSellItems) {
                 //trim all spaces character for offcanvas ids
@@ -55,14 +52,13 @@ public class CreateAuctionController extends HttpServlet {
                 GameItemsDAO gameItem = new GameItemsDAO(gameItems, trimedSkinName);
                 sellItemList.add(gameItem);
             }
-            request.setAttribute("userSellList", userAuctionList);
             request.setAttribute("sellList", sellItemList);
             request.setAttribute("userSellItemsAmount", userAuctionAmount);
         } else {
             redirect = "BuyPageController";
         }
 
-        request.getRequestDispatcher("createAuction.jsp").forward(request, response);
+        request.getRequestDispatcher(redirect).forward(request, response);
     }
 
 }

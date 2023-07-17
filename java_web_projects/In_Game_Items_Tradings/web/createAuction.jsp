@@ -132,7 +132,7 @@
                                             <h5>${sellList.gameItems.rarity}</h5>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center mt-2">
-                                            <p class="sell-info-select-name">Auction duration:</p>
+                                            <p class="sell-info-select-name" required >Auction duration:</p>
                                             <input class="mb-3" type="radio" name ="sellTime" value="1">
                                             <label class="mb-3">1 Day</label>
                                             <input class="mb-3" type="radio" name ="sellTime" value="2">
@@ -149,7 +149,7 @@
                                         <div class="d-flex justify-content-between mt-2">
                                             <p class="sell-info-select-name">Game Account:</p>
                                             <div class="form-group w-50">
-                                                <input class="form-control" type="text" name ="gameAccount" placeholder="G.Account Name">
+                                                <input class="form-control" type="text" name ="gameAccount" placeholder="G.Account Name"required="" >
                                             </div>
                                         </div>
                                         <c:if test="${sessionScope.user != null}">
@@ -355,7 +355,7 @@
                         button.innerText = "Create Auction";
                         button.setAttribute("onclick", "addToSellList(event)");
                     } else {
-                        button.innerText = "Sell List is Full";
+                        button.innerText = "Auction created limit reached!";
                         button.removeAttribute("onclick");
                     }
                 }
