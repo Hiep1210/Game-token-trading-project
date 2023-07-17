@@ -281,6 +281,30 @@ public class GameItemsDAO {
         }
     }
 
+    public static boolean deleteGameItemById(int id) {
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "DELETE FROM GameItems WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st = con.prepareStatement(sql);
+            
+            st.setInt(1, id);
+            
+            con.close();
+            st.executeUpdate();
+            if (st.executeUpdate() != 1) {
+                System.out.println("ERROR INSERTING User");
+            }
+            st.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
+    }
+
     public static void main(String[] args) {
         String trimedName = "CZ75-Auto_Victoria";
         GameItems item = getItemBySkinName(trimedName, "Factory New");
