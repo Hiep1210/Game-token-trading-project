@@ -67,8 +67,10 @@ public class AddGameItemController extends HttpServlet {
             User user = (User) request.getSession().getAttribute("user");
 
             String redirect = "addGameItem.jsp";
+            //if there is no user -> redirect
             if (user == null) {
                 redirect = "BuyPageController";
+                //if the user is not admin -> redirect
             } else if (!isAdmin(user.getRoleid())) {
                 redirect = "BuyPageController";
             } else {
@@ -76,15 +78,21 @@ public class AddGameItemController extends HttpServlet {
                 iterator = upload.getItemIterator(request);
                 while (iterator.hasNext()) {
                     item = iterator.next();
-                    if (item.isFormField()) { // Process form fields
+                    if (item.isFormField()) { 
+                        // Process form fields
                         String fieldName = item.getFieldName();
                         String fieldValue = Streams.asString(item.openStream());
+                        // Limit input with only 255 digits
+                        if (fieldValue.length() > 255) {
+                        fieldValue = fieldValue.substring(0, 255);
+                        }
                         switch (fieldName) {
                             case "skinName":
                                 skinName = fieldValue;
                                 break;
                             case "itemName":
                                 itemName = fieldValue;
+                                
                                 break;
                             case "type":
                                 type = fieldValue;
@@ -95,8 +103,9 @@ public class AddGameItemController extends HttpServlet {
                             default:
                                 break;
                         }
-                    } else { // Process file upload
-                        // Get the original filename of the uploaded profile picture
+                    } else { 
+                        // Process file upload
+                        // Get the original filename of the uploaded game item picture
                         picGameItem = item.getName().substring(0,item.getName().lastIndexOf("."));
                         //User not select any picture
                         if ("".equals(picGameItem)) {
@@ -108,7 +117,7 @@ public class AddGameItemController extends HttpServlet {
                 }
                 gameItem = new GameItems(skinName, itemName, type, rarity, picGameItem);
                 GameItemsDAO.insertGameItem(gameItem);
-                // Save the profile picture
+                // Save the game item picture
             }
             request.getRequestDispatcher(redirect).forward(request, response);
         } catch (Exception e) {
