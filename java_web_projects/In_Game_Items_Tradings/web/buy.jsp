@@ -208,11 +208,13 @@
                                             <p class="sell-info-select-name">Sell Price:</p>
                                             <h5>$ ${market_items.price}</h5>
                                         </div>
-                                        <c:if test="${sessionScope.user != null}">
+                                            <c:if test="${sessionScope.user != null }">
                                             <div class="summit-button mt-2">
+                                                <c:if test="${sessionScope.user.id != market_items.userid }">
                                                 <button class="btn item-card-button"  onclick="addCart(${market_items.id},${sessionScope.user.id})" id="button-cart${market_items.id}">
                                                     <i class="fa-solid fa-cart-shopping"></i>
                                                 </button>
+                                                </c:if>
                                             </div>
                                         </c:if>
                                     </div>
