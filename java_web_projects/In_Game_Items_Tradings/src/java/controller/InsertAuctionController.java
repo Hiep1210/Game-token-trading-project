@@ -42,7 +42,7 @@ public class InsertAuctionController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         Auction auction;
         int userAuctionAmount = AuctionDAO.getUserAuctionItemAmount(user.getId());
-        if (userAuctionAmount > 5) {
+        if (userAuctionAmount > 4) {
             return;
         }
 
