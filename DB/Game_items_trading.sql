@@ -541,6 +541,7 @@ INSERT INTO `game_items_trading`.`bid` (`id`, `bidder_id`, `auction_id`, `bid_ti
 	
 INSERT INTO `game_items_trading`.`transactiontype` (`id`, `type`) VALUES ('1', 'buy');
 INSERT INTO `game_items_trading`.`transactiontype` (`id`, `type`) VALUES ('2', 'auction');
+INSERT INTO `game_items_trading`.`transactiontype` (`id`,`type`) VALUES ('3', 'trade');
 
 INSERT INTO `game_items_trading`.`processitems` (`id`, `transactionType_id`, `transaction_id`, `sender_id`, `receiver_id`, `game_account_name`, `process_date`) VALUES ('1', '1', '15', '3', '2', 'br', '2023-06-18 16:33:53');
 INSERT INTO `game_items_trading`.`processitems` (`id`, `transactionType_id`, `transaction_id`, `sender_id`, `receiver_id`, `game_account_name`, `process_date`) VALUES ('2', '1', '16', '3', '2', 'br', '2023-06-18 16:33:53');
