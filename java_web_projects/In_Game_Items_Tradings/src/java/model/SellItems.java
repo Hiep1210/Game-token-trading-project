@@ -53,7 +53,7 @@ public class SellItems extends GameItems {
         this.gameAccount = gameAccount;
         this.sellerId = sellerId;
     }
-
+    
     public int getId() {
         return id;
     }

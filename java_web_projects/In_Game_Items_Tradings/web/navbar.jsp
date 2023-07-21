@@ -44,13 +44,6 @@
                         </a>
                         <h5>Auction</h5>
                     </div>
-                   <!-- Blog Button -->
-                    <div class="col-lg-2 navbar-item nopadding">
-                        <a href="ThreadController">
-                            <i class="material-icons navbar-item-icon">compare_arrows</i>
-                        </a>
-                        <h5>Blog</h5>
-                    </div>
                 </div>
             </div>
             <!-- Navbar User  -->
@@ -60,14 +53,14 @@
                     <!-- User Notification -->
                     <div class="col-lg-3 navbar-user-notifi dropdown">
                         <c:if test="${(sessionScope.user != null)}">  
-                                    <!-- Dropdown toggler -->
-                                    <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                       aria-expanded="false" onclick="getNotification()">
-                                        <i class="material-icons navbar-item-icon">notifications</i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end" id = "noti-list">
-                                        <a class="dropdown-item" href="#">You have 0 new notification </a>
-                                    </div>
+                            <!-- Dropdown toggler -->
+                            <a class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                               aria-expanded="false" onclick="getNotification()">
+                                <i class="material-icons navbar-item-icon">notifications</i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" id = "noti-list">
+                                <a class="dropdown-item" href="#">You have 0 new notification </a>
+                            </div>
                         </c:if>
                     </div>
                     <!-- User Balance -->
@@ -125,19 +118,19 @@
             </div>
         </div>
 </nav>
-            <script>
-            function getNotification() {
-            $.ajax({
-                url: "/In_Game_Items_Trading/GetNotificationController",
-                type: 'GET',
-                data: {
-                },
-                success: function(data){
-                    var list = document.getElementById("noti-list");
-                    list.innerHTML = data;
-                }
-            });
+<script>
+    function getNotification() {
+        $.ajax({
+            url: "/In_Game_Items_Trading/GetNotificationController",
+            type: 'GET',
+            data: {
+            },
+            success: function (data) {
+                var list = document.getElementById("noti-list");
+                list.innerHTML = data;
+            }
+        });
     }
-        </script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
-    </script>
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js">
+</script>

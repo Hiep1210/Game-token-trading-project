@@ -47,7 +47,7 @@
                                 <div class="col-md-4">
                                     <div class="row nopadding">
                                         <div class="mx-1 my-3">
-                                            <a onclick="deleteUserMarketItems('${sellingList.getId()}'); confirm('Are you sure you want to delete this item from the market?');" class="btn btn-danger w-100">
+                                            <a onclick="deleteUserMarketItems('${sellingList.getId()}');" class="btn btn-danger w-100">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>
@@ -122,17 +122,19 @@
 
         <script>
             function deleteUserMarketItems(itemId) {
-                console.log(itemId);
-                $.ajax({
-                    url: '/In_Game_Items_Trading/DeleteUserMarketItems',
-                    method: 'POST',
-                    data: {
-                        itemId: itemId
-                    },
-                    success: function () {
-                        window.location.reload();
-                    }
-                });
+                var userConfirmed = confirm('Are you sure you want to delete this item from the market?');
+                if (userConfirmed) {
+                    $.ajax({
+                        url: '/In_Game_Items_Trading/DeleteUserMarketItems',
+                        method: 'POST',
+                        data: {
+                            itemId: itemId
+                        },
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                }
             }
         </script>
     </body>

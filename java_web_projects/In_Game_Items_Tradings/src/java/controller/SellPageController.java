@@ -27,7 +27,7 @@ public class SellPageController extends HttpServlet {
         int userSellItemAmount = 0;
         if (user != null) {
             userSellList = SellListDAO.getUserSellList(user.getId());
-            userSellItemAmount = SellDAO.getUserSellingAmount(user.getId());
+            userSellItemAmount = SellDAO.getUserSellItemsAmount(user.getId());
         }
         
         ArrayList<GameItems> allSellItems = SellDAO.getTopTwelveItems();

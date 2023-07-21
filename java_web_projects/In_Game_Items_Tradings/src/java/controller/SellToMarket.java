@@ -30,7 +30,7 @@ public class SellToMarket extends HttpServlet {
             ArrayList<SellItems> sellList = SellListDAO.getUserSellList(user.getId());
 
             for (SellItems sellItems : sellList) {
-                SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItems.getId());
+                SellItems sellItemInfo = SellListDAO.getSellItemInfo(sellItems.getId());
 
                 long currentTime = System.currentTimeMillis();
                 Timestamp timestamp = new Timestamp(currentTime);
@@ -40,7 +40,6 @@ public class SellToMarket extends HttpServlet {
                 Timestamp endDate = new Timestamp(currentTime + sellTimeInMillis);
 
                 SellListDAO.sellToMarket(sellItemInfo, timestamp, endDate);
-                SellListDAO.deleteSellListItem(user.getId(), sellItemInfo.getId());
                 SellListDAO.deleteSellItemsItem(user.getId(), sellItemInfo.getId());
             }
         }

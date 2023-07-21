@@ -59,7 +59,7 @@ public class SellListDAO {
         try {
             DBContext db = new DBContext();
             con = db.getConnection();
-            String sql = "SELECT id FROM SellItems WHERE exterior = ? AND sell_time = ? AND price = ? AND game_account_name = ? AND seller_id = ?";
+            String sql = "SELECT id FROM SellItems WHERE exterior = ? AND sell_time = ? AND price = ? AND game_account_name = ? AND seller_id = ? ORDER BY id desc";
             st = con.prepareStatement(sql);
             st.setString(1, sellItem.getExterior());
             st.setInt(2, sellItem.getSellTime());
@@ -117,20 +117,17 @@ public class SellListDAO {
         try {
             DBContext db = new DBContext();
             con = db.getConnection();
-            String sql = "SELECT sl.id, si.exterior, si.sell_time, si.price, si.game_account_name, sl.seller_id, gi.skin_name, gi.item_name, gi.type, gi.rarity, gi.img "
-                    + "FROM SellItems si "
-                    + "INNER JOIN SellList sl ON si.id = sl.sell_item_id "
-                    + "INNER JOIN GameItems gi ON si.item_id = gi.id "
-                    + "WHERE sl.seller_id = " + sellerId + " ORDER BY id desc";
+            String sql = "SELECT si.id, si.exterior, si.sell_time, si.price, si.game_account_name, si.seller_id, gi.id, gi.skin_name, gi.item_name, gi.type, gi.rarity, gi.img \n"
+                    + "FROM SellItems si \n"
+                    + "INNER JOIN GameItems gi ON si.item_id = gi.id \n"
+                    + "WHERE si.seller_id = " + sellerId + " ORDER BY si.id desc";
             statement = con.prepareStatement(sql);
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                SellItems sellItem = new SellItems(rs.getInt("id"), rs.getString("exterior"), rs.getInt("sell_time"), rs.getDouble("price"), rs.getString("game_account_name"), rs.getInt("seller_id"));
-                sellItem.setSkinName(rs.getString("skin_name"));
-                sellItem.setItemName(rs.getString("item_name"));
-                sellItem.setType(rs.getString("type"));
-                sellItem.setRarity(rs.getString("rarity"));
-                sellItem.setImg(rs.getString("img"));
+                SellItems sellItem = new SellItems(rs.getInt(1), rs.getString(2), 
+                        rs.getInt(3), rs.getDouble(4), rs.getString(5), 
+                        rs.getInt(6), rs.getInt(7), rs.getString(8), 
+                        rs.getString(9), rs.getString(10), rs.getString(11), rs.getString(12));
                 sellListItemsList.add(sellItem);
             }
         } catch (Exception e) {
@@ -146,7 +143,7 @@ public class SellListDAO {
         return sellListItemsList;
     }
 
-    public static SellItems getSellListItemInfo(int sellItemId) {
+    public static SellItems getSellItemInfo(int sellItemId) {
         SellItems sellItem = null;
         Connection con = null;
         PreparedStatement statement = null;
@@ -186,31 +183,6 @@ public class SellListDAO {
             }
         }
         return sellItem;
-    }
-
-    public static void deleteSellListItem(int sellerId, int sellItemId) {
-        Connection con = null;
-        PreparedStatement statement = null;
-        try {
-            DBContext db = new DBContext();
-            con = db.getConnection();
-            String sql = "DELETE FROM SellList WHERE (seller_id = ? AND sell_item_id = ?);";
-            statement = con.prepareStatement(sql);
-            statement.setInt(1, sellerId);
-            statement.setInt(2, sellItemId);
-            if (statement.executeUpdate() < 1) {
-                throw new NullPointerException();
-            }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        } finally {
-            try {
-                statement.close();
-                con.close();
-            } catch (SQLException s) {
-                logger.log(Level.SEVERE, s.getMessage());
-            }
-        }
     }
 
     public static void deleteSellItemsItem(int sellerId, int itemId) {

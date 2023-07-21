@@ -48,12 +48,11 @@ public class AddSellListController extends HttpServlet {
             //insert item to sellitems table
             SellListDAO.insertSellItemsItem(sellItem);
             
-            //Insert item to selllist table
+            //Get Items id from sellITems table
             int sellItemId = SellListDAO.getSellItemId(sellItem);
-            SellListDAO.addToSellList(sellerId, sellItemId);
             
             //get sell item info for printing to UI
-            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
+            SellItems sellItemInfo = SellListDAO.getSellItemInfo(sellItemId);
 
             PrintWriter out = response.getWriter();
             out.println("<!-- Item Card -->\n"
@@ -76,7 +75,6 @@ public class AddSellListController extends HttpServlet {
                     + "                                        </button>\n"
                     + "                                    </div>\n"
                     + "                                </div>");
-
         }
     }
 }
