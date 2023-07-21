@@ -53,15 +53,6 @@ create table SellItems(
     foreign key(item_id) references GameItems(id)
 );
 
-create table SellList(
-	id int not null auto_increment,
-    primary key(id),
-    seller_id int not null,
-	sell_item_id int not null,
-    foreign key(sell_item_id) references SellItems(id),
-    foreign key(seller_id) references UserAccount(id)
-);
-
 create table MarketItems(
 	id int not null auto_increment,
     primary key(id),
@@ -70,7 +61,7 @@ create table MarketItems(
     foreign key(user_id) references UserAccount(id),
     item_id int,
     price double,
-    foreign key(item_id) references SellItems(item_id),
+    foreign key(item_id) references GameItems(id),
     begin_date datetime,
     end_date datetime
 );
