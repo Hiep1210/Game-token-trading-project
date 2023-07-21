@@ -28,6 +28,7 @@
         <!-- Main Content -->
         <div class="container-fluid">
             <div class="container-fluid w-50">
+                <h1 class="text-white fw-bold">Items on Market:</h1>
                 <div class="row" id="sell-card-box">
                     <c:forEach var ="sellingList" items="${requestScope.sellingList}" varStatus="currentStatus">
                         <!-- Item Card -->
@@ -41,7 +42,7 @@
                                         <h5 class="card-title mb-2">${sellingList.getType()} | ${sellingList.getItemName()} ${sellingList.getSkinName()} (${sellingList.getExterior()})
                                         </h5>
                                         <p class="card-text mb-1">Selling price: ${sellingList.getPrice()}</p>
-                                        <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
+                                        <p class="card-text mb-1">Time Left: <span id="countdownSelling${currentStatus.index}"></span></p>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -51,6 +52,27 @@
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <h1 class="text-white fw-bold">Items waiting for Admin approval:</h1>
+                <div class="row" id="sell-card-box">
+                    <c:forEach var ="processList" items="${requestScope.processList}" varStatus="currentStatus">
+                        <!-- Item Card -->
+                        <div class="sell-card mb-3" id="sell-card">
+                            <div class="row g-0">
+                                <div class="col-md-2">
+                                    <img src="UI/image/${processList.getImg()}.png" class="img-fluid rounded" alt="...">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-2">${processList.getType()} | ${processList.getItemName()} ${processList.getSkinName()} (${processList.getExterior()})
+                                        </h5>
+                                        <p class="card-text mb-1">Selling price: ${processList.getPrice()}</p>
+                                        <p class="card-text mb-1">Time Left: <span id="countdownProcessing${currentStatus.index}"></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +106,11 @@
             // Define the countdown details for each timer
             var countdowns = [
             <c:forEach var="sellingListItem" items="${requestScope.sellingList}" varStatus="currentStatus">
-            {name: "countdown${currentStatus.index}", endDate: "${sellingListItem.getEnddate()}"}
+            {name: "countdownSelling${currentStatus.index}", endDate: "${sellingListItem.getEnddate()}"}
+            ,
+            </c:forEach>
+            <c:forEach var="processList" items="${requestScope.processList}" varStatus="currentStatus">
+            {name: "countdownProcessing${currentStatus.index}", endDate: "${processList.getEnddate()}"}
                 <c:if test="${not currentStatus.last}">
             ,
                 </c:if>

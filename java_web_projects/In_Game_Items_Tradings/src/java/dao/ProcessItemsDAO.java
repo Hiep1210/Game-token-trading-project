@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import Context.DBContext;
@@ -15,7 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import model.ProcessItem;
 import model.TradeItem;
-import model.User;
 
 /**
  *
@@ -89,6 +84,7 @@ public class ProcessItemsDAO {
         }
         return processItemList;
     }
+
     public static ProcessItem getProcessItems(int processItemId) {
         ProcessItem processItem = null;
         try {
@@ -140,7 +136,8 @@ public class ProcessItemsDAO {
         }
         return deleteStatus;
     }
-    public static ArrayList<ProcessItem> getAllTradeOffersInProcess(){
+
+    public static ArrayList<ProcessItem> getAllTradeOffersInProcess() {
         ArrayList<ProcessItem> list = new ArrayList<>();
         ProcessItem items = null;
         Connection con = null;
@@ -170,6 +167,7 @@ public class ProcessItemsDAO {
         }
         return list;
     }
+
     public static void main(String[] args) {
         getAllTradeOffersInProcess();
     }

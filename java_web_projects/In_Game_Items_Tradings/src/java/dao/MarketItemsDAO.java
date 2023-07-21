@@ -66,6 +66,67 @@ public class MarketItemsDAO {
         return list;
     }
 
+    public static ArrayList<MarketItems> getUserMarketItems(int userId) {
+        ArrayList<MarketItems> list = new ArrayList<>();
+        MarketItems items = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = SELECTITEMS + " AND m.user_id = " + userId + " ";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13));
+                    list.add(items);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
+    public static ArrayList<MarketItems> getUserProcessItems(int userId) {
+        ArrayList<MarketItems> list = new ArrayList<>();
+        MarketItems items = null;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            //if connection is secured, proceed to execute query and retrieve data into and return a list
+            if (con != null) {
+                String sql = "select m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.* \n"
+                        + "FROM marketitems m, gameitems g \n"
+                        + "WHERE m.item_id = g.id AND NOW() < m.end_date\n"
+                        + "AND EXISTS (\n"
+                        + "SELECT 1 FROM processitems p \n"
+                        + "WHERE  p.transaction_id = m.id\n"
+                        + "AND p.transactionType_id = 1) "
+                        + "AND m.user_id = " + userId + " ";
+                Statement call = con.createStatement();
+                ResultSet rs = call.executeQuery(sql);
+                //run a loop to save queries into model
+                while (rs.next()) {
+                    items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
+                            rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
+                            rs.getString(12), rs.getString(13));
+                    list.add(items);
+                }
+                call.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
     public static MarketItems getMarketItem(int marketItemId) {
         MarketItems item = null;
         try {
@@ -217,40 +278,6 @@ public class MarketItemsDAO {
         return list;
     }
 
-    public static ArrayList<MarketItems> getUserSellingItems(int sellerId) {
-        ArrayList<MarketItems> list = new ArrayList<>();
-        Connection con = null;
-        PreparedStatement statement = null;
-        try {
-            DBContext db = new DBContext();
-            con = db.getConnection();
-            String sql = "SELECT m.id,m.game_account_name,m.user_id, m.price, m.begin_date, m.end_date, g.*\n"
-                    + "FROM marketitems m, gameitems g\n"
-                    + "WHERE m.item_id = g.id\n"
-                    + "AND m.user_id = ?";
-            statement = con.prepareStatement(sql);
-            statement.setInt(1, sellerId);
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                MarketItems items = new MarketItems(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getDouble(4), rs.getObject(5, LocalDateTime.class),
-                        rs.getObject(6, LocalDateTime.class), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11),
-                        rs.getString(12), rs.getString(13));
-                list.add(items);
-            }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        } finally {
-            try {
-                statement.close();
-                con.close();
-            } catch (SQLException s) {
-                logger.log(Level.SEVERE, s.getMessage());
-            }
-        }
-        return list;
-    }
-
     public static void deleteUserSellingItems(int itemId) {
         Connection con = null;
         PreparedStatement statement = null;
@@ -272,5 +299,12 @@ public class MarketItemsDAO {
             }
         }
     }
-
+    
+    public static void main(String[] args) {
+        ArrayList<MarketItems> list = getUserProcessItems(2);
+        for (MarketItems marketItems : list) {
+            System.out.println(marketItems.getId());
+            System.out.println(marketItems.getSkinName());
+        }
+    }
 }
