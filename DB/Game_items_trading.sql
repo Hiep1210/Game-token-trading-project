@@ -564,4 +564,3 @@ INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('3
 INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('12', '2');
 INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('11', '3');
 INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('3', '3');
-
