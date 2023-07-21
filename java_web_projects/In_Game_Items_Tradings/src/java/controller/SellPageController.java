@@ -1,6 +1,7 @@
 package controller;
 
 import dao.GameItemsDAO;
+import dao.MarketItemsDAO;
 import dao.SellDAO;
 import dao.SellListDAO;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import model.User;
 
 @WebServlet(name = "SellPageController", urlPatterns = {"/SellPageController"})
 public class SellPageController extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,19 +28,22 @@ public class SellPageController extends HttpServlet {
         int userSellItemAmount = 0;
         if (user != null) {
             userSellList = SellListDAO.getUserSellList(user.getId());
-            userSellItemAmount = SellDAO.getUserSellItemsAmount(user.getId());
+            int sellListAmount = SellListDAO.getUserSellList(user.getId()).size();
+            int sellingAmount = MarketItemsDAO.getUserMarketItems(user.getId()).size();
+            int processAmount = MarketItemsDAO.getUserProcessItems(user.getId()).size();
+            userSellItemAmount = sellListAmount + sellingAmount + processAmount;
         }
-        
+
         ArrayList<GameItems> allSellItems = SellDAO.getTopTwelveItems();
         ArrayList<GameItemsDAO> sellItemList = new ArrayList<>();
-        
+
         for (GameItems gameItems : allSellItems) {
             //trim all spaces character for offcanvas ids
             String trimedSkinName = gameItems.getSkinName().replaceAll("\\s", "");
             GameItemsDAO gameItem = new GameItemsDAO(gameItems, trimedSkinName);
             sellItemList.add(gameItem);
         }
-        
+
         request.setAttribute("sellList", sellItemList);
         request.setAttribute("userSellList", userSellList);
         request.setAttribute("userSellItemsAmount", userSellItemAmount);
