@@ -89,7 +89,6 @@
                                 <!-- Dropdown menu -->
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="UserProfileController">User Profile</a>
-                                    <a class="dropdown-item" href="#">Transaction History</a>
                                     <a class="dropdown-item" href="ViewCartController">View Your Cart</a>
                                     <div class="dropdown-divider"></div>
                                     <a id="logout" class="dropdown-item" href="LogOutController">Log out</a>
