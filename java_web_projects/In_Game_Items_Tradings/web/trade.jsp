@@ -44,75 +44,6 @@
                 <div class="row"> 
                     <div class="col-lg-5">
                         <div class="container-fluid">
-                            <div class="row mt-2">
-                                <!-- Search Bar -->
-                                <div class="col-lg-6 search-bar form">
-                                    <div class="form-group">
-                                        <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
-                                        <input oninput="filterByType()" id="search-input" class="form-control ps-5" type="text" placeholder="Search...">
-                                    </div>
-                                </div>
-                                <!-- Filter By Type -->
-                                <div class="col-lg-2 filter-type" style="">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-danger">Type</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="smg" value="smg" checked>SMGs</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Sort by Rarity -->
-                                <div class="col-lg-2">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-danger" id="rarity-sort">Rarity</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li class="dropdown-item" onclick="filterByType('asc', this)">Rarest First</li>
-                                            <li class="dropdown-item" onclick="filterByType('desc', this)">Common First</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Sort by Exterior -->
-                                <div class="col-lg-2">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-danger">Exterior</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Battle-Scarred" checked>Battle-Scarred</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Factory New" checked>Pistol</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Field-Tested" checked>Rifle</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Minimal Wear" checked>SMGs</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Well-Worn" checked>Heavy</li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
                                 <c:forEach var ="gItem" items="${requestScope.gItem}" varStatus="currentStatus">
                                     <!-- Item Card -->
@@ -286,75 +217,6 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="container-fluid">
-                            <div class="row mt-2">
-                                <!-- Search Bar -->
-                                <div class="col-lg-6 search-bar form">
-                                    <div class="form-group">
-                                        <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
-                                        <input oninput="filterByType()" id="search-input" class="form-control ps-5" type="text" placeholder="Search...">
-                                    </div>
-                                </div>
-                                <!-- Filter By Type -->
-                                <div class="col-lg-2 filter-type" style="">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-danger">Type</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="smg" value="smg" checked>SMGs</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Sort by Rarity -->
-                                <div class="col-lg-2">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-danger" id="rarity-sort">Rarity</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li class="dropdown-item" onclick="filterByType('asc', this)">Rarest First</li>
-                                            <li class="dropdown-item" onclick="filterByType('desc', this)">Common First</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- Sort by Exterior -->
-                                <div class="col-lg-2">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-danger">Exterior</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="visually-hidden">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Battle-Scarred" checked>Battle-Scarred</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Factory New" checked>Pistol</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Field-Tested" checked>Rifle</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Minimal Wear" checked>SMGs</li>
-                                            <li class="dropdown-item"><input type="checkbox" name="ex" value="Well-Worn" checked>Heavy</li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item" style="color: rgb(87, 242, 135)" id="select-all"">Select All</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(218, 100, 123)" id="reset-all">Reset</a></li>
-                                            <li><a class="dropdown-item" style="color: rgb(128, 108, 245)" onclick="filterByType()">Save Filter</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="row">
 
                                 <c:forEach var ="gItem" items="${requestScope.gItem}" varStatus="currentStatus">
@@ -413,30 +275,94 @@
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script>
-                                                    function filterByType(order) {
-                                                        var searchName = document.getElementById("search-input").value;
-                                                        console.log(searchName);
-                                                        $.ajax({
-                                                            url: "/In_Game_Items_Trading/filterSell",
-                                                            type: "GET",
-                                                            //use when passing array
-                                                            traditional: true,
-                                                            data: {
-                                                                types: checkedValues,
-                                                                txt: searchName,
-                                                                order: order
-                                                            },
-                                                            success: function (data) {
-                                                                var row = document.getElementById("list-content");
-                                                                row.innerHTML = data;
-                                                                document.getElementById("load-button").style.display = "none";
-                                                            },
-                                                            error: function () {
-                                                                console.log('Error occurred during AJAX request');
-                                                            }
-                                                        });
-                                                    }
-        </script>
+        // Create an empty array to store the checked values
+        var checkedValues = ['knife', 'pistol', 'rifle', 'smgs', 'heavy'];
+        var exte = ['Battle-Scarred', 'Factory New','Field-Tested', 'Minimal Wear', 'Well-Worn'];
+        var selectAllButton = document.getElementById('select-all');
+        var resetButton = document.getElementById('reset-all');
+        // Get all the checkbox elements on the page
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        // Add event listener to each checkbox
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                // Check if the checkbox is checked
+                if (this.checked) {
+                    // Push the value into the array
+                    exte.push(this.value);
+                    checkedValues.push(this.value);
+                } else {
+                    // Remove the value from the array if unchecked
+                    var index = checkedValues.indexOf(this.value);
+                    if (index !== -1) {
+                        checkedValues.splice(index, 1);
+                    }
+                    var index1 = exte.indexOf(this.value);
+                    if(index1 !== -1){
+                        exte.splice(index1,1);
+                    }
+                }
+                // Log the updated array
+                console.log(exte);
+            });
+        });
+        selectAllButton.addEventListener('click', function () {
+            checkedValues = [];
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = true;
+                checkedValues.push(checkbox.value);
+            });
+            console.log(checkedValues);
+        });
+        resetButton.addEventListener('click', function () {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
+            checkedValues = [];
+            console.log(checkedValues);
+        });
+        function filterByType(order) {
+            updateButtons();
+            var searchName = document.getElementById("search-input").value;
+            console.log(searchName);
+            $.ajax({
+                url: "/In_Game_Items_Trading/FilterTradeController",
+                type: "GET",
+                //use when passing array
+                traditional: true,
+                data: {
+                    types: checkedValues,
+                    exte: exte,
+                    txt: searchName,
+                    order: order
+                },
+                success: function (data) {
+                    var row = document.getElementById("list-content");
+                    row.innerHTML = data;
+                    document.getElementById("load-button").style.display = "none";
+                    updateButtons();
+                },
+                error: function () {
+                    console.log('Error occurred during AJAX request');
+                }
+            });
+        }
+        function updateButtons() {
+            var buttons = document.querySelectorAll(".summit-button .item-card-button");
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                if (userSellItemsAmount < 5) {
+                    button.innerText = "Add to Sell List";
+                    button.setAttribute("onclick", "addToSellList(event)");
+                } else {
+                    button.innerText = "Sell List is Full";
+                    button.removeAttribute("onclick");
+                }
+            }
+        }
+
+        // Call the updateButtons function when the page loads
+        window.addEventListener('load', updateButtons);
+    </script>
         <script>
             function handleCheckboxChange(checkbox) {
                 var h4Element;

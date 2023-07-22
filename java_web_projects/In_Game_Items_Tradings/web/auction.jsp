@@ -82,10 +82,16 @@
                         </form>
                     </div>
                     <!-- Cart Info Section -->
+                    
                     <div class="cart-info">
                         <c:if test="${sessionScope.user.id != null}">
                             <button class="buy-button">
                                 <h5><a href="ViewAuctionCreatedController">View Your Auctions</a></h5>
+                            </button> 
+                            <br/>
+                            <br/>
+                             <button class="buy-button">
+                                <h5><a href="CreateAuctionController">Create Auction</a></h5>
                             </button> 
                         </c:if>
                     </div>
@@ -272,6 +278,10 @@
                                             <h5 id="sideCountdownJoined${currentStatus.index}"></h5>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Bid step: </p>
+                                            ${auction.bidIncrement} %
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
                                             <p class="sell-info-select-name">Number of bidders:</p>
                                             ${auction.bidList.size()}
                                         </div>
@@ -284,7 +294,7 @@
                                             <c:choose>
                                                 <%-- if user is highest bidder set min value to bid is 0 --%>
                                                 <c:when test="${sessionScope.user.id == auction.bidList.get(0).bidderId }">
-                                                    <c:set var="min" value="1"/>
+                                                    <c:set var="min" value="${auction.bidList.get(0).amount * auction.bidIncrement / 100}"/>
 
                                                     <c:set var="bidId" value="${auction.bidList.get(0).bidId}"/>
                                                     <c:set var="gameAccountName" value="${auction.bidList.get(0).gameAccountName}"/>
@@ -302,7 +312,8 @@
                                                 <c:otherwise>          
                                                     <c:forEach var ="userBid" items="${auction.bidList}">
                                                         <c:if test="${userBid.bidderId == sessionScope.user.id}">
-                                                            <c:set var="min" value="${auction.bidList.get(0).amount - userBid.amount + 1}"/>
+                                                            <c:set var="min" value="${auction.bidList.get(0).amount - userBid.amount 
+                                                                                      + auction.bidList.get(0).amount * auction.bidIncrement / 100}"/>
                                                             <c:set var="bidId" value="${userBid.bidId}"/>
                                                             <c:set var="gameAccountName" value="${userBid.gameAccountName}"/>
                                                             <div class="d-flex justify-content-between mt-2">
@@ -359,6 +370,10 @@
                                             <h5 id="sideCountdownNotJoined${currentStatus.index}"></h5>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Bid step: </p>
+                                            ${auction.bidIncrement} %
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
                                             <p class="sell-info-select-name">Number of bidders :</p>
                                             ${auction.bidList.size()}
                                         </div>     
@@ -380,8 +395,9 @@
                                                         <p class="sell-info-select-name">Current highest bid :</p>
                                                         ${auction.bidList.get(0).amount} $
                                                     </div>  
-                                                    <h3>The amount you need to add to your bid is : ${auction.bidList.get(0).amount + 1}$</h3>
-                                                    <c:set var="min" value="${auction.bidList.get(0).amount + 1}"/>
+
+                                                    <c:set var="min" value="${auction.bidList.get(0).amount + auction.bidList.get(0).amount * auction.bidIncrement / 100}"/>
+                                                    <h3>The amount you need to add to your bid is : ${min}$</h3>
                                                 </c:otherwise>
                                             </c:choose>
                                             <form action="InsertBidController" method="post">
@@ -410,47 +426,62 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
         <script>
-            // Define the countdown details for each timer
-            var countdowns = [
-            <c:forEach var="auction"  items="${requestScope.joinedAuctionList}" varStatus="currentStatus">
-            {name: "countdownJoined${currentStatus.index}", endDate: "${auction.endingDate}"},
-            {name: "sideCountdownJoined${currentStatus.index}", endDate: "${auction.endingDate}"
-            }
-            ,
+// Define the countdown details for each timer
+var countdowns = [
+                <c:forEach var="auction"  items="${requestScope.joinedAuctionList}" varStatus="currentStatus">
+{name: "countdownJoined${currentStatus.index}", endDate: "${auction.endingDate}"},
+{name: "sideCountdownJoined${currentStatus.index}", endDate: "${auction.endingDate}"
+}
+,
             </c:forEach>
-            <c:forEach var="auction"  items="${requestScope.notJoinedAuctionList}" varStatus="currentStatus">
-            {name: "countdownNotJoined${currentStatus.index}", endDate: "${auction.endingDate}"
-            }
-            ,
-            {name: "sideCountdownNotJoined${currentStatus.index}", endDate: "${auction.endingDate}"}
+                <c:forEach var="auction"  items="${requestScope.notJoinedAuctionList}" varStatus="currentStatus">
+{name: "countdownNotJoined${currentStatus.index}", endDate: "${auction.endingDate}"
+}
+,
+{name: "sideCountdownNotJoined${currentStatus.index}", endDate: "${auction.endingDate}"}
                 <c:if test="${not currentStatus.last}">
-            ,
+,
                 </c:if>
             </c:forEach>
-            ];
-            // Update all countdowns
-            function updateCountdowns() {
-            countdowns.forEach(function (countdown) {
-            var endDate = new Date(countdown.endDate);
-            var now = new Date();
-            var distance = endDate.getTime() - now.getTime();
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            var countdownElement = document.getElementById(countdown.name);
-            countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-            // If the countdown is finished, update the HTML element
-            if (distance < 0) {
-            countdownElement.innerHTML = countdown.name + ": EXPIRED";
-            }
-            });
-            }
+];
+// Update all countdowns
+function updateCountdowns() {
+countdowns.forEach(function (countdown) {
+var endDate = new Date(countdown.endDate);
+var now = new Date();
+var distance = endDate.getTime() - now.getTime();
+var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+var countdownElement = document.getElementById(countdown.name);
+countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+// If the countdown is finished, update the HTML element
+if (distance < 0) {
+countdownElement.innerHTML = countdown.name + ": EXPIRED";
+}
+});
+}
 
-            // Update countdowns every 1 second
-            var countdownInterval = setInterval(updateCountdowns, 1000);
-            // Call updateCountdowns once immediately to display the initial countdowns
-            updateCountdowns();
+// Update countdowns every 1 second
+var countdownInterval = setInterval(updateCountdowns, 1000);
+// Call updateCountdowns once immediately to display the initial countdowns
+updateCountdowns();
+        </script>
+        <script>
+            function showGameAccInput(auctionId) {
+            var element = document.getElementById("gameAccInput" + auctionId);
+            if (element) {
+            var input = Array.from(element.classList);
+            if (input.includes("hidden")) {
+            element.classList.remove("hidden");
+            console.log(element.classList);
+            } else {
+            element.classList.add("hidden");
+            console.log(element.classList);
+            }
+            }
+            }
         </script>
     </body>
 

@@ -13,9 +13,6 @@
             <a href="ChangePassword.jsp">
                 <li>Change Password</li>
             </a>
-            <a href="CreateAuctionController">
-                <li>Create auction</li>
-            </a>
         </ul>
     </details>
     <!-- Sidebar Category -->

@@ -42,20 +42,20 @@ public class InsertAuctionController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         Auction auction;
         int userAuctionAmount = AuctionDAO.getUserAuctionItemAmount(user.getId());
-        if (userAuctionAmount > 4) {
+        if (userAuctionAmount > 5) {
             return;
         }
-
         String skinName = request.getParameter("skinName");
         String exterior = request.getParameter("exterior");
         int sellTime = Integer.parseInt(request.getParameter("sellTime"));
         double staringPrice = Double.parseDouble(request.getParameter("price"));
         String gameAccountName = request.getParameter("gameAccount");
+        int bidIncrement = Integer.parseInt(request.getParameter("bidIncrement"));
 
         GameItems gameItem = GameItemsDAO.getItemBySkinName(skinName, exterior);
         if (gameItem != null) {
-            auction = new Auction(gameItem.getId() , user.getId(), staringPrice, gameAccountName,
-                    LocalDateTime.now(), LocalDateTime.now().plusDays(sellTime));
+            auction = new Auction(user.getId(), gameItem.getId(), bidIncrement, staringPrice,
+                    gameAccountName, LocalDateTime.now(), LocalDateTime.now().plusDays(sellTime), gameItem);
             AuctionDAO.insertAuction(auction);
         }
     }

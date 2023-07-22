@@ -10,8 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ead66dd0-8100-436a-bfb7-f1d4106b4ecb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../..//README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/web/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../..//java_web_projects/In_Game_Items_Tradings/web/signup.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,13 +80,7 @@
     </configuration>
     <configuration name="Tomcat 10.0.27" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.27" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
-      <deployment>
-        <artifact name="Tomcat explode">
-          <settings>
-            <option name="CONTEXT_PATH" value="/Tomcat_explode" />
-          </settings>
-        </artifact>
-      </deployment>
+      <deployment />
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="661dd96f-f159-4eee-a417-f25e4b97f464" />
       </server-settings>
@@ -159,9 +154,7 @@
       </ConfigurationWrapper>
       <method v="2">
         <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="Tomcat explode" />
-        </option>
+        <option name="BuildArtifacts" enabled="false" />
       </method>
     </configuration>
   </component>
@@ -182,6 +175,7 @@
       <workItem from="1687839109223" duration="2197000" />
       <workItem from="1687842318592" duration="569000" />
       <workItem from="1688006718746" duration="579000" />
+      <workItem from="1689859562366" duration="354000" />
     </task>
     <servers />
   </component>

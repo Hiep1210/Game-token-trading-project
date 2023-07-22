@@ -16,6 +16,7 @@ public class Auction {
     private int auctionId;
     private int sellerId;
     private int itemId;
+    private int bidIncrement;
     private double lowestBid;
     private String gameAccountName;
     private LocalDateTime startingDate;
@@ -26,27 +27,20 @@ public class Auction {
     public Auction() {
     }
 
-    public Auction(int itemId, int sellerId, double lowestBid, String gameAccountName, LocalDateTime startingDate, LocalDateTime endingDate) {
-        this.itemId = itemId;
+    public Auction(int sellerId, int itemId, int bidIncrement, double lowestBid, String gameAccountName,
+            LocalDateTime startingDate, LocalDateTime endingDate, GameItems gameItem) {
         this.sellerId = sellerId;
-        this.gameAccountName = gameAccountName;
+        this.itemId = itemId;
+        this.bidIncrement = bidIncrement;
         this.lowestBid = lowestBid;
+        this.gameAccountName = gameAccountName;
         this.startingDate = startingDate;
         this.endingDate = endingDate;
-    }
-
-    public Auction(int auctionId, int itemId, int sellerId, double lowestBid, String gameAccountName, LocalDateTime startingDate, LocalDateTime endingDate) {
-        this.auctionId = auctionId;
-        this.itemId = itemId;
-        this.sellerId = sellerId;
-        this.gameAccountName = gameAccountName;
-        this.lowestBid = lowestBid;
-        this.startingDate = startingDate;
-        this.endingDate = endingDate;
+        this.gameItem = gameItem;
+        this.bidList = bidList;
     }
 
     public int getAuctionId() {
-        
         return auctionId;
     }
 
@@ -68,6 +62,14 @@ public class Auction {
 
     public void setItemId(int itemId) {
         this.itemId = itemId;
+    }
+
+    public int getBidIncrement() {
+        return bidIncrement;
+    }
+
+    public void setBidIncrement(int bidIncrement) {
+        this.bidIncrement = bidIncrement;
     }
 
     public double getLowestBid() {
@@ -118,4 +120,5 @@ public class Auction {
         this.bidList = bidList;
     }
 
+    
 }
