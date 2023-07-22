@@ -147,7 +147,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
-                                            <p class="sell-info-select-name">Bid increment: %</p>
+                                            <p class="sell-info-select-name">Bid step: %</p>
                                             <div class="form-group w-50">
                                                 <input class="form-control" type="number" step="1" min="5" max="20" value="10" id="bidIncrement" name="bidIncrement" class="form-control"  placeholder="Insert bid step" required>
                                             </div>
