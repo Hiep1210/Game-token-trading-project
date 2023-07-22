@@ -40,7 +40,7 @@
                 <div class="row">
                     <!-- Sidebar -->
                     <div class="col-lg-3 sidebar">
-                        <%@include file="sidebar.jsp" %>
+
                     </div>
                     <div class="col-lg-8">
                         <!-- Tool bar -->
