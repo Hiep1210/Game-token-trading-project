@@ -44,7 +44,16 @@
                 <div class="row"> 
                     <div class="col-lg-5">
                         <div class="container-fluid">
-                            <div class="row">
+                            <div class="row mt-2">
+                                <!-- Search Bar -->
+                                <div class="col-lg-9 search-bar form">
+                                    <div class="form-group">
+                                        <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
+                                        <input oninput="search1()" id="search-input1" class="form-control ps-5" type="text" placeholder="Search...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="list-content1">
                                 <c:forEach var ="gItem" items="${requestScope.gItem}" varStatus="currentStatus">
                                     <!-- Item Card -->
                                     <div class="item-card mb-3 col-lg-3"  id="item-card">
@@ -217,7 +226,16 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="container-fluid">
-                            <div class="row">
+                            <div class="row mt-2">
+                                <!-- Search Bar -->
+                                <div class="col-lg-9 search-bar form">
+                                    <div class="form-group">
+                                        <i class="fa-solid fa-magnifying-glass pt-3 ps-3"></i>
+                                        <input oninput="search2()" id="search-input2" class="form-control ps-5" type="text" placeholder="Search...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="list-content2">
 
                                 <c:forEach var ="gItem" items="${requestScope.gItem}" varStatus="currentStatus">
                                     <!-- Item Card -->
@@ -275,94 +293,47 @@
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script>
-        // Create an empty array to store the checked values
-        var checkedValues = ['knife', 'pistol', 'rifle', 'smgs', 'heavy'];
-        var exte = ['Battle-Scarred', 'Factory New','Field-Tested', 'Minimal Wear', 'Well-Worn'];
-        var selectAllButton = document.getElementById('select-all');
-        var resetButton = document.getElementById('reset-all');
-        // Get all the checkbox elements on the page
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        // Add event listener to each checkbox
-        checkboxes.forEach(function (checkbox) {
-            checkbox.addEventListener('change', function () {
-                // Check if the checkbox is checked
-                if (this.checked) {
-                    // Push the value into the array
-                    exte.push(this.value);
-                    checkedValues.push(this.value);
-                } else {
-                    // Remove the value from the array if unchecked
-                    var index = checkedValues.indexOf(this.value);
-                    if (index !== -1) {
-                        checkedValues.splice(index, 1);
-                    }
-                    var index1 = exte.indexOf(this.value);
-                    if(index1 !== -1){
-                        exte.splice(index1,1);
-                    }
-                }
-                // Log the updated array
-                console.log(exte);
-            });
-        });
-        selectAllButton.addEventListener('click', function () {
-            checkedValues = [];
-            checkboxes.forEach(function (checkbox) {
-                checkbox.checked = true;
-                checkedValues.push(checkbox.value);
-            });
-            console.log(checkedValues);
-        });
-        resetButton.addEventListener('click', function () {
-            checkboxes.forEach(function (checkbox) {
-                checkbox.checked = false;
-            });
-            checkedValues = [];
-            console.log(checkedValues);
-        });
-        function filterByType(order) {
-            updateButtons();
-            var searchName = document.getElementById("search-input").value;
+            function search2(){
+                var searchName = document.getElementById("search-input2").value;
             console.log(searchName);
             $.ajax({
-                url: "/In_Game_Items_Trading/FilterTradeController",
+                url: "/In_Game_Items_Trading/SearchItemTrade",
                 type: "GET",
                 //use when passing array
                 traditional: true,
                 data: {
-                    types: checkedValues,
-                    exte: exte,
-                    txt: searchName,
-                    order: order
+                    txt: searchName
                 },
                 success: function (data) {
-                    var row = document.getElementById("list-content");
+                    var row = document.getElementById("list-content2");
                     row.innerHTML = data;
-                    document.getElementById("load-button").style.display = "none";
-                    updateButtons();
                 },
                 error: function () {
                     console.log('Error occurred during AJAX request');
                 }
             });
-        }
-        function updateButtons() {
-            var buttons = document.querySelectorAll(".summit-button .item-card-button");
-            for (var i = 0; i < buttons.length; i++) {
-                var button = buttons[i];
-                if (userSellItemsAmount < 5) {
-                    button.innerText = "Add to Sell List";
-                    button.setAttribute("onclick", "addToSellList(event)");
-                } else {
-                    button.innerText = "Sell List is Full";
-                    button.removeAttribute("onclick");
-                }
             }
-        }
-
-        // Call the updateButtons function when the page loads
-        window.addEventListener('load', updateButtons);
-    </script>
+            function search1(){
+                var searchName = document.getElementById("search-input1").value;
+            console.log(searchName);
+            $.ajax({
+                url: "/In_Game_Items_Trading/SearchItemTrade",
+                type: "GET",
+                //use when passing array
+                traditional: true,
+                data: {
+                    txt: searchName
+                },
+                success: function (data) {
+                    var row = document.getElementById("list-content1");
+                    row.innerHTML = data;
+                },
+                error: function () {
+                    console.log('Error occurred during AJAX request');
+                }
+            });
+            }
+        </script>
         <script>
             function handleCheckboxChange(checkbox) {
                 var h4Element;

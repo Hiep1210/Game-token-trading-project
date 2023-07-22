@@ -63,8 +63,8 @@ public class ProcessItemController extends HttpServlet {
             Bid bid = new Bid();
             int processItemId;
             double newMoneyAmount = 0;
-            int senderId = Integer.parseInt(request.getParameter("sender"));
-            int recId = Integer.parseInt(request.getParameter("receiver"));
+            int senderId;
+            int recId;
             if (user == null || user.getRoleid() != 2) {
                 redirect = "BuyPageController";
             } else if (rawProcessItemId == null || decision == null) {
@@ -84,6 +84,8 @@ public class ProcessItemController extends HttpServlet {
                     BidDAO.deleteBid(bid.getBidId());
                     AuctionDAO.deleteAuction(processItem.getTransactionId());
                 } else if (processItem.getTransactionTypeIdId() == 3) {
+                    senderId = Integer.parseInt(request.getParameter("sender"));
+                    recId = Integer.parseInt(request.getParameter("receiver"));
                     int tradeId = processItem.getTransactionId();
                     TradeDAO.deleteOfferItems(tradeId);
                     TradeDAO.deleteRecitems(tradeId);
@@ -131,7 +133,7 @@ public class ProcessItemController extends HttpServlet {
             request.getRequestDispatcher(redirect).forward(request, response);
         } catch (Exception e) {
             System.out.println("Error in ProcessItemController");
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }

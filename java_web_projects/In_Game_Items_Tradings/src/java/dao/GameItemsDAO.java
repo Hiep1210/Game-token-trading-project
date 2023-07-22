@@ -123,16 +123,14 @@ public class GameItemsDAO {
         return list;
     }
 
-    public static ArrayList<GameItems> Search(String[] name) {
+    public static ArrayList<GameItems> Search(String name) {
         ArrayList<GameItems> list = new ArrayList<>();
         try {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "SELECT * FROM game_items_trading.gameitems where true ";
-                for (int i = 0; i < name.length; i++) {
-                    sql += " and (item_name Like '%" + name[i] + "%' or skin_name like '%" + name[i] + "%') ";
-                }
+                    sql += " and (item_name Like '%" + name + "%' or skin_name like '%" + name + "%') ";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
