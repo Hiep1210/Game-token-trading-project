@@ -75,15 +75,14 @@
                                                         Buy
                                                     </td>
                                                     <td>
-                                                        <img src="UI/image/${processItem.object.getImg()}.png" alt="game item picture" width="300" 
-                                                             height="400">
+                                                        <img src="UI/image/${processItem.object.getImg()}.png" alt="game item picture" class="img-fluid" style="width: 200px; height: 200px; object-fit: scale-down">
                                                     </td>
                                                     <td> 
-                                                        ${processItem.object.skinName}
+                                                        ${processItem.object.type} | 
                                                         ${processItem.object.itemName}
-                                                        ${processItem.object.type}
-                                                        ${processItem.object.rarity}
-                                                        ${processItem.object.exterior}
+                                                        ${processItem.object.skinName}
+                                                        (${processItem.object.rarity})
+                                                        (${processItem.object.exterior})
                                                     </td>
                                                     <td>
                                                         ${processItem.object.getgameAccountName()}
@@ -109,15 +108,14 @@
                                                         Auction
                                                     </td>
                                                     <td>
-                                                        <img src="UI/image/${processItem.object.gameItem.getImg()}.png" alt="game item picture" width="300" 
-                                                             height="400">
+                                                        <img src="UI/image/${processItem.object.gameItem.getImg()}.png" alt="game item picture" class="img-fluid" style="width: 200px; height: 200px; object-fit: scale-down">
                                                     </td>
                                                     <td> 
-                                                        ${processItem.object.gameItem.skinName}
+                                                        ${processItem.object.gameItem.type} | 
                                                         ${processItem.object.gameItem.itemName}
-                                                        ${processItem.object.gameItem.type}
-                                                        ${processItem.object.gameItem.rarity}
-                                                        ${processItem.object.gameItem.exterior}
+                                                        ${processItem.object.gameItem.skinName}
+                                                        (${processItem.object.gameItem.rarity})
+                                                        (${processItem.object.gameItem.exterior})
                                                     </td>
                                                     <td>
                                                         ${processItem.object.bidList.get(0).gameAccountName}

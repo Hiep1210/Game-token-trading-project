@@ -18,44 +18,65 @@
               integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <!-- Link Icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+              integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Link CSS -->
         <link rel="stylesheet" href="UI/css/style.css">
-        <link rel="stylesheet" href="UI/css/styleForm.css">
+        <link rel="stylesheet" href="UI/css/userProfile.css">
     </head>
 
     <body>
+        <%@include file="navbar.jsp" %>
+
+        <div class="container-fluid main-content">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 sidebar">
+                    <%@include file="sidebar.jsp" %>
+                </div>
+                <div class="col-lg-9">
+                    <div class="container-fluid">
+                        <h1 class="text-center text-white fs-1 fw-bold">Send Announcement</h1>
+                        <!-- Main Form -->
+                        <c:if test="${(sessionScope.user != null) && (sessionScope.user.roleid eq 2)}">   
+                            <form id="topup-form" action='InsertNotificationController' method='post'>
+                                <input type="hidden" name="type" value="admin">
+                                <div class="form-group">
+                                    <label for="content" class="form-label text-white fs-4">Enter message</label>
+                                    <textarea type="text" id="content" name="content" class="form-control"  placeholder="Attention all users..." rows="10" required></textarea>
+                                    <span class="form-message"></span>
+                                </div>
+                            </form>
+                        </c:if> 
+                        <!-- Form Buttons -->
+                        <div class="row">
+                            <!-- Button Spacer -->
+                            <div class="col-lg-9">
+                            </div>
+                            <!-- Summit button -->
+                            <div class="col-lg-3">
+                                <div class="summit-button mt-2">
+                                    <button type="submit" name="action" value="Submit" form="topup-form">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="container nopadding">
 
             <!-- Form -->
             <div class="login form">
                 <!-- Screen Header -->
                 <header>Top-up</header>
-                <!-- Main Form -->
-                <c:if test="${(sessionScope.user != null) && (sessionScope.user.roleid eq 2)}">   
-                    <form id="topup-form" action='InsertNotificationController' method='post'>
-                        <input type="hidden" name="type" value="admin">
-                        <div class="form-group">
-                            <label for="content" class="form-label">Enter message</label>
-                            <input type="text" id="content" name="content" class="form-control"  placeholder="Attention all users..." required>
-                            <span class="form-message"></span>
-                        </div>
-                    </form>
-                </c:if> 
-               
-                <!-- Form Buttons -->
-                <div class="row">
-                    <!-- Button Spacer -->
-                    <div class="col-lg-9">
-                    </div>
-                    <!-- Summit button -->
-                    <div class="col-lg-3">
-                        <div class="summit-button">
-                            <button type="submit" name="action" value="Submit" form="topup-form">Confirm</button>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
-    </body>
+    </div>
+</div>
+</body>
 
 </html>
