@@ -52,7 +52,7 @@
                                     <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
                                     <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
                                     <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
-                                    <li class="dropdown-item"><input type="checkbox" name="smg" value="smgs" checked>SMGs</li>
+                                    <li class="dropdown-item"><input type="checkbox" name="smgs" value="smgs" checked>SMGs</li>
                                     <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
                                     <li>
                                         <hr class="dropdown-divider">
@@ -223,6 +223,7 @@
         }
 
         function loadMore() {
+            updateButtons();
             var amount = getAmount();
             console.log(amount);
             $.ajax({
@@ -285,6 +286,7 @@
             console.log(checkedValues);
         });
         function filterByType(order) {
+            updateButtons();
             var searchName = document.getElementById("search-input").value;
             console.log(searchName);
             $.ajax({
@@ -301,6 +303,7 @@
                     var row = document.getElementById("list-content");
                     row.innerHTML = data;
                     document.getElementById("load-button").style.display = "none";
+                    updateButtons();
                 },
                 error: function () {
                     console.log('Error occurred during AJAX request');

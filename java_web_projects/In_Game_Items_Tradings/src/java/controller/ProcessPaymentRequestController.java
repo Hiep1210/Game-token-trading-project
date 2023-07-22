@@ -52,7 +52,9 @@ public class ProcessPaymentRequestController extends HttpServlet {
                 if (decision.equals("accept")) {
                     newMoneyAmount = user.getMoney() + paymentRequest.getMoney();
                     UserDAO.updateUserMoney(paymentRequest.getUser_id(), newMoneyAmount);
-                    user.setMoney(newMoneyAmount);
+                    if (user.getId() == paymentRequest.getUser_id()) {
+                        user.setMoney(newMoneyAmount);
+                    }
                 }
                 PaymentRequestDAO.deletePaymentRequest(paymentRequestId);//Delete payment request record from table
             }

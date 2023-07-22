@@ -8,10 +8,8 @@ import Context.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.SQLException;
 import model.GameItems;
 
 /**
@@ -276,6 +274,30 @@ public class GameItemsDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static boolean deleteGameItemById(int id) {
+        boolean deleteStatus = true;
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            String sql = "DELETE FROM GameItems WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+            st = con.prepareStatement(sql);
+            
+            st.setInt(1, id);
+            
+            con.close();
+            st.executeUpdate();
+            if (st.executeUpdate() != 1) {
+                System.out.println("ERROR INSERTING User");
+            }
+            st.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return deleteStatus;
     }
 
     public static void main(String[] args) {

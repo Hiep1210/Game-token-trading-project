@@ -175,17 +175,19 @@
                                     <div class="card rarity-${market_items.getRarity().toLowerCase()}"">
                                         <img src="UI/image/${market_items.getImg()}.png" alt ="displayfailed" class="card-img-top" >
                                         <div class="card-body">
-                                            <h5 class="card-title item-card-price ps-1">$ ${market_items.price}</h5>
+                                            <p class="item-full-name">${market_items.type} | ${market_items.itemName} ${market_items.skinName}</p>
+                                            <a href="#" class="btn item-card-button">
+                                                <h5 class="card-title item-card-price nopadding">$ ${market_items.price}</h5>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-
                                 <!-- Item Details -->
                                 <div class="offcanvas offcanvas-start" data-bs-theme="dark" tabindex="-1" id="offcanvas${market_items.id}"
                                      aria-labelledby="offcanvas">
                                     <div class="offcanvas-header">
                                         <h5 class="offcanvas-title" id="offcanvas">
-                                            ${market_items.type} | ${market_items.skinName}
+                                            ${market_items.type} | ${market_items.itemName} ${market_items.skinName}
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
                                                 aria-label="Close"></button>
@@ -208,35 +210,19 @@
                                             <p class="sell-info-select-name">Sell Price:</p>
                                             <h5>$ ${market_items.price}</h5>
                                         </div>
-                                        <c:if test="${sessionScope.user != null}">
+                                        <c:if test="${sessionScope.user != null }">
                                             <div class="summit-button mt-2">
-                                                <button class="btn item-card-button"  onclick="addCart(${market_items.id},${sessionScope.user.id})" id="button-cart${market_items.id}">
-                                                    <i class="fa-solid fa-cart-shopping"></i>
-                                                </button>
+                                                <c:if test="${sessionScope.user.id != market_items.userid }">
+                                                    <button class="btn item-card-button"  onclick="addCart(${market_items.id},${sessionScope.user.id})" id="button-cart${market_items.id}">
+                                                        <i class="fa-solid fa-cart-shopping"></i>
+                                                    </button>
+                                                </c:if>
                                             </div>
                                         </c:if>
                                     </div>
                                 </div>
                             </c:forEach>
                         </div>
-                        <!-- Page Navigator -->
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -296,8 +282,8 @@
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                        var countdownElement = document.getElementById(countdown.name);
-                        countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                    var countdownElement = document.getElementById(countdown.name);
+                    countdownElement.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
                     // If the countdown is finished, update the HTML element
                     if (distance < 0) {

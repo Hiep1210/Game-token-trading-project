@@ -1,20 +1,25 @@
 package controller;
 
-import dao.CartDAO;
+import dao.GameItemsDAO;
+import dao.RoleDAO;
+import dao.SellListDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.User;
-import dao.GameItemsDAO;
-import dao.RoleDAO;
-import dao.SellDAO;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import model.GameItems;
 import model.Role;
+import model.User;
 
+/**
+ *
+ * @author VICTUS
+ */
 @WebServlet(name = "DeleteGameItemController", urlPatterns = {"/DeleteGameItemController"})
 public class DeleteGameItemController extends HttpServlet {
 
@@ -31,36 +36,25 @@ public class DeleteGameItemController extends HttpServlet {
     }
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
-    try {
-        User user = (User) request.getSession().getAttribute("user");
-        String skinName = request.getParameter("skinName");
-        String itemName = request.getParameter("itemName");
-        String type = request.getParameter("type");
-        String rarity = request.getParameter("rarity");
-        String img = request.getParameter("img");
+        try {
+            User user = (User) request.getSession().getAttribute("user");
+            int Id = Integer.parseInt(request.getParameter("id"));
+            String redirect = "ViewGameItem.jsp";
 
-        String redirect = "ViewGameItem.jsp";
-        if (user == null) {
-            redirect = "BuyPageController";
-        } else if (!isAdmin(user.getRoleid())) {
-            redirect = "BuyPageController";
-        } else {
-            if (!GameItemsDAO.deleteGameItem(skinName, itemName, type, rarity, img)) {
-            request.setAttribute("message", "deleted game item failed");
-            request.getRequestDispatcher("ViewGameItemController").forward(request, response);
-        } else {
+            if (user == null || !isAdmin(user.getRoleid())) {
+                redirect = "BuyPageController";
+            } else {
+                GameItemsDAO.deleteGameItemById(Id);
             
-            int userid = user.getId();
-            response.sendRedirect("ViewGameItemController?id=" + userid);
-        
-            
+            PrintWriter out = response.getWriter();
+            out.print("Item deleted successfully");
+            }
+
+            request.getRequestDispatcher(redirect).forward(request, response);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        }
-        request.getRequestDispatcher(redirect).forward(request, response);
-    } catch (Exception e) {
-        System.out.println(e);
     }
-}
 
     public boolean isAdmin(int role_id) {
         ArrayList<Role> roleList = RoleDAO.getRoleList();
@@ -73,4 +67,5 @@ public class DeleteGameItemController extends HttpServlet {
         }
         return isAdmin;
     }
+
 }

@@ -132,7 +132,16 @@ body {
 .dropdown-item {
     color: white;
     font-weight: bold;
-    max-width: 300px;
+    max-width: 400px;
+    white-space: normal;
+}
+
+#noti-list {
+    width: 400px;
+}
+#noti-list .dropdown-item {
+    width: 100%;
+    white-space: normal;
 }
 
 .text-container {

@@ -11,13 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.GameItems;
-import model.MarketItems;
-import model.SellList;
 
 /**
  *
@@ -210,14 +206,14 @@ public class SellDAO {
         return deleteStatus;
     }
     
-    public static int getUserSellingAmount(int sellerId) {
+    public static int getUserSellItemsAmount(int sellerId) {
         int userSellItemsAmount = 0;
         Connection con = null;
         PreparedStatement statement = null;
         try {
             DBContext db = new DBContext();
             con = db.getConnection();
-            String sql = "SELECT * FROM MarketItems WHERE user_id = ?";
+            String sql = "SELECT * FROM SellItems WHERE seller_id = ?";
             statement = con.prepareStatement(sql);
             statement.setInt(1, sellerId); // Set the parameter value for the seller_id
             ResultSet rs = statement.executeQuery();

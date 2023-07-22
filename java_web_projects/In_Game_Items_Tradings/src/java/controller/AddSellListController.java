@@ -1,6 +1,7 @@
 package controller;
 
 import dao.GameItemsDAO;
+import dao.MarketItemsDAO;
 import dao.SellListDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -28,7 +29,10 @@ public class AddSellListController extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         //if sell list already have 5 item then return
-        int userSellListLength = SellListDAO.getUserSellList(user.getId()).size();
+        int sellListAmount = SellListDAO.getUserSellList(user.getId()).size();
+        int sellingAmount = MarketItemsDAO.getUserMarketItems(user.getId()).size();
+        int processAmount = MarketItemsDAO.getUserProcessItems(user.getId()).size();
+        int userSellListLength = sellListAmount + sellingAmount + processAmount;
         if (userSellListLength == 5) {
             return;
         }
@@ -44,16 +48,15 @@ public class AddSellListController extends HttpServlet {
 
         if (gameItem != null) {
             SellItems sellItem = new SellItems(exterior, sellTime, price, gameAccount, sellerId, gameItem.getId());
-            
+
             //insert item to sellitems table
             SellListDAO.insertSellItemsItem(sellItem);
-            
-            //Insert item to selllist table
+
+            //Get Items id from sellITems table
             int sellItemId = SellListDAO.getSellItemId(sellItem);
-            SellListDAO.addToSellList(sellerId, sellItemId);
-            
+
             //get sell item info for printing to UI
-            SellItems sellItemInfo = SellListDAO.getSellListItemInfo(sellItemId);
+            SellItems sellItemInfo = SellListDAO.getSellItemInfo(sellItemId);
 
             PrintWriter out = response.getWriter();
             out.println("<!-- Item Card -->\n"
@@ -76,7 +79,6 @@ public class AddSellListController extends HttpServlet {
                     + "                                        </button>\n"
                     + "                                    </div>\n"
                     + "                                </div>");
-
         }
     }
 }
