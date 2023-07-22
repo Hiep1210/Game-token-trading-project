@@ -27,39 +27,37 @@
         <!-- Main Content -->
         <div class="container-fluid">
             <div class="row">
-                <h1 class="card-title mb-4" id="cart-size">Your active auction(s): ${requestScope.auctionList.size()} auctions!</h1>
-                <c:if test="${requestScope.message != null}">
-                    <h2>${requestScope.message}</h2>
-                </c:if>
-                <div class="col-lg-8">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <c:forEach var ="auction" items="${requestScope.auctionList}" varStatus="currentStatus">
-                                <c:set var="gameItem" value="${auction.gameItem}"/>
-                                <!-- Item Card -->
-                                <div class="sell-card mb-3"  id="item-card">
-                                    <div class="row g-0">
-                                        <div class="col-md-2">
-                                            <img src="UI/image/${gameItem.img}.png" class="img-fluid rounded" alt="...">
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-2"> ${gameItem.itemName} | ${gameItem.skinName}</h5>
-                                                <c:choose>
-                                                    <c:when test="${auction.bidList.size() == 0}">
-                                                        <p class="card-text mb-1">0 bids</p>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <p class="card-text mb-1">Current highest bid: <span> ${auction.bidList.get(0).amount} $ </span></p>
-                                                    </c:otherwise>
-                                                </c:choose> 
-                                                <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
-                                            </div>
+                <div class="container-fluid w-50">
+                    <div class="row">
+                        <h1 class="card-title mb-4" id="cart-size">Your active auction(s): ${requestScope.auctionList.size()} auctions!</h1>
+                        <c:if test="${requestScope.message != null}">
+                            <h2>${requestScope.message}</h2>
+                        </c:if>
+                        <c:forEach var ="auction" items="${requestScope.auctionList}" varStatus="currentStatus">
+                            <c:set var="gameItem" value="${auction.gameItem}"/>
+                            <!-- Item Card -->
+                            <div class="sell-card mb-3"  id="item-card">
+                                <div class="row g-0">
+                                    <div class="col-md-2">
+                                        <img src="UI/image/${gameItem.img}.png" class="img-fluid rounded" alt="...">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="card-body">
+                                            <h5 class="card-title mb-2"> ${gameItem.itemName} | ${gameItem.skinName}</h5>
+                                            <c:choose>
+                                                <c:when test="${auction.bidList.size() == 0}">
+                                                    <p class="card-text mb-1">0 bids</p>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p class="card-text mb-1">Current highest bid: <span> ${auction.bidList.get(0).amount} $ </span></p>
+                                                </c:otherwise>
+                                            </c:choose> 
+                                            <p class="card-text mb-1">Time Left: <span id="countdown${currentStatus.index}"></span></p>
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach>
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -88,9 +86,9 @@
             // Define the countdown details for each timer
             var countdowns = [
             <c:forEach var="auction"  items="${requestScope.auctionList}" varStatus="currentStatus">
-                {name: "countdown${currentStatus.index}", endDate: "${auction.endingDate}"}
+            {name: "countdown${currentStatus.index}", endDate: "${auction.endingDate}"}
                 <c:if test="${not currentStatus.last}">
-                ,
+            ,
                 </c:if>
             </c:forEach>
             ];

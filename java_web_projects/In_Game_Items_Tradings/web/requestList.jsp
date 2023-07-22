@@ -70,12 +70,12 @@
                                                 <td>${paymentRequest.money}</td>
                                                 <td> ${paymentRequest.date}</td>
                                                 <td><img src="UI/image/${paymentRequest.img}" alt="invoice picture" width="400" 
-                                                         height="500"></td>
+                                                         height="500" style="object-fit: scale-down"></td>
                                                 <td>
-                                                    Accept<input type="radio" name="decision" value="accept">
+                                                    Accept<input type="radio" name="decision" value="accept"><br>
                                                     Reject<input type="radio" name="decision" value="reject">
                                                 </td>
-                                                <td><input type='submit' name='action' value='Accept'></td>
+                                                <td><input type='submit' name='action' value='Accept' class="btn btn-success"></td>
                                             </tr>   
                                         </form>
                                     </c:forEach>

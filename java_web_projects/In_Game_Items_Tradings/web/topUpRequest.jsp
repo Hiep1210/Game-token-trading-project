@@ -42,7 +42,7 @@
                     <div class="container">
                         <div class="form">
                             <!-- Screen Header -->
-                            <header class="header text-center">Top-up</header>
+                            <header class="header text-center fw-bold fs-1">Top-up</header>
                             <!-- Main Form -->
                             <form id="topup-form" action='SendPaymentRequestController' method='post' enctype="multipart/form-data">
                                 <div class="form-group">
@@ -70,6 +70,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-lg-3 bank-info">
+                    <img src="UI/image/bank-info.jpg" alt="bankinfo" class="img-fluid"/>
+                    <p class="text-danger">*Please include your site's username in the message.<br>If no username included, we will count it as donations for the site admins!</p>
                 </div>
             </div>
         </div>
