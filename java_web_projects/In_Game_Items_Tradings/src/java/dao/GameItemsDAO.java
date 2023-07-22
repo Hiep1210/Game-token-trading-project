@@ -148,7 +148,96 @@ public class GameItemsDAO {
         }
         return list;
     }
-
+    public static ArrayList<GameItems> filterTrade(String[] types, String[] exterior, String searchTerm, String sortOrder) {
+        ArrayList<GameItems> list = new ArrayList<>();
+        String selectedTypes = "";
+        String ex = "";
+        if (exterior == null) {
+            exterior = new String[0];
+            ex = "AND (exterior = 'nonexisttype')";
+        }
+        if (types == null) {
+            types = new String[0];
+            selectedTypes = "AND (type = 'nonexisttype')";
+        }
+        int numberOfTypes = types.length;
+        int exNum = exterior.length;
+        if (sortOrder == null) {
+            sortOrder = "";
+        }
+        //iterate through all element in selectedType
+        for (int i = 0; i < numberOfTypes; i++) {
+            //Open Parentheses at start
+            if (i == 0) {
+                selectedTypes += "AND (";
+            }
+            selectedTypes += "type = ? ";
+            //Add OR except last element
+            if (i < numberOfTypes - 1) {
+                selectedTypes += "OR ";
+            }
+            //Close Parentheses at end
+            if (i == numberOfTypes - 1) {
+                selectedTypes += ")";
+            }
+        }
+        for (int i = 0; i < exNum; i++) {
+            //Open Parentheses at start
+            if (i == 0) {
+                ex += "AND (";
+            }
+            ex += "type = ? ";
+            //Add OR except last element
+            if (i < exNum - 1) {
+                ex += "OR ";
+            }
+            //Close Parentheses at end
+            if (i == exNum - 1) {
+                ex += ")";
+            }
+        }
+        try {
+            DBContext db = new DBContext();
+            Connection con = db.getConnection();
+            if (con != null) {
+                String sql = "SELECT DISTINCT skin_name, item_name, type, rarity,exter img "
+                        + "FROM GameItems "
+                        + "WHERE (skin_name) IN (SELECT DISTINCT skin_name FROM GameItems) "
+                        + selectedTypes
+                        + ex
+                        + "AND (CONCAT(type, ' ', item_name, ' ', skin_name) LIKE ? "
+                        + "OR CONCAT(type, ' ', skin_name) LIKE ? "
+                        + "OR CONCAT(item_name, ' ', skin_name) LIKE ? ) "
+                        + "ORDER BY CASE rarity "
+                        + "    WHEN 'covert' THEN 1 "
+                        + "    WHEN 'classified' THEN 2 "
+                        + "    WHEN 'restricted' THEN 3 "
+                        + "    WHEN 'mil-spec' THEN 4 "
+                        + "    WHEN 'industrial' THEN 5 "
+                        + "    ELSE 6 "
+                        + "END " + sortOrder + ", skin_name, item_name " + sortOrder + " ;";
+                PreparedStatement st = con.prepareStatement(sql);
+                //Set value for selected types
+                for (int i = 1; i <= numberOfTypes; i++) {
+                    st.setString(i, types[i - 1]);
+                }
+                // Set the search term parameter values
+                st.setString(numberOfTypes + 1, "%" + searchTerm + "%");
+                st.setString(numberOfTypes + 2, "%" + searchTerm + "%");
+                st.setString(numberOfTypes + 3, "%" + searchTerm + "%");
+                ResultSet rs = st.executeQuery();
+                //assign value for object items then return it
+                while (rs.next()) {
+                    list.add(new GameItems(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                }
+                st.close();
+                con.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
     public static GameItems getItemBySkinName(String skinName, String exterior) {
         GameItems item = new GameItems();
         try {
