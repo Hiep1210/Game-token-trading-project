@@ -548,3 +548,19 @@ INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('3
 INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('12', '2');
 INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('11', '3');
 INSERT INTO `game_items_trading`.`receiveitem` (`rec_id`, `trade_id`) VALUES ('3', '3');
+
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('1', 'gamer5', '5', '31', '100', '2023-07-22 17:58:30', '2023-07-30 13:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('2', 'gamer5', '5', '41', '200', '2023-07-22 17:58:30', '2023-07-30 12:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('3', 'gamer5', '5', '51', '300', '2023-07-22 17:58:30', '2023-07-30 17:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('4', 'gamer5', '5', '61', '400', '2023-07-22 17:58:30', '2023-07-30 12:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('5', 'gamer5', '5', '71', '50', '2023-07-22 17:58:30', '2023-07-30 17:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('6', 'gamer5', '5', '81', '1000', '2023-07-22 17:58:30', '2023-07-30 15:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('7', 'gamer5', '5', '91', '525', '2023-07-22 17:58:30', '2023-07-30 17:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('8', 'gamer5', '5', '96', '712', '2023-07-22 17:58:30', '2023-07-30 12:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('9', 'gamer5', '5', '101', '566', '2023-07-22 17:58:30', '2023-07-30 17:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('10', 'gamer5', '5', '106', '400', '2023-07-22 17:58:30', '2023-07-30 17:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('11', 'gamer5', '5', '111', '11', '2023-07-22 17:58:30', '2023-07-30 11:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('12', 'gamer5', '5', '116', '811', '2023-07-22 17:58:30', '2023-07-30 11:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('13', 'gamer5', '5', '121', '20', '2023-07-22 17:58:30', '2023-07-30 11:58:30');
+INSERT INTO `game_items_trading`.`marketitems` (`id`, `game_account_name`, `user_id`, `item_id`, `price`, `begin_date`, `end_date`) VALUES ('14', 'gamer5', '5', '126', '2000', '2023-07-22 17:58:30', '2023-07-30 17:58:30');
+
