@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.CartDAO;
 import dao.MarketItemsDAO;
 import dao.SellListDAO;
 import java.io.IOException;
@@ -32,7 +33,8 @@ public class DeleteUserMarketItems extends HttpServlet {
         if (user != null) {
             try {
                 int itemId = Integer.parseInt(itemIdStr);
-
+                
+                CartDAO.deleteCartWithMarketItemId(itemId);
                 MarketItemsDAO.deleteUserSellingItems(itemId);
 
             } catch (NumberFormatException e) {

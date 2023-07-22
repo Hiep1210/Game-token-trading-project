@@ -89,7 +89,7 @@
                     <div>
                         <div class="d-flex align-items-center">
                             <label for="gacc">Game Account Name: </label>
-                            <input style="margin-left:15px; background-color: rgb(28, 26, 36); color: wheat" type="text" placeholder="Your game account name" name="gAcc" required=""/>
+                            <input style="margin-left:15px; background-color: rgb(28, 26, 36); color: wheat" type="text" placeholder="Your game account name" name="gAcc" class="form-control w-25" required=""/>
                             <button type="submit" class="btn item-card-button" style="height: 80px; width: auto; margin-left: auto">
                                 <b>Create Offer</b>
                             </button>
