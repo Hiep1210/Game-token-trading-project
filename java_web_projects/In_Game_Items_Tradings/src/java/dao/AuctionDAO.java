@@ -5,7 +5,6 @@
 package dao;
 
 import Context.DBContext;
-import static com.mysql.cj.conf.PropertyKey.logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import model.Auction;
 import model.GameItems;
 
@@ -46,6 +44,7 @@ public class AuctionDAO {
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setBidIncrement(rs.getInt("bid_increment"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
@@ -92,6 +91,7 @@ public class AuctionDAO {
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setBidIncrement(rs.getInt("bid_increment"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
@@ -136,6 +136,7 @@ public class AuctionDAO {
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setBidIncrement(rs.getInt("bid_increment"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
@@ -170,16 +171,17 @@ public class AuctionDAO {
             //if connection is secured, proceed to execute query and retrieve data into and return a list
             if (con != null) {
                 String sql = "INSERT INTO game_items_trading.auction ( seller_id, "
-                        + " item_id, lowest_bid, starting_date,"
+                        + " item_id, lowest_bid, bid_increment, starting_date,"
                         + " ending_date, game_account_name) VALUES "
-                        + " ( ?, ?, ?, ?, ?, ?);";
+                        + " ( ?, ?, ?, ?, ?, ?, ?);";
                 PreparedStatement preparedStatement = con.prepareStatement(sql);
                 preparedStatement.setInt(1, auction.getSellerId());
                 preparedStatement.setInt(2, auction.getItemId());
                 preparedStatement.setDouble(3, auction.getLowestBid());
-                preparedStatement.setObject(4, auction.getStartingDate());
-                preparedStatement.setObject(5, auction.getEndingDate());
-                preparedStatement.setString(6, auction.getGameAccountName());
+                preparedStatement.setInt(4, auction.getBidIncrement());
+                preparedStatement.setObject(5, auction.getStartingDate());
+                preparedStatement.setObject(6, auction.getEndingDate());
+                preparedStatement.setString(7, auction.getGameAccountName());
                 // if insert command failed
                 if (preparedStatement.executeUpdate() != 1) {
                     insertStatus = false;
@@ -240,10 +242,10 @@ public class AuctionDAO {
                     gameItem = new GameItems();
                     //Get auction information
                     //Querry result has 2 column named id , so only take auction id from 1st collumn
-                    auction.setAuctionId(rs.getInt(1));
-                    auction.setItemId(rs.getInt("item_id"));
+                    auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setBidIncrement(rs.getInt("bid_increment"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
@@ -325,6 +327,7 @@ public class AuctionDAO {
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setBidIncrement(rs.getInt("bid_increment"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
@@ -373,6 +376,7 @@ public class AuctionDAO {
                     auction.setAuctionId(rs.getInt("id"));
                     auction.setSellerId(rs.getInt("seller_id"));
                     auction.setLowestBid(rs.getDouble("lowest_bid"));
+                    auction.setBidIncrement(rs.getInt("bid_increment"));
                     auction.setStartingDate(rs.getObject("starting_date", LocalDateTime.class));
                     auction.setEndingDate(rs.getObject("ending_date", LocalDateTime.class));
                     auction.setGameAccountName(rs.getString("game_account_name"));
@@ -430,12 +434,4 @@ public class AuctionDAO {
         return userSellItemsAmount;
     }
 
-
-    public static void main(String[] args) {
-//
-//        ArrayList<Auction> auctionList = getAllEndedAuction();
-//        for (Auction auction : auctionList) {
-//            System.out.println(auction);
-//        }
-    }
 }
