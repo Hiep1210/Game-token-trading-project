@@ -37,8 +37,4 @@
             </a>
         </details>
     </c:if> 
-    <!-- Sidebar Category -->
-    <details class="sidebar-category">
-        <summary>History</summary>
-    </details>
 </div>
