@@ -53,15 +53,12 @@ public class GameItemsDAO {
             DBContext db = new DBContext();
             Connection con = db.getConnection();
             if (con != null) {
-                String sql = "SELECT DISTINCT id, skin_name, item_name, type, rarity, img "
-                        + "FROM GameItems "
-                        + "WHERE (skin_name) IN (SELECT DISTINCT skin_name FROM GameItems) AND exterior = 'Factory New'";
+                String sql = "SELECT * from GameItems";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it
                 while (rs.next()) {
-                    list.add(new GameItems(rs.getInt(1), rs.getString(2), rs.getString(3),
-                            rs.getString(4), rs.getString(5), rs.getString(6)));
+                    list.add(new GameItems(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
                 }
                 call.close();
                 con.close();

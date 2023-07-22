@@ -3,6 +3,7 @@ package controller;
 import dao.AuctionDAO;
 import dao.BidDAO;
 import dao.MarketItemsDAO;
+import dao.NotificationDAO;
 import dao.ProcessItemsDAO;
 import dao.TradeDAO;
 import dao.UserDAO;
@@ -12,11 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.Auction;
 import model.Bid;
 import model.MarketItems;
+import model.Notification;
 import model.OfferItem;
 import model.ProcessItem;
 import model.ReceiveItem;
@@ -30,10 +33,10 @@ public class ProcessItemController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Users are not allowed to access this servlet through the doGet method
         User user = (User) request.getSession().getAttribute("user");
-        if(user == null){
+        if (user == null) {
             response.sendRedirect("login.jsp");
         }
-        
+
         ArrayList<ProcessItem> tradeProcess = ProcessItemsDAO.getAllTradeOffersInProcess();
         HashMap<Integer, ArrayList<OfferItem>> offerItem = new HashMap<>();
         HashMap<Integer, ArrayList<ReceiveItem>> receiveItem = new HashMap<>();
@@ -60,6 +63,8 @@ public class ProcessItemController extends HttpServlet {
             Bid bid = new Bid();
             int processItemId;
             double newMoneyAmount = 0;
+            int senderId = Integer.parseInt(request.getParameter("sender"));
+            int recId = Integer.parseInt(request.getParameter("receiver"));
             if (user == null || user.getRoleid() != 2) {
                 redirect = "BuyPageController";
             } else if (rawProcessItemId == null || decision == null) {
@@ -78,12 +83,23 @@ public class ProcessItemController extends HttpServlet {
                     processItem.setObject(auction);
                     BidDAO.deleteBid(bid.getBidId());
                     AuctionDAO.deleteAuction(processItem.getTransactionId());
-                }else if (processItem.getTransactionTypeIdId() == 3){
+                } else if (processItem.getTransactionTypeIdId() == 3) {
                     int tradeId = processItem.getTransactionId();
                     TradeDAO.deleteOfferItems(tradeId);
                     TradeDAO.deleteRecitems(tradeId);
                     TradeDAO.deleteTrade(tradeId);
                     ProcessItemsDAO.deleteProcessItems(processItemId);
+                    if (decision.equals("accept")) {
+                        NotificationDAO.insertNotification(new Notification(senderId, LocalDateTime.now(),
+                                "Admin has accepted your trade offer, please wait for items to be sent to your game account", "trade"));
+                        NotificationDAO.insertNotification(new Notification(recId, LocalDateTime.now(),
+                                "Admin has accepted your trade offer, please wait for items to be sent to your game account", "trade"));
+                    } else {
+                        NotificationDAO.insertNotification(new Notification(senderId, LocalDateTime.now(),
+                                "Admin has rejected your trade offer", "trade"));
+                        NotificationDAO.insertNotification(new Notification(recId, LocalDateTime.now(),
+                                "Admin has rejected your trade offer", "trade"));
+                    }
                     request.setAttribute("message", "Trade offer processed");
                     doGet(request, response);
                 }

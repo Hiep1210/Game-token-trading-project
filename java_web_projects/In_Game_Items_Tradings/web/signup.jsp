@@ -92,7 +92,6 @@
                                    placeholder="Confirm your password" type="password" class="form-control">
                             <span class="form-message"></span>
                         </div>
-                </form>
 
                 <!-- Form Buttons -->
                 <div class="row">
@@ -112,6 +111,7 @@
                     </div>
                 </div>
             </div>
+                </form>
         </div>
 
         <script>

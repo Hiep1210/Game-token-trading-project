@@ -27,7 +27,6 @@ public class TradePageController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ArrayList<GameItems> gItem = GameItemsDAO.getAllGameItems();
-        System.out.println(request.getAttribute("mess"));
         request.setAttribute("gItem", gItem);
         request.getRequestDispatcher("trade.jsp").forward(request, response);
     } 

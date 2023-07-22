@@ -73,7 +73,9 @@
                             <tbody>
                                 <c:forEach var = "trade" items="${requestScope.trade}" varStatus="currentStatus">
                                 <form action='ProcessItemController' method='post'>
-                                    <input type="hidden" name="processItemId" value="${trade.id}">    
+                                    <input type="hidden" name="processItemId" value="${trade.id}"/>
+                                    <input type="hidden" name="sender" value="${trade.senderId}"/>
+                                    <input type="hidden" name="receiver" value="${trade.receiverId}"/>
                                     <tr>
                                         <th scope="row">${currentStatus.index + 1}</th>
                                         <td class="offer"><div class="offer">
