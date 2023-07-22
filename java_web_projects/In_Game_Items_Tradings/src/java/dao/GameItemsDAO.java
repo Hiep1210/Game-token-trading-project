@@ -130,7 +130,7 @@ public class GameItemsDAO {
             Connection con = db.getConnection();
             if (con != null) {
                 String sql = "SELECT * FROM game_items_trading.gameitems where true ";
-                    sql += " and (item_name Like '%" + name + "%' or skin_name like '%" + name + "%') ";
+                    sql += " and (item_name Like '%" + name + "%' or skin_name like '%" + name + "%' or exterior like '%"+name+"%')";
                 Statement call = con.createStatement();
                 ResultSet rs = call.executeQuery(sql);
                 //assign value for object items then return it

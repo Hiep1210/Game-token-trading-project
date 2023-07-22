@@ -61,8 +61,8 @@
                                             <img  data-bs-toggle="offcanvas" href="#offcanvas${gItem.id}" src="UI/image/${gItem.img}.png" class="img-fluid rounded" alt="...">
                                             <div class="card-body">
                                                 <p>${gItem.type} | ${gItem.itemName} ${gItem.skinName} (${gItem.exterior})</p>
-                                                <input id="itemno${gItem.id}" type="checkbox" value="${gItem.id}" name="offer" hidden="" onchange="handleCheckboxChange(this)"/>
-                                                <label for="itemno${gItem.id}" class="btn item-card-button">
+                                                <input id="itemno${gItem.id}left" type="checkbox" value="${gItem.id}" name="offer" hidden="" onchange="handleCheckboxChange(this)"/>
+                                                <label for="itemno${gItem.id}left" class="btn item-card-button">
                                                     <i style="color:white" class="material-icons navbar-item-icon">compare_arrows</i>
                                                 </label>
                                             </div>
@@ -302,7 +302,8 @@
                 //use when passing array
                 traditional: true,
                 data: {
-                    txt: searchName
+                    txt: searchName,
+                    side: "receive"
                 },
                 success: function (data) {
                     var row = document.getElementById("list-content2");
@@ -322,7 +323,8 @@
                 //use when passing array
                 traditional: true,
                 data: {
-                    txt: searchName
+                    txt: searchName,
+                    side: "offer"
                 },
                 success: function (data) {
                     var row = document.getElementById("list-content1");

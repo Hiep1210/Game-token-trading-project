@@ -30,6 +30,7 @@ public class SearchItemTrade extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String search = request.getParameter("txt");
+        String side = request.getParameter("side");
         PrintWriter out = response.getWriter();
         ArrayList<GameItems> result = GameItemsDAO.Search(search);
         for (GameItems game : result) {
@@ -38,8 +39,8 @@ public class SearchItemTrade extends HttpServlet {
 "                                            <img  data-bs-toggle=\"offcanvas\" href=\"#offcanvas"+game.getId()+"\" src=\"UI/image/"+game.getImg()+".png\" class=\"img-fluid rounded\" alt=\"...\">\n" +
 "                                            <div class=\"card-body\">\n" +
 "                                                <p>"+game.getType()+" | "+game.getItemName()+" "+game.getSkinName()+" ("+game.getExterior()+")</p>\n" +
-"                                                <input id=\"itemno"+game.getId()+"right\" type=\"checkbox\" value=\""+game.getId()+"\" name=\"receive\" hidden=\"\" onchange=\"handleCheckboxChange(this)\"/>\n" +
-"                                                <label for=\"itemno"+game.getId()+"right\" class=\"btn item-card-button\">\n" +
+"                                                <input id=\"itemno"+game.getId()+side+"\" type=\"checkbox\" value=\""+game.getId()+"\" name=\""+side+"\" hidden=\"\" onchange=\"handleCheckboxChange(this)\"/>\n" +
+"                                                <label for=\"itemno"+game.getId()+side+"\" class=\"btn item-card-button\">\n" +
 "                                                    <i style=\"color:white\" class=\"material-icons navbar-item-icon\">compare_arrows</i>\n" +
 "                                                </label>\n" +
 "                                            </div>\n" +
@@ -59,15 +60,15 @@ public class SearchItemTrade extends HttpServlet {
 "                                            <img class=\"img-fluid\" src=\"UI/image/"+game.getImg()+".png\" alt=\"\">\n" +
 "                                            <div class=\"d-flex justify-content-between mt-2\">\n" +
 "                                                <p class=\"sell-info-select-name\">Type: </p>\n" +
-"                                                <h5>${gItem.type}</h5>\n" +
+"                                                <h5>"+game.getType()+"</h5>\n" +
 "                                            </div>\n" +
 "                                            <div class=\"d-flex justify-content-between mt-2\">\n" +
 "                                                <p class=\"sell-info-select-name\">Exterior:</p>\n" +
-"                                                <h5>${gItem.exterior}</h5>\n" +
+"                                                <h5>"+game.getExterior()+"</h5>\n" +
 "                                            </div>\n" +
 "                                            <div class=\"d-flex justify-content-between mt-2\">\n" +
 "                                                <p class=\"sell-info-select-name\">Rarity:</p>\n" +
-"                                                <h5>${gItem.rarity}</h5>\n" +
+"                                                <h5>"+game.getRarity()+"</h5>\n" +
 "                                            </div>\n" +
 "                                        </div>\n" +
 "                                    </div>");
