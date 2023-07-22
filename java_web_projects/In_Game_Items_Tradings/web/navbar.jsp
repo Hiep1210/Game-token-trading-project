@@ -72,9 +72,11 @@
                                 <h5>$ ${sessionScope.user.money}</h5>
                             </div>
                             <!-- Topup button -->
-                            <div class="navbar-user-balance-topup rounded-circle">
-                                <i class="material-icons navbar-item-icon">add</i>
-                            </div>
+                            <a href="topUpRequest.jsp" class="text-decoration-none">
+                                <div class="navbar-user-balance-topup rounded-circle">
+                                    <i class="material-icons navbar-item-icon">add</i>
+                                </div>
+                            </a>
                         </c:if>
                     </div>
                     <!-- User Profile -->

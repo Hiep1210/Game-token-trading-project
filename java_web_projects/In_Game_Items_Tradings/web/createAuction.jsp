@@ -38,11 +38,8 @@
 
             <div class="container-fluid main-content">
                 <div class="row">
-                    <!-- Sidebar -->
-                    <div class="col-lg-3 sidebar">
-                        <%@include file="sidebar.jsp" %>
-                    </div>
-                    <div class="col-lg-8">
+                    <div class="container-fluid w-75">
+                        <h1 class="text-white fw-bold">Create Auction:</h1>
                         <!-- Tool bar -->
                         <div class="row mt-2">
                             <!-- Search Bar -->
@@ -64,7 +61,7 @@
                                         <li class="dropdown-item"><input type="checkbox" name="knife" value="knife" checked>Knife</li>
                                         <li class="dropdown-item"><input type="checkbox" name="pistol" value="pistol" checked>Pistol</li>
                                         <li class="dropdown-item"><input type="checkbox" name="rifle" value="rifle" checked>Rifle</li>
-                                        <li class="dropdown-item"><input type="checkbox" name="smgs" value="smgs" checked>SMGs</li>
+                                        <li class="dropdown-item"><input type="checkbox" name="smg" value="smgs" checked>SMGs</li>
                                         <li class="dropdown-item"><input type="checkbox" name="heavy" value="heavy" checked>Heavy</li>
                                         <li>
                                             <hr class="dropdown-divider">
@@ -144,6 +141,12 @@
                                             <p class="sell-info-select-name">Starting price:</p>
                                             <div class="form-group w-50">
                                                 <input class="form-control" type="number" step="0.01" min="0.01" max="10000" id="lowestBid" name="price" class="form-control"  placeholder="Insert starting bid" required>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Bid step: %</p>
+                                            <div class="form-group w-50">
+                                                <input class="form-control" type="number" step="1" min="5" max="20" value="10" id="bidIncrement" name="bidIncrement" class="form-control"  placeholder="Insert bid step" required>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
@@ -249,7 +252,7 @@
                 var searchName = document.getElementById("search-input").value;
                 console.log(searchName);
                 $.ajax({
-                    url: "/In_Game_Items_Trading/filterSell",
+                    url: "/In_Game_Items_Trading/filterAuction",
                     type: "GET",
                     //use when passing array
                     traditional: true,
@@ -288,6 +291,7 @@
                     var sellTimeElement = parentContainer.querySelector('input[name="sellTime"]:checked');
                     var priceElement = parentContainer.querySelector('input[name="price"]');
                     var gameAccountElement = parentContainer.querySelector('input[name="gameAccount"]');
+                    var bidIncrementElement = parentContainer.querySelector('input[name="bidIncrement"]');
                     var imageElement = parentContainer.querySelector('img');
 
                     // Check if all necessary elements exist
@@ -296,6 +300,7 @@
                         var sellTime = sellTimeElement.value;
                         var price = priceElement.value;
                         var gameAccount = gameAccountElement.value;
+                        var bidIncrement = bidIncrementElement.value;
 
                         // Get the image name
                         var skinName = imageElement.getAttribute('src');
@@ -307,6 +312,7 @@
                         console.log("Price: " + price);
                         console.log("Game Account: " + gameAccount);
                         console.log("Skin Name: " + skinName);
+                        console.log("Bid Increment: " + bidIncrement);
 
                         // Create data object to send to the backend
                         var data = {
@@ -314,7 +320,8 @@
                             sellTime: sellTime,
                             gameAccount: gameAccount,
                             price: price,
-                            skinName: skinName
+                            skinName: skinName,
+                            bidIncrement: bidIncrement
                         };
 
                         $.ajax({

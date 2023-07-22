@@ -29,12 +29,12 @@
         <c:if test="${requestScope.errorMessage != null}">
             <h2 style="color: plum">${requestScope.errorMessage}</h2>
         </c:if>
-            <script>
+        <script>
             //load page before display message
             window.onload = function () {
-                if (${requestScope.mess != null}) {
+                    if (${requestScope.mess != null}) {
                     document.title = "GIT";
-                    alert('${requestScope.mess}');
+                        alert('${requestScope.mess}');
                 }
             };
         </script>
@@ -113,105 +113,105 @@
                         <!-- Filter Selection Section -->
                         <div class="filter sidebar">
                             <div class="container">
-                                    <!-- Filter Type -->
-                                    <details class="sidebar-category">
-                                        <summary>Type</summary>
-                                        <ul class="nopadding d-flex flex-column">
-                                            <div class="category-group">
-                                                <input type="checkbox" name="type" value="knife" id="knife">
-                                                <label for="knife">Knife</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="type" value="glove" id="glove">
-                                                <label for="glove">Glove</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="type" value="pistol" id="gun">
-                                                <label for="gun">Pistol</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="type" value="Heavy" id="gun">
-                                                <label for="gun">Heavy</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="type" value="Rifle" id="gun">
-                                                <label for="gun">Rifle</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="type" value="SMGs" id="gun">
-                                                <label for="gun">SMGs</label>
-                                            </div>
-                                        </ul>
-                                    </details>
-                                    <!-- Filter Exterior -->
-                                    <details class="sidebar-category">
-                                        <summary>Exterior</summary>
-                                        <ul class="nopadding d-flex flex-column">
-                                            <div class="category-group">
-                                                <input type="checkbox" name="exterior" value="Factory New" id="fn">
-                                                <label for="knife">Factory New</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="exterior" value="Minimal Wear" id="mw">
-                                                <label for="glove">Minimal Wear</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="exterior" value="Field-Tested" id="ft">
-                                                <label for="gun">Field-Tested</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="exterior" value="Well-Worn" id="ww">
-                                                <label for="gun">Well-Worn</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="exterior" value="Battle-Scarred" id="bs">
-                                                <label for="gun">Battle-Scarred</label>
-                                            </div>
-                                        </ul>
-                                    </details>
-                                    <!-- Filter Rarity -->
-                                    <details class="sidebar-category">
-                                        <summary>Rarity</summary>
-                                        <ul class="nopadding d-flex flex-column">
-                                            <div class="category-group">
-                                                <input type="checkbox" name="rarity" value="Consumer Grade" id="grey">
-                                                <label for="knife">Consumer Grade</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="rarity" value="Industrial Grade" id="blue">
-                                                <label for="glove">Industrial Grade</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="rarity" value="Restricted" id="purple">
-                                                <label for="gun">Restricted</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="rarity" value="Classified" id="pink">
-                                                <label for="gun">Classified</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="checkbox" name="rarity" value="Covert" id="red">
-                                                <label for="gun">Covert</label>
-                                            </div>
-                                        </ul>
-                                    </details>
-                                    <details class="sidebar-category">
-                                        <summary>Price</summary>
-                                        <ul class="nopadding d-flex flex-column">
-                                            <div class="category-group">
-                                                <input type="radio" name="priceorder" value="asc" id="grey">
-                                                <label for="sort">Sort Price Ascending</label>
-                                            </div>
-                                            <div class="category-group">
-                                                <input type="radio" name="priceorder" value="desc" id="blue">
-                                                <label for="sort">Sort Price Descending</label>
-                                        </ul>
-                                    </details>
-                                    <c:if test="${sessionScope.user != null}">
-                                        <button type="submit" class="btn item-card-button" >
+                                <!-- Filter Type -->
+                                <details class="sidebar-category">
+                                    <summary>Type</summary>
+                                    <ul class="nopadding d-flex flex-column">
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="knife" id="knife">
+                                            <label for="knife">Knife</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="glove" id="glove">
+                                            <label for="glove">Glove</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="pistol" id="gun">
+                                            <label for="gun">Pistol</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="Heavy" id="gun">
+                                            <label for="gun">Heavy</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="Rifle" id="gun">
+                                            <label for="gun">Rifle</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="type" value="SMGs" id="gun">
+                                            <label for="gun">SMGs</label>
+                                        </div>
+                                    </ul>
+                                </details>
+                                <!-- Filter Exterior -->
+                                <details class="sidebar-category">
+                                    <summary>Exterior</summary>
+                                    <ul class="nopadding d-flex flex-column">
+                                        <div class="category-group">
+                                            <input type="checkbox" name="exterior" value="Factory New" id="fn">
+                                            <label for="knife">Factory New</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="exterior" value="Minimal Wear" id="mw">
+                                            <label for="glove">Minimal Wear</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="exterior" value="Field-Tested" id="ft">
+                                            <label for="gun">Field-Tested</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="exterior" value="Well-Worn" id="ww">
+                                            <label for="gun">Well-Worn</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="exterior" value="Battle-Scarred" id="bs">
+                                            <label for="gun">Battle-Scarred</label>
+                                        </div>
+                                    </ul>
+                                </details>
+                                <!-- Filter Rarity -->
+                                <details class="sidebar-category">
+                                    <summary>Rarity</summary>
+                                    <ul class="nopadding d-flex flex-column">
+                                        <div class="category-group">
+                                            <input type="checkbox" name="rarity" value="Consumer Grade" id="grey">
+                                            <label for="knife">Consumer Grade</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="rarity" value="Industrial Grade" id="blue">
+                                            <label for="glove">Industrial Grade</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="rarity" value="Restricted" id="purple">
+                                            <label for="gun">Restricted</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="rarity" value="Classified" id="pink">
+                                            <label for="gun">Classified</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="checkbox" name="rarity" value="Covert" id="red">
+                                            <label for="gun">Covert</label>
+                                        </div>
+                                    </ul>
+                                </details>
+                                <details class="sidebar-category">
+                                    <summary>Price</summary>
+                                    <ul class="nopadding d-flex flex-column">
+                                        <div class="category-group">
+                                            <input type="radio" name="priceorder" value="asc" id="grey">
+                                            <label for="sort">Sort Price Ascending</label>
+                                        </div>
+                                        <div class="category-group">
+                                            <input type="radio" name="priceorder" value="desc" id="blue">
+                                            <label for="sort">Sort Price Descending</label>
+                                    </ul>
+                                </details>
+                                <c:if test="${sessionScope.user != null}">
+                                    <button type="submit" class="btn item-card-button" >
                                         Create Trade Offer
                                     </button>
-                                    </c:if>          
+                                </c:if>          
                             </div>
                             <c:if test="${sessionScope.user !=null}">
                                 <div style="margin-top: 30px">
@@ -357,7 +357,7 @@
                     h4Element.parentNode.replaceChild(iElement, h4Element);
                 }
             }
-            
+
         </script>
     </body>
 
