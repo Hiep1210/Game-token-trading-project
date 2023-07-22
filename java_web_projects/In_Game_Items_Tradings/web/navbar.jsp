@@ -59,7 +59,7 @@
                                 <i class="material-icons navbar-item-icon">notifications</i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" id = "noti-list">
-                                <a class="dropdown-item" href="#">You have 0 new notification </a>
+                                <p class="dropdown-item" href="#">You have 0 new notification </p>
                             </div>
                         </c:if>
                     </div>

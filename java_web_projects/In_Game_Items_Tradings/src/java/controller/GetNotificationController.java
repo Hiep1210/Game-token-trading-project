@@ -29,7 +29,8 @@ public class GetNotificationController extends HttpServlet {
         int id = user.getId();
         ArrayList<Notification> notificationList = NotificationDAO.getAllUserNotification(id);
         for (Notification noti : notificationList) {
-            out.println("<a class=\"dropdown-item\" href=\"#\">" + noti.getNoti_content() + "</a>");
+            out.println("<p class=\"dropdown-item w-100\" href=\"#\">" + noti.getNoti_content() + "</p>"
+                    + "<div class=\"dropdown-divider\"></div>");
         }
     }
 }
