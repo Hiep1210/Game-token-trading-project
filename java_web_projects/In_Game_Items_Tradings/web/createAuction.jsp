@@ -38,11 +38,8 @@
 
             <div class="container-fluid main-content">
                 <div class="row">
-                    <!-- Sidebar -->
-                    <div class="col-lg-3 sidebar">
-                        <%@include file="sidebar.jsp" %>
-                    </div>
-                    <div class="col-lg-8">
+                    <div class="container-fluid w-75">
+                        <h1 class="text-white fw-bold">Create Auction:</h1>
                         <!-- Tool bar -->
                         <div class="row mt-2">
                             <!-- Search Bar -->
