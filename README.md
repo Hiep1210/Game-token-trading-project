@@ -24,3 +24,5 @@ Tài liệu:
 [Daily Report](https://docs.google.com/spreadsheets/d/1VWTJeDWcJItloYncrRG8kqn6nCSnTeA0DwjpmOvqU2Y/edit#gid=0)
 
 [Project Backlog](https://docs.google.com/spreadsheets/d/1zN-EBGGo1EgroNjnxDXLT6dBLO7TpAEP/edit#gid=199086574)
+
+[Release Notes](https://docs.google.com/document/d/1TEO9tkLPnJ4vvnzvsMo1m-do3DrSNXflu5vWcBh9DtI/edit?usp=sharing)
