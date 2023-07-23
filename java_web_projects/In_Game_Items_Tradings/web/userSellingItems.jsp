@@ -72,7 +72,6 @@
                                         <h5 class="card-title mb-2">${processList.getType()} | ${processList.getItemName()} ${processList.getSkinName()} (${processList.getExterior()})
                                         </h5>
                                         <p class="card-text mb-1">Selling price: ${processList.getPrice()}</p>
-                                        <p class="card-text mb-1">Time Left: <span id="countdownProcessing${currentStatus.index}"></span></p>
                                     </div>
                                 </div>
                             </div>

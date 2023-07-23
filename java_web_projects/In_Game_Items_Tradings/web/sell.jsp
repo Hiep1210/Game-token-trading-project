@@ -111,41 +111,41 @@
                                 <div class="offcanvas-body">
                                     <img class="img-fluid" src="UI/image/${sellList.gameItems.img}.png" alt="">
                                     <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Exterior:</p>
-                                        <select name="exterior" class="form-control w-50">
-                                            <option value="Factory New">Factory New</option>
-                                            <option value="Minimal Wear">Minimal Wear</option>
-                                            <option value="Field-Tested">Field-Tested</option>
-                                            <option value="Well-Worn">Well-Worn</option>
-                                            <option value="Battle-Scarred">Battle-Scarred</option>
-                                        </select>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
                                         <p class="sell-info-select-name">Rarity:</p>
                                         <h5>${sellList.gameItems.rarity}</h5>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <p class="sell-info-select-name">Sell time:</p>
-                                        <input class="mb-3" type="radio" name ="sellTime" value="1">
-                                        <label class="mb-3">1 Day</label>
-                                        <input class="mb-3" type="radio" name ="sellTime" value="2">
-                                        <label class="mb-3">2 Day</label>
-                                        <input class="mb-3" type="radio" name ="sellTime" value="3">
-                                        <label class="mb-3">3 Day</label>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Sell Price:</p>
-                                        <div class="form-group w-50">
-                                            <input class="form-control" type="number" name ="price" placeholder="Enter price">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <p class="sell-info-select-name">Game Account:</p>
-                                        <div class="form-group w-50">
-                                            <input class="form-control" type="text" name ="gameAccount" placeholder="G.Account Name">
-                                        </div>
-                                    </div>
                                     <c:if test="${sessionScope.user != null}">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Exterior:</p>
+                                            <select name="exterior" class="form-control w-50">
+                                                <option value="Factory New">Factory New</option>
+                                                <option value="Minimal Wear">Minimal Wear</option>
+                                                <option value="Field-Tested">Field-Tested</option>
+                                                <option value="Well-Worn">Well-Worn</option>
+                                                <option value="Battle-Scarred">Battle-Scarred</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mt-2">
+                                            <p class="sell-info-select-name">Sell time:</p>
+                                            <input class="mb-3" type="radio" name ="sellTime" value="1">
+                                            <label class="mb-3">1 Day</label>
+                                            <input class="mb-3" type="radio" name ="sellTime" value="2">
+                                            <label class="mb-3">2 Day</label>
+                                            <input class="mb-3" type="radio" name ="sellTime" value="3">
+                                            <label class="mb-3">3 Day</label>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Sell Price:</p>
+                                            <div class="form-group w-50">
+                                                <input class="form-control" type="number" name ="price" placeholder="Enter price">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <p class="sell-info-select-name">Game Account:</p>
+                                            <div class="form-group w-50">
+                                                <input class="form-control" type="text" name ="gameAccount" placeholder="G.Account Name">
+                                            </div>
+                                        </div>
                                         <div class="summit-button mt-2">
                                             <button class="btn item-card-button" onclick="addToSellList(event)">
                                                 Add to Sell List
